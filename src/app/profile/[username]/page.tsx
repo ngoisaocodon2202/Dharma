@@ -8,7 +8,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/Card';
 import { MapPin, Calendar, BookOpen, Headphones, User, Clock } from 'lucide-react';
 import type { Metadata } from 'next';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ username: string }>;

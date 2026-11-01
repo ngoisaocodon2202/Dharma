@@ -9,7 +9,7 @@ import { BookmarkButton } from '@/components/article/BookmarkButton';
 import { CommentSection } from '@/components/article/CommentSection';
 import type { Metadata } from 'next';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;

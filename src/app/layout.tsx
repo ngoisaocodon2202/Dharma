@@ -16,6 +16,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.APP_URL || 'https://giacngo.vercel.app'),
   title: 'Phật Pháp — Cổng Thông Tin, Thư Viện, Chùa & Không Gian Thiền Định',
   description:
     'Một không gian thanh tịnh để học hỏi, chia sẻ và kết nối Phật pháp. Nơi những giá trị tỉnh thức, từ bi và trí tuệ được lan tỏa.',

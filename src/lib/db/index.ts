@@ -24,6 +24,11 @@ export const pool = new Pool({
   connectionTimeoutMillis: 5000,
 });
 
+// Prevent uncaught exceptions on idle client errors
+pool.on('error', (err) => {
+  console.warn('[PostgreSQL Pool Warning] Connection or idle client error:', err.message);
+});
+
 /**
  * Execute a parameterized SQL query safely against PostgreSQL pool
  */

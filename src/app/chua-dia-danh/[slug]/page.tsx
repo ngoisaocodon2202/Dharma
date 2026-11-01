@@ -7,7 +7,7 @@ import { BookmarkButton } from '@/components/article/BookmarkButton';
 import { MapPin, Phone, Globe, CheckCircle, Navigation } from 'lucide-react';
 import type { Metadata } from 'next';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;
