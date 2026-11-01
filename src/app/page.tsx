@@ -31,7 +31,7 @@ import {
   Scroll,
 } from 'lucide-react';
 
-export const revalidate = 60; // ISR cache revalidation every minute
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   // Query data from PostgreSQL

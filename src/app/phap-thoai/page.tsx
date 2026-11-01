@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { VideoCatalogView } from '@/components/video/VideoCatalogView';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 interface Props {
   searchParams: Promise<{

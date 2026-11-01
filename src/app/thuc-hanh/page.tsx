@@ -5,7 +5,7 @@ import { DailyPracticeCard, DailyPracticeData } from '@/components/home/DailyPra
 import { Calendar } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function PracticePage() {
   const res = await query(`

@@ -3,7 +3,7 @@ import { query } from '@/lib/db';
 import { Building, CheckCircle, Globe, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function OrganizationsPage() {
   const res = await query('SELECT * FROM organizations ORDER BY is_verified DESC, created_at ASC');

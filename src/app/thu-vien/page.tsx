@@ -5,7 +5,7 @@ import { BooksSection } from '@/components/books/BooksSection';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { BookItem } from '@/components/books/types';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function LibraryPage() {
   const res = await query(

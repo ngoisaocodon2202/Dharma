@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { RSVPButton } from '@/components/events/RSVPButton';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function EventsPage() {
   const res = await query(`

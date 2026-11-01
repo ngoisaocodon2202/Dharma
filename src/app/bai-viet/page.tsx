@@ -8,7 +8,7 @@ import { Clock, Eye, BookOpen } from 'lucide-react';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 interface Props {
   searchParams: Promise<{ 'chuyen-muc'?: string; q?: string }>;

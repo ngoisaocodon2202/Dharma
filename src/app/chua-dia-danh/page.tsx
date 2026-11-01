@@ -5,7 +5,7 @@ import { MapPin, Search, Building, Filter } from 'lucide-react';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { TempleGalleryView } from '@/components/temple/TempleGalleryView';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 interface Props {
   searchParams: Promise<{ tinh?: string; 'the-loai'?: string; q?: string }>;

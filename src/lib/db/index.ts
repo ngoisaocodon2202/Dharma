@@ -31,5 +31,16 @@ export async function query<T extends QueryResultRow = any>(
   text: string,
   params?: any[]
 ): Promise<QueryResult<T>> {
-  return pool.query<T>(text, params);
+  try {
+    return await pool.query<T>(text, params);
+  } catch (error: any) {
+    console.warn(`[Database Warning] Query failed or connection unreachable: ${error.message}`);
+    return {
+      rows: [] as T[],
+      rowCount: 0,
+      command: '',
+      oid: 0,
+      fields: [],
+    } as QueryResult<T>;
+  }
 }
