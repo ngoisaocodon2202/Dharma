@@ -8,6 +8,8 @@ import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { GlobalAudioPlayer } from '@/components/audio/GlobalAudioPlayer';
 import { AuthModal } from '@/components/auth/AuthModal';
 
+export const dynamic = 'force-dynamic';
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
