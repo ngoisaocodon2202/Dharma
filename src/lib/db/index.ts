@@ -5,6 +5,12 @@ dotenv.config();
 
 const connectionString = process.env.DATABASE_URL;
 
+const isRemoteDb = Boolean(
+  connectionString &&
+  !connectionString.includes('127.0.0.1') &&
+  !connectionString.includes('localhost')
+);
+
 export const pool = new Pool({
   connectionString: connectionString || undefined,
   host: process.env.DB_HOST || '127.0.0.1',
@@ -12,6 +18,7 @@ export const pool = new Pool({
   database: process.env.DB_DATABASE || 'phatphap',
   user: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD,
+  ssl: isRemoteDb ? { rejectUnauthorized: false } : undefined,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
