@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-app: #FFF8E7;
+  --bg-surface: #FFFDF5;
+  --bg-surface-soft: #FFF3D0;
+  --border-subtle: #FAEFD5;
+  --border-strong: #F0DFB8;
+
+  --text-main: #2C1A0E;
+  --text-muted: #6B4F2A;
+  --text-subtle: #9A7A4A;
+
+  --color-primary: #C8780A;
+  --color-primary-hover: #A05E08;
+  --color-primary-soft: #FFF3D0;
+  --color-primary-text: #ffffff;
+
+  --color-secondary: #2d6a4f;
+  --color-secondary-soft: #f2f8f5;
+
+  --color-accent: #c86d7a;
+  --color-accent-soft: #fdf5f6;
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Date input indicator styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(48%) sepia(85%) saturate(1600%) hue-rotate(18deg) brightness(95%) contrast(98%);
+  transition: transform 0.2s ease;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  transform: scale(1.15);
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Lora', Georgia, serif;
+}
+
+::selection {
+  background-color: rgba(200, 120, 10, 0.2);
+  color: #7A4606;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF3D0;
+}
+::-webkit-scrollbar-thumb {
+  background: #F0DFB8;
+  border-radius: 4px;
+}
+
+.editorial-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  font-size: 1.125rem;
+  color: var(--text-main);
+}
+
+.editorial-content h2 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+}
+
+.editorial-content h3 {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+}
+
+.editorial-content blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 1.25rem;
+  font-style: italic;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+}
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -6px rgba(200, 120, 10, 0.18), 0 4px 10px -4px rgba(0, 0, 0, 0.04);
+}
+
+.hover-lift-sm {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+.hover-lift-sm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -4px rgba(200, 120, 10, 0.15);
+}
+
+.delay-75  { animation-delay: 75ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+.radiant-bg {
+  background: radial-gradient(circle at 50% 0%, rgba(200, 120, 10, 0.10) 0%, rgba(255, 248, 231, 0) 70%);
+}
+
+.text-gradient-saffron {
+  background: linear-gradient(135deg, #C8780A 0%, #7A4606 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shimmer-effect {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Mobile Safe-Area Insets */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+.pt-safe {
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Responsive typography refinement on mobile devices */
+@media (max-width: 640px) {
+  .editorial-content p {
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+  .editorial-content h2 {
+    font-size: 1.35rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .editorial-content h3 {
+    font-size: 1.15rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
