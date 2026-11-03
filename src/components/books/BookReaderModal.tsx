@@ -283,24 +283,23 @@ export function BookReaderModal({ book, isOpen, onClose, initialPage = 1 }: Book
 
   // Reusable Page Face Renderer so both static pages and the 3D turning leaf look 100% authentic
   const renderPageContent = (page: BookPage, isRightSide = false) => (
-    <div className="flex-1 h-full flex flex-col justify-between p-4 sm:p-7 md:p-9 select-text overflow-y-auto no-scrollbar relative">
-      {/* Top Running Header */}
-      <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-2 mb-3 text-[10px] sm:text-xs tracking-wider uppercase font-sans font-semibold opacity-65 shrink-0 gap-2">
-        <span className="truncate">{isRightSide ? page.chapterTitle : book.title}</span>
-        <span className="truncate text-right">{isRightSide ? book.title : page.chapterTitle}</span>
+    <div className="flex-1 h-full flex flex-col justify-between p-4 sm:p-6 md:p-8 select-text overflow-hidden relative">
+      {/* 1. Top Running Header (Pinned, never overlapped) */}
+      <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-2 mb-2.5 text-[10px] sm:text-xs tracking-wider uppercase font-sans font-semibold shrink-0 gap-3">
+        <span className="truncate text-saffron-800/85 dark:text-saffron-400/85 font-bold">
+          {page.chapterTitle || book.title}
+        </span>
+        <span className="truncate text-right opacity-60 hidden sm:inline">
+          {book.title}
+        </span>
       </div>
 
-      {/* Main Sutra / Book Content */}
-      <div className="flex-1 space-y-3 min-h-0 flex flex-col justify-center py-1">
+      {/* 2. Main Sutra / Book Content (Contained within its own bounds, never overflows header/footer) */}
+      <div className="flex-1 min-h-0 overflow-y-auto custom-dropdown-scroll pr-1 py-1 space-y-3">
         {page.title && (
-          <div className="space-y-1">
-            <span className="inline-block text-[10px] font-sans font-bold uppercase tracking-widest text-saffron-700 dark:text-saffron-400 opacity-85">
-              {page.chapterTitle}
-            </span>
-            <h2 className="font-heading text-base sm:text-xl font-bold tracking-tight text-saffron-800 dark:text-saffron-400 border-l-3 border-saffron-600 pl-2.5 leading-snug">
-              {page.title}
-            </h2>
-          </div>
+          <h2 className="font-heading text-[15px] sm:text-lg md:text-xl font-bold tracking-tight text-saffron-800 dark:text-saffron-400 border-l-3 border-saffron-600 pl-2.5 leading-snug">
+            {page.title}
+          </h2>
         )}
 
         <div className={cn(fontFamilyClass, 'whitespace-pre-line text-justify', fontSizeClass)}>
@@ -310,7 +309,7 @@ export function BookReaderModal({ book, isOpen, onClose, initialPage = 1 }: Book
         {page.quote && (
           <div
             className={cn(
-              'p-3 sm:p-3.5 rounded-xl border-l-3 my-1.5 font-heading italic text-xs sm:text-sm leading-relaxed shadow-2xs',
+              'p-2.5 sm:p-3.5 rounded-xl border-l-3 mt-2 font-heading italic text-xs sm:text-sm leading-relaxed shadow-2xs',
               themeStyles.quoteBg
             )}
           >
@@ -319,10 +318,10 @@ export function BookReaderModal({ book, isOpen, onClose, initialPage = 1 }: Book
         )}
       </div>
 
-      {/* Bottom Running Footer (100% Vietnamese font-sans, zero font-mono glitches) */}
-      <div className="pt-2.5 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] sm:text-xs opacity-70 font-sans tabular-nums shrink-0 mt-2 gap-2">
-        <span className="truncate max-w-[68%] italic">{page.footnote || book.author}</span>
-        <span className="font-bold shrink-0 text-saffron-800 dark:text-saffron-400">
+      {/* 3. Bottom Running Footer (Pinned, separated by border-t, never overlaps content above) */}
+      <div className="pt-2.5 mt-2.5 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] sm:text-xs font-sans tabular-nums shrink-0 gap-3">
+        <span className="truncate italic opacity-70">{page.footnote || book.author}</span>
+        <span className="font-bold shrink-0 text-saffron-800 dark:text-saffron-400 whitespace-nowrap">
           — Trang {page.pageNumber} / {totalPages} —
         </span>
       </div>
@@ -720,22 +719,12 @@ export function BookReaderModal({ book, isOpen, onClose, initialPage = 1 }: Book
         {/* PHYSICAL HARDCOVER BOOK FRAME WITH LAYERED PAPER STACK */}
         <div
           className={cn(
-            'w-full h-full max-h-[600px] sm:max-h-[640px] md:max-h-[680px] flex items-stretch justify-center relative rounded-r-2xl rounded-l-md md:rounded-r-3xl md:rounded-l-lg border transition-colors duration-300 book-stage-3d',
+            'w-full h-full max-h-[640px] sm:max-h-[680px] md:max-h-[720px] flex items-stretch justify-center relative rounded-r-2xl rounded-l-md md:rounded-r-3xl md:rounded-l-lg border transition-colors duration-300 book-stage-3d',
             isTwoPage ? 'max-w-5xl xl:max-w-6xl rounded-2xl md:rounded-3xl' : 'max-w-2xl xl:max-w-3xl',
             themeStyles.paperBg,
             themeStyles.stackClass
           )}
         >
-          {/* Red-Gold Bookmark Ribbon at top spine */}
-          <div
-            className={cn(
-              'absolute -top-1 z-20 pointer-events-none text-red-700 dark:text-red-500 drop-shadow-sm',
-              isTwoPage ? 'left-1/2 -translate-x-1/2' : 'left-5 sm:left-7'
-            )}
-          >
-            <Bookmark className="w-5 h-6 fill-red-700/90 text-amber-400" />
-          </div>
-
           {/* Realistic Book Spine Crease Shadow */}
           {!isTwoPage ? (
             <div className="absolute inset-y-0 left-0 w-6 sm:w-8 bg-gradient-to-r from-black/18 via-black/5 to-transparent pointer-events-none z-10 rounded-l-md" />
@@ -824,22 +813,22 @@ export function BookReaderModal({ book, isOpen, onClose, initialPage = 1 }: Book
             </div>
           )}
 
-          {/* Interactive Curled Page Corner (Bottom Right - Click to Flip Next) */}
+          {/* Interactive Curled Page Corner (Bottom Right on Desktop - Click to Flip Next) */}
           {currentPageIndex < totalPages && (
             <button
               type="button"
               onClick={handleNextPage}
               title="Nhấn để lật sang trang tiếp theo"
               aria-label="Lật sang trang tiếp theo"
-              className="group/corner absolute bottom-0 right-0 z-25 w-11 h-11 sm:w-14 sm:h-14 overflow-hidden cursor-pointer focus:outline-none"
+              className="group/corner absolute bottom-0 right-0 z-25 w-7 h-7 hidden sm:block overflow-hidden cursor-pointer focus:outline-none opacity-60 hover:opacity-100 transition-opacity"
             >
               <div
                 className="w-full h-full transition-all duration-300 group-hover/corner:scale-125 origin-bottom-right"
                 style={{
                   background:
                     'linear-gradient(135deg, transparent 50%, rgba(181,137,46,0.28) 50%, rgba(253,251,247,0.95) 62%, rgba(160,94,8,0.35) 100%)',
-                  boxShadow: '-3px -3px 8px rgba(0,0,0,0.12)',
-                  borderTopLeftRadius: '10px',
+                  boxShadow: '-2px -2px 6px rgba(0,0,0,0.1)',
+                  borderTopLeftRadius: '8px',
                 }}
               />
             </button>
