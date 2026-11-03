@@ -123,6 +123,9 @@ export const UI_DICT: Record<SupportedLang, Record<string, string>> = {
     'Nam (Thiện Nam)': 'Male (Upāsaka)',
     'Nữ (Tín Nữ)': 'Female (Upāsikā)',
     'Đã lưu!': 'Saved!',
+    'Thắp Hương Tam Bảo Trực Tuyến': 'Online Incense Offering',
+    'Chạm Để Thắp Hương & Gõ Chuông': 'Tap to Light Incense & Ring Bell',
+    'Gửi Nguyện Cầu Hồi Hướng': 'Send Dedication Prayer',
   },
   zh: {
     'Trang chủ': '首页',

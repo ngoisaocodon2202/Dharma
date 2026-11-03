@@ -86,23 +86,23 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
     >
       <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-amber-950/90 via-charcoal-900 to-charcoal-950 text-white rounded-3xl border border-amber-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.8)] animate-scale-in">
         {/* Header */}
-        <div className="relative px-6 pt-6 pb-4 flex items-center justify-between border-b border-amber-500/20">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-charcoal-950 shadow-md">
+        <div className="relative px-4 sm:px-6 pt-5 pb-3.5 flex items-center justify-between gap-2 border-b border-amber-500/20">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-charcoal-950 shadow-md shrink-0">
               <Flame className="w-4 h-4 fill-current" />
             </div>
-            <div>
-              <h3 className="font-heading font-bold text-base text-amber-200">
+            <div className="min-w-0">
+              <h3 className="font-heading font-bold text-sm sm:text-base text-amber-200 whitespace-nowrap truncate">
                 Thắp Hương Tam Bảo Trực Tuyến
               </h3>
-              <p className="text-[11px] text-amber-300/70">
+              <p className="text-[11px] text-amber-300/70 whitespace-nowrap truncate">
                 Nhất tâm đảnh lễ • Dâng nén tâm hương
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full text-amber-300/70 hover:text-amber-100 hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-full text-amber-300/70 hover:text-amber-100 hover:bg-white/10 transition-colors shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
@@ -174,8 +174,8 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
 
             {/* Bronze Incense Burner Vessel (Lư Hương Đồng) */}
             <div className="relative w-36 h-14 bg-gradient-to-r from-amber-700 via-amber-500 to-amber-800 rounded-b-3xl rounded-t-lg border-t-2 border-amber-300 shadow-lg flex items-center justify-center">
-              <div className="text-[10px] font-heading font-extrabold uppercase tracking-widest text-charcoal-950 flex items-center gap-1">
-                <BuddhaBodhiIcon className="w-3.5 h-3.5 text-amber-950" />
+              <div className="text-[10px] font-heading font-extrabold uppercase tracking-widest text-charcoal-950 flex items-center gap-1 whitespace-nowrap">
+                <BuddhaBodhiIcon className="w-3.5 h-3.5 text-amber-950 shrink-0" />
                 <span>Bàn Thờ Tam Bảo</span>
               </div>
             </div>
@@ -185,15 +185,15 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
           {!isLit ? (
             <button
               onClick={handleLightIncense}
-              className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-saffron-600 hover:from-amber-400 hover:to-saffron-500 text-charcoal-950 font-bold text-sm tracking-wide shadow-[0_4px_20px_rgba(245,158,11,0.4)] active:scale-98 transition-all flex items-center justify-center gap-2"
+              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-saffron-600 hover:from-amber-400 hover:to-saffron-500 text-charcoal-950 font-bold text-xs sm:text-sm tracking-wide shadow-[0_4px_20px_rgba(245,158,11,0.4)] active:scale-98 transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
             >
-              <Flame className="w-4 h-4 fill-current text-charcoal-950" />
-              <span>Chạm Để Thắp Hương & Gõ Chuông</span>
+              <Flame className="w-4 h-4 fill-current text-charcoal-950 shrink-0" />
+              <span className="whitespace-nowrap truncate">Chạm Để Thắp Hương & Gõ Chuông</span>
             </button>
           ) : (
             <div className="w-full space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-500/40">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-spin" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-500/40 whitespace-nowrap">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-spin shrink-0" />
                 <span>Hương trầm đã thắp • Tâm thanh tịnh</span>
               </div>
 
@@ -209,16 +209,16 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
                 <button
                   type="submit"
                   disabled={!prayerText.trim() || isSubmitted}
-                  className="w-full py-2.5 px-4 rounded-xl bg-amber-600/80 hover:bg-amber-500 disabled:opacity-40 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-4 rounded-xl bg-amber-600/80 hover:bg-amber-500 disabled:opacity-40 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
                 >
                   {isSubmitted ? (
                     <>
-                      <Check className="w-4 h-4 text-emerald-300" />
+                      <Check className="w-4 h-4 text-emerald-300 shrink-0" />
                       <span>Đã hồi hướng lời nguyện an lành!</span>
                     </>
                   ) : (
                     <>
-                      <Heart className="w-3.5 h-3.5 text-rose-400 fill-current" />
+                      <Heart className="w-3.5 h-3.5 text-rose-400 fill-current shrink-0" />
                       <span>Gửi Nguyện Cầu Hồi Hướng</span>
                     </>
                   )}
@@ -228,9 +228,9 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
           )}
 
           {/* Counter info */}
-          <div className="mt-4 pt-3 border-t border-amber-500/20 w-full flex items-center justify-between text-[11px] text-amber-300/60">
-            <span>Số lần bạn đã dâng tâm hương</span>
-            <span className="font-mono font-bold text-amber-300">
+          <div className="mt-4 pt-3 border-t border-amber-500/20 w-full flex items-center justify-between gap-2 text-[11px] text-amber-300/60 whitespace-nowrap">
+            <span className="truncate">Số lần bạn đã dâng tâm hương</span>
+            <span className="font-mono font-bold text-amber-300 shrink-0">
               {totalOffered.toLocaleString('vi-VN')} lần
             </span>
           </div>
@@ -328,23 +328,23 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
     >
       <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-stone-900 via-charcoal-900 to-stone-950 text-white rounded-3xl border border-amber-600/30 shadow-[0_20px_60px_rgba(0,0,0,0.85)] animate-scale-in">
         {/* Header */}
-        <div className="px-5 pt-5 pb-3 flex items-center justify-between border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-charcoal-950 shadow-md">
+        <div className="px-4 sm:px-5 pt-5 pb-3 flex items-center justify-between gap-2 border-b border-white/10">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-charcoal-950 shadow-md shrink-0">
               <BuddhaBodhiIcon className="w-4 h-4 text-charcoal-950" />
             </div>
-            <div>
-              <h3 className="font-heading font-bold text-sm text-amber-200">
+            <div className="min-w-0">
+              <h3 className="font-heading font-bold text-sm text-amber-200 whitespace-nowrap truncate">
                 Chuỗi Hạt 108 Niệm Phật
               </h3>
-              <p className="text-[10px] text-amber-300/70">
+              <p className="text-[10px] text-amber-300/70 whitespace-nowrap truncate">
                 Chạm vào màn hình để gõ mõ và lần từng hạt
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full text-stone-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-full text-stone-400 hover:text-white hover:bg-white/10 transition-colors shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
