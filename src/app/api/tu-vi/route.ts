@@ -106,6 +106,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const parsedViewYear = Number(viewYear);
+    if (
+      !Number.isInteger(parsedViewYear) ||
+      parsedViewYear < currentYear ||
+      parsedViewYear > currentYear + 1
+    ) {
+      return NextResponse.json(
+        {
+          error: `Năm phân tích vận trình chỉ cho phép từ năm nay (${currentYear}) đến năm tiếp theo (${currentYear + 1}).`,
+        },
+        { status: 400 }
+      );
+    }
+
     // 1. Tính toán Can Chi, Ngũ Hành, Cung Phi chuẩn xác
     const canChiData = calculateCanChiAndMenh(birthYear, gender as 'Nam' | 'Nữ', viewYear);
     const birthHourObj = GIO_SINH_OPTIONS.find((g) => g.value === birthHour) || GIO_SINH_OPTIONS[0];

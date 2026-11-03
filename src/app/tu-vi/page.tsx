@@ -40,9 +40,25 @@ export default function PersonalDestinyAnalysisPage() {
   const [birthYear, setBirthYear] = useState<number>(1996);
   const [calendarType, setCalendarType] = useState<'solar' | 'lunar'>('solar');
   const [birthHour, setBirthHour] = useState<string>('KhongRo');
-  const [viewYear, setViewYear] = useState<number>(currentYear);
+  const [viewYearInput, setViewYearInput] = useState<string>(String(currentYear));
   const [focusArea, setFocusArea] = useState<string>('tong_quan');
   const [wishes, setWishes] = useState<string>('');
+
+  const parsedViewYear = Number(viewYearInput.trim());
+  const viewYearError = useMemo(() => {
+    const trimmed = viewYearInput.trim();
+    if (!trimmed) return `Vui lòng nhập năm (${currentYear} hoặc ${currentYear + 1}).`;
+    const num = Number(trimmed);
+    if (!Number.isInteger(num)) return `Năm nhập vào không hợp lệ.`;
+    if (num <= currentYear - 1) {
+      return `Năm ${num} đã qua — chỉ nhập từ năm nay (${currentYear}) đến năm tiếp theo (${currentYear + 1}).`;
+    }
+    if (num > currentYear + 1) {
+      return `Chỉ được nhập tối đa đến năm tiếp theo (${currentYear + 1}).`;
+    }
+    return null;
+  }, [viewYearInput, currentYear]);
+  const viewYear = !viewYearError ? parsedViewYear : currentYear;
 
   // Processing & Result State
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
@@ -122,6 +138,11 @@ export default function PersonalDestinyAnalysisPage() {
     const trimmedName = fullName.trim();
     if (!trimmedName) {
       setErrorMsg('Vui lòng nhập Họ tên hoặc Pháp danh của bạn để bắt đầu phân tích.');
+      return;
+    }
+
+    if (viewYearError) {
+      setErrorMsg(viewYearError);
       return;
     }
 
@@ -402,20 +423,31 @@ export default function PersonalDestinyAnalysisPage() {
 
             <div className="space-y-1.5">
               <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
-                6. Năm Phân Tích Vận Trình
+                6. Năm Phân Tích ({currentYear} - {currentYear + 1}) *
               </label>
-              <CustomSelect
-                value={viewYear}
-                onChange={(val) => setViewYear(Number(val))}
-                align="right"
-                options={Array.from(
-                  { length: Math.max(1, currentYear - 2024 + 1) },
-                  (_, i) => ({
-                    value: 2024 + i,
-                    label: `Năm ${2024 + i}`,
-                  })
+              <input
+                type="number"
+                inputMode="numeric"
+                value={viewYearInput}
+                onChange={(e) => setViewYearInput(e.target.value)}
+                placeholder={`Nhập ${currentYear} hoặc ${currentYear + 1}`}
+                className={cn(
+                  'w-full px-3.5 py-3 rounded-2xl border text-xs sm:text-sm font-bold transition-all focus:outline-none',
+                  viewYearError
+                    ? 'bg-rose-50/80 border-rose-500 text-rose-700 ring-2 ring-rose-500/20 focus:border-rose-600'
+                    : 'bg-[#fdfbf7] dark:bg-charcoal-900 border-stone-200/90 dark:border-charcoal-700 text-stone-800 dark:text-stone-100 focus:border-[#b5892e] focus:ring-2 focus:ring-[#b5892e]/15'
                 )}
               />
+              {viewYearError ? (
+                <p className="text-[11px] font-semibold text-rose-600 flex items-start gap-1 leading-snug">
+                  <AlertCircle className="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{viewYearError}</span>
+                </p>
+              ) : (
+                <p className="text-[10px] text-emerald-700 font-medium whitespace-nowrap truncate">
+                  ✓ Hợp lệ: chỉ nhận năm {currentYear} hoặc {currentYear + 1}
+                </p>
+              )}
             </div>
           </div>
 
