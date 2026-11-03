@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CustomSelect } from './CustomSelect';
 
 interface BuddhistDatePickerProps {
   value: string; // 'YYYY-MM-DD'
@@ -306,30 +307,29 @@ export function BuddhistDatePicker({
 
                 <div className="flex items-center gap-2">
                   {/* Month Select */}
-                  <select
+                  <CustomSelect
+                    compact
                     value={viewMonth}
-                    onChange={(e) => setViewMonth(parseInt(e.target.value, 10))}
-                    className="px-2 py-1 rounded-lg bg-ivory-100 dark:bg-charcoal-750 border border-ivory-200 dark:border-charcoal-600 text-xs sm:text-sm font-bold text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:ring-1 focus:ring-saffron-500 cursor-pointer"
-                  >
-                    {MONTH_NAMES.map((name, idx) => (
-                      <option key={name} value={idx}>
-                        {name}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) => setViewMonth(Number(val))}
+                    className="w-28"
+                    options={MONTH_NAMES.map((name, idx) => ({
+                      value: idx,
+                      label: name,
+                    }))}
+                  />
 
                   {/* Year Select */}
-                  <select
+                  <CustomSelect
+                    compact
+                    align="right"
                     value={viewYear}
-                    onChange={(e) => setViewYear(parseInt(e.target.value, 10))}
-                    className="px-2 py-1 rounded-lg bg-ivory-100 dark:bg-charcoal-750 border border-ivory-200 dark:border-charcoal-600 text-xs sm:text-sm font-bold text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:ring-1 focus:ring-saffron-500 cursor-pointer"
-                  >
-                    {years.map((y) => (
-                      <option key={y} value={y}>
-                        Năm {y}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) => setViewYear(Number(val))}
+                    className="w-28"
+                    options={years.map((y) => ({
+                      value: y,
+                      label: `Năm ${y}`,
+                    }))}
+                  />
                 </div>
 
                 <button

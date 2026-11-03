@@ -20,6 +20,7 @@ import {
   Info,
 } from 'lucide-react';
 import { useAuth } from '@/components/auth/AuthContext';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 import { calculateCanChiAndMenh, GIO_SINH_OPTIONS, FOCUS_AREAS } from '@/lib/tu-vi-calc';
 import { getLunarDate, NGU_HANH_COLOR_MAP } from '@/lib/lunar-calendar';
 import type { TuViAnalysisResult } from '@/app/api/tu-vi/route';
@@ -298,47 +299,33 @@ export default function PersonalDestinyAnalysisPage() {
                 3. Ngày Tháng Năm Sinh *
               </label>
               <div className="grid grid-cols-3 gap-2.5">
-                <div className="relative">
-                  <select
-                    value={birthDay}
-                    onChange={(e) => setBirthDay(Number(e.target.value))}
-                    className="w-full px-3 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
-                  >
-                    {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
-                      <option key={d} value={d}>
-                        Ngày {d}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <CustomSelect
+                  value={birthDay}
+                  onChange={(val) => setBirthDay(Number(val))}
+                  options={Array.from({ length: 31 }, (_, i) => ({
+                    value: i + 1,
+                    label: `Ngày ${i + 1}`,
+                  }))}
+                />
 
-                <div className="relative">
-                  <select
-                    value={birthMonth}
-                    onChange={(e) => setBirthMonth(Number(e.target.value))}
-                    className="w-full px-3 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
-                  >
-                    {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                      <option key={m} value={m}>
-                        Tháng {m}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <CustomSelect
+                  value={birthMonth}
+                  onChange={(val) => setBirthMonth(Number(val))}
+                  options={Array.from({ length: 12 }, (_, i) => ({
+                    value: i + 1,
+                    label: `Tháng ${i + 1}`,
+                  }))}
+                />
 
-                <div className="relative">
-                  <select
-                    value={birthYear}
-                    onChange={(e) => setBirthYear(Number(e.target.value))}
-                    className="w-full px-3 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
-                  >
-                    {Array.from({ length: 95 }, (_, i) => 1935 + i).map((y) => (
-                      <option key={y} value={y}>
-                        Năm {y}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <CustomSelect
+                  value={birthYear}
+                  onChange={(val) => setBirthYear(Number(val))}
+                  align="right"
+                  options={Array.from({ length: 95 }, (_, i) => ({
+                    value: 1935 + i,
+                    label: `Năm ${1935 + i}`,
+                  }))}
+                />
               </div>
             </div>
 
@@ -381,51 +368,44 @@ export default function PersonalDestinyAnalysisPage() {
               <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
                 4. Giờ Sinh (12 Canh Giờ)
               </label>
-              <select
+              <CustomSelect
                 value={birthHour}
-                onChange={(e) => setBirthHour(e.target.value)}
-                className="w-full px-3.5 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-medium text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
-              >
-                {GIO_SINH_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+                onChange={(val) => setBirthHour(String(val))}
+                options={GIO_SINH_OPTIONS.map((opt) => ({
+                  value: opt.value,
+                  label: opt.label,
+                  sublabel: opt.description,
+                }))}
+              />
             </div>
 
             <div className="space-y-1.5">
               <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
                 5. Khía Cạnh Cần Tham Khảo
               </label>
-              <select
+              <CustomSelect
                 value={focusArea}
-                onChange={(e) => setFocusArea(e.target.value)}
-                className="w-full px-3.5 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-medium text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
-              >
-                {FOCUS_AREAS.map((area) => (
-                  <option key={area.value} value={area.value}>
-                    {area.label}
-                  </option>
-                ))}
-              </select>
+                onChange={(val) => setFocusArea(String(val))}
+                options={FOCUS_AREAS.map((area) => ({
+                  value: area.value,
+                  label: area.label,
+                }))}
+              />
             </div>
 
             <div className="space-y-1.5">
               <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
                 6. Năm Phân Tích Vận Trình
               </label>
-              <select
+              <CustomSelect
                 value={viewYear}
-                onChange={(e) => setViewYear(Number(e.target.value))}
-                className="w-full px-3.5 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
-              >
-                {[2025, 2026, 2027, 2028, 2029, 2030].map((y) => (
-                  <option key={y} value={y}>
-                    Năm {y}
-                  </option>
-                ))}
-              </select>
+                onChange={(val) => setViewYear(Number(val))}
+                align="right"
+                options={[2025, 2026, 2027, 2028, 2029, 2030].map((y) => ({
+                  value: y,
+                  label: `Năm ${y}`,
+                }))}
+              />
             </div>
           </div>
 

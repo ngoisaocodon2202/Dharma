@@ -133,7 +133,7 @@ export function LanguageSwitcher({ compact = false }: LanguageSwitcherProps) {
             <Globe className="w-3 h-3" />
             <span>Ngôn ngữ Phật giáo</span>
           </div>
-          <div className="py-1 max-h-72 overflow-y-auto">
+          <div className="py-1 px-1.5 max-h-64 overflow-y-auto custom-dropdown-scroll space-y-0.5">
             {BUDDHIST_LANGUAGES.map((item) => {
               const isSelected = item.code === lang;
               return (
@@ -145,9 +145,9 @@ export function LanguageSwitcher({ compact = false }: LanguageSwitcherProps) {
                     setIsOpen(false);
                   }}
                   className={cn(
-                    'w-full px-3.5 py-2 flex items-center justify-between text-left text-xs transition-colors whitespace-nowrap',
+                    'w-full px-3 py-2 rounded-xl flex items-center justify-between text-left text-xs transition-colors whitespace-nowrap cursor-pointer',
                     isSelected
-                      ? 'bg-saffron-50 dark:bg-saffron-950/50 text-saffron-800 dark:text-saffron-300 font-semibold'
+                      ? 'bg-gradient-to-r from-amber-50 to-[#fff6df] dark:from-saffron-950/60 dark:to-charcoal-800 text-[#4a2508] dark:text-saffron-300 font-bold shadow-2xs'
                       : 'text-charcoal-700 dark:text-charcoal-300 hover:bg-ivory-100 dark:hover:bg-charcoal-800'
                   )}
                 >

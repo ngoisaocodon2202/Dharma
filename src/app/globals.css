@@ -192,6 +192,21 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   scrollbar-width: none;
 }
 
+/* Custom sleek scrollbar for dropdown menus */
+.custom-dropdown-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-dropdown-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-dropdown-scroll::-webkit-scrollbar-thumb {
+  background: rgba(181, 137, 46, 0.35);
+  border-radius: 9999px;
+}
+.custom-dropdown-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(181, 137, 46, 0.65);
+}
+
 /* Responsive typography refinement on mobile devices */
 @media (max-width: 640px) {
   .editorial-content p {

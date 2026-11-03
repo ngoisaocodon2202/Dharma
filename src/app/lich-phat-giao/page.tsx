@@ -14,6 +14,7 @@ import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { getLunarDate, LunarDateInfo } from '@/lib/lunar-calendar';
 import { useAuth } from '@/components/auth/AuthContext';
 import { Button } from '@/components/ui/Button';
+import { CustomSelect } from '@/components/ui/CustomSelect';
 import { cn } from '@/lib/utils';
 
 export interface PersonalReminder {
@@ -244,37 +245,36 @@ export default function BuddhistCalendarPage() {
             </button>
 
             <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-              <select
+              <CustomSelect
+                compact
                 value={viewMonth}
-                onChange={(e) => {
-                  setViewMonth(Number(e.target.value));
+                onChange={(val) => {
+                  setViewMonth(Number(val));
                   setSelectedDay(1);
                 }}
-                aria-label="Chọn tháng"
-                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white dark:bg-charcoal-800 border border-[#e5d8c1] dark:border-charcoal-700 font-heading font-bold text-xs sm:text-sm text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:border-saffron-500 cursor-pointer whitespace-nowrap"
-              >
-                {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                  <option key={m} value={m}>
-                    Tháng {m}
-                  </option>
-                ))}
-              </select>
+                className="w-28 sm:w-32"
+                buttonClassName="rounded-xl bg-white dark:bg-charcoal-800 border-[#e5d8c1]"
+                options={Array.from({ length: 12 }, (_, i) => ({
+                  value: i + 1,
+                  label: `Tháng ${i + 1}`,
+                }))}
+              />
 
-              <select
+              <CustomSelect
+                compact
+                align="right"
                 value={viewYear}
-                onChange={(e) => {
-                  setViewYear(Number(e.target.value));
+                onChange={(val) => {
+                  setViewYear(Number(val));
                   setSelectedDay(1);
                 }}
-                aria-label="Chọn năm"
-                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white dark:bg-charcoal-800 border border-[#e5d8c1] dark:border-charcoal-700 font-heading font-bold text-xs sm:text-sm text-saffron-700 dark:text-saffron-400 focus:outline-none focus:border-saffron-500 cursor-pointer whitespace-nowrap"
-              >
-                {Array.from({ length: 65 }, (_, i) => 2020 + i).map((y) => (
-                  <option key={y} value={y}>
-                    {y}
-                  </option>
-                ))}
-              </select>
+                className="w-24 sm:w-28"
+                buttonClassName="rounded-xl bg-white dark:bg-charcoal-800 border-[#e5d8c1]"
+                options={Array.from({ length: 65 }, (_, i) => ({
+                  value: 2020 + i,
+                  label: `${2020 + i}`,
+                }))}
+              />
             </div>
 
             <button
@@ -617,19 +617,25 @@ export default function BuddhistCalendarPage() {
                 <label className="text-xs font-semibold text-charcoal-700 dark:text-charcoal-300 block">
                   Chế độ lặp lại hằng năm
                 </label>
-                <select
+                <CustomSelect
+                  compact
                   value={repeatType}
-                  onChange={(e) => setRepeatType(e.target.value as any)}
-                  className="w-full px-3 py-2 rounded-xl text-xs bg-ivory-50 dark:bg-charcoal-900 border border-ivory-300 dark:border-charcoal-700 text-charcoal-900 dark:text-charcoal-100"
-                >
-                  <option value="lunar_yearly">
-                    Hằng năm theo Âm lịch ({selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL — Ngày Giỗ)
-                  </option>
-                  <option value="solar_yearly">
-                    Hằng năm theo Dương lịch ({selectedDay}/{viewMonth} DL)
-                  </option>
-                  <option value="once">Chỉ nhắc 1 lần ({selectedDateStr})</option>
-                </select>
+                  onChange={(val) => setRepeatType(val as 'lunar_yearly' | 'solar_yearly' | 'once')}
+                  options={[
+                    {
+                      value: 'lunar_yearly',
+                      label: `Hằng năm theo Âm lịch (${selectedLunarInfo.lunarDay}/${selectedLunarInfo.lunarMonth} ÂL — Ngày Giỗ)`,
+                    },
+                    {
+                      value: 'solar_yearly',
+                      label: `Hằng năm theo Dương lịch (${selectedDay}/${viewMonth} DL)`,
+                    },
+                    {
+                      value: 'once',
+                      label: `Chỉ nhắc 1 lần (${selectedDateStr})`,
+                    },
+                  ]}
+                />
               </div>
 
               <div className="space-y-1">
