@@ -15,6 +15,13 @@ dist/
 build/
 out/
 .next/
+.vercel/
+*.tsbuildinfo
+
+# Local agent / scratch files
+.agents/
+scripts/
+public/uploads/
 
 # Logs
 logs
