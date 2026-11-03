@@ -8,7 +8,7 @@ export interface User {
   role_id: string;
   full_name: string;
   dharma_name?: string;
-  gender?: 'Nam' | 'Nữ';
+  gender?: 'Nam' | 'Nữ' | 'male' | 'female';
   avatar_url?: string;
 }
 
@@ -16,6 +16,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   login: (userData: User) => void;
+  setDharmaProfile: (dharmaName: string, gender: 'Nam' | 'Nữ' | 'male' | 'female') => void;
   updateUser: (partial: Partial<User>) => void;
   logout: () => Promise<void>;
   openAuthModal: (mode?: 'login' | 'register') => void;
@@ -58,6 +59,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsAuthModalOpen(false);
   };
 
+  const setDharmaProfile = (dharmaName: string, gender: 'Nam' | 'Nữ' | 'male' | 'female') => {
+    const normalizedGender: 'Nam' | 'Nữ' =
+      gender === 'female' || gender === 'Nữ' ? 'Nữ' : 'Nam';
+    const userId = `phattu-${dharmaName.toLowerCase().replace(/\s+/g, '-')}`;
+    login({
+      id: userId,
+      email: '',
+      role_id: 'PHAT_TU',
+      full_name: dharmaName,
+      dharma_name: dharmaName,
+      gender: normalizedGender,
+    });
+  };
+
   const updateUser = (partial: Partial<User>) => {
     setUser((prev) => {
       const next = prev ? { ...prev, ...partial } : null;
@@ -93,6 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         isLoading,
         login,
+        setDharmaProfile,
         updateUser,
         logout,
         openAuthModal,

@@ -60,10 +60,7 @@ const PRACTICE_NODES: PracticeNode[] = [
 ];
 
 export function OmManiMandalaHub() {
-  const [completed, setCompleted] = useState<Record<string, boolean>>({
-    'niem-phat': true,
-    'toa-thien': true,
-  });
+  const [completed, setCompleted] = useState<Record<string, boolean>>({});
 
   const toggleComplete = (id: string, e: React.MouseEvent) => {
     e.preventDefault();

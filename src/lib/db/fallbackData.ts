@@ -15,49 +15,49 @@ export const FALLBACK_AUTHORS: Record<string, { full_name: string; dharma_name: 
     full_name: 'HT. Thích Thanh Từ',
     dharma_name: 'HT. Thích Thanh Từ • TV. Trúc Lâm',
     temple_name: 'Thiền Viện Trúc Lâm Đà Lạt',
-    avatar_url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=300&auto=format&fit=crop&q=80',
+    avatar_url: '/images/tran_nhan_tong_yentu.jpg',
     bio: 'Tông chủ Thiền phái Trúc Lâm Yên Tử phục hưng, người khôi phục dòng thiền mang đậm bản sắc dân tộc Việt Nam.',
   },
   '00000000-0000-0000-0000-000000000002': {
     full_name: 'TT. Thích Nhật Quang',
     dharma_name: 'TT. Thích Nhật Quang • Tổ Đình Vĩnh Nghiêm',
     temple_name: 'Tổ Đình Vĩnh Nghiêm',
-    avatar_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80',
+    avatar_url: '/images/monk_incense.jpg',
     bio: 'Giảng sư Phật học, chia sẻ giáo lý căn bản và phương pháp thiền tập chánh niệm cho Phật tử tại gia.',
   },
   '00000000-0000-0000-0000-000000000003': {
     full_name: 'ĐĐ. Thích Tâm Trường',
     dharma_name: 'ĐĐ. Thích Tâm Trường • Chùa Hoằng Pháp',
     temple_name: 'Chùa Hoằng Pháp',
-    avatar_url: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=300&auto=format&fit=crop&q=80',
+    avatar_url: '/images/monk_robes.jpg',
     bio: 'Trụ trì Chùa Hoằng Pháp, hướng dẫn các khóa tu Phật thất và hoằng dương pháp môn Tịnh Độ.',
   },
   '00000000-0000-0000-0000-000000000004': {
     full_name: 'Thiền sư Thích Nhất Hạnh',
     dharma_name: 'Thiền sư Thích Nhất Hạnh • Tổ Đình Từ Hiếu',
     temple_name: 'Tổ Đình Từ Hiếu — Làng Mai',
-    avatar_url: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=300&auto=format&fit=crop&q=80',
+    avatar_url: '/images/thich_nhat_hanh.jpg',
     bio: 'Bậc thầy thiền định quốc tế, người sáng lập Làng Mai và phong trào Phật giáo Dấn thân (Engaged Buddhism).',
   },
   '00000000-0000-0000-0000-000000000005': {
     full_name: 'ĐĐ. Thích Pháp Hòa',
     dharma_name: 'ĐĐ. Thích Pháp Hòa • Tu Viện Trúc Lâm',
     temple_name: 'Tu Viện Trúc Lâm & Tây Thiên',
-    avatar_url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&auto=format&fit=crop&q=80',
+    avatar_url: '/images/apps/phap-thoai.jpg',
     bio: 'Trụ trì Tu Viện Trúc Lâm & Tây Thiên, giảng sư Phật học với phong cách thuyết giảng sâu sắc và gần gũi.',
   },
   '00000000-0000-0000-0000-000000000006': {
     full_name: 'Thầy Thích Minh Niệm',
     dharma_name: 'Thầy Thích Minh Niệm • TV. Minh Đức',
     temple_name: 'Thiền Viện Minh Đức',
-    avatar_url: 'https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=300&auto=format&fit=crop&q=80',
+    avatar_url: '/images/mindfulness_peace.jpg',
     bio: 'Tác giả cuốn sách Hiểu Về Trái Tim, người sáng lập dòng thiền hiểu biết và chữa lành tâm thức.',
   },
   '00000000-0000-0000-0000-000000000007': {
     full_name: 'Trưởng lão HT. Thích Minh Châu',
     dharma_name: 'HT. Thích Minh Châu • TV. Vạn Hạnh',
     temple_name: 'Thiền Viện Vạn Hạnh',
-    avatar_url: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=300&auto=format&fit=crop&q=80',
+    avatar_url: '/images/sutra_book.jpg',
     bio: 'Bậc đại cao tăng dịch giả vĩ đại của Kinh Tạng Nguyên Thủy Pāli (Kinh tạng Nikāya) sang tiếng Việt.',
   },
 };
@@ -425,6 +425,57 @@ export const RAW_CURATED_ARTICLES = [
   }
 ];
 
+const AUTHENTIC_BUDDHIST_IMAGES = [
+  '/images/buddha_meditation.jpg',
+  '/images/golden_buddha.jpg',
+  '/images/lotus_blooming.jpg',
+  '/images/ancient_pagoda.jpg',
+  '/images/monk_incense.jpg',
+  '/images/sutra_book.jpg',
+  '/images/thich_nhat_hanh.jpg',
+  '/images/tran_nhan_tong_yentu.jpg',
+  '/images/quan_am_bodhisattva.jpg',
+  '/images/chua_bai_dinh.jpg',
+  '/images/buddha_temple_serene.jpg',
+  '/images/zen_garden.jpg',
+  '/images/incense_smoke.jpg',
+  '/images/lotus_pond.jpg',
+  '/images/monk_robes.jpg',
+  '/images/tripitaka_koreana.jpg',
+  '/images/golden_buddha_altar.jpg',
+  '/images/quan_am_altar.jpg',
+  '/images/om_mani_hero.jpg',
+  '/images/mindfulness_peace.jpg',
+  '/images/buddha_temple.jpg',
+  '/images/bo_tat_thich_quang_duc.jpg',
+  '/images/apps/tung-kinh.jpg',
+  '/images/apps/niem-phat.jpg',
+  '/images/apps/thap-huong.jpg',
+  '/images/apps/phap-thoai.jpg',
+  '/images/apps/phong-thien.jpg',
+  '/images/apps/chua-co-tu.jpg',
+  '/images/apps/minh-chu.jpg',
+  '/images/books/kinh_phap_cu.jpg',
+  '/images/books/duong_xua_may_trang.jpg',
+  '/images/books/kinh_kim_cuong.jpg',
+  '/images/books/kinh_dia_tang.jpg',
+  '/images/books/trai_tim_cua_but.jpg',
+  '/images/books/an_lac_tung_buoc_chan.jpg',
+  '/images/books/kinh_a_di_da.jpg',
+];
+
+function getMatchedBuddhistImage(slug: string, idx: number): string {
+  if (slug.includes('thich-nhat-hanh')) return '/images/thich_nhat_hanh.jpg';
+  if (slug.includes('tran-nhan-tong') || slug.includes('truc-lam')) return '/images/tran_nhan_tong_yentu.jpg';
+  if (slug.includes('thich-quang-duc')) return '/images/bo_tat_thich_quang_duc.jpg';
+  if (slug.includes('quan-am') || slug.includes('tu-bi')) return '/images/quan_am_bodhisattva.jpg';
+  if (slug.includes('hoa-sen') || slug.includes('sen')) return '/images/lotus_blooming.jpg';
+  if (slug.includes('chua') || slug.includes('kien-truc')) return '/images/chua_bai_dinh.jpg';
+  if (slug.includes('kinh') || slug.includes('tam-tang')) return '/images/sutra_book.jpg';
+  if (slug.includes('thien') || slug.includes('hoi-tho')) return '/images/buddha_meditation.jpg';
+  return AUTHENTIC_BUDDHIST_IMAGES[idx % AUTHENTIC_BUDDHIST_IMAGES.length];
+}
+
 export function getDynamicDailyArticles() {
   const now = Date.now();
   const daySeed = Math.floor(now / (1000 * 60 * 60 * 24));
@@ -444,7 +495,7 @@ export function getDynamicDailyArticles() {
       slug: raw.slug,
       excerpt: raw.excerpt,
       content: raw.content,
-      cover_image: raw.cover_image,
+      cover_image: getMatchedBuddhistImage(raw.slug, actualIdx),
       reading_time_minutes: raw.reading_time || 7,
       view_count: 0,
       status: 'PUBLISHED',
@@ -463,7 +514,7 @@ export function getDynamicDailyArticles() {
   });
 }
 
-export const FALLBACK_TEMPLES = [
+export const RAW_FALLBACK_TEMPLES = [
   {
     "id": "50000000-0000-0000-0000-000000000001",
     "name": "Chùa Một Cột (Diên Hựu Tự)",
@@ -769,6 +820,24 @@ export const FALLBACK_TEMPLES = [
     "is_verified": true
   }
 ];
+
+const AUTHENTIC_TEMPLE_IMAGES = [
+  '/images/ancient_pagoda.jpg',
+  '/images/chua_bai_dinh.jpg',
+  '/images/buddha_temple_serene.jpg',
+  '/images/buddha_temple.jpg',
+  '/images/tran_nhan_tong_yentu.jpg',
+  '/images/quan_am_bodhisattva.jpg',
+  '/images/golden_buddha_altar.jpg',
+  '/images/apps/chua-co-tu.jpg',
+  '/images/zen_garden.jpg',
+  '/images/lotus_pond.jpg',
+];
+
+export const FALLBACK_TEMPLES = RAW_FALLBACK_TEMPLES.map((temple, idx) => ({
+  ...temple,
+  cover_image: AUTHENTIC_TEMPLE_IMAGES[idx % AUTHENTIC_TEMPLE_IMAGES.length],
+}));
 export const FALLBACK_VIDEOS = [
   {
     "id": "70000000-0000-0000-0000-000000000001",
@@ -1366,7 +1435,7 @@ export const FALLBACK_AUDIO = [
     audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
     duration_seconds: 1560,
     category: 'PHAP_THOAI',
-    cover_image: 'https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=600&auto=format&fit=crop&q=80',
+    cover_image: '/images/mindfulness_peace.jpg',
     description: 'Bài giảng sâu sắc về bản chất của tâm sân, phương pháp nhìn sâu vào cảm thọ để nuôi dưỡng từ bi và bao dung.',
     listen_count: 0,
   },
@@ -1377,7 +1446,7 @@ export const FALLBACK_AUDIO = [
     audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
     duration_seconds: 540,
     category: 'KINH_TUNG',
-    cover_image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&auto=format&fit=crop&q=80',
+    cover_image: '/images/apps/tung-kinh.jpg',
     description: 'Thời kinh tụng Bát Nhã với giọng tụng trang nghiêm, chuông mõ thanh thoát giúp lắng đọng tâm thức.',
     listen_count: 0,
   },
@@ -1388,7 +1457,7 @@ export const FALLBACK_AUDIO = [
     audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
     duration_seconds: 900,
     category: 'THIEN',
-    cover_image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&auto=format&fit=crop&q=80',
+    cover_image: '/images/thich_nhat_hanh.jpg',
     description: 'Bài thực hành thiền dẫn nhẹ nhàng đưa tâm về với thân, thư giãn từng thớ cơ và cảm nhận sự sống tươi mát.',
     listen_count: 0,
   },
@@ -1399,7 +1468,7 @@ export const FALLBACK_AUDIO = [
     audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
     duration_seconds: 1820,
     category: 'PHAP_THOAI',
-    cover_image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&auto=format&fit=crop&q=80',
+    cover_image: '/images/apps/phap-thoai.jpg',
     description: 'Lời khuyên chân thành giúp người cư sĩ ứng dụng Phật pháp để tháo gỡ những khúc mắc trong gia đình và công việc.',
     listen_count: 0,
   },
@@ -1433,7 +1502,7 @@ export const FALLBACK_EVENTS = [
     temple_id: '50000000-0000-0000-0000-000000000013',
     temple_name: 'Chùa Quán Sứ',
     description: 'Chương trình tu học trọn ngày dành cho Phật tử: Tọa thiền buổi sáng, nghe pháp thoại từ chư Tôn đức, thọ trai chánh niệm và pháp đàm chia sẻ.',
-    cover_image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&auto=format&fit=crop&q=80',
+    cover_image: '/images/buddha_meditation.jpg',
     start_date: new Date(Date.now() + 3 * 86400000).toISOString(),
     end_date: new Date(Date.now() + 3 * 86400000 + 8 * 3600000).toISOString(),
     location: 'Chùa Quán Sứ, 73 Quán Sứ, Hoàn Kiếm, Hà Nội',
@@ -1446,7 +1515,7 @@ export const FALLBACK_EVENTS = [
     temple_id: '50000000-0000-0000-0000-000000000012',
     temple_name: 'Chùa Hoằng Pháp',
     description: 'Lễ thắp nến hoa đăng tri ân chư Phật, tụng kinh Phước Đức và lắng nghe pháp thoại về đạo hiếu trong gia đình Phật tử.',
-    cover_image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=800&auto=format&fit=crop&q=80',
+    cover_image: '/images/apps/thap-huong.jpg',
     start_date: new Date(Date.now() + 7 * 86400000).toISOString(),
     end_date: new Date(Date.now() + 7 * 86400000 + 4 * 3600000).toISOString(),
     location: 'Chùa Hoằng Pháp, Xã Tân Hiệp, Huyện Hóc Môn, TP. Hồ Chí Minh',
@@ -1459,7 +1528,7 @@ export const FALLBACK_EVENTS = [
     temple_id: '50000000-0000-0000-0000-000000000011',
     temple_name: 'Thiền Viện Trúc Lâm Đà Lạt',
     description: 'Khóa thực hành thiền tọa, thiền hành giữa rừng thông thanh tịnh và lắng nghe chư Tăng khai thị phương pháp buông xả vọng tưởng.',
-    cover_image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=80',
+    cover_image: '/images/tran_nhan_tong_yentu.jpg',
     start_date: new Date(Date.now() + 12 * 86400000).toISOString(),
     end_date: new Date(Date.now() + 13 * 86400000).toISOString(),
     location: 'Thiền Viện Trúc Lâm Đà Lạt, Đồi Phụng Hoàng, Lâm Đồng',
@@ -1473,8 +1542,8 @@ export const FALLBACK_ORGANIZATIONS = [
     name: 'Giáo hội Phật giáo Việt Nam',
     slug: 'giao-hoi-phat-giao-viet-nam',
     org_type: 'GIAO_HOI',
-    logo_url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
-    cover_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&auto=format&fit=crop&q=80',
+    logo_url: '/images/golden_buddha.jpg',
+    cover_url: '/images/chua_bai_dinh.jpg',
     description: 'Tổ chức tôn giáo đại diện cho Tăng Ni, Phật tử Việt Nam ở trong và ngoài nước với phương châm Đạo pháp - Dân tộc.',
     address: 'Chùa Quán Sứ, 73 Quán Sứ, Hoàn Kiếm, Hà Nội',
     phone: '024.39422427',
@@ -1487,8 +1556,8 @@ export const FALLBACK_ORGANIZATIONS = [
     name: 'Viện Nghiên cứu Phật học Việt Nam',
     slug: 'vien-nghien-cuu-phat-hoc-viet-nam',
     org_type: 'VIEN_NGHIEN_CUU',
-    logo_url: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=200&auto=format&fit=crop&q=80',
-    cover_url: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1200&auto=format&fit=crop&q=80',
+    logo_url: '/images/sutra_book.jpg',
+    cover_url: '/images/tripitaka_koreana.jpg',
     description: 'Trung tâm dịch thuật, ấn hành Đại Tạng Kinh Việt Nam và nghiên cứu di sản văn hóa, triết học Phật giáo.',
     address: 'Thiền Viện Vạn Hạnh, 750 Nguyễn Kiệm, Phú Nhuận, TP. Hồ Chí Minh',
     phone: '028.38446489',
