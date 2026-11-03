@@ -178,7 +178,7 @@ export const GIO_SINH_OPTIONS = [
 ];
 
 export const FOCUS_AREAS = [
-  { value: 'tong_quan', label: 'Vận Mạng Tổng Quan 2026', icon: 'Compass' },
+  { value: 'tong_quan', label: `Vận Mạng Tổng Quan ${new Date().getFullYear()}`, icon: 'Compass' },
   { value: 'cong_danh', label: 'Công Danh & Sự Nghiệp', icon: 'Briefcase' },
   { value: 'tai_loc', label: 'Tài Lộc & Kinh Doanh', icon: 'Coins' },
   { value: 'tinh_duyen', label: 'Tình Duyên & Gia Đạo', icon: 'Heart' },

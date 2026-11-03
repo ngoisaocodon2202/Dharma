@@ -97,10 +97,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const currentYear = new Date().getFullYear();
     const birthYear = parseInt(birthDate.split('-')[0], 10);
-    if (isNaN(birthYear) || birthYear < 1920 || birthYear > 2030) {
+    if (isNaN(birthYear) || birthYear < 1920 || birthYear > currentYear) {
       return NextResponse.json(
-        { error: 'Năm sinh không hợp lệ (hỗ trợ từ 1920 đến 2030)' },
+        { error: `Năm sinh không hợp lệ (hỗ trợ từ 1920 đến ${currentYear})` },
         { status: 400 }
       );
     }

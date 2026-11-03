@@ -29,6 +29,7 @@ import { cn } from '@/lib/utils';
 export default function PersonalDestinyAnalysisPage() {
   const { user } = useAuth();
   const today = useMemo(() => new Date(), []);
+  const currentYear = today.getFullYear();
   const resultRef = useRef<HTMLDivElement>(null);
 
   // Personal Information Form State
@@ -39,7 +40,7 @@ export default function PersonalDestinyAnalysisPage() {
   const [birthYear, setBirthYear] = useState<number>(1996);
   const [calendarType, setCalendarType] = useState<'solar' | 'lunar'>('solar');
   const [birthHour, setBirthHour] = useState<string>('KhongRo');
-  const [viewYear, setViewYear] = useState<number>(today.getFullYear());
+  const [viewYear, setViewYear] = useState<number>(currentYear);
   const [focusArea, setFocusArea] = useState<string>('tong_quan');
   const [wishes, setWishes] = useState<string>('');
 
@@ -298,10 +299,11 @@ export default function PersonalDestinyAnalysisPage() {
               <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
                 3. Ngày Tháng Năm Sinh *
               </label>
-              <div className="grid grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-3 gap-2">
                 <CustomSelect
                   value={birthDay}
                   onChange={(val) => setBirthDay(Number(val))}
+                  buttonClassName="px-2.5 sm:px-3.5 py-2.5 sm:py-3"
                   options={Array.from({ length: 31 }, (_, i) => ({
                     value: i + 1,
                     label: `Ngày ${i + 1}`,
@@ -311,6 +313,7 @@ export default function PersonalDestinyAnalysisPage() {
                 <CustomSelect
                   value={birthMonth}
                   onChange={(val) => setBirthMonth(Number(val))}
+                  buttonClassName="px-2.5 sm:px-3.5 py-2.5 sm:py-3"
                   options={Array.from({ length: 12 }, (_, i) => ({
                     value: i + 1,
                     label: `Tháng ${i + 1}`,
@@ -321,10 +324,14 @@ export default function PersonalDestinyAnalysisPage() {
                   value={birthYear}
                   onChange={(val) => setBirthYear(Number(val))}
                   align="right"
-                  options={Array.from({ length: 95 }, (_, i) => ({
-                    value: 1935 + i,
-                    label: `Năm ${1935 + i}`,
-                  }))}
+                  buttonClassName="px-2.5 sm:px-3.5 py-2.5 sm:py-3"
+                  options={Array.from(
+                    { length: currentYear - 1930 + 1 },
+                    (_, i) => ({
+                      value: 1930 + i,
+                      label: `Năm ${1930 + i}`,
+                    })
+                  )}
                 />
               </div>
             </div>
@@ -401,10 +408,13 @@ export default function PersonalDestinyAnalysisPage() {
                 value={viewYear}
                 onChange={(val) => setViewYear(Number(val))}
                 align="right"
-                options={[2025, 2026, 2027, 2028, 2029, 2030].map((y) => ({
-                  value: y,
-                  label: `Năm ${y}`,
-                }))}
+                options={Array.from(
+                  { length: Math.max(1, currentYear - 2024 + 1) },
+                  (_, i) => ({
+                    value: 2024 + i,
+                    label: `Năm ${2024 + i}`,
+                  })
+                )}
               />
             </div>
           </div>
