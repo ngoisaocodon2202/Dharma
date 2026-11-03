@@ -83,9 +83,8 @@ export default async function ArticleDetailPage({ params }: Props) {
     },
   };
 
-  const displayAuthor = article.author_dharma_name
-    ? `Thầy ${article.author_dharma_name}`
-    : article.author_name;
+  const displayAuthor = article.author_name;
+  const displayTempleOrRole = article.author_dharma_name || 'Chư Tăng Ni & Tự Viện Phật Giáo';
 
   return (
     <article className="py-10 space-y-12">
@@ -140,7 +139,7 @@ export default async function ArticleDetailPage({ params }: Props) {
             </div>
             <div>
               <p className="text-sm font-semibold text-charcoal-900 dark:text-charcoal-100">{displayAuthor}</p>
-              <p className="text-xs text-charcoal-500">Tác giả bài giảng</p>
+              <p className="text-xs text-saffron-700 dark:text-saffron-400 font-medium">{displayTempleOrRole}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">

@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { OmManiMobileHeader } from '@/components/om-mani/OmManiMobileHeader';
+import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 
 export interface SubNavItem {
   name: string;
@@ -53,23 +54,37 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
     icon: BuddhaBodhiIcon,
   },
   {
+    id: 'lich-su',
+    name: 'Lịch sử Phật giáo',
+    href: '/lich-su-phat-giao',
+    icon: Scroll,
+  },
+  {
     id: 'hoc-phat',
     name: 'Học Phật',
     children: [
       {
-        name: 'Bài viết',
+        name: 'Bài giảng Sư Thầy & Chùa',
         href: '/bai-viet',
         icon: BookOpen,
-        description: 'Tri thức giáo lý, pháp thoại & đời sống tỉnh thức',
+        description: 'Bài viết mới cập nhật hàng ngày từ Chư Tăng Ni & Tự Viện',
+        badge: 'Mỗi ngày',
       },
       {
-        name: 'Pháp thoại',
+        name: 'Lịch sử Phật giáo',
+        href: '/lich-su-phat-giao',
+        icon: Scroll,
+        description: 'Cội nguồn từ Đức Phật Thích Ca tại Ấn Độ đến hiện tại',
+        badge: '2.600 năm',
+      },
+      {
+        name: 'Pháp thoại & Video',
         href: '/phap-thoai',
         icon: Music,
         description: 'Nghe giảng pháp, âm thanh tĩnh tâm & video tụng kinh',
       },
       {
-        name: 'Lộ trình học',
+        name: 'Lộ trình học Phật',
         href: '/lo-trinh-hoc',
         icon: Compass,
         description: 'Khóa học Phật pháp bài bản theo từng cấp độ',
@@ -79,6 +94,39 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
         href: '/thu-vien',
         icon: Scroll,
         description: 'Kho tàng kinh điển Đại thừa & sách Phật học quý',
+      },
+    ],
+  },
+  {
+    id: 'tu-tap',
+    name: 'Lịch & Tu tập',
+    children: [
+      {
+        name: 'Lịch Vạn Niên & Nhắc Nhở',
+        href: '/lich-phat-giao',
+        icon: Calendar,
+        description: 'Xem Âm Dương lịch & ghi chú Ngày Giỗ, Ngày Quan Trọng',
+        badge: 'Ghi chú',
+      },
+      {
+        name: 'Màu Chủ Đạo & Ngày Tốt',
+        href: '/tu-vi',
+        icon: Sparkles,
+        videoSrc: '/tuvi.mp4',
+        description: 'Xem màu hợp bản mệnh Ngũ Hành, Ngày Hoàng Đạo & Giờ Tốt',
+        badge: 'Mới',
+      },
+      {
+        name: 'Phòng thiền trực tuyến',
+        href: '/phong-thien',
+        icon: Wind,
+        description: 'Không gian thiền định chuông mõ trực tuyến thanh tịnh',
+      },
+      {
+        name: 'Thực hành hàng ngày',
+        href: '/thuc-hanh',
+        icon: BuddhaBodhiIcon,
+        description: 'Thời khóa niệm Phật, sám hối & chánh niệm mỗi ngày',
       },
     ],
   },
@@ -107,36 +155,10 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
     ],
   },
   {
-    id: 'tu-tap',
-    name: 'Tu tập',
-    children: [
-      {
-        name: 'Phòng thiền',
-        href: '/phong-thien',
-        icon: Wind,
-        description: 'Không gian thiền định chuông mõ trực tuyến thanh tịnh',
-      },
-      {
-        name: 'Thực hành',
-        href: '/thuc-hanh',
-        icon: BuddhaBodhiIcon,
-        description: 'Thời khóa niệm Phật, sám hối & chánh niệm mỗi ngày',
-      },
-      {
-        name: 'Tử Vi',
-        href: '/tu-vi',
-        icon: Sparkles,
-        videoSrc: '/tuvi.mp4',
-        description: 'Lá số tử vi, an sao khoa học & chiêm nghiệm nhân quả',
-        badge: 'Mới',
-      },
-    ],
-  },
-  {
-    id: 'cong-dong',
-    name: 'Cộng đồng',
-    href: '/cong-dong',
-    icon: Users,
+    id: 'ai-phat-phap',
+    name: 'AI Phật Pháp',
+    href: '/hoi-dap-ai',
+    icon: Sparkles,
   },
 ];
 
@@ -144,14 +166,27 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
 const MOBILE_SECTIONS = [
   {
     title: null,
-    items: [{ name: 'Trang chủ', href: '/', icon: BuddhaBodhiIcon, description: '' }],
+    items: [
+      { name: 'Trang chủ', href: '/', icon: BuddhaBodhiIcon, description: '' },
+      { name: 'Lịch sử Phật giáo', href: '/lich-su-phat-giao', icon: Scroll, description: '', badge: '2.600 năm' },
+      { name: 'AI Hỏi Đáp Phật Pháp', href: '/hoi-dap-ai', icon: Sparkles, description: '', badge: '24/7' },
+    ],
   },
   {
-    title: 'Học Phật & Tri Thức',
+    title: 'Lịch Vạn Niên & Tiện Ích',
     items: [
-      { name: 'Bài viết', href: '/bai-viet', icon: BookOpen, description: '' },
-      { name: 'Pháp thoại', href: '/phap-thoai', icon: Music, description: '' },
-      { name: 'Lộ trình học', href: '/lo-trinh-hoc', icon: Compass, description: '' },
+      { name: 'Lịch Vạn Niên & Nhắc Nhở', href: '/lich-phat-giao', icon: Calendar, description: '', badge: 'Ngày Giỗ' },
+      { name: 'Xem Màu Chủ Đạo & Ngày Tốt', href: '/tu-vi', icon: Sparkles, videoSrc: '/tuvi.mp4', description: '', badge: 'Mới' },
+      { name: 'Phòng thiền trực tuyến', href: '/phong-thien', icon: Wind, description: '' },
+      { name: 'Thực hành chánh niệm', href: '/thuc-hanh', icon: BuddhaBodhiIcon, description: '' },
+    ],
+  },
+  {
+    title: 'Học Phật & Tri Thức Mỗi Ngày',
+    items: [
+      { name: 'Bài giảng Sư Thầy & Chùa', href: '/bai-viet', icon: BookOpen, description: '', badge: 'Hàng ngày' },
+      { name: 'Pháp thoại & Video', href: '/phap-thoai', icon: Music, description: '' },
+      { name: 'Lộ trình học Phật', href: '/lo-trinh-hoc', icon: Compass, description: '' },
       { name: 'Tủ kinh sách', href: '/thu-vien', icon: Scroll, description: '' },
     ],
   },
@@ -161,20 +196,6 @@ const MOBILE_SECTIONS = [
       { name: 'Chùa & Địa danh', href: '/chua-dia-danh', icon: MapPin, description: '' },
       { name: 'Sự kiện & Khóa tu', href: '/su-kien', icon: Calendar, description: '' },
       { name: 'Tự viện & Tổ chức', href: '/to-chuc', icon: Building, description: '' },
-    ],
-  },
-  {
-    title: 'Tu Tập & Tiện Ích',
-    items: [
-      { name: 'Phòng thiền', href: '/phong-thien', icon: Wind, description: '' },
-      { name: 'Thực hành', href: '/thuc-hanh', icon: BuddhaBodhiIcon, description: '' },
-      { name: 'Tử Vi', href: '/tu-vi', icon: Sparkles, videoSrc: '/tuvi.mp4', description: '', badge: 'Mới' },
-    ],
-  },
-  {
-    title: 'Cộng Đồng',
-    items: [
-      { name: 'Cộng đồng Phật tử', href: '/cong-dong', icon: Users, description: '' },
     ],
   },
 ];
@@ -436,7 +457,10 @@ export function Header() {
           </nav>
 
           {/* Right Action Icons & Auth Buttons */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 whitespace-nowrap">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 whitespace-nowrap">
+            {/* Multi-language switcher */}
+            <LanguageSwitcher />
+
             {/* Search Trigger */}
             <button
               onClick={() => setIsSearchOpen(true)}
@@ -445,95 +469,73 @@ export function Header() {
               aria-label="Tìm kiếm"
             >
               <Search className="w-4 h-4 text-charcoal-500 dark:text-charcoal-400 shrink-0" />
-              <span className="hidden xl:inline whitespace-nowrap">Tìm kiếm...</span>
-              <kbd className="hidden xl:inline text-[10px] font-mono px-1 py-0.5 bg-white dark:bg-charcoal-700 border border-ivory-200 dark:border-charcoal-600 rounded">
-                ⌘K
-              </kbd>
+              <span className="hidden 2xl:inline whitespace-nowrap">Tìm kiếm...</span>
             </button>
 
-            {/* User Profile or Login */}
+            {/* User Profile or Dharma Name Entry */}
             {user ? (
               <div className="relative">
                 <button
                   onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
                   className="flex items-center justify-center w-9 h-9 aspect-square md:w-auto md:h-auto md:aspect-auto p-0 md:py-1 md:pl-3 md:pr-1 gap-2 rounded-full border border-ivory-200 dark:border-charcoal-700 bg-white/60 dark:bg-charcoal-800/60 hover:bg-ivory-100 dark:hover:bg-charcoal-800 transition-all active:scale-95 shadow-2xs shrink-0"
-                  aria-label="Tài khoản người dùng"
+                  aria-label="Pháp danh Phật tử"
                   title={user.dharma_name || user.full_name}
                 >
-                  <span className="text-xs font-medium text-charcoal-800 dark:text-charcoal-200 hidden md:inline max-w-[130px] truncate">
+                  <span className="text-xs font-medium text-charcoal-800 dark:text-charcoal-200 hidden md:inline max-w-[130px] truncate whitespace-nowrap">
                     {user.dharma_name || user.full_name}
                   </span>
                   <div className="w-7 h-7 rounded-full bg-saffron-200 dark:bg-saffron-800 flex items-center justify-center text-xs font-bold text-saffron-800 dark:text-saffron-200 overflow-hidden shrink-0">
-                    {user.avatar_url ? (
-                      <img src={user.avatar_url} alt={user.full_name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="leading-none">{user.full_name.charAt(0).toUpperCase()}</span>
-                    )}
+                    <span className="leading-none">{(user.dharma_name || user.full_name).charAt(0).toUpperCase()}</span>
                   </div>
                 </button>
 
                 {/* User Dropdown Menu */}
                 {isUserDropdownOpen && (
                   <div
-                    className="absolute right-0 mt-2 w-48 bg-white dark:bg-charcoal-800 rounded-xl shadow-lg border border-ivory-200 dark:border-charcoal-700 py-1.5 z-40 animate-fade-in-up"
+                    className="absolute right-0 mt-2 w-52 bg-white dark:bg-charcoal-800 rounded-xl shadow-lg border border-ivory-200 dark:border-charcoal-700 py-1.5 z-40 animate-fade-in-up"
                     onClick={() => setIsUserDropdownOpen(false)}
                   >
                     <div className="px-3.5 py-2 border-b border-ivory-100 dark:border-charcoal-700">
                       <p className="text-xs font-semibold text-charcoal-900 dark:text-charcoal-100 truncate">
-                        {user.full_name}
+                        Pháp danh: {user.dharma_name || user.full_name}
                       </p>
-                      {user.dharma_name && (
-                        <p className="text-[11px] text-saffron-600 dark:text-saffron-400">
-                          PD: {user.dharma_name}
-                        </p>
-                      )}
-                      <span className="inline-block mt-1 text-[10px] uppercase font-mono px-1.5 py-0.5 bg-ivory-100 dark:bg-charcoal-700 text-charcoal-600 dark:text-charcoal-300 rounded">
-                        {user.role_id}
-                      </span>
+                      <p className="text-[11px] text-saffron-600 dark:text-saffron-400">
+                        Giới tính: {user.gender === 'female' ? 'Tín Nữ (Nữ)' : 'Thiện Nam (Nam)'}
+                      </p>
                     </div>
+
+                    <button
+                      onClick={() => openAuthModal('login')}
+                      className="w-full flex items-center gap-2 px-3.5 py-2 text-xs text-charcoal-700 dark:text-charcoal-300 hover:bg-ivory-100 dark:hover:bg-charcoal-700 text-left transition-colors"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-saffron-600" /> Đổi Pháp Danh
+                    </button>
 
                     <Link
                       href="/ho-so"
                       className="flex items-center gap-2 px-3.5 py-2 text-xs text-charcoal-700 dark:text-charcoal-300 hover:bg-ivory-100 dark:hover:bg-charcoal-700 transition-colors"
                     >
-                      <Users className="w-3.5 h-3.5" /> Trang cá nhân
+                      <Users className="w-3.5 h-3.5" /> Hồ sơ tu tập
                     </Link>
-
-                    {(user.role_id === 'SUPER_ADMIN' || user.role_id === 'ADMIN' || user.role_id === 'MODERATOR') && (
-                      <Link
-                        href="/admin"
-                        className="flex items-center gap-2 px-3.5 py-2 text-xs text-saffron-700 dark:text-saffron-400 hover:bg-ivory-100 dark:hover:bg-charcoal-700 font-medium transition-colors"
-                      >
-                        <ShieldAlert className="w-3.5 h-3.5" /> Quản trị CMS
-                      </Link>
-                    )}
 
                     <button
                       onClick={() => logout()}
                       className="w-full flex items-center gap-2 px-3.5 py-2 text-xs text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-left transition-colors"
                     >
-                      <LogOut className="w-3.5 h-3.5" /> Đăng xuất
+                      <LogOut className="w-3.5 h-3.5" /> Xóa Pháp Danh
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => openAuthModal('login')}
-                  className="text-xs px-2.5 sm:px-3 whitespace-nowrap shrink-0 hidden sm:inline-flex"
-                >
-                  Đăng nhập
-                </Button>
+              <div className="flex items-center gap-1.5 shrink-0">
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => openAuthModal('register')}
-                  className="text-xs px-2.5 sm:px-3 whitespace-nowrap shrink-0 hidden md:inline-flex"
+                  onClick={() => openAuthModal('login')}
+                  className="text-xs px-3 whitespace-nowrap shrink-0 inline-flex items-center gap-1.5"
                 >
-                  Đăng ký
+                  <span>☸ Nhập Pháp Danh</span>
                 </Button>
               </div>
             )}
@@ -698,28 +700,17 @@ export function Header() {
                   </Button>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      openAuthModal('login');
-                    }}
-                    className="w-full text-xs"
-                  >
-                    Đăng nhập
-                  </Button>
+                <div className="w-full">
                   <Button
                     variant="primary"
                     size="sm"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      openAuthModal('register');
+                      openAuthModal('login');
                     }}
-                    className="w-full text-xs"
+                    className="w-full text-xs whitespace-nowrap"
                   >
-                    Đăng ký
+                    ☸ Nhập Pháp Danh & Giới Tính
                   </Button>
                 </div>
               )}

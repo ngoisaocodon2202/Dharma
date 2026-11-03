@@ -371,8 +371,6 @@ export default async function AudioAndVideoPage({ searchParams }: Props) {
                   <span className="font-medium text-saffron-700 dark:text-saffron-400">Giảng sư: {featured.speaker}</span>
                   <span>•</span>
                   <span>{formatDuration(featured.duration_seconds)}</span>
-                  <span>•</span>
-                  <span>{featured.listen_count?.toLocaleString('vi-VN')} lượt nghe</span>
                 </div>
               </div>
             </div>

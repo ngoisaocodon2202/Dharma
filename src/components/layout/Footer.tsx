@@ -76,19 +76,19 @@ export function Footer() {
               <ul className="space-y-2 text-xs">
                 <li>
                   <Link
-                    href="/bai-viet"
+                    href="/lich-su-phat-giao"
                     className="flex items-center justify-between py-1 text-charcoal-600 dark:text-charcoal-300 hover:text-saffron-700 dark:hover:text-saffron-400 hover:translate-x-1 transition-all"
                   >
-                    <span>Bài viết Phật pháp</span>
+                    <span>Lịch sử Phật giáo (2.600 năm)</span>
                     <ArrowUpRight className="w-3 h-3 opacity-40" />
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/phap-thoai"
+                    href="/bai-viet"
                     className="flex items-center justify-between py-1 text-charcoal-600 dark:text-charcoal-300 hover:text-saffron-700 dark:hover:text-saffron-400 hover:translate-x-1 transition-all"
                   >
-                    <span>Pháp thoại & Video Cổ tự</span>
+                    <span>Bài giảng Sư Thầy & Tự Viện (Hàng ngày)</span>
                     <ArrowUpRight className="w-3 h-3 opacity-40" />
                   </Link>
                 </li>
@@ -103,42 +103,42 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/hoi-dap"
+                    href="/hoi-dap-ai"
                     className="flex items-center justify-between py-1 text-charcoal-600 dark:text-charcoal-300 hover:text-saffron-700 dark:hover:text-saffron-400 hover:translate-x-1 transition-all"
                   >
-                    <span>Hỏi đáp Phật pháp (Q&A)</span>
+                    <span>AI Hỗ Trợ Hỏi Đáp Phật Pháp</span>
                     <ArrowUpRight className="w-3 h-3 opacity-40" />
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Tile 2: Tu học & Thiền tập */}
+            {/* Tile 2: Lịch Vạn Niên & Tu Học */}
             <div className="p-4 sm:p-5 bg-ivory-50/70 dark:bg-charcoal-900/50 rounded-2xl border border-ivory-200/70 dark:border-charcoal-700/60 space-y-3.5 hover:border-jade-300/80 dark:hover:border-jade-700/60 transition-colors">
               <div className="flex items-center gap-2 pb-2 border-b border-ivory-200/60 dark:border-charcoal-800">
                 <div className="w-7 h-7 rounded-lg bg-jade-100 dark:bg-jade-950/60 text-jade-700 dark:text-jade-400 flex items-center justify-center flex-shrink-0">
                   <BuddhaMeditationIcon className="w-4 h-4 text-jade-700 dark:text-jade-400" />
                 </div>
                 <h4 className="font-heading text-sm font-bold text-charcoal-900 dark:text-charcoal-100">
-                  Tu Học & Thiền Định
+                  Lịch Vạn Niên & Tu Tập
                 </h4>
               </div>
               <ul className="space-y-2 text-xs">
                 <li>
                   <Link
-                    href="/thuc-hanh"
+                    href="/lich-phat-giao"
                     className="flex items-center justify-between py-1 text-charcoal-600 dark:text-charcoal-300 hover:text-jade-700 dark:hover:text-jade-400 hover:translate-x-1 transition-all"
                   >
-                    <span>Thực hành hôm nay</span>
+                    <span>Lịch Vạn Niên & Nhắc Nhở Ngày Giỗ</span>
                     <ArrowUpRight className="w-3 h-3 opacity-40" />
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/lo-trinh-hoc"
+                    href="/tu-vi"
                     className="flex items-center justify-between py-1 text-charcoal-600 dark:text-charcoal-300 hover:text-jade-700 dark:hover:text-jade-400 hover:translate-x-1 transition-all"
                   >
-                    <span>Lộ trình học Phật (5 Tuyến)</span>
+                    <span>Xem Màu Chủ Đạo & Ngày Tốt</span>
                     <ArrowUpRight className="w-3 h-3 opacity-40" />
                   </Link>
                 </li>
@@ -153,24 +153,24 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/hanh-trinh"
+                    href="/lo-trinh-hoc"
                     className="flex items-center justify-between py-1 text-charcoal-600 dark:text-charcoal-300 hover:text-jade-700 dark:hover:text-jade-400 hover:translate-x-1 transition-all"
                   >
-                    <span>Hành trình Phật giáo</span>
+                    <span>Lộ trình học Phật (5 Tuyến)</span>
                     <ArrowUpRight className="w-3 h-3 opacity-40" />
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Tile 3: Chùa & Cộng đồng */}
+            {/* Tile 3: Chùa & Tự Viện */}
             <div className="p-4 sm:p-5 bg-ivory-50/70 dark:bg-charcoal-900/50 rounded-2xl border border-ivory-200/70 dark:border-charcoal-700/60 space-y-3.5 hover:border-lotus-300/80 dark:hover:border-lotus-700/60 transition-colors">
               <div className="flex items-center gap-2 pb-2 border-b border-ivory-200/60 dark:border-charcoal-800">
                 <div className="w-7 h-7 rounded-lg bg-lotus-100 dark:bg-lotus-950/60 text-lotus-700 dark:text-lotus-400 flex items-center justify-center flex-shrink-0">
                   <TemplePagodaIcon className="w-4 h-4 text-lotus-700 dark:text-lotus-400" />
                 </div>
                 <h4 className="font-heading text-sm font-bold text-charcoal-900 dark:text-charcoal-100">
-                  Chùa & Cộng Đồng
+                  Chùa & Tự Viện
                 </h4>
               </div>
               <ul className="space-y-2 text-xs">
@@ -203,10 +203,10 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/cong-dong"
+                    href="/phap-thoai"
                     className="flex items-center justify-between py-1 text-charcoal-600 dark:text-charcoal-300 hover:text-lotus-700 dark:hover:text-lotus-400 hover:translate-x-1 transition-all"
                   >
-                    <span>Nhóm tu học cộng đồng</span>
+                    <span>Pháp thoại & Video Cổ tự</span>
                     <ArrowUpRight className="w-3 h-3 opacity-40" />
                   </Link>
                 </li>

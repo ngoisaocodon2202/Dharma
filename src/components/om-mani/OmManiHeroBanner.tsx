@@ -7,28 +7,28 @@ import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 
 const HERO_SLIDES = [
   {
-    title: 'BỒ ĐỀ TÂM — PHẬT PHÁP TOÀN CẦU',
-    subtitle: 'An yên với một chạm • Không gian tu học, tụng kinh & nuôi dưỡng chánh niệm',
+    title: 'LỊCH SỬ PHẬT GIÁO TỪ KHỞI NGUYÊN ĐẾN HIỆN ĐẠI',
+    subtitle: 'Hành trình 2.600 năm ánh đạo vàng từ Ấn Độ cổ đại đến Trúc Lâm Yên Tử và Phật giáo toàn cầu',
     image: '/images/om_mani_hero.jpg',
-    tag: 'Tu Học Phật Giáo',
-    ctaText: 'Bắt Đầu Tu Học',
-    href: '/lo-trinh-hoc',
+    tag: 'Lịch Sử & Cội Nguồn',
+    ctaText: 'Khám Phá Lịch Sử',
+    href: '/lich-su-phat-giao',
   },
   {
-    title: 'NUÔI DƯỠNG THIỆN LÀNH MỖI NGÀY',
-    subtitle: '“Từ bi diệt hận thù, là định luật ngàn thu.” — Kinh Pháp Cú',
+    title: 'LỊCH VẠN NIÊN & NHẮC NHỞ NGÀY QUAN TRỌNG',
+    subtitle: 'Tra cứu Âm Dương lịch vạn niên, ngày Rằm - Mùng 1 và ghi chú Ngày Giỗ, Ngày Quan Trọng của gia đình',
     image: '/images/tran_nhan_tong_yentu.jpg',
-    tag: 'Chánh Niệm Hiện Tiền',
-    ctaText: 'Nhật Ký Tu Tập',
-    href: '/thuc-hanh',
+    tag: 'Lịch Phật Giáo Vạn Niên',
+    ctaText: 'Mở Lịch & Tạo Nhắc Nhở',
+    href: '/lich-phat-giao',
   },
   {
-    title: 'KHO TÀNG KINH ĐIỂN & PHÁP ÂM',
-    subtitle: 'Hơn 500 bài giảng pháp thoại, kinh văn Đại Thừa & bản đồ danh lam cổ tự',
+    title: 'PHÁP THOẠI CHƯ TÔN ĐỨC & KHO TÀNG KINH ĐIỂN',
+    subtitle: 'Bài viết mới cập nhật mỗi ngày từ các Sư Thầy, Tự Viện cùng tủ Kinh sách & AI Hỏi Đáp Phật Pháp',
     image: '/images/buddha_meditation.jpg',
-    tag: 'Pháp Âm Giác Ngộ',
-    ctaText: 'Nghe Pháp Âm',
-    href: '/phap-thoai',
+    tag: 'Cập Nhật Hàng Ngày',
+    ctaText: 'Đọc Bài Giảng Mới Nhất',
+    href: '/bai-viet',
   },
 ];
 

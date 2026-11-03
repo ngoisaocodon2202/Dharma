@@ -21,7 +21,7 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
   const [incenseCount, setIncenseCount] = useState(3);
   const [prayerText, setPrayerText] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [totalOffered, setTotalOffered] = useState(528980);
+  const [totalOffered, setTotalOffered] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -47,7 +47,7 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('om_mani_incense_count');
+      const saved = localStorage.getItem('phatphap_personal_incense_count');
       if (saved) setTotalOffered(Number(saved));
     }
   }, []);
@@ -60,7 +60,7 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
     const newCount = totalOffered + 1;
     setTotalOffered(newCount);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('om_mani_incense_count', String(newCount));
+      localStorage.setItem('phatphap_personal_incense_count', String(newCount));
     }
   };
 
@@ -229,9 +229,9 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
 
           {/* Counter info */}
           <div className="mt-4 pt-3 border-t border-amber-500/20 w-full flex items-center justify-between text-[11px] text-amber-300/60">
-            <span>Đồng tâm cầu nguyện</span>
+            <span>Số lần bạn đã dâng tâm hương</span>
             <span className="font-mono font-bold text-amber-300">
-              {totalOffered.toLocaleString('vi-VN')} lượt dâng hương
+              {totalOffered.toLocaleString('vi-VN')} lần
             </span>
           </div>
         </div>
@@ -263,7 +263,7 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
   const [selectedChant, setSelectedChant] = useState(CHANT_OPTIONS[0]);
   const [beadIndex, setBeadIndex] = useState(0); // 0 to 107
   const [roundCount, setRoundCount] = useState(0);
-  const [totalCount, setTotalCount] = useState(108);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -289,7 +289,7 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedCount = localStorage.getItem('om_mani_mala_total');
+      const savedCount = localStorage.getItem('phatphap_personal_chant_count');
       if (savedCount) setTotalCount(Number(savedCount));
     }
   }, []);
@@ -309,7 +309,7 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
     const nextTotal = totalCount + 1;
     setTotalCount(nextTotal);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('om_mani_mala_total', String(nextTotal));
+      localStorage.setItem('phatphap_personal_chant_count', String(nextTotal));
     }
   };
 

@@ -11,13 +11,13 @@ interface OmManiAltarSectionProps {
 }
 
 export function OmManiAltarSection({ onOpenIncense, onOpenMala }: OmManiAltarSectionProps) {
-  const [chantCount, setChantCount] = useState(528980);
+  const [chantCount, setChantCount] = useState(0);
   const [hasChantedToday, setHasChantedToday] = useState(false);
   const [altarView, setAltarView] = useState<'buddha' | 'quanam'>('buddha');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('om_mani_altar_chant_count');
+      const saved = localStorage.getItem('phatphap_personal_chant_count');
       if (saved) setChantCount(Number(saved));
     }
   }, []);
@@ -28,7 +28,7 @@ export function OmManiAltarSection({ onOpenIncense, onOpenMala }: OmManiAltarSec
     setChantCount(nextCount);
     setHasChantedToday(true);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('om_mani_altar_chant_count', String(nextCount));
+      localStorage.setItem('phatphap_personal_chant_count', String(nextCount));
     }
   };
 
@@ -59,15 +59,15 @@ export function OmManiAltarSection({ onOpenIncense, onOpenMala }: OmManiAltarSec
         {/* Background Ambient Glow */}
         <div className="absolute inset-0 bg-radial-at-t from-amber-500/15 via-transparent to-transparent pointer-events-none" />
 
-        {/* Top Status Bar: Count of prayers */}
+        {/* Top Status Bar: Personal Mindfulness Chant Count */}
         <div className="px-4 py-2.5 border-b border-white/10 flex items-center justify-between text-[11px] sm:text-xs">
           <div className="flex items-center gap-1.5 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-            <span className="text-stone-300">Đang có</span>
+            <span className="text-stone-300">Tâm niệm Phật của bạn:</span>
             <span className="font-mono font-bold text-amber-300">
               {chantCount.toLocaleString('vi-VN')}
             </span>
-            <span className="text-stone-300">hương linh nhờ cầu niệm</span>
+            <span className="text-stone-300">câu niệm tỉnh thức</span>
           </div>
 
           <div className="hidden sm:flex items-center gap-1.5 text-stone-400 text-[11px] whitespace-nowrap">

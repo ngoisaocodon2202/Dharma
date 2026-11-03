@@ -8,6 +8,7 @@ export interface User {
   role_id: string;
   full_name: string;
   dharma_name?: string;
+  gender?: 'Nam' | 'Nữ';
   avatar_url?: string;
 }
 
@@ -25,6 +26,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const STORAGE_KEY = 'phatphap_dharma_profile';
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,39 +35,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register'>('login');
 
   useEffect(() => {
-    // Check existing session
-    const checkSession = async () => {
-      try {
-        const res = await fetch('/api/auth/me');
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user);
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && (parsed.dharma_name || parsed.full_name)) {
+          setUser(parsed);
         }
-      } catch (err) {
-        console.error('Không thể kiểm tra phiên đăng nhập:', err);
-      } finally {
-        setIsLoading(false);
       }
-    };
-    checkSession();
+    } catch (err) {
+      console.warn('Không thể đọc hồ sơ Pháp danh:', err);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const login = (userData: User) => {
     setUser(userData);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+    } catch {}
     setIsAuthModalOpen(false);
   };
 
   const updateUser = (partial: Partial<User>) => {
-    setUser(prev => prev ? { ...prev, ...partial } : prev);
+    setUser((prev) => {
+      const next = prev ? { ...prev, ...partial } : null;
+      if (next) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        } catch {}
+      }
+      return next;
+    });
   };
 
   const logout = async () => {
+    setUser(null);
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      setUser(null);
-    } catch (err) {
-      console.error('Lỗi khi đăng xuất:', err);
-    }
+      localStorage.removeItem(STORAGE_KEY);
+      await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+    } catch {}
   };
 
   const openAuthModal = (mode: 'login' | 'register' = 'login') => {

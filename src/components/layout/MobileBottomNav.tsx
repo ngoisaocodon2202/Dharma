@@ -3,21 +3,21 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Heart, Headphones, User } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircleQuestion, User } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { cn } from '@/lib/utils';
 
 const BOTTOM_NAV_ITEMS = [
   { name: 'Trang chủ', href: '/', icon: BuddhaBodhiIcon },
-  { name: 'Tu tập', href: '/thuc-hanh', icon: Heart },
+  { name: 'Lịch Nhắc', href: '/lich-phat-giao', icon: Calendar },
   {
-    name: 'Tử Vi',
+    name: 'Màu & Ngày',
     href: '/tu-vi',
     icon: Sparkles,
     videoSrc: '/tuvi.mp4',
     isCenter: true,
   },
-  { name: 'Pháp âm', href: '/phap-thoai', icon: Headphones },
+  { name: 'AI Pháp', href: '/hoi-dap-ai', icon: Sparkles },
   { name: 'Hồ sơ', href: '/ho-so', icon: User },
 ];
 

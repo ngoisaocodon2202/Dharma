@@ -208,12 +208,12 @@ export function VideoPlayerModal({
                   <Clock className="w-3.5 h-3.5" />
                   {formatDuration(video.duration_seconds)}
                 </span>
-                {video.view_count && (
+                {video.view_count ? (
                   <span className="flex items-center gap-1 whitespace-nowrap">
                     <Eye className="w-3.5 h-3.5" />
                     {video.view_count.toLocaleString('vi-VN')} lượt xem
                   </span>
-                )}
+                ) : null}
               </div>
             </div>
 

@@ -138,23 +138,24 @@ export default async function HomePage() {
           </section>
         </ScrollReveal>
 
-        {/* 3. BÀI VIẾT MỚI (EDITORIAL ARTICLES) */}
+        {/* 3. BÀI VIẾT MỚI TỪ SƯ THẦY & CHÙA CHIỀN (DAILY MONK & TEMPLE ARTICLES) */}
         <ScrollReveal delayMs={100}>
           <section id="bai-viet" className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-ivory-200 dark:border-charcoal-800 pb-3 gap-2">
               <div>
-                <span className="text-xs font-semibold text-saffron-700 dark:text-saffron-400 uppercase tracking-wider block">
-                  Tri thức & Tỉnh thức
-                </span>
+                <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-saffron-700 dark:text-saffron-400 uppercase tracking-wider mb-0.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Cập nhật mới mỗi ngày từ Chư Tăng Ni & Tự Viện</span>
+                </div>
                 <h2 className="font-heading text-2xl md:text-3xl font-bold text-charcoal-900 dark:text-charcoal-100">
-                  Bài Viết Mới & Khuyên Đọc
+                  Bài Giảng Mới Của Sư Thầy & Chùa Chiền
                 </h2>
               </div>
               <Link
                 href="/bai-viet"
-                className="text-xs font-medium text-saffron-700 dark:text-saffron-400 hover:underline flex items-center gap-1"
+                className="text-xs font-medium text-saffron-700 dark:text-saffron-400 hover:underline flex items-center gap-1 whitespace-nowrap shrink-0"
               >
-                Xem toàn bộ bài viết <ArrowRight className="w-3.5 h-3.5" />
+                Xem toàn bộ bài viết mới <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
 
@@ -169,8 +170,11 @@ export default async function HomePage() {
                         alt={featuredArticle.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute top-4 left-4">
+                      <div className="absolute top-4 left-4 flex items-center gap-2">
                         <Badge variant="saffron">{featuredArticle.category_name}</Badge>
+                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-600/95 text-white text-[10px] font-bold tracking-wide shadow-xs whitespace-nowrap">
+                          Mới đăng hôm nay
+                        </span>
                       </div>
                     </div>
                     <CardHeader className="space-y-2">
@@ -193,22 +197,21 @@ export default async function HomePage() {
                       </p>
                     </CardContent>
                     <CardFooter>
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-full bg-saffron-200 dark:bg-saffron-800 flex items-center justify-center text-xs font-semibold text-saffron-800 overflow-hidden">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-7 h-7 rounded-full bg-saffron-200 dark:bg-saffron-800 flex items-center justify-center text-xs font-semibold text-saffron-800 overflow-hidden shrink-0">
                           {featuredArticle.author_avatar ? (
                             <img src={featuredArticle.author_avatar} alt={featuredArticle.author_name} className="w-full h-full object-cover" />
                           ) : (
                             featuredArticle.author_name.charAt(0)
                           )}
                         </div>
-                        <span className="font-medium text-charcoal-800 dark:text-charcoal-200">
-                          {featuredArticle.author_dharma_name ? `Thầy ${featuredArticle.author_dharma_name}` : featuredArticle.author_name}
+                        <span className="font-medium text-charcoal-800 dark:text-charcoal-200 truncate">
+                          {featuredArticle.author_name}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1 text-charcoal-400">
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>{featuredArticle.view_count || 120}</span>
-                      </div>
+                      <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 whitespace-nowrap shrink-0">
+                        {featuredArticle.author_dharma_name || 'Tự Viện Phật Giáo'}
+                      </span>
                     </CardFooter>
                   </Card>
                 </div>
@@ -230,10 +233,10 @@ export default async function HomePage() {
                     </div>
                     <div className="min-w-0 flex-1 flex flex-col justify-between">
                       <div>
-                        <div className="flex items-center gap-2 text-[11px] text-charcoal-400 mb-1">
-                          <span className="text-saffron-700 dark:text-saffron-400 font-medium">{article.category_name}</span>
+                        <div className="flex items-center gap-2 text-[11px] text-charcoal-400 mb-1 whitespace-nowrap">
+                          <span className="text-saffron-700 dark:text-saffron-400 font-medium truncate">{article.category_name}</span>
                           <span>•</span>
-                          <span>{article.reading_time_minutes} phút</span>
+                          <span>{formatDate(article.published_at)}</span>
                         </div>
                         <Link href={`/bai-viet/${article.slug}`}>
                           <h4 className="font-heading text-sm font-semibold text-charcoal-900 dark:text-charcoal-100 line-clamp-2 hover:text-saffron-600 transition-colors leading-snug">
@@ -241,14 +244,99 @@ export default async function HomePage() {
                           </h4>
                         </Link>
                       </div>
-                      <div className="text-[11px] text-charcoal-500 mt-2">
-                        {article.author_dharma_name || article.author_name}
+                      <div className="text-[11px] text-charcoal-500 mt-2 truncate">
+                        {article.author_name} {article.author_dharma_name ? `• ${article.author_dharma_name}` : ''}
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
+          </section>
+        </ScrollReveal>
+
+        {/* 3.5. TIỆN ÍCH NỔI BẬT: LỊCH SỬ PHẬT GIÁO • LỊCH NHẮC NHỞ • MÀU CHỦ ĐẠO • AI PHẬT PHÁP */}
+        <ScrollReveal delayMs={100}>
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link
+              href="/lich-su-phat-giao"
+              className="group p-5 rounded-2xl bg-gradient-to-br from-[#3d1f0d] via-[#5c1616] to-[#3d1f0d] text-white border border-[#d4af37]/40 shadow-md hover:shadow-xl transition-all hover-lift flex flex-col justify-between"
+            >
+              <div className="space-y-2">
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#ffd966] text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+                  2.600 Năm Ánh Đạo Vàng
+                </span>
+                <h3 className="font-heading text-lg font-bold text-[#ffd966] group-hover:underline">
+                  Lịch Sử Phật Giáo Toàn Diện
+                </h3>
+                <p className="text-xs text-stone-200/90 leading-relaxed line-clamp-2">
+                  Từ Đức Phật Thích Ca tại Ấn Độ cổ đại, các kỳ Kết tập, truyền thừa Nam-Bắc tông đến 2.000 năm Phật giáo Việt Nam và thế giới hiện đại.
+                </p>
+              </div>
+              <span className="mt-4 text-xs font-bold text-[#ffd966] inline-flex items-center gap-1 whitespace-nowrap">
+                Khám phá dòng lịch sử <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
+
+            <Link
+              href="/lich-phat-giao"
+              className="group p-5 rounded-2xl bg-white dark:bg-charcoal-800 border-2 border-amber-300/70 dark:border-amber-700/60 shadow-sm hover:border-amber-500 transition-all hover-lift flex flex-col justify-between"
+            >
+              <div className="space-y-2">
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+                  Âm Dương Lịch Vạn Niên
+                </span>
+                <h3 className="font-heading text-lg font-bold text-charcoal-900 dark:text-charcoal-50 group-hover:text-saffron-600 transition-colors">
+                  Lịch Nhắc Nhở Ngày Giỗ & Ngày Trai
+                </h3>
+                <p className="text-xs text-charcoal-600 dark:text-charcoal-300 leading-relaxed line-clamp-2">
+                  Chọn bất kỳ ngày nào để ghi chú Ngày Giỗ, Ngày Quan Trọng của gia đình hoặc xem cuốn lịch Âm - Dương vạn niên từ nay về sau.
+                </p>
+              </div>
+              <span className="mt-4 text-xs font-bold text-saffron-700 dark:text-saffron-400 inline-flex items-center gap-1 whitespace-nowrap">
+                Mở lịch & ghi chú ngay <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
+
+            <Link
+              href="/tu-vi"
+              className="group p-5 rounded-2xl bg-white dark:bg-charcoal-800 border-2 border-emerald-300/70 dark:border-emerald-700/60 shadow-sm hover:border-emerald-500 transition-all hover-lift flex flex-col justify-between"
+            >
+              <div className="space-y-2">
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+                  Ngũ Hành & Lịch Khổng Minh
+                </span>
+                <h3 className="font-heading text-lg font-bold text-charcoal-900 dark:text-charcoal-50 group-hover:text-emerald-600 transition-colors">
+                  Xem Màu Chủ Đạo & Ngày Tốt
+                </h3>
+                <p className="text-xs text-charcoal-600 dark:text-charcoal-300 leading-relaxed line-clamp-2">
+                  Tra cứu màu sắc chủ đạo tương sinh bản mệnh, Ngày Hoàng Đạo, Giờ Tốt và Hướng Xuất Hành cát tường mỗi ngày.
+                </p>
+              </div>
+              <span className="mt-4 text-xs font-bold text-emerald-700 dark:text-emerald-400 inline-flex items-center gap-1 whitespace-nowrap">
+                Tra cứu màu hợp & ngày tốt <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
+
+            <Link
+              href="/hoi-dap-ai"
+              className="group p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-charcoal-800 dark:to-charcoal-800 border-2 border-saffron-300 dark:border-saffron-700 shadow-sm hover:border-saffron-500 transition-all hover-lift flex flex-col justify-between"
+            >
+              <div className="space-y-2">
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-saffron-600 text-white text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+                  Hỏi Đáp Phật Pháp 24/7
+                </span>
+                <h3 className="font-heading text-lg font-bold text-charcoal-900 dark:text-charcoal-50 group-hover:text-saffron-600 transition-colors">
+                  Trợ Lý AI Phật Pháp Tỉnh Thức
+                </h3>
+                <p className="text-xs text-charcoal-600 dark:text-charcoal-300 leading-relaxed line-clamp-2">
+                  Giải đáp mọi câu hỏi về Giáo lý, Kinh điển, Thiền tập, Nghi lễ và lời khuyên chuyển hóa khổ đau theo Chánh pháp.
+                </p>
+              </div>
+              <span className="mt-4 text-xs font-bold text-saffron-700 dark:text-saffron-400 inline-flex items-center gap-1 whitespace-nowrap">
+                Trò chuyện cùng AI ngay <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
           </section>
         </ScrollReveal>
 
@@ -366,7 +454,7 @@ export default async function HomePage() {
                   </div>
                   <div className="pt-3 mt-3 border-t border-ivory-100 dark:border-charcoal-700 flex items-center justify-between text-xs text-charcoal-400 whitespace-nowrap">
                     <span>{formatDuration(track.duration_seconds)}</span>
-                    <span>{track.listen_count || 1200} lượt nghe</span>
+                    <span className="text-saffron-600 dark:text-saffron-400 font-medium">Nghe pháp âm</span>
                   </div>
                 </div>
               ))}

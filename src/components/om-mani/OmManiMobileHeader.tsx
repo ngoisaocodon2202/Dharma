@@ -8,6 +8,7 @@ import { useAuth } from '@/components/auth/AuthContext';
 import { playBellSound } from '@/lib/buddhistSounds';
 import { IncenseOfferingModal, MalaBeadsModal } from './OmManiInteractiveTools';
 import { SearchModal } from '@/components/layout/SearchModal';
+import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 import { cn } from '@/lib/utils';
 
 interface OmManiMobileHeaderProps {
@@ -15,14 +16,15 @@ interface OmManiMobileHeaderProps {
 }
 
 const CATEGORY_TABS = [
-  { id: 'all', name: 'Tất cả', href: '/' },
+  { id: 'all', name: 'Trang chủ', href: '/' },
+  { id: 'lich-su', name: 'Lịch Sử Phật Giáo', href: '/lich-su-phat-giao', badge: 'Mới' },
+  { id: 'lich-nhac', name: 'Lịch Nhắc Nhở', href: '/lich-phat-giao', badge: 'Âm Lịch' },
+  { id: 'tu-vi', name: 'Màu & Ngày Tốt', href: '/tu-vi', badge: 'Hot' },
+  { id: 'ai-phat-phap', name: 'AI Phật Pháp', href: '/hoi-dap-ai', badge: '24/7' },
+  { id: 'bai-viet', name: 'Bài Giảng Sư Thầy', href: '/bai-viet' },
   { id: 'tung-kinh', name: 'Tụng Kinh', href: '/thu-vien' },
-  { id: 'niem-phat', name: 'Niệm Phật', href: '#altar-section' },
   { id: 'phap-thoai', name: 'Pháp Thoại', href: '/phap-thoai' },
-  { id: 'tu-vi', name: 'Tử Vi 2026', href: '/tu-vi', badge: 'Hot' },
   { id: 'phong-thien', name: 'Phòng Thiền', href: '/phong-thien' },
-  { id: 'minh-chu', name: 'Minh Chú', href: '#minh-chu-section' },
-  { id: 'bai-viet', name: 'Bài Viết', href: '/bai-viet' },
   { id: 'chua', name: 'Danh Lam Cổ Tự', href: '/chua-dia-danh' },
 ];
 
@@ -77,16 +79,19 @@ export function OmManiMobileHeader({ onOpenMenu }: OmManiMobileHeaderProps) {
             </div>
           </div>
 
-          {/* Right: Quick Action Buttons (Thắp Hương, Gõ Chuông, Tìm kiếm, Menu) */}
+          {/* Right: Language Switcher + Quick Action Buttons (Thắp Hương, Gõ Chuông, Tìm kiếm, Menu) */}
           <div className="flex items-center gap-1 shrink-0">
+            {/* Compact Multi-Language Switcher */}
+            <LanguageSwitcher compact />
+
             {/* Quick Thắp Hương Button */}
             <button
               onClick={() => setIsIncenseOpen(true)}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/50 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-700/60 text-[11px] font-semibold transition-all active:scale-95 shadow-2xs"
+              className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/50 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-700/60 text-[11px] font-semibold transition-all active:scale-95 shadow-2xs whitespace-nowrap"
               title="Thắp hương online"
             >
-              <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500 animate-pulse" />
-              <span className="hidden xs:inline">Thắp hương</span>
+              <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500 animate-pulse shrink-0" />
+              <span>Thắp hương</span>
             </button>
 
             {/* Quick Gõ Chuông Button */}

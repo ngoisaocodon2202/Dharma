@@ -56,13 +56,13 @@ export default async function ArticlesPage({ searchParams }: Props) {
       <div className="space-y-3 border-b border-ivory-200 dark:border-charcoal-800 pb-6 animate-fade-in-up">
         <div className="inline-flex items-center gap-1.5 text-xs text-saffron-700 dark:text-saffron-400 font-semibold uppercase tracking-wider">
           <BookOpen className="w-4 h-4 animate-pulse-glow flex-shrink-0" />
-          <span>Thư viện Tri thức</span>
+          <span>Cập nhật hàng ngày từ Chư Tăng Ni & Tự Viện</span>
         </div>
         <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50 leading-tight">
-          Bài Viết Phật Pháp
+          Bài Giảng & Pháp Thoại Từ Các Sư Thầy, Chùa Chiền
         </h1>
         <p className="text-xs sm:text-sm text-charcoal-600 dark:text-charcoal-400 max-w-2xl leading-relaxed">
-          Tập hợp những bài khảo luận, giảng giải giáo lý căn bản, phương pháp thiền tập và câu chuyện chuyển hóa tâm thức được chia sẻ bởi chư Tăng Ni và các tác giả Phật tử.
+          Các bài pháp thoại, giảng giải giáo lý, phương pháp thiền tập và lời khuyên chuyển hóa tâm thức do Chư Tôn Đức Tăng Ni và các Chùa, Tự Viện đăng tải và cập nhật mới theo từng ngày.
         </p>
 
         {/* Category Pills Filter — Horizontal Scroll on Mobile, Wrap on Desktop */}
@@ -132,22 +132,21 @@ export default async function ArticlesPage({ searchParams }: Props) {
                 </div>
 
                 <CardFooter>
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-saffron-200 dark:bg-saffron-800 flex items-center justify-center text-[10px] font-semibold text-saffron-800">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-6 h-6 rounded-full bg-saffron-200 dark:bg-saffron-800 flex items-center justify-center text-[10px] font-semibold text-saffron-800 shrink-0">
                       {article.author_avatar ? (
                         <img src={article.author_avatar} alt={article.author_name} className="w-full h-full object-cover rounded-full" />
                       ) : (
                         article.author_name.charAt(0)
                       )}
                     </div>
-                    <span className="text-xs text-charcoal-700 dark:text-charcoal-300">
-                      {article.author_dharma_name || article.author_name}
+                    <span className="text-xs font-medium text-charcoal-700 dark:text-charcoal-300 truncate">
+                      {article.author_name}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1 text-xs text-charcoal-400">
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>{article.view_count || 100}</span>
-                  </div>
+                  <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 whitespace-nowrap shrink-0">
+                    {article.author_dharma_name || 'Chùa / Tự viện'}
+                  </span>
                 </CardFooter>
               </Card>
             ))}

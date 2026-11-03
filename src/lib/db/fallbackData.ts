@@ -1,0 +1,1506 @@
+// Auto-generated rich fallback dataset for PhatPhap Platform
+// Ensures 100% content availability on Vercel with daily auto-updating Dharma articles from Venerable Monks & Temples
+
+export const FALLBACK_CATEGORIES = [
+  { id: '10000000-0000-0000-0000-000000000001', name: 'Giáo lý Căn bản', slug: 'giao-ly-can-ban', description: 'Tứ Diệu Đế, Bát Chánh Đạo, Nhân Quả và Duyên Khởi dành cho mọi người', sort_order: 1 },
+  { id: '10000000-0000-0000-0000-000000000002', name: 'Thiền quán & Chánh niệm', slug: 'thien-quan-chanh-niem', description: 'Thực hành quan sát thân tâm, hơi thở và buông xả phiền não trong từng phút giây', sort_order: 2 },
+  { id: '10000000-0000-0000-0000-000000000003', name: 'Lời Phật dạy', slug: 'loi-phat-day', description: 'Trích giảng những lời dạy thanh cao từ Kinh Pháp Cú và các kinh tạng cốt lõi', sort_order: 3 },
+  { id: '10000000-0000-0000-0000-000000000004', name: 'Phật giáo & Đời sống', slug: 'phat-giao-doi-song', description: 'Ứng dụng từ bi và trí tuệ vào công việc, gia đình và các mối quan hệ xã hội', sort_order: 4 },
+  { id: '10000000-0000-0000-0000-000000000005', name: 'Văn hóa & Lịch sử', slug: 'van-hoa-lich-su', description: 'Di sản kiến trúc chùa chiền, nghệ thuật điêu khắc và lịch sử Phật giáo', sort_order: 5 },
+  { id: '10000000-0000-0000-0000-000000000006', name: 'Tấm gương Tu học', slug: 'tam-guong-tu-hoc', description: 'Hành trạng chư tôn thiền đức và những câu chuyện chuyển hóa tâm thức mầu nhiệm', sort_order: 6 },
+];
+
+export const FALLBACK_AUTHORS: Record<string, { full_name: string; dharma_name: string; temple_name: string; avatar_url: string; bio: string }> = {
+  '00000000-0000-0000-0000-000000000001': {
+    full_name: 'HT. Thích Thanh Từ',
+    dharma_name: 'HT. Thích Thanh Từ • TV. Trúc Lâm',
+    temple_name: 'Thiền Viện Trúc Lâm Đà Lạt',
+    avatar_url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=300&auto=format&fit=crop&q=80',
+    bio: 'Tông chủ Thiền phái Trúc Lâm Yên Tử phục hưng, người khôi phục dòng thiền mang đậm bản sắc dân tộc Việt Nam.',
+  },
+  '00000000-0000-0000-0000-000000000002': {
+    full_name: 'TT. Thích Nhật Quang',
+    dharma_name: 'TT. Thích Nhật Quang • Tổ Đình Vĩnh Nghiêm',
+    temple_name: 'Tổ Đình Vĩnh Nghiêm',
+    avatar_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80',
+    bio: 'Giảng sư Phật học, chia sẻ giáo lý căn bản và phương pháp thiền tập chánh niệm cho Phật tử tại gia.',
+  },
+  '00000000-0000-0000-0000-000000000003': {
+    full_name: 'ĐĐ. Thích Tâm Trường',
+    dharma_name: 'ĐĐ. Thích Tâm Trường • Chùa Hoằng Pháp',
+    temple_name: 'Chùa Hoằng Pháp',
+    avatar_url: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=300&auto=format&fit=crop&q=80',
+    bio: 'Trụ trì Chùa Hoằng Pháp, hướng dẫn các khóa tu Phật thất và hoằng dương pháp môn Tịnh Độ.',
+  },
+  '00000000-0000-0000-0000-000000000004': {
+    full_name: 'Thiền sư Thích Nhất Hạnh',
+    dharma_name: 'Thiền sư Thích Nhất Hạnh • Tổ Đình Từ Hiếu',
+    temple_name: 'Tổ Đình Từ Hiếu — Làng Mai',
+    avatar_url: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=300&auto=format&fit=crop&q=80',
+    bio: 'Bậc thầy thiền định quốc tế, người sáng lập Làng Mai và phong trào Phật giáo Dấn thân (Engaged Buddhism).',
+  },
+  '00000000-0000-0000-0000-000000000005': {
+    full_name: 'ĐĐ. Thích Pháp Hòa',
+    dharma_name: 'ĐĐ. Thích Pháp Hòa • Tu Viện Trúc Lâm',
+    temple_name: 'Tu Viện Trúc Lâm & Tây Thiên',
+    avatar_url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&auto=format&fit=crop&q=80',
+    bio: 'Trụ trì Tu Viện Trúc Lâm & Tây Thiên, giảng sư Phật học với phong cách thuyết giảng sâu sắc và gần gũi.',
+  },
+  '00000000-0000-0000-0000-000000000006': {
+    full_name: 'Thầy Thích Minh Niệm',
+    dharma_name: 'Thầy Thích Minh Niệm • TV. Minh Đức',
+    temple_name: 'Thiền Viện Minh Đức',
+    avatar_url: 'https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=300&auto=format&fit=crop&q=80',
+    bio: 'Tác giả cuốn sách Hiểu Về Trái Tim, người sáng lập dòng thiền hiểu biết và chữa lành tâm thức.',
+  },
+  '00000000-0000-0000-0000-000000000007': {
+    full_name: 'Trưởng lão HT. Thích Minh Châu',
+    dharma_name: 'HT. Thích Minh Châu • TV. Vạn Hạnh',
+    temple_name: 'Thiền Viện Vạn Hạnh',
+    avatar_url: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=300&auto=format&fit=crop&q=80',
+    bio: 'Bậc đại cao tăng dịch giả vĩ đại của Kinh Tạng Nguyên Thủy Pāli (Kinh tạng Nikāya) sang tiếng Việt.',
+  },
+};
+
+export const RAW_CURATED_ARTICLES = [
+  {
+    "title": "Tứ Diệu Đế: Bốn Chân Lý Tối Hậu Giúp Nhận Diện Và Chuyển Hóa Khổ Đau",
+    "slug": "tu-dieu-de-bon-chan-ly-toi-hau",
+    "category_id": "10000000-0000-0000-0000-000000000001",
+    "author_id": "00000000-0000-0000-0000-000000000007",
+    "cover_image": "https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Tứ Diệu Đế không phải là lý thuyết yếm thế, mà là phương pháp chẩn đoán tâm lý vĩ đại giúp con người hiểu rõ gốc rễ của khổ và tìm ra lộ trình an lạc viên mãn.",
+    "content": "## Cốt Lõi Của Giáo Lý Phật Đà\n\nTứ Diệu Đế (Cattāri Ariyasaccāni) là bài pháp đầu tiên Đức Phật Thích Ca Mâu Ni thuyết giảng tại Vườn Lộc Uyển (Sarnath) cho năm anh em tôn giả Kiều Trần Như. Đây là nền tảng cốt lõi xuyên suốt toàn bộ kho tàng giáo lý Phật giáo.\n\nĐức Phật hành xử như một vị y vương vĩ đại:\n1. **Khổ đế (Dukkha):** Nhận diện căn bệnh — sự bất toại nguyện, sinh, lão, bệnh, tử, và những biến động tâm lý.\n2. **Tập đế (Samudaya):** Tìm ra nguyên nhân gây bệnh — đó chính là tham ái (Tanha), sân hận và vô minh chấp ngã.\n3. **Diệt đế (Nirodha):** Xác nhận bệnh có thể chữa khỏi hoàn toàn — trạng thái dập tắt phiền não, đạt tới Niết bàn tịch tịnh.\n4. **Đạo đế (Magga):** Đơn thuốc chữa lành — chính là Bát Chánh Đạo, con đường thực hành tám nhánh đưa tới giải thoát.\n\n### Thực Hành Trong Đời Sống\nKhi gặp phải nghịch cảnh, thay vì than vãn hoặc trốn chạy, hãy can đảm nhìn thẳng vào cảm thọ đau đớn, tự hỏi lòng tham ái hay sự kỳ vọng nào của ta đang chưa được thỏa mãn. Khi hiểu rõ nguyên nhân, tâm sẽ tự nhiên buông xả và bình an."
+  },
+  {
+    "title": "Bát Chánh Đạo: Con Đường Tám Nhánh Dẫn Đến Giải Thoát Và An Lạc Tự Tại",
+    "slug": "bat-chanh-dao-con-duong-tam-nhanh-giai-thoat",
+    "category_id": "10000000-0000-0000-0000-000000000001",
+    "author_id": "00000000-0000-0000-0000-000000000002",
+    "cover_image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 9,
+    "excerpt": "Bát Chánh Đạo là kim chỉ nam toàn diện cho lối sống tỉnh thức, kết hợp hài hòa giữa Trí Tuệ (Tuệ), Đạo Đức (Giới) và Định Lực (Định).",
+    "content": "## Lối Sống Chân Chính Đưa Đến Bình An\n\nBát Chánh Đạo là con đường trung đạo (Majjhima Patipada) giúp hành giả tránh xa hai cực đoan: đam mê dục lạc thấp hèn và khổ hạnh ép xác tiêu cực.\n\n### Ba Nhóm Tu Tập Cốt Lõi:\n\n1. **Nhóm Tuệ Học (Paññā):**\n   - **Chánh Kiến (Sammā-diṭṭhi):** Cái nhìn đúng đắn về nhân quả, duyên khởi, vô thường và vô ngã.\n   - **Chánh Tư Duy (Sammā-saṅkappa):** Suy nghĩ hướng thiện, không tham lam, không sân hận và không làm hại muôn loài.\n\n2. **Nhóm Giới Học (Sīla):**\n   - **Chánh Ngữ (Sammā-vācā):** Lời nói chân thật, hòa nhã, ái ngữ, đem lại niềm vui và sự hiểu biết.\n   - **Chánh Nghiệp (Sammā-kammanta):** Hành động chân chính, tôn trọng mạng sống, bảo vệ tài sản và sự thủy chung.\n   - **Chánh Mạng (Sammā-ājīva):** Nuôi sống bản thân bằng nghề nghiệp trong sạch, không tổn hại nhân loại và môi trường.\n\n3. **Nhóm Định Học (Samādhi):**\n   - **Chánh Tinh Tấn (Sammā-vāyāma):** Siêng năng ngăn ngừa điều ác chưa sinh, dứt trừ điều ác đã sinh, phát triển điều thiện.\n   - **Chánh Niệm (Sammā-sati):** Ý thức trọn vẹn về thân, thọ, tâm, pháp trong từng giây phút hiện tại.\n   - **Chánh Định (Sammā-samādhi):** Tâm an định, nhất tâm, không bị phân tán bởi các vọng tưởng bên ngoài."
+  },
+  {
+    "title": "Lý Duyên Khởi: Vạn Vật Nương Nhau Mà Sinh Khởi Trong Vũ Trụ",
+    "slug": "ly-duyen-khoi-van-vat-tuong-tuc",
+    "category_id": "10000000-0000-0000-0000-000000000001",
+    "author_id": "00000000-0000-0000-0000-000000000004",
+    "cover_image": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Cái này có vì cái kia có, cái này không vì cái kia không. Thấu hiểu Duyên Khởi giúp ta xóa bỏ ranh giới vị kỷ và nuôi dưỡng tình thương muôn loài.",
+    "content": "## Tuệ Giác Tương Tức (Interbeing)\n\nĐức Phật dạy trong kinh A Hàm:\n> \"Cái này có thì cái kia có; cái này sinh thì cái kia sinh. Cái này không thì cái kia không; cái này diệt thì cái kia diệt.\"\n\nKhông một hiện tượng nào trong vũ trụ có thể tồn tại độc lập, biệt lập và tự thân. Một bông hoa sen muốn nở rộ cần có bùn lầy, ánh nắng mặt trời, hạt mưa rơi, công người chăm sóc và không khí trong lành. Nếu rút đi ánh sáng hay nước, hoa sen không thể tồn tại.\n\n### Ý Nghĩa Của Duyên Khởi Với Con Người\nKhi thấu hiểu lý duyên khởi, ta nhận ra mình không thể hạnh phúc một mình khi những người xung quanh đau khổ. Ta và thế giới là một thể tương tức. Giúp đỡ tha nhân chính là đang nâng đỡ chính bản thân mình."
+  },
+  {
+    "title": "Vô Thường & Vô Ngã: Chiếc Chìa Khóa Mở Cánh Cửa Tự Do Tâm Thức",
+    "slug": "vo-thuong-vo-nga-chia-khoa-tu-do",
+    "category_id": "10000000-0000-0000-0000-000000000001",
+    "author_id": "00000000-0000-0000-0000-000000000006",
+    "cover_image": "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Hiểu được bản chất luôn biến đổi của vạn vật giúp ta không còn bám chấp, đón nhận mọi thăng trầm của đời sống bằng nụ cười thanh thản.",
+    "content": "## Bình An Trước Vạn Biến\n\nNhiều người lầm tưởng \"Vô thường\" (Anicca) là bi quan, nhưng thực chất vô thường chính là điều kiện cho sự sống nảy nở. Nếu hạt bắp không vô thường thì làm sao trở thành cây bắp trĩu hạt? Nếu nỗi buồn không vô thường thì làm sao nụ cười có thể hé nở trở lại?\n\n### Vô Ngã (Anatta) — Không Có Cái Tôi Riêng Biệt\nThân thể ta là sự mượn tạm của bốn đại: đất, nước, gió, lửa. Tâm trí ta là dòng chảy liên tục của các cảm thọ và suy nghĩ. Khi ta bớt bám chặt vào cái gọi là \"của tôi\", \"tôi là nhất\", ta sẽ không còn bị tổn thương bởi những lời khen chê thị phi của thế gian."
+  },
+  {
+    "title": "Nghiệp Báo & Luật Nhân Quả: Hiểu Để Tự Quyết Định Số Phận Bản Thân",
+    "slug": "nghiep-bao-luat-nhan-qua-lam-chu-so-phan",
+    "category_id": "10000000-0000-0000-0000-000000000001",
+    "author_id": "00000000-0000-0000-0000-000000000005",
+    "cover_image": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Nghiệp (Kamma) là hành động có chủ ý. Ta chính là kẻ thừa tự của nghiệp, không ai có thể ban phúc hay giáng họa ngoài chính hành vi của ta.",
+    "content": "## Gieo Gió Gặt Bão, Gieo Lành Gặt Quả Ngọt\n\nĐức Phật dạy trong kinh Tiểu Nghiệp Phân Biệt:\n> \"Con người là chủ nhân của nghiệp, là kẻ thừa tự của nghiệp. Nghiệp là thai tạng, nghiệp là quyến thuộc, nghiệp là điểm tựa.\"\n\n### Ba Cánh Cửa Của Nghiệp:\n1. **Thân nghiệp:** Những việc ta làm bằng hành động cụ thể.\n2. **Khẩu nghiệp:** Những lời ta nói ra hằng ngày.\n3. **Ý nghiệp:** Những suy nghĩ, toan tính và khởi tâm kín đáo. Trong ba điều này, Ý nghiệp là cội nguồn sâu xa nhất chi phối hành động và lời nói.\n\nKhi hiểu về luật nhân quả, ta không oán trời trách đất khi gặp hoạn nạn, mà biết bình tĩnh quán xét, sám hối lỗi lầm và tích cực gieo những hạt giống thiện lành cho tương lai."
+  },
+  {
+    "title": "Ngũ Giới Quý Báu: Nền Tảng Đạo Đức Vững Chắc Của Người Phật Tử Tại Gia",
+    "slug": "ngu-gioi-quy-bau-nen-tang-dao-duc-tai-gia",
+    "category_id": "10000000-0000-0000-0000-000000000001",
+    "author_id": "00000000-0000-0000-0000-000000000002",
+    "cover_image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Năm giới không phải là sự cấm đoán gò bó, mà là năm hàng rào bảo vệ vững chắc giúp giữ gìn hạnh phúc gia đình và sự bình an cho tâm hồn.",
+    "content": "## Năm Nguyên Tắc Bảo Vệ Sự Sống\n\n1. **Giới thứ nhất: Không sát sinh:** Tôn trọng sự sống, nuôi dưỡng lòng từ bi đối với con người và muôn loài sinh linh.\n2. **Giới thứ hai: Không trộm cắp:** Tôn trọng quyền sở hữu của người khác, sống bằng mồ hôi nước mắt chân chính và thực hành bố thí.\n3. **Giới thứ ba: Không tà dâm:** Bảo vệ sự thủy chung trong hôn nhân, giữ gìn danh dự và phẩm giá gia đình.\n4. **Giới thứ tư: Không nói dối:** Nói lời chân thật, hòa giải, không đâm thọc, không chửi rủa độc địa.\n5. **Giới thứ năm: Không uống rượu và chất say:** Giữ gìn sự sáng suốt, tỉnh táo của tâm trí, bảo vệ sức khỏe và an toàn cho cộng đồng."
+  },
+  {
+    "title": "Quán Niệm Hơi Thở (Anapanasati): Trở Về Với Hòn Đảo Tự Thân",
+    "slug": "quan-niem-hoi-tho-anapanasati-tro-ve-tu-than",
+    "category_id": "10000000-0000-0000-0000-000000000002",
+    "author_id": "00000000-0000-0000-0000-000000000004",
+    "cover_image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Hơi thở là chiếc cầu nối giữa thân và tâm. Khi tâm tán loạn, chỉ cần đưa sự chú ý trở về luồng gió mát nơi đầu mũi, tâm liền an định.",
+    "content": "## 16 Phép Quán Niệm Hơi Thở Kinh Điển\n\nTrong Kinh Anapanasati Sutta, Đức Phật đã chỉ dẫn tường tận lộ trình thiền định bằng hơi thở từ thô đến tế, chia làm bốn giai đoạn:\n1. **Quán Thân trong Thân:** Thở vào biết thở vào, thở ra biết thở ra; thở vào cảm nhận toàn thân, thở ra làm lắng dịu thân hành.\n2. **Quán Thọ trong Thọ:** Nhận diện cảm thọ hỷ lạc, an tịnh và làm lắng dịu các cảm thọ khổ đau bức bối.\n3. **Quán Tâm trong Tâm:** Nhận biết tâm có tham hay không tham, có sân hay không sân, làm cho tâm hoan hỷ và giải thoát.\n4. **Quán Pháp trong Pháp:** Quán chiếu vô thường, xả ly và đoạn diệt phiền não.\n\n### Cách Thực Hành 10 Phút Mỗi Ngày\nHãy ngồi thẳng lưng, thả lỏng bờ vai và cơ mặt. Đặt nhẹ hai bàn tay lên đùi. Không cần ép hơi thở phải dài hay ngắn, chỉ đơn thuần quan sát hơi thở như nó đang là. Khi có suy nghĩ kéo bạn đi, hãy mỉm cười và nhẹ nhàng quay lại với hơi thở."
+  },
+  {
+    "title": "Nghệ Thuật Buông Thư Thân Tâm: Trị Liệu Lo Âu Và Căng Thẳng Giữa Đời Thường",
+    "slug": "nghe-thuat-buong-thu-than-tam-tri-lieu-lo-au",
+    "category_id": "10000000-0000-0000-0000-000000000002",
+    "author_id": "00000000-0000-0000-0000-000000000006",
+    "cover_image": "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Cơ thể chúng ta chứa đựng rất nhiều căng thẳng tích tụ. Thực hành buông thư sâu (Deep Relaxation) giúp từng tế bào được nghỉ ngơi và tự chữa lành.",
+    "content": "## Cho Phép Bản Thân Được Nghỉ Ngơi\n\nChúng ta thường bận rộn đến mức quên mất cách nghỉ ngơi thực sự. Ngay cả khi nằm trên giường, tâm trí vẫn chạy đua với những lo âu về ngày mai.\n\n### Bài Thực Hành Buông Thư Toàn Thân (15 Phút):\n- Nằm ngửa trên thảm hoặc giường, hai chân mở rộng tự nhiên, hai tay xuôi theo thân.\n- Thở vào, đưa sự chú ý lên đỉnh đầu. Thở ra, buông lỏng hoàn toàn da đầu và vầng trán.\n- Tiếp tục quét qua đôi mắt, khóe miệng, bờ vai, cánh tay, lồng ngực, lưng và đôi bàn chân.\n- Ở mỗi vùng cơ bắp, hãy gửi đến đó một năng lượng biết ơn và cho phép nó được thả lỏng hoàn toàn.\nSau 15 phút, bạn sẽ cảm thấy năng lượng tươi mới tràn ngập thân tâm."
+  },
+  {
+    "title": "Thiền Đi Từng Bước Chân An Lạc: Tiếp Xúc Thực Tại Nhiệm Mầu",
+    "slug": "thien-di-tung-buoc-chan-an-lac",
+    "category_id": "10000000-0000-0000-0000-000000000002",
+    "author_id": "00000000-0000-0000-0000-000000000004",
+    "cover_image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Thiền hành không phải là đi để tới đích, mà là đi trong an lạc ở từng bước chân. Đặt bàn chân xuống mặt đất như thể đang hôn lên đất mẹ.",
+    "content": "## Bước Đi Như Một Người Tự Do\n\nNgười đời thường đi như bị ma đuổi, tâm luôn chạy trước thân để vội vã đến một cuộc họp hay một cuộc hẹn. Thiền sư Thích Nhất Hạnh dạy:\n> \"Phép lạ không phải là đi trên mặt nước hay đi trên than hồng. Phép lạ là đi từng bước trên mặt đất mà lòng tràn đầy an lạc.\"\n\n### Thực Hành Thiền Hành Hằng Ngày:\n- Khi bước chân trái: Thở vào và thầm nói *\"Đã về\"*.\n- Khi bước chân phải: Thở ra và thầm nói *\"Đã tới\"*.\n- Cảm nhận lòng bàn chân tiếp xúc vững chãi với mặt đất. Bạn đang ở đây, bây giờ, tràn đầy sự sống."
+  },
+  {
+    "title": "Thiền Trà Tỉnh Thức: Uống Trà Trong Hiện Tại Để Chạm Vào Tĩnh Lặng",
+    "slug": "thien-tra-tinh-thuc-uong-tra-cham-tinh-lang",
+    "category_id": "10000000-0000-0000-0000-000000000002",
+    "author_id": "00000000-0000-0000-0000-000000000005",
+    "cover_image": "https://images.unsplash.com/photo-1532012164546-f432f2e3777a?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Chén trà trên tay, mây trôi nước chảy. Nghệ thuật uống trà chánh niệm biến khoảnh khắc bình dị thành giờ phút hội ngộ thiêng liêng với chính mình.",
+    "content": "## Chén Trà Trong Lòng Bàn Tay\n\nUống trà trong chánh niệm là một phương pháp thiền định tao nhã và sâu sắc. \n\nKhi cầm chén trà nóng:\n1. **Quan sát:** Nhìn khói trà nghi ngút bốc lên, cảm nhận hơi ấm lan tỏa qua lòng bàn tay.\n2. **Khứu giác:** Đưa chén trà lên ngang mũi, hít một hơi thật sâu cảm nhận hương thơm thanh khiết của lá trà non.\n3. **Thưởng thức:** Uống từng ngụm nhỏ, để vị đắng chát ban đầu dần chuyển thành hậu ngọt thanh tao nơi cuống họng.\n\nTrong giây phút ấy, không có quá khứ, không có tương lai, chỉ có bạn và chén trà nhiệm mầu."
+  },
+  {
+    "title": "Thiết Lập Góc Thiền Tại Nhà: Không Gian Tĩnh Tâm Cho Cả Gia Đình",
+    "slug": "thiet-lap-goc-thien-tai-nha",
+    "category_id": "10000000-0000-0000-0000-000000000002",
+    "author_id": "00000000-0000-0000-0000-000000000002",
+    "cover_image": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Một góc thiền nhỏ với bồ đoàn, đóa hoa sen và chuông đồng sẽ là nơi nương tựa bình yên cho mọi thành viên mỗi khi gặp giông bão cuộc đời.",
+    "content": "## Xây Dựng Ốc Đảo Tâm Linh Giữa Tổ Ấm\n\nDù ngôi nhà của bạn rộng hay hẹp, chỉ cần một góc nhỏ tĩnh lặng cạnh cửa sổ cũng có thể trở thành \"căn phòng thở\" mầu nhiệm.\n\n### Các Vật Phẩm Cơ Bản:\n- **Tọa cụ và bồ đoàn:** Giúp tư thế ngồi thiền được vững chãi và êm ái.\n- **Tôn tượng Phật hoặc hoa tươi:** Tượng trưng cho sự tỉnh thức, từ bi và thanh khiết.\n- **Chiếc chuông đồng nhỏ:** Tiếng chuông là tiếng gọi của sự tỉnh thức đưa tâm trở về với hiện tại.\n\nMỗi tối, dành 10-15 phút cùng người thân ngồi tĩnh lặng bên góc thiền, mọi mâu thuẫn vụn vặt trong ngày sẽ tự nhiên tiêu tan."
+  },
+  {
+    "title": "Thiền Quán Về Lòng Từ (Metta Bhavana): Lan Tỏa Yêu Thương Không Điều Kiện",
+    "slug": "thien-quan-ve-long-tu-metta-bhavana",
+    "category_id": "10000000-0000-0000-0000-000000000002",
+    "author_id": "00000000-0000-0000-0000-000000000006",
+    "cover_image": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Tâm từ là phương thuốc chữa lành hữu hiệu nhất cho sân hận. Khi lòng ngập tràn yêu thương, nỗi sợ hãi và hận thù không còn chỗ trú ngụ.",
+    "content": "## Mở Rộng Trái Tim Đến Vô Biên\n\nMetta Bhavana là pháp thiền nuôi dưỡng lòng từ ái được Đức Phật chỉ dạy trong kinh Metta Sutta:\n\n> \"Nguyện cho muôn loài chúng sinh được an vui, hạnh phúc và thoát khỏi mọi hiểm nguy tai ương.\"\n\n### Lộ Trình Mở Rộng Tâm Từ:\n1. Gửi năng lượng thương yêu đến chính bản thân mình (yêu thương bản thân đúng cách).\n2. Gửi đến người ta kính trọng và yêu mến (cha mẹ, thầy cô, bạn bè).\n3. Gửi đến người bình thường (người xa lạ ta gặp trên đường).\n4. Gửi đến người ta cảm thấy khó hòa hợp hoặc đang có hiềm khích.\n5. Lan tỏa đến toàn thể muôn loài chúng sinh khắp mười phương."
+  },
+  {
+    "title": "Tinh Hoa Kinh Pháp Cú: Lời Dạy Về Tâm Ý Làm Chủ Mọi Nghiệp Quả",
+    "slug": "tinh-hoa-kinh-phap-cu-tam-y-lam-chu",
+    "category_id": "10000000-0000-0000-0000-000000000003",
+    "author_id": "00000000-0000-0000-0000-000000000007",
+    "cover_image": "https://images.unsplash.com/photo-1532012164546-f432f2e3777a?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Ý dẫn đầu các pháp, ý làm chủ ý tạo. Những câu kệ vàng ngọc trong Kinh Pháp Cú soi sáng lối đi đạo đức cho ngàn đời nhân loại.",
+    "content": "## Kệ Pháp Cú Đầu Tiên\n\nKinh Pháp Cú (Dhammapada) mở đầu bằng hai bài kệ bất hủ:\n\n> \"Ý dẫn đầu các pháp,  \n> Ý làm chủ, ý tạo;  \n> Nếu với ý ô nhiễm,  \n> Nói năng hay hành động,  \n> Khổ não bước theo sau,  \n> Như xe chân vật kéo.\"\n\n> \"Ý dẫn đầu các pháp,  \n> Ý làm chủ, ý tạo;  \n> Nếu với ý thanh tịnh,  \n> Nói năng hay hành động,  \n> An lạc bước theo sau,  \n> Như bóng không rời hình.\"\n\nMuốn thay đổi cuộc đời, hãy bắt đầu từ việc gạn lọc tâm ý. Tâm tà vạy ắt gặt tai ương, tâm trong sáng ắt hưởng an lạc viên mãn."
+  },
+  {
+    "title": "Phật Dạy Về Đạo Hiếu: Công Cha Nghĩa Mẹ Sâu Dày Hơn Biển Trời",
+    "slug": "phat-day-ve-dao-hieu-cong-cha-nghia-me",
+    "category_id": "10000000-0000-0000-0000-000000000003",
+    "author_id": "00000000-0000-0000-0000-000000000005",
+    "cover_image": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Tâm hiếu là tâm Phật, hạnh hiếu là hạnh Phật. Lời dạy sâu sắc trong Kinh Báo Hiếu Phụ Mẫu Trọng Ân nhắc nhở bổn phận thiêng liêng của người làm con.",
+    "content": "## Ơn Cha Mẹ Khó Đáp Đền\n\nTrong kinh Tăng Chi Bộ, Đức Phật tuyên bố:\n> \"Có hai hạng người, này các Tỳ-kheo, ta không thể trả ơn cho hết được. Đó là Cha và Mẹ. Dù một vai cõng mẹ, một vai cõng cha trải qua trăm năm, cũng chưa trả được công ơn sinh thành dưỡng dục.\"\n\n### Cách Báo Hiếu Chân Chính Nhất Theo Đạo Phật:\n- **Phụng dưỡng vật chất:** Chăm sóc cơm ăn, áo mặc, thuốc men khi cha mẹ già yếu.\n- **An ủi tinh thần:** Lắng nghe, ân cần, nhẫn nhịn và luôn giữ hòa khí gia đình.\n- **Báo hiếu tâm linh:** Khuyên cha mẹ biết quy y Tam Bảo, giữ gìn năm giới, niệm Phật và làm việc thiện để gieo nhân giải thoát cho đời sau."
+  },
+  {
+    "title": "Lời Phật Dạy Người Cư Sĩ Quản Lý Tài Chính & Thịnh Vượng Chân Chính",
+    "slug": "loi-phat-day-nguoi-cu-si-quan-ly-tai-chinh",
+    "category_id": "10000000-0000-0000-0000-000000000003",
+    "author_id": "00000000-0000-0000-0000-000000000002",
+    "cover_image": "https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Đạo Phật không hề phủ nhận của cải vật chất. Trong Kinh Giáo Thọ Thi-Ca-La-Việt, Đức Phật đã chỉ dẫn công thức phân bổ tài chính thông thái tuyệt vời.",
+    "content": "## Công Thức Phân Chia Thu Nhập Bốn Phần\n\nTrong Kinh Sigalovada Sutta, Đức Phật khuyên người cư sĩ sau khi làm ra tài sản hợp pháp nên chia làm 4 phần:\n1. **Một phần tư (25%):** Dùng cho chi tiêu sinh hoạt hằng ngày của gia đình và phụng dưỡng cha mẹ.\n2. **Hai phần tư (50%):** Dùng để tái đầu tư vào công việc làm ăn, sản xuất và kinh doanh chân chính.\n3. **Một phần tư (25%):** Dành dụm phòng khi ốm đau, rủi ro bất trắc và trích một phần để làm việc phước thiện, cúng dường Tam Bảo.\n\nSở hữu tài sản bằng nghề nghiệp chân chính và biết sẻ chia sẽ đem lại sự thịnh vượng bền vững và an lạc tinh thần."
+  },
+  {
+    "title": "Nghệ Thuật Tha Thứ: Buông Bỏ Oán Thù Để Tự Cứu Lấy Chính Mình",
+    "slug": "nghe-thuat-tha-thu-buong-bo-oan-thu",
+    "category_id": "10000000-0000-0000-0000-000000000003",
+    "author_id": "00000000-0000-0000-0000-000000000004",
+    "cover_image": "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Ôm giữ cơn giận cũng giống như uống thuốc độc mà mong người khác chết. Tha thứ cho người khác là món quà lớn nhất ta tặng cho chính mình.",
+    "content": "## Hận Thù Diệt Hận Thù Là Điều Không Thể Có\n\nKinh Pháp Cú số 5 dạy:\n> \"Hận thù diệt hận thù,  \n> Đời này không thể có.  \n> Từ bi diệt hận thù,  \n> Là định luật ngàn thu.\"\n\nKhi ai đó làm tổn thương ta, họ đang là nạn nhân của sự vô minh và khổ đau trong chính họ. Hiểu được nỗi khổ của họ, lòng trắc ẩn sẽ thay thế sự căm ghét. Tha thứ không có nghĩa là đồng tình với việc làm sai trái, mà là tháo gỡ sợi xích oán thù đang trói chặt trái tim bạn."
+  },
+  {
+    "title": "Lời Phật Dạy Về Bốn Người Bạn Tốt & Cách Nhận Diện Bạn Giả Dối",
+    "slug": "loi-phat-day-ve-bon-nguoi-ban-tot",
+    "category_id": "10000000-0000-0000-0000-000000000003",
+    "author_id": "00000000-0000-0000-0000-000000000005",
+    "cover_image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Gần mực thì đen, gần đèn thì rạng. Lời Phật dạy cách chọn bạn tri kỷ đồng hành trên con đường đạo đức và sự nghiệp.",
+    "content": "## Bốn Hạng Bạn Lành (Thiện Tri Thức)\n\n1. **Bạn giúp đỡ:** Che chở ta khi ta hoạn nạn, bảo vệ tài sản của ta khi ta sơ ý.\n2. **Bạn cùng vui cùng khổ:** Chia sẻ những tâm sự thầm kín, không bỏ rơi ta khi ta sa cơ thất thế.\n3. **Bạn chỉ đường hướng thiện:** Khuyên ta tránh xa điều ác, khuyến khích ta làm điều lành và chỉ dạy những điều ta chưa biết.\n4. **Bạn có lòng trắc ẩn:** Không vui mừng trước thất bại của ta, luôn hoan hỷ khi thấy ta thành công và bảo vệ danh dự cho ta."
+  },
+  {
+    "title": "Vượt Qua Nỗi Sợ Hãi Về Sinh Tử: Tuệ Giác Về Bản Chất Bất Diệt",
+    "slug": "vuot-qua-noi-so-sinh-tu-tue-giac-bat-diet",
+    "category_id": "10000000-0000-0000-0000-000000000003",
+    "author_id": "00000000-0000-0000-0000-000000000004",
+    "cover_image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Đám mây không bao giờ chết, nó chỉ chuyển hóa thành cơn mưa mát lành. Nhìn sâu vào bản chất sinh diệt giúp ta tự tại trước cái chết.",
+    "content": "## Không Sinh Không Diệt Đừng Sợ Hãi\n\nTrong tác phẩm nổi tiếng \"Không Sinh Không Diệt Đừng Sợ Hãi\", Thiền sư Thích Nhất Hạnh giải thích tuệ giác Bát Nhã:\n> \"Sóng biển nhấp nhô lúc lên lúc xuống, nhưng bản chất của sóng chính là nước. Khi sóng nhận ra mình là nước, nó không còn sợ hãi lúc dâng trào hay lúc tan biến.\"\n\nChúng ta cũng vậy, cái chết của thể xác chỉ là một sự chuyển tiếp của dòng năng lượng ý thức. Sống trọn vẹn từng ngày trong chánh niệm và yêu thương, ta sẽ mỉm cười thanh thản khi chiếc lá vàng lìa cành."
+  },
+  {
+    "title": "Hóa Giải Nóng Giận Bằng Ái Ngữ: Bí Quyết Gìn Giữ Hạnh Phúc Hôn Nhân",
+    "slug": "hoa-giai-nong-gian-bang-ai-ngu-hon-nhan",
+    "category_id": "10000000-0000-0000-0000-000000000004",
+    "author_id": "00000000-0000-0000-0000-000000000006",
+    "cover_image": "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Khi cơn giận bùng lên, im lặng và theo dõi hơi thở là thượng sách. Đừng bao giờ ra quyết định hay nói lời cay độc lúc lửa sân đang bốc cháy.",
+    "content": "## Nghệ Thuật Ôm Ấp Cơn Giận\n\nCơn giận giống như một đứa trẻ đang gào khóc. Bạn không thể trừng phạt đứa trẻ mà phải dịu dàng ôm nó vào lòng và hỏi han.\n\n### Ba Câu Nói Thần Diệu Để Hóa Giải Rạn Nứt:\n1. *\"Em/Anh đang giận, xin hãy cho em/anh một khoảng lặng để tự nhìn lại mình.\"*\n2. *\"Em/Anh đang lắng nghe đây, xin hãy nói cho em/anh biết nỗi niềm của anh/em.\"*\n3. *\"Em/Anh đã hiểu rồi, em/anh xin lỗi vì những vụng về đã làm anh/em tổn thương.\"*\n\nNhờ ái ngữ và lắng nghe sâu sắc, ngôi nhà sẽ luôn là bến đỗ bình yên nhất."
+  },
+  {
+    "title": "Đạo Phật Với Stress & Áp Lực Công Sở: Làm Việc Chăm Chỉ Mà Không Lao Lực",
+    "slug": "dao-phat-voi-stress-ap-luc-cong-so",
+    "category_id": "10000000-0000-0000-0000-000000000004",
+    "author_id": "00000000-0000-0000-0000-000000000005",
+    "cover_image": "https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Học cách làm việc với tâm không dính mắc. Đem hết tâm huyết cống hiến cho công việc nhưng không biến sự thành bại thành gánh nặng tâm lý.",
+    "content": "## Làm Việc Trong Tinh Thần Thiền Định\n\nÁp lực deadline và KPI thường khiến người trẻ kiệt quệ (burnout). Đạo Phật dạy phương pháp \"Hành động vô ngã\":\n\n- **Tập trung đơn nhiệm (Single-tasking):** Làm việc nào trọn vẹn việc đó, không để đầu óc phân tán bởi mười mối lo cùng lúc.\n- **Dừng lại 60 giây sau mỗi giờ làm:** Thả lỏng mắt, thở 3 hơi sâu trước màn hình máy tính.\n- **Buông xả khi rời văn phòng:** Bước ra khỏi cửa cơ quan, hãy để công việc lại bàn làm việc, trở về với mái ấm và bữa cơm gia đình trọn vẹn."
+  },
+  {
+    "title": "Ứng Xử Tỉnh Thức Khi Bị Gièm Pha, Thị Phi Và Hiểu Lầm",
+    "slug": "ung-xu-tinh-thuc-khi-bi-giem-pha-thi-phi",
+    "category_id": "10000000-0000-0000-0000-000000000004",
+    "author_id": "00000000-0000-0000-0000-000000000002",
+    "cover_image": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Khen chê là ngọn gió đời, tâm như núi vững gió lay chẳng màng. Cách người xưa đối diện thị phi bằng sự tĩnh lặng thanh tao.",
+    "content": "## Tám Ngọn Gió Đời (Bát Phong)\n\nNgười đời luôn bị cuốn xoay bởi 8 ngọn gió: Lợi - Hao, Nhục - Vinh, Khen - Chê, Khổ - Vui.\nĐức Phật dạy:\n> \"Như tảng đá kiên cố, không bị gió bão lay chuyển; người trí cũng bất động trước mọi lời khen chê của thế gian.\"\n\nKhi bị vu oan, im lặng sống trong sạch là câu trả lời hùng hồn nhất. Thời gian và nhân quả sẽ là người phán xét công minh nhất cho sự thật."
+  },
+  {
+    "title": "Nuôi Dạy Con Trong Tinh Thần Từ Bi & Tôn Trọng Cá Tính",
+    "slug": "nuoi-day-con-trong-tinh-than-tu-bi",
+    "category_id": "10000000-0000-0000-0000-000000000004",
+    "author_id": "00000000-0000-0000-0000-000000000006",
+    "cover_image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Con cái là những mầm cây cần mảnh đất tình thương màu mỡ, không phải bản sao để cha mẹ áp đặt những kỳ vọng dang dở của mình.",
+    "content": "## Cha Mẹ Là Tấm Gương Tỉnh Thức\n\nDạy con không phải bằng lời rao giảng đạo đức sáo rỗng, mà bằng chính cách cha mẹ đối xử với nhau và với mọi người xung quanh:\n- Lắng nghe con không phán xét, chấp nhận con với những điểm chưa hoàn hảo.\n- Khuyến khích con biết yêu thương động vật, chia sẻ đồ chơi và biết nói lời cảm ơn, xin lỗi chân thành.\n- Cho con không gian tự do trải nghiệm và chịu trách nhiệm về hành vi của mình."
+  },
+  {
+    "title": "Đạo Phật Và Môi Trường: Lối Sống Xanh, Thuận Tự Nhiên & Hạn Chế Sát Sinh",
+    "slug": "dao-phat-va-moi-truong-loi-song-xanh",
+    "category_id": "10000000-0000-0000-0000-000000000004",
+    "author_id": "00000000-0000-0000-0000-000000000004",
+    "cover_image": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Trái đất không phải là tài nguyên vô tận để bóc lột. Lối sống tri túc (biết đủ) và ăn chay là hành động thiết thực bảo vệ hành tinh xanh.",
+    "content": "## Tình Thương Dành Cho Đất Mẹ\n\nMỗi bước chân ta đi, mỗi ngụm nước ta uống đều là ân huệ của thiên nhiên. \n- Giảm thiểu rác thải nhựa, tiết kiệm điện nước.\n- Thực hành ăn chay định kỳ để giảm lượng khí thải carbon và nuôi dưỡng hạt giống từ bi.\n- Sống tri túc: Biết đủ với những nhu cầu căn bản, không chạy theo chủ nghĩa tiêu dùng hoang phí."
+  },
+  {
+    "title": "Chữa Lành Đứa Trẻ Bên Trong: Nhìn Sâu Vào Những Tổn Thương Quá Khứ",
+    "slug": "chua-lanh-dua-tre-ben-trong-ton-thuong",
+    "category_id": "10000000-0000-0000-0000-000000000004",
+    "author_id": "00000000-0000-0000-0000-000000000006",
+    "cover_image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Bên trong mỗi người trưởng thành luôn có một đứa trẻ 5 tuổi từng bị tổn thương. Hãy quay về lắng nghe và vỗ về đứa trẻ ấy bằng năng lượng chánh niệm.",
+    "content": "## Trở Về Ôm Lấy Quá Khứ\n\nNhiều phản ứng giận dữ hay bất an của chúng ta hôm nay bắt nguồn từ những vết thương tuổi thơ chưa được chữa lành:\n- Ngồi yên, nhắm mắt và hình dung đứa trẻ năm xưa đang đứng trước mặt bạn.\n- Nói với đứa trẻ ấy: *\"Ta đã trở về rồi đây, ta đã lớn khôn và đủ sức bảo bọc cho em. Em an toàn rồi.\"*\nKhi hòa giải được với quá khứ, ta mới có thể sống trọn vẹn và an nhiên trong hiện tại."
+  },
+  {
+    "title": "Tinh Thần Nhập Thế Của Thiền Phái Trúc Lâm Thời Trần: Đạo Gắn Liền Với Đời",
+    "slug": "tinh-than-nhap-the-thien-phai-truc-lam-thoi-tran",
+    "category_id": "10000000-0000-0000-0000-000000000005",
+    "author_id": "00000000-0000-0000-0000-000000000001",
+    "cover_image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 9,
+    "excerpt": "Cư trần lạc đạo thả tùy duyên. Đỉnh cao triết học Phật giáo Việt Nam kết hợp hài hòa giữa giải thoát tâm linh và trách nhiệm bảo vệ giang sơn xã tắc.",
+    "content": "## Đạo Không Tách Rời Khỏi Đời\n\nThiền phái Trúc Lâm do Phật hoàng Trần Nhân Tông sáng lập là minh chứng rực rỡ nhất cho tinh thần Phật giáo dân tộc Việt Nam:\n> \"Cư trần lạc đạo thả tùy duyên,  \n> Cơ tắc xang hề khốn tắc miên.  \n> Gia trung hữu bảo hưu tầm mịch,  \n> Đối cảnh vô tâm mạc vấn thiền.\"\n\nSống giữa trần tục mà vui với đạo, thuận theo duyên khởi. Trong nhà đã có sẵn viên ngọc báu tự tính, chớ nhọc công tìm kiếm bên ngoài."
+  },
+  {
+    "title": "Nét Đẹp Độc Đáo Của Kiến Trúc Chùa Cổ Bắc Bộ: Mái Đao Cong & Gỗ Lim Mộc Mạc",
+    "slug": "kien-truc-chua-co-bac-bo-mai-dao-cong",
+    "category_id": "10000000-0000-0000-0000-000000000005",
+    "author_id": "00000000-0000-0000-0000-000000000001",
+    "cover_image": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Chùa Việt Nam không vươn cao chọc trời mà nép mình khiêm cung dưới bóng đa, bến nước, hòa quyện tuyệt mỹ với thiên nhiên làng quê thanh bình.",
+    "content": "## Nét Duyên Mộc Mạc Cổ Truyền\n\nKiến trúc chùa cổ miền Bắc nổi bật với cấu trúc vì kèo gỗ lim vững chãi, mái ngói vảy rồng cong vút như cánh chim hạ cánh, nền gạch Bát Tràng ấm áp. Mỗi chi tiết chạm khắc hoa sen, mây nước, rồng phượng đều gửi gắm ước nguyện mưa thuận gió hòa và thái bình thịnh trị."
+  },
+  {
+    "title": "Ý Nghĩa Tiếng Chuông Chùa: Âm Thanh Thức Tỉnh Lương Tri Nhân Loại",
+    "slug": "y-nghia-tieng-chuong-chua-thuc-tinh-luong-tri",
+    "category_id": "10000000-0000-0000-0000-000000000005",
+    "author_id": "00000000-0000-0000-0000-000000000005",
+    "cover_image": "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Nghe chuông phiền não tan mây khói, ý lặng thân an miệng mỉm cười. Văn hóa thỉnh chuông Đại hồng chung ngân vang giữa sớm mai thanh tịnh.",
+    "content": "## Tiếng Chuông Vọng Cõi U Minh\n\nMỗi sớm mai và chiều tà, tiếng chuông chùa ngân vang mang thông điệp từ bi giải thoát:\n> \"Nghe tiếng chuông lòng nhẹ tưng bừng,  \n> Bến giác mê đồ bỗng tỉnh bừng.  \n> Nguyện dứt oan khiên tiêu nghiệp chướng,  \n> Mười phương pháp giới ngập lòng xuân.\"\n\nKhi nghe tiếng chuông, người con Phật thường dừng lại mọi hoạt động, hít một hơi thở thật sâu để đưa tâm về với thân."
+  },
+  {
+    "title": "Ý Nghĩa Chiếc Áo Lam & Y Hoại Sắc Trong Đời Sống Phật Tử",
+    "slug": "y-nghia-chiec-ao-lam-va-y-hoai-sac",
+    "category_id": "10000000-0000-0000-0000-000000000005",
+    "author_id": "00000000-0000-0000-0000-000000000002",
+    "cover_image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Màu lam bình dị biểu trưng cho sự nhẫn nhục, hòa đồng và khiêm nhường. Chiếc áo nhắc nhở người mặc sống giản dị và bao dung.",
+    "content": "## Sắc Áo Của Sự Khiêm Hạ\n\nMàu áo lam không sặc sỡ, không phân biệt giàu nghèo. Khi khoác lên mình chiếc áo lam, mọi Phật tử đều bình đẳng trước Tam Bảo, cùng một chí hướng tu học đoạn trừ phiền não và lan tỏa tình thương."
+  },
+  {
+    "title": "Lịch Sử Du Nhập Phật Giáo Vào Việt Nam: Từ Trung Tâm Luy Lâu Đến Thời Lý - Trần",
+    "slug": "lich-su-du-nhap-phat-giao-viet-nam-luy-lau",
+    "category_id": "10000000-0000-0000-0000-000000000005",
+    "author_id": "00000000-0000-0000-0000-000000000001",
+    "cover_image": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 9,
+    "excerpt": "Phật giáo truyền trực tiếp từ Ấn Độ sang Việt Nam qua đường biển từ thế kỷ thứ nhất TCN, hình thành trung tâm Phật giáo Luy Lâu sầm uất trước cả Trung Hoa.",
+    "content": "## Dòng Chảy Tâm Linh Ngàn Năm Văn Hiến\n\nTrung tâm Luy Lâu (Bắc Ninh ngày nay) từng đón nhận các bậc cao tăng Ấn Độ như Khương Tăng Hội, Ma Ha Kỳ Vực. Trải qua thời Lý - Trần, Phật giáo trở thành quốc giáo, đồng hành cùng sự thịnh vượng và tự chủ của dân tộc Đại Việt."
+  },
+  {
+    "title": "Biểu Tượng Hoa Sen Trong Mỹ Thuật Phật Giáo: Gần Bùn Mà Chẳng Hôi Tanh Mùi Bùn",
+    "slug": "bieu-tuong-hoa-sen-trong-my-thuat-phat-giao",
+    "category_id": "10000000-0000-0000-0000-000000000005",
+    "author_id": "00000000-0000-0000-0000-000000000007",
+    "cover_image": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Hoa sen tượng trưng cho Phật tính thanh khiết vốn có trong mỗi con người, dù sinh ra giữa bùn lầy ngũ dục vẫn tỏa ngát hương thơm tinh khiết.",
+    "content": "## Tám Đặc Tính Tuyệt Vời Của Hoa Sen\n\nHoa sen hội tụ 8 đặc tính cao quý: Trừng thanh (lọc trong nước), Hành trực (thân ngay thẳng), Khiết tịnh (không dính bùn hôi), Hướng thượng (luôn vươn lên đón ánh sáng), Bồng thực (hoa và quả đồng thời xuất hiện),... biểu trưng cho quả vị giác ngộ viên mãn."
+  },
+  {
+    "title": "Cuộc Đời & Di Sản Hòa Bình Của Thiền Sư Thích Nhất Hạnh",
+    "slug": "cuoc-doi-di-san-thien-su-thich-nhat-hanh",
+    "category_id": "10000000-0000-0000-0000-000000000006",
+    "author_id": "00000000-0000-0000-0000-000000000004",
+    "cover_image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 10,
+    "excerpt": "Hành trình phụng sự không mệt mỏi của bậc thiền sư mang tuệ giác chánh niệm phương Đông hòa nhập vào dòng chảy văn minh toàn cầu.",
+    "content": "## Sứ Giả Của Hòa Bình Và Tỉnh Thức\n\nThiền sư Thích Nhất Hạnh (1926 - 2022) được mục sư Martin Luther King đề cử giải Nobel Hòa bình năm 1967. Thầy đã để lại kho tàng hơn 100 đầu sách kinh điển, hàng trăm bài thực tập chánh niệm nuôi dưỡng tâm hồn hàng triệu độc giả trên khắp năm châu."
+  },
+  {
+    "title": "Phật Hoàng Trần Nhân Tông: Từ Đấng Minh Quân Đến Tổ Sư Non Yên Tử",
+    "slug": "phat-hoang-tran-nhan-tong-tu-minh-quan-den-to-su",
+    "category_id": "10000000-0000-0000-0000-000000000006",
+    "author_id": "00000000-0000-0000-0000-000000000001",
+    "cover_image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 9,
+    "excerpt": "Rũ bỏ ngai vàng quyền quý khi đang ở đỉnh cao vinh quang để lên chốn rừng thiêng Yên Tử khoác áo nâu sồng tìm cầu chân lý giải thoát.",
+    "content": "## Tấm Gương Buông Bỏ Vĩ Đại\n\nSau hai lần lãnh đạo quân dân Đại Việt đánh tan giặc Nguyên Mông xâm lược, vua Trần Nhân Tông nhường ngôi cho con và xuất gia tu hành tại non Yên Tử, lập nên Thiền phái Trúc Lâm - một dòng thiền thuần Việt rạng rỡ non sông."
+  },
+  {
+    "title": "Bồ Tát Thích Quảng Đức & Trái Tim Bất Diệt Ngọn Lửa Từ Bi",
+    "slug": "bo-tat-thich-quang-duc-trai-tim-bat-diet",
+    "category_id": "10000000-0000-0000-0000-000000000006",
+    "author_id": "00000000-0000-0000-0000-000000000001",
+    "cover_image": "https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 8,
+    "excerpt": "Ngọn lửa vị pháp thiêu thân năm 1963 để lại quả tim bất diệt rung động lương tri toàn cầu, minh chứng cho tinh thần từ bi vô úy của đạo Phật.",
+    "content": "## Ngọn Lửa Chấn Động Địa Cầu\n\nNgày 11/6/1963, Hòa thượng Thích Quảng Đức tự thiêu tại ngã tư Phan Đình Phùng - Lê Văn Duyệt (Sài Gòn) để đòi quyền bình đẳng tôn giáo. Trong biển lửa ngút trời, ngài vẫn ngồi kiết già tĩnh lặng, để lại quả tim xá lợi bất hoại biểu trưng cho sức mạnh đại từ đại bi."
+  },
+  {
+    "title": "Tấm Gương Cư Sĩ Tâm Minh Lê Đình Thám & Phong Trào Chấn Hưng Phật Giáo",
+    "slug": "cu-si-tam-minh-le-dinh-tham-chan-hung-phat-giao",
+    "category_id": "10000000-0000-0000-0000-000000000006",
+    "author_id": "00000000-0000-0000-0000-000000000007",
+    "cover_image": "https://images.unsplash.com/photo-1532012164546-f432f2e3777a?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Một vị bác sĩ y khoa đem cả cuộc đời dịch kinh, thành lập Gia đình Phật tử Việt Nam và đào tạo thế hệ thanh thiếu niên phụng sự đạo pháp.",
+    "content": "## Trí Thức Tại Gia Cống Hiến Vì Chánh Pháp\n\nBác sĩ Tâm Minh Lê Đình Thám (1897 - 1969) là linh hồn của phong trào chấn hưng Phật giáo miền Trung thế kỷ 20. Ngài sáng lập tạp chí Viên Âm, phiên dịch bộ Kinh Lăng Nghiêm đồ sộ và đặt nền móng cho tổ chức Gia đình Phật tử Việt Nam."
+  },
+  {
+    "title": "Chuyện Chuyển Hóa Của Một Doanh Nhân: Từ Tranh Đua Đến Tìm Lại Chính Mình",
+    "slug": "chuyen-chuyen-hoa-cua-doanh-nhan-tim-lai-chinh-minh",
+    "category_id": "10000000-0000-0000-0000-000000000006",
+    "author_id": "00000000-0000-0000-0000-000000000003",
+    "cover_image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 7,
+    "excerpt": "Khi tài khoản ngân hàng đầy ắp nhưng tâm hồn trống rỗng và đổ vỡ, khóa tu 7 ngày im lặng đã mở ra bước ngoặt tái sinh kỳ diệu.",
+    "content": "## Hạnh Phúc Thật Sự Không Nằm Ở Con Số\n\nCâu chuyện người thật việc thật về một giám đốc doanh nghiệp từng lao vào kiếm tiền đến mức kiệt quệ sức khỏe và suýt tan vỡ hôn nhân. Nhờ duyên lành đến với một khóa thiền Vipassana, anh nhận ra giá trị của sự biết đủ và bắt đầu xây dựng mô hình doanh nghiệp hạnh phúc, yêu thương nhân viên."
+  },
+  {
+    "title": "Nụ Cười An Nhiên Của Người Mẹ Già Vượt Qua Bạo Bệnh Nhờ Niệm Phật",
+    "slug": "nu-cuoi-an-nhien-nguoi-me-gia-niem-phat",
+    "category_id": "10000000-0000-0000-0000-000000000006",
+    "author_id": "00000000-0000-0000-0000-000000000003",
+    "cover_image": "https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=1000&auto=format&fit=crop&q=80",
+    "reading_time": 6,
+    "excerpt": "Giữa những cơn đau co thắt của bệnh tật tuổi xế chiều, câu niệm Phật A Di Đà đã trở thành liều thuốc an thần kỳ diệu đem lại nụ cười thanh thoát.",
+    "content": "## Sức Mạnh Của Niềm Tin Tâm Linh\n\nLời chia sẻ chân tình về người mẹ 78 tuổi đối diện với căn bệnh hiểm nghèo. Thay vì sợ hãi oán thán, bà dành trọn thời gian lần chuỗi niệm Phật và hồi hướng công đức cho con cháu. Tâm an thì thân bớt đau, sự thanh thản của bà đã truyền cảm hứng sống đẹp cho cả đại gia đình."
+  }
+];
+
+export function getDynamicDailyArticles() {
+  const now = Date.now();
+  const daySeed = Math.floor(now / (1000 * 60 * 60 * 24));
+  const total = RAW_CURATED_ARTICLES.length;
+
+  return RAW_CURATED_ARTICLES.map((_, idx) => {
+    const actualIdx = (idx + (daySeed * 3)) % total;
+    const raw = RAW_CURATED_ARTICLES[actualIdx];
+    const cat = FALLBACK_CATEGORIES.find((c) => c.id === raw.category_id) || FALLBACK_CATEGORIES[0];
+    const author = FALLBACK_AUTHORS[raw.author_id] || FALLBACK_AUTHORS['00000000-0000-0000-0000-000000000004'];
+    const hoursAgo = idx === 0 ? 1 : idx === 1 ? 3 : idx === 2 ? 6 : (idx - 2) * 24;
+    const publishedDate = new Date(now - hoursAgo * 3600 * 1000).toISOString();
+
+    return {
+      id: `art-${actualIdx + 1}`,
+      title: raw.title,
+      slug: raw.slug,
+      excerpt: raw.excerpt,
+      content: raw.content,
+      cover_image: raw.cover_image,
+      reading_time_minutes: raw.reading_time || 7,
+      view_count: 0,
+      status: 'PUBLISHED',
+      published_at: publishedDate,
+      category_id: cat.id,
+      category_name: cat.name,
+      category_slug: cat.slug,
+      author_id: raw.author_id,
+      author_name: author.full_name,
+      author_dharma_name: author.dharma_name,
+      author_avatar: author.avatar_url,
+      author_bio: author.bio,
+      temple_name: author.temple_name,
+      is_today: idx < 3,
+    };
+  });
+}
+
+export const FALLBACK_TEMPLES = [
+  {
+    "id": "50000000-0000-0000-0000-000000000001",
+    "name": "Chùa Một Cột (Diên Hựu Tự)",
+    "slug": "chua-mot-cot-ha-noi",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "ĐĐ. Thích Đức Thiện",
+    "address": "Phố Chùa Một Cột, Phường Đội Cấn, Quận Ba Đình",
+    "province": "Hà Nội",
+    "district": "Ba Đình",
+    "latitude": 21.035824,
+    "longitude": 105.833621,
+    "cover_image": "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1600&auto=format&fit=crop&q=85",
+    "description": "Chùa Một Cột được xây dựng vào năm 1049 dưới thời vua Lý Thái Tông, mô phỏng đóa hoa sen vươn lên giữa hồ Linh Chiểu. Đây là một trong những biểu tượng văn hóa và tâm linh ngàn năm văn hiến của thủ đô Hà Nội.",
+    "history": "Theo truyền thuyết, vua Lý Thái Tông mộng thấy Phật Bà Quan Âm ngự trên tòa sen dắt vua lên tòa. Khi tỉnh dậy, vua cho dựng chùa với một cột đá nguyên khối vươn lên giữa hồ sen giống như giấc mộng, đặt tên là Diên Hựu (Phúc lành dài lâu).",
+    "phone": "024.3845.5588",
+    "website": "https://ditichlichsu.gov.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000002",
+    "name": "Chùa Trấn Quốc",
+    "slug": "chua-tran-quoc-ha-noi",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "TT. Thích Thanh Nhã",
+    "address": "Đường Thanh Niên, Phường Yên Phụ, Quận Tây Hồ",
+    "province": "Hà Nội",
+    "district": "Tây Hồ",
+    "latitude": 21.048325,
+    "longitude": 105.836815,
+    "cover_image": "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=2560&auto=format&fit=crop&q=90",
+    "description": "Chùa Trấn Quốc là ngôi chùa cổ kính nhất Thăng Long - Hà Nội với lịch sử hơn 1.500 năm, tọa lạc trên bán đảo nhỏ phía đông hồ Tây, từng được bình chọn là một trong những ngôi chùa đẹp nhất thế giới.",
+    "history": "Chùa được khởi dựng từ thời Tiền Lý (năm 541-547) với tên gọi Khai Quốc bên bờ sông Hồng. Đến đời vua Lê Trung Hưng dời vào đảo Kim Ngư hồ Tây và đổi tên thành Trấn Quốc thời vua Lê Hy Tông.",
+    "phone": "024.3829.3869",
+    "website": "https://chuatranquoc.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000003",
+    "name": "Quần Thể Danh Thắng Chùa Hương",
+    "slug": "chua-huong-ha-noi",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "TT. Thích Minh Hiền",
+    "address": "Xã Hương Sơn, Huyện Mỹ Đức",
+    "province": "Hà Nội",
+    "district": "Mỹ Đức",
+    "latitude": 20.618642,
+    "longitude": 105.748312,
+    "cover_image": "https://images.unsplash.com/photo-1528127269322-539801943592?w=2560&auto=format&fit=crop&q=90",
+    "description": "Chùa Hương là một quần thể văn hóa - tôn giáo lớn gồm hàng chục ngôi chùa thờ Phật, đền thờ thần gắn liền với tín ngưỡng nông nghiệp. Động Hương Tích được chúa Trịnh Sâm ngợi ca là Nam thiên đệ nhất động.",
+    "history": "Chùa Hương hình thành từ cuối thế kỷ 17. Trải qua các thăng trầm lịch sử, lễ hội Chùa Hương hàng năm kéo dài từ mùng 6 tháng Giêng đến hết tháng 3 âm lịch luôn là mùa trẩy hội tâm linh lớn nhất miền Bắc.",
+    "phone": "024.3384.8144",
+    "website": "https://lehoichuahuong.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000004",
+    "name": "Quần Thể Tâm Linh Chùa Bái Đính",
+    "slug": "chua-bai-dinh-ninh-binh",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "HT. Thích Thanh Nhiễu",
+    "address": "Xã Gia Sinh, Huyện Gia Viễn",
+    "province": "Ninh Bình",
+    "district": "Gia Viễn",
+    "latitude": 20.274218,
+    "longitude": 105.865319,
+    "cover_image": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=2560&auto=format&fit=crop&q=90",
+    "description": "Chùa Bái Đính là quần thể chùa lớn giữ nhiều kỷ lục nhất châu Á và Việt Nam, nổi bật với hành lang 500 tượng La Hán bằng đá xanh, đại bảo tháp cao 13 tầng cùng chuông đồng Đại hồng chung nặng 36 tấn.",
+    "history": "Khu chùa cổ được sáng lập bởi Quốc sư Nguyễn Minh Không từ thời nhà Lý (năm 1136). Năm 2003, quần thể Bái Đính mới được khởi công xây dựng và trở thành trung tâm tổ chức Đại lễ Phật đản Vesak Liên Hợp Quốc.",
+    "phone": "0229.3831.688",
+    "website": "https://chuabaidinh.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000005",
+    "name": "Quần Thể Chùa Tam Chúc",
+    "slug": "chua-tam-chuc-ha-nam",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "HT. Thích Thanh Quyết",
+    "address": "Thị trấn Ba Sao, Huyện Kim Bảng",
+    "province": "Hà Nam",
+    "district": "Kim Bảng",
+    "latitude": 20.551945,
+    "longitude": 105.823912,
+    "cover_image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2560&auto=format&fit=crop&q=90",
+    "description": "Chùa Tam Chúc tựa lưng vào núi Thất Tinh, hướng mặt ra hồ Lục Nhạc mênh mông, được mệnh danh là Vịnh Hạ Long trên cạn với phong cảnh non nước kỳ vĩ và những bức phù điêu dung nham núi lửa tinh xảo.",
+    "history": "Chùa Tam Chúc cổ có niên đại hơn 1.000 năm gắn liền với truyền thuyết Tiền Lục Nhạc - Hậu Thất Tinh. Quần thể ngày nay là nơi hội tụ tinh hoa nghệ thuật kiến trúc Phật giáo Đông Nam Á.",
+    "phone": "0226.3989.999",
+    "website": "https://tamchuc.com.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000006",
+    "name": "Thiền Viện Trúc Lâm Yên Tử",
+    "slug": "thien-vien-truc-lam-yen-tu",
+    "category": "THIEN_VIEN",
+    "tradition": "Thiền phái Trúc Lâm Yên Tử",
+    "abbot_name": "TT. Thích Đạo Hiển",
+    "address": "Núi Yên Tử, Xã Thượng Yên Công, Thành phố Uông Bí",
+    "province": "Quảng Ninh",
+    "district": "Uông Bí",
+    "latitude": 21.155021,
+    "longitude": 106.720835,
+    "cover_image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=2560&auto=format&fit=crop&q=90",
+    "description": "Cái nôi của Thiền phái Trúc Lâm Việt Nam do Phật hoàng Trần Nhân Tông sáng lập thế kỷ 13. Nơi đây hội tụ khí thiêng sông núi với chùa Hoa Yên, vườn tháp Huệ Quang và Chùa Đồng đỉnh non thiêng.",
+    "history": "Sau khi đánh thắng giặc Nguyên Mông, vua Trần Nhân Tông nhường ngôi và lên non thiêng Yên Tử xuất gia tu hành, sáng lập dòng thiền mang đậm bản sắc văn hóa dân tộc Việt Nam.",
+    "phone": "0203.3854.123",
+    "website": "https://yentu.com.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000007",
+    "name": "Chùa Linh Ứng Bãi Bụt (Sơn Trà)",
+    "slug": "chua-linh-ung-bai-but-da-nang",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "TT. Thích Thiện Nguyện",
+    "address": "Bán đảo Sơn Trà, Phường Thọ Quang, Quận Sơn Trà",
+    "province": "Đà Nẵng",
+    "district": "Sơn Trà",
+    "latitude": 16.100345,
+    "longitude": 108.277812,
+    "cover_image": "https://images.unsplash.com/photo-1608999383953-d61f5d9c1ace?w=2560&auto=format&fit=crop&q=90",
+    "description": "Ngôi chùa tọa lạc trên bán đảo Sơn Trà nhìn thẳng ra vịnh Đà Nẵng, nổi tiếng với đại tượng Bồ Tát Quán Thế Âm cao 67m (tương đương tòa nhà 30 tầng) đứng tựa lưng vào núi, hướng mắt ra biển Đông che chở sóng gió.",
+    "history": "Được khởi công xây dựng từ năm 2004 và khánh thành năm 2010. Tên gọi Bãi Bụt gắn liền với truyền thuyết thời vua Minh Mạng khi ngư dân phát hiện một bức tượng Phật dạt vào bãi cát và lập am thờ tự.",
+    "phone": "0236.3923.366",
+    "website": "https://chualinhungdanang.com",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000008",
+    "name": "Chùa Thiên Mụ (Linh Mụ Tự)",
+    "slug": "chua-thien-mu-hue",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "HT. Thích Trí Tựu",
+    "address": "Đồi Hà Khê, Phường Kim Long, Thành phố Huế",
+    "province": "Thừa Thiên Huế",
+    "district": "TP. Huế",
+    "latitude": 16.453312,
+    "longitude": 107.545012,
+    "cover_image": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=2560&auto=format&fit=crop&q=90",
+    "description": "Biểu tượng lịch sử và tâm linh xứ Huế bên dòng sông Hương hiền hòa, Chùa Thiên Mụ nổi bật với tháp Phước Duyên hình bát giác 7 tầng cao 21m cùng tiếng chuông chùa ngân vang lay động lòng người.",
+    "history": "Chùa được chúa Tiên Nguyễn Hoàng cho xây dựng vào năm 1601 sau khi nghe dân làng kể về điềm báo một bà lão áo đỏ rực xuất hiện trên đồi nói sẽ có bậc chân chúa đến lập chùa tụ linh khí đất nước.",
+    "phone": "0234.3522.617",
+    "website": "https://khamphahue.com.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000009",
+    "name": "Chùa Bửu Long (Thiền Viện Tổ Đình Bửu Long)",
+    "slug": "chua-buu-long-tp-hcm",
+    "category": "CHUA",
+    "tradition": "Nam tông (Nguyên thủy)",
+    "abbot_name": "HT. Thích Viên Minh",
+    "address": "81 Nguyễn Xiển, Phường Long Bình, Thành phố Thủ Đức",
+    "province": "TP. Hồ Chí Minh",
+    "district": "TP. Thủ Đức",
+    "latitude": 10.871925,
+    "longitude": 106.828612,
+    "cover_image": "https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?w=2560&auto=format&fit=crop&q=90",
+    "description": "Được National Geographic vinh danh là một trong những ngôi chùa có kiến trúc đẹp nhất thế giới, Chùa Bửu Long mang phong cách Phật giáo Nguyên thủy Theravada với bảo tháp Gotama Cetiya dát vàng lộng lẫy soi bóng hồ nước xanh biếc.",
+    "history": "Thành lập năm 1942 bởi Cư sĩ Võ Hà Thuật. Năm 2007, chùa được trùng tu lớn theo sự chỉ đạo của Hòa thượng Viên Minh, kết hợp tinh hoa kiến trúc Ấn Độ, Myanmar và văn hóa Phật giáo thời Nguyễn.",
+    "phone": "028.3732.5539",
+    "website": "https://trungtamhoton.org",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000010",
+    "name": "Chùa Vĩnh Nghiêm",
+    "slug": "chua-vinh-nghiem-tp-hcm",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "TT. Thích Thanh Phong",
+    "address": "339 Nam Kỳ Khởi Nghĩa, Phường 14, Quận 3",
+    "province": "TP. Hồ Chí Minh",
+    "district": "Quận 3",
+    "latitude": 10.790612,
+    "longitude": 106.685324,
+    "cover_image": "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=2560&auto=format&fit=crop&q=90",
+    "description": "Chùa Vĩnh Nghiêm là một trong những cơ sở Phật giáo lớn nhất Sài Gòn, mang phong cách kiến trúc chùa cổ miền Bắc bằng bê tông cốt thép đầu tiên tại Việt Nam với tháp Quán Thế Âm 7 tầng uy nghiêm.",
+    "history": "Khởi công xây dựng năm 1964 và hoàn thành năm 1971 do hai vị Hòa thượng Thích Tâm Giác và Thích Thanh Kiểm sáng lập, lấy nguyên mẫu từ ngôi tổ đình Vĩnh Nghiêm tại Bắc Giang.",
+    "phone": "028.3848.3153",
+    "website": "https://chuavinhnghiem.org",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000011",
+    "name": "Thiền Viện Trúc Lâm Đà Lạt",
+    "slug": "thien-vien-truc-lam-da-lat",
+    "category": "THIEN_VIEN",
+    "tradition": "Thiền phái Trúc Lâm Yên Tử",
+    "abbot_name": "HT. Thích Thông Phương",
+    "address": "Núi Phụng Hoàng, Phường 3, bên hồ Tuyền Lâm",
+    "province": "Lâm Đồng",
+    "district": "Đà Lạt",
+    "latitude": 11.904812,
+    "longitude": 108.434689,
+    "cover_image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=2560&auto=format&fit=crop&q=90",
+    "description": "Thiền viện Trúc Lâm Đà Lạt tọa lạc trên đồi Phụng Hoàng nhìn ra hồ Tuyền Lâm phẳng lặng, là một trong những trung tâm nghiên cứu và thực hành thiền tông lớn nhất Việt Nam do Thiền sư Thích Thanh Từ sáng lập.",
+    "history": "Được khởi công xây dựng vào năm 1993 và hoàn thành năm 1994, thiết kế bởi kiến trúc sư Ngô Viết Thụ. Không gian thiền môn hòa mình giữa đồi thông thơ mộng và ngàn hoa khoe sắc.",
+    "phone": "0263.3827.565",
+    "website": "https://truclamdalat.net",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000012",
+    "name": "Chùa Hoằng Pháp",
+    "slug": "chua-hoang-phap-tp-hcm",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "ĐĐ. Thích Tâm Trường",
+    "address": "Xã Tân Hiệp, Huyện Hóc Môn",
+    "province": "TP. Hồ Chí Minh",
+    "district": "Hóc Môn",
+    "latitude": 10.887612,
+    "longitude": 106.589123,
+    "cover_image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&auto=format&fit=crop&q=85",
+    "description": "Chùa Hoằng Pháp nổi tiếng với phong trào tu Phật thất và các khóa tu mùa hè thu hút hàng ngàn thanh thiếu niên và Phật tử từ khắp mọi miền đất nước về tham gia học hỏi nếp sống tỉnh thức.",
+    "history": "Sáng lập vào năm 1957 bởi Cố Đại lão Hòa thượng Ngộ Chân Tử. Nơi đây là trung tâm hoằng pháp và đào tạo Tăng tài kiệt xuất với nhiều ấn phẩm kinh sách và đĩa giảng Phật pháp giá trị.",
+    "phone": "028.3713.0002",
+    "website": "https://chuahoangphap.com.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000013",
+    "name": "Chùa Quán Sứ (Trụ Sở Trung Ương GHPGVN)",
+    "slug": "chua-quan-su-ha-noi",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "HT. Thích Thanh Nhiễu",
+    "address": "Số 73 Quán Sứ, Phường Trần Hưng Đạo, Quận Hoàn Kiếm",
+    "province": "Hà Nội",
+    "district": "Hoàn Kiếm",
+    "latitude": 21.025345,
+    "longitude": 105.845892,
+    "cover_image": "https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=2560&auto=format&fit=crop&q=90",
+    "description": "Chùa Quán Sứ là trụ sở chính thức của Giáo hội Phật giáo Việt Nam, trái tim của mọi hoạt động Phật sự quốc gia, gìn giữ nhiều bảo vật Phật giáo quý giá cùng thư viện Phật học phong phú.",
+    "history": "Xây dựng vào thế kỷ 15 dưới triều vua Lê Thế Tông, nguyên là công quán tiếp đón sứ thần các nước Phật giáo sang cống nạp, sau đó vua cho dựng ngôi chùa bên cạnh để sứ thần lễ bái.",
+    "phone": "024.3942.2427",
+    "website": "https://phatgiao.org.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000014",
+    "name": "Chùa Keo (Thần Quang Tự)",
+    "slug": "chua-keo-thai-binh",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "ĐĐ. Thích Thanh Bản",
+    "address": "Xã Duy Nhất, Huyện Vũ Thư",
+    "province": "Thái Bình",
+    "district": "Vũ Thư",
+    "latitude": 20.360612,
+    "longitude": 106.300624,
+    "cover_image": "https://images.unsplash.com/photo-1544717305-2782549b5136?w=2560&auto=format&fit=crop&q=90",
+    "description": "Kiệt tác kiến trúc gỗ cổ bậc nhất Đông Nam Á, Chùa Keo nổi tiếng với gác chuông ba tầng mái cao 11m hoàn toàn bằng gỗ lim không dùng một chiếc đinh sắt nào, đạt đến đỉnh cao điêu khắc thời Hậu Lê.",
+    "history": "Khởi dựng từ năm 1061 thời Lý Thánh Tông bởi Thiền sư Dương Không Lộ. Năm 1611 bị lũ cuốn trôi và được nhân dân tái thiết lại vào năm 1630 với quy mô bề thế gồm 128 gian như hiện nay.",
+    "phone": "0227.3822.456",
+    "website": "https://ditichchuakeo.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000015",
+    "name": "Chùa Long Sơn (Chùa Phật Trắng)",
+    "slug": "chua-long-son-khanh-hoa",
+    "category": "CHUA",
+    "tradition": "Bắc tông",
+    "abbot_name": "HT. Thích Quảng Thiện",
+    "address": "Số 20 Đường 23/10, Phường Phương Sơn, Thành phố Nha Trang",
+    "province": "Khánh Hòa",
+    "district": "TP. Nha Trang",
+    "latitude": 12.250412,
+    "longitude": 109.180635,
+    "cover_image": "https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1600&auto=format&fit=crop&q=85",
+    "description": "Tọa lạc dưới chân đồi Trại Thủy, Chùa Long Sơn nổi tiếng với pho tượng Kim Thân Phật Tổ (Phật Trắng) ngồi thuyết pháp trên đỉnh đồi cao 24m, từ đây có thể ngắm trọn vẹn toàn cảnh thành phố biển Nha Trang.",
+    "history": "Chùa do Hòa thượng Thích Ngộ Chí khai sơn năm 1886. Trải qua nhiều lần trùng tu, chùa đã được Trung tâm Sách Kỷ lục Việt Nam xác lập tượng Phật ngoài trời lớn nhất nước.",
+    "phone": "0258.3822.844",
+    "website": "https://chualongson.org.vn",
+    "is_verified": true
+  },
+  {
+    "id": "50000000-0000-0000-0000-000000000016",
+    "name": "Bồ Đề Đạo Tràng (Mahabodhi Temple - Bodh Gaya)",
+    "slug": "bo-de-dao-trang-bodh-gaya",
+    "category": "DI_TICH",
+    "tradition": "Thánh Tích Phật Giáo Quốc Tế",
+    "abbot_name": "Ban Quản Trị Mahabodhi Temple",
+    "address": "Bodh Gaya, Bang Bihar, Ấn Độ (Tứ Động Tâm)",
+    "province": "Thánh Tích Phật Giáo",
+    "district": "Bodh Gaya",
+    "latitude": 24.695912,
+    "longitude": 84.991425,
+    "cover_image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=85",
+    "description": "Thánh tích thiêng liêng bậc nhất của người con Phật trên toàn cầu — nơi Đức Bổn Sư Thích Ca Mâu Ni đạt giác ngộ vô thượng chánh đẳng chánh giác dưới cội cây Bồ Đề thiêng sau 49 ngày thiền định.",
+    "history": "Được vua A Dục (Ashoka) khởi dựng tháp tưởng niệm đầu tiên vào thế kỷ thứ 3 TCN. Quần thể đền Đại Giác hiện nay được UNESCO công nhận là Di sản Thế giới với tháp chính cao 55m.",
+    "phone": "+91.631.2200.735",
+    "website": "https://bodhgayatourism.com",
+    "is_verified": true
+  }
+];
+export const FALLBACK_VIDEOS = [
+  {
+    "id": "70000000-0000-0000-0000-000000000001",
+    "title": "Suy Nghĩ Lạc Quan Cuộc Sống Sẽ Bớt Khổ",
+    "speaker": "ĐĐ. Thích Pháp Hòa",
+    "video_url": "https://www.youtube.com/watch?v=8bgy1xhjCIU",
+    "thumbnail_url": "https://i.ytimg.com/vi/8bgy1xhjCIU/hqdefault.jpg",
+    "duration_seconds": 4320,
+    "category": "PHAP_THOAI",
+    "description": "Bài pháp thoại sâu sắc và hóm hỉnh của Thầy Thích Pháp Hòa chia sẻ cách làm chủ tư duy, chuyển hóa suy nghĩ tiêu cực thành năng lượng an vui, sống thanh thản giữa nghịch cảnh đời thường.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.406Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000002",
+    "title": "Hiểu Về Trái Tim: Tình Yêu Đích Thực Là Gì?",
+    "speaker": "Thầy Thích Minh Niệm",
+    "video_url": "https://www.youtube.com/watch?v=KBBw7pd8_q4",
+    "thumbnail_url": "https://i.ytimg.com/vi/KBBw7pd8_q4/hqdefault.jpg",
+    "duration_seconds": 2850,
+    "category": "PHAP_THOAI",
+    "description": "Bài giảng trích từ tác phẩm nổi tiếng Hiểu Về Trái Tim, phân tích bản chất của bốn yếu tố Từ - Bi - Hỷ - Xả trong tình thương, giúp ta trao đi yêu thương mà không biến thành sự ràng buộc hay tổn thương.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.421Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000003",
+    "title": "Học Cách TĨNH TÂM Bớt Suy Nghĩ - Nghe 1 Lần An Lạc 1 Đời",
+    "speaker": "Thiền sư Thích Nhất Hạnh",
+    "video_url": "https://www.youtube.com/watch?v=gcJsTUWm14E",
+    "thumbnail_url": "https://i.ytimg.com/vi/gcJsTUWm14E/hqdefault.jpg",
+    "duration_seconds": 3600,
+    "category": "THIEN_QUAN",
+    "description": "Những lời dạy dịu dàng và đầy tuệ giác của Thiền sư Thích Nhất Hạnh hướng dẫn nghệ thuật đưa tâm trở về với thân, dừng lại những suy nghĩ vẩn vơ để chạm vào sự tĩnh lặng và mầu nhiệm của hiện tại.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.421Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000004",
+    "title": "CHÚ ĐẠI BI 21 Biến (Chữ To Dễ Thuộc) - Thanh Tịnh Cầu An",
+    "speaker": "TT. Thích Trí Thoát Tụng",
+    "video_url": "https://www.youtube.com/watch?v=bewoZVB_wts",
+    "thumbnail_url": "https://i.ytimg.com/vi/bewoZVB_wts/hqdefault.jpg",
+    "duration_seconds": 3720,
+    "category": "KINH_TUNG",
+    "description": "Thời kinh tụng Chú Đại Bi 21 biến với chất giọng thanh thoát, trầm hùng của Thượng tọa Thích Trí Thoát kết hợp tiếng chuông mõ trang nghiêm, giúp tiêu trừ chướng ngại, mang lại bình an vô lượng.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000005",
+    "title": "Bát Nhã Ba La Mật Đa Tâm Kinh (21 Biến) Thanh Tịnh",
+    "speaker": "TT. Thích Trí Thoát",
+    "video_url": "https://www.youtube.com/watch?v=iL0z8bPVTcQ",
+    "thumbnail_url": "https://i.ytimg.com/vi/iL0z8bPVTcQ/hqdefault.jpg",
+    "duration_seconds": 1980,
+    "category": "KINH_TUNG",
+    "description": "Trì tụng Tâm Kinh Bát Nhã soi tỏ chân lý Tánh Không, vượt qua mọi khổ ách tai ương. Âm thanh mầu nhiệm đưa hành giả vào trạng thái định tâm thanh tịnh tuyệt đối.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000006",
+    "title": "Chiêm Bái Toàn Cảnh Quần Thể Danh Thắng Chùa Tam Chúc | Non Nước Hữu Tình",
+    "speaker": "Phim Tài Liệu Di Sản Phật Giáo",
+    "video_url": "https://www.youtube.com/watch?v=3QRGSGW21Jg",
+    "thumbnail_url": "https://i.ytimg.com/vi/3QRGSGW21Jg/hqdefault.jpg",
+    "duration_seconds": 1420,
+    "category": "VAN_HOA",
+    "description": "Thước phim tư liệu toàn cảnh ghi lại không gian danh thắng chùa Tam Chúc giữa hồ Lục Nhạc và dãy núi Thất Tinh, cùng kiến trúc Điện Tam Thế tráng lệ bậc nhất Việt Nam.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000007",
+    "title": "Bái Đính Cổ Tự - Vẻ Đẹp Linh Thiêng Huyền Bí Nơi Đất Cố Đô Tràng An",
+    "speaker": "Our Endless World Travel",
+    "video_url": "https://www.youtube.com/watch?v=Hit9M451P78",
+    "thumbnail_url": "https://i.ytimg.com/vi/Hit9M451P78/hqdefault.jpg",
+    "duration_seconds": 1850,
+    "category": "VAN_HOA",
+    "description": "Hành trình chiêm bái Chùa Bái Đính Ninh Bình, chiêm ngưỡng hành lang La Hán đá xanh dài nhất châu Á và tiếng chuông đồng vang vọng giữa đất trời Tràng An thanh tịnh.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000008",
+    "title": "Nghệ Thuật Lắng Nghe & Nói Lời Ái Ngữ Nuôi Dưỡng Hạnh Phúc",
+    "speaker": "Thiền sư Thích Nhất Hạnh",
+    "video_url": "https://www.youtube.com/watch?v=9hz_zOcXPXY",
+    "thumbnail_url": "https://i.ytimg.com/vi/9hz_zOcXPXY/hqdefault.jpg",
+    "duration_seconds": 3120,
+    "category": "PHAP_THOAI",
+    "description": "Bí quyết thực hành ái ngữ và lắng nghe sâu sắc để hóa giải những rạn nứt trong các mối quan hệ hôn nhân, gia đình và bạn bè theo tinh thần từ bi Bồ Tát Quán Âm.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000009",
+    "title": "Hiểu Về Trái Tim: Chuyển Hóa Tuyệt Vọng & Nỗi Sợ",
+    "speaker": "Thầy Thích Minh Niệm",
+    "video_url": "https://www.youtube.com/watch?v=4zeYOdbbM30",
+    "thumbnail_url": "https://i.ytimg.com/vi/4zeYOdbbM30/hqdefault.jpg",
+    "duration_seconds": 2400,
+    "category": "THIEN_QUAN",
+    "description": "Chỉ dẫn tâm lý trị liệu dựa trên tuệ giác đạo Phật: Đón nhận nỗi tuyệt vọng như một phần của cuộc sống và khơi dậy sức mạnh chữa lành tự thân từ sự buông xả.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000010",
+    "title": "Giữ Được Bình An Giữa Sóng Gió Là Thành Công Lớn Nhất Đời Người",
+    "speaker": "Thiền sư Thích Nhất Hạnh",
+    "video_url": "https://www.youtube.com/watch?v=SELZBUa3VDM",
+    "thumbnail_url": "https://i.ytimg.com/vi/SELZBUa3VDM/hqdefault.jpg",
+    "duration_seconds": 3950,
+    "category": "PHAP_THOAI",
+    "description": "Bài pháp đàm sâu sắc giúp người cư sĩ xây dựng hòn đảo tự thân vững vàng, không bị cuốn trôi bởi danh lợi, hơn thua và áp lực của đời sống hiện đại.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000011",
+    "title": "Bát Nhã Ba La Mật Đa Tâm Kinh Diễn Xướng Thanh Tịnh",
+    "speaker": "Quỳnh Trang Official",
+    "video_url": "https://www.youtube.com/watch?v=Wm3AZIkhNy4",
+    "thumbnail_url": "https://i.ytimg.com/vi/Wm3AZIkhNy4/hqdefault.jpg",
+    "duration_seconds": 640,
+    "category": "KINH_TUNG",
+    "description": "Giọng ca ngân vang mộc mạc và thanh khiết kết hợp phối khí thiền định nhẹ nhàng, tạo nên một bản diễn xướng Bát Nhã Tâm Kinh lay động lòng người.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000012",
+    "title": "Tâm Bình Thế Giới Bình - Sống An Lạc Trong Mọi Hoàn Cảnh",
+    "speaker": "ĐĐ. Thích Pháp Hòa",
+    "video_url": "https://www.youtube.com/watch?v=5rCVXF25BJU",
+    "thumbnail_url": "https://i.ytimg.com/vi/5rCVXF25BJU/hqdefault.jpg",
+    "duration_seconds": 4620,
+    "category": "PHAP_THOAI",
+    "description": "Bài pháp thoại mới nhất của Thầy Thích Pháp Hòa tại Tu Viện Trúc Lâm, giải đáp tường tận các khúc mắc trong đời sống tâm linh, gia đình và phương pháp giữ tâm bình thản trước vạn biến.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  },
+  {
+    "id": "70000000-0000-0000-0000-000000000013",
+    "title": "Bình An Nơi Tâm - Sống Thuận Duyên Giữa Biến Động",
+    "speaker": "ĐĐ. Thích Pháp Hòa",
+    "video_url": "https://www.youtube.com/watch?v=h9OggggjJsA",
+    "thumbnail_url": "https://i.ytimg.com/vi/h9OggggjJsA/hqdefault.jpg",
+    "duration_seconds": 4120,
+    "category": "PHAP_THOAI",
+    "description": "Thời pháp thoại sâu sắc về nghệ thuật buông bỏ sự cầu toàn, đón nhận mọi thuận nghịch của duyên khởi bằng nụ cười bao dung và trí tuệ tỉnh thức.",
+    "view_count": 0,
+    "created_at": "2026-11-03T15:04:13.422Z"
+  }
+];
+export const FALLBACK_BOOKS = [
+  {
+    "id": "90000000-0000-0000-0000-000000000001",
+    "slug": "kinh-phap-cu",
+    "title": "Kinh Pháp Cú (Dhammapada)",
+    "subtitle": "Tuyển tập 423 bài kệ vàng khai mở tuệ giác giải thoát",
+    "author": "Đức Phật Thích Ca Mâu Ni",
+    "translator": "HT. Thích Minh Châu dịch Việt",
+    "cover_image": "/images/books/kinh_phap_cu.jpg",
+    "description": "Kinh Pháp Cú là một trong mười lăm quyển kinh thuộc Tiểu Bộ Kinh trong Kinh Tạng Pali. Tuyển tập 423 bài kệ ngắn gọn, súc tích chứa đựng cốt tủy giáo lý Phật đà, là cẩm nang tu dưỡng đạo đức cao quý của người con Phật qua mọi thời đại.",
+    "category": "KINH_DIEN",
+    "total_pages": 260,
+    "published_year": 2020,
+    "chapters": [
+      {
+        "title": "Lời Tựa & Ý Nghĩa Kinh Pháp Cú",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Lời Tựa & Cốt Tủy Pháp Cú",
+            "title": "Hương Thơm Của Giới Đức",
+            "content": "Kinh Pháp Cú (Dhammapada) là viên ngọc quý nhất trong kho tàng văn học Phật giáo Pali. Từng lời dạy của Đức Bổn Sư Thích Ca Mâu Ni được cô đọng thành những câu kệ ngũ ngôn dung dị mà thâm sâu mầu nhiệm.\n\nĐọc Kinh Pháp Cú không phải chỉ để tìm hiểu triết lý, mà là để soi rọi lại từng ý nghĩ, lời nói và hành vi của chính mình trong từng phút giây của đời sống thường nhật. Mỗi bài kệ như một giọt nước cam lộ tươi mát, gột rửa những trần cấu phiền não và đánh thức hạt giống tuệ giác vốn sẵn có trong tâm khảm mỗi người.",
+            "quote": "Hương các loài hoa thơm không ngược bay chiều gió. Chỉ hương người đức hạnh bay ngược gió bốn phương.",
+            "footnote": "Dhammapada: Dhamma là Chân lý/Giáo pháp, Pada là Lời dạy/Con đường."
+          }
+        ]
+      },
+      {
+        "title": "Phẩm 1: Song Yếu (Yamakavagga)",
+        "startPage": 2,
+        "pages": [
+          {
+            "pageNumber": 2,
+            "chapterTitle": "Phẩm 1: Song Yếu (Yamakavagga)",
+            "title": "Kệ 01 & 02: Tâm Là Chủ, Tâm Tạo Tác",
+            "content": "1. Ý dẫn đầu các pháp,\nÝ làm chủ, ý tạo;\nNếu với ý ô nhiễm,\nNói lên hay hành động,\nKhổ não bước theo sau,\nNhư xe chân vật kéo.\n\n2. Ý dẫn đầu các pháp,\nÝ làm chủ, ý tạo;\nNếu với ý thanh tịnh,\nNói lên hay hành động,\nAn lạc bước theo sau,\nNhư bóng không rời hình.\n\nÝ niệm là cội nguồn của mọi khổ vui nơi cõi nhân gian. Người biết hộ trì tâm ý như người lính canh giữ thành trì cẩn mật, chẳng để cho giặc phiền não lén lút xâm nhập.",
+            "quote": "Ý tịnh tạo an lạc, ý nhiễm chuốc khổ đau.",
+            "footnote": "Phẩm Song Yếu gồm các cặp kệ đối lập: thiện và ác, khổ và vui."
+          },
+          {
+            "pageNumber": 3,
+            "chapterTitle": "Phẩm 1: Song Yếu (Yamakavagga)",
+            "title": "Kệ 03 - 05: Hận Thù Diệt Hận Thù",
+            "content": "3. \"Nó mắng tôi, đánh tôi,\nNó thắng tôi, cướp tôi\",\nAi ôm ấp niệm ấy,\nHận thù không thể nguôi.\n\n4. \"Nó mắng tôi, đánh tôi,\nNó thắng tôi, cướp tôi\",\nKhông ôm ấp niệm ấy,\nHận thù tự nhiên nguôi.\n\n5. Ở đời này hận thù,\nKhông thể diệt hận thù;\nChỉ từ bi diệt hận,\nLà định luật ngàn thu.\n\nOán hận gặp oán hận chỉ tựa như lấy dầu đổ vào lửa cháy bùng thêm. Chỉ có lòng bao dung và ánh sáng của tình thương chân thật mới làm mát dịu những vết thương lòng muôn thuở.",
+            "quote": "Lấy ân báo oán, oán ấy tiêu tan. Lấy oán báo oán, oán hận chập chùng.",
+            "footnote": "Đức Thế Tôn thuyết bài kệ này tại Kỳ Viên Tịnh Xá hóa giải thù hận muôn kiếp."
+          }
+        ]
+      },
+      {
+        "title": "Phẩm 2: Không Phóng Dật (Appamadavagga)",
+        "startPage": 4,
+        "pages": [
+          {
+            "pageNumber": 4,
+            "chapterTitle": "Phẩm 2: Không Phóng Dật (Appamadavagga)",
+            "title": "Kệ 21 & 22: Con Đường Bất Tử",
+            "content": "21. Không phóng dật: đường sống,\nPhóng dật: đường của chết;\nNgười tinh tấn không chết,\nKẻ phóng dật như chết.\n\n22. Bậc trí tuệ thông suốt,\nĐiều bất tử cao thượng;\nVui trong không phóng dật,\nVui hạnh bậc Thánh hiền.\n\nPhóng dật là buông lung theo dục vọng, quên mất chánh niệm hiện tiền. Bậc trí giả luôn tỉnh thức, biết rõ từng hơi thở, từng bước chân, sống trọn vẹn trong tịnh thức không để tháng ngày trôi qua uổng phí.",
+            "quote": "Tinh tấn là sức mạnh nhiệm mầu phá tan ngàn trùng tăm tối.",
+            "footnote": "Appamada: Sự không buông lung, tinh cần tỉnh giác trong từng sát-na."
+          },
+          {
+            "pageNumber": 5,
+            "chapterTitle": "Phẩm 2: Không Phóng Dật (Appamadavagga)",
+            "title": "Kệ 25: Tự Xây Hòn Đảo Cho Chính Mình",
+            "content": "25. Bằng nỗ lực chuyên cần,\nBằng không phóng dật hạnh,\nBằng tự chế, tự điều,\nBậc trí xây hòn đảo,\nNước lũ không ngập tràn.\n\nGiữa đại dương cuồn cuộn của tham ái và sinh tử luân hồi, nếu không tự xây cho mình một hòn đảo của chánh niệm và giới đức, con người sẽ dễ dàng bị cuốn phăng vào vực thẳm mê lầm.\n\nHãy tự mình thắp đuốc lên mà đi, lấy Chánh pháp làm ngọn đèn chỉ lối, lấy Giới luật làm bậc thềm an ổn.",
+            "quote": "Hãy là ngọn đèn cho chính mình, hãy nương tựa nơi chính mình.",
+            "footnote": "Lời di huấn thiêng liêng của Đức Thế Tôn trước giờ nhập Niết bàn."
+          }
+        ]
+      },
+      {
+        "title": "Phẩm 3: Tâm (Cittavagga)",
+        "startPage": 6,
+        "pages": [
+          {
+            "pageNumber": 6,
+            "chapterTitle": "Phẩm 3: Tâm (Cittavagga)",
+            "title": "Kệ 33 - 35: Uốn Nắn Dòng Tâm Thức",
+            "content": "33. Tâm dao động, quay cuồng,\nKhó bảo hộ, khó nhiếp;\nNgười trí uốn thẳng tâm,\nNhư thợ tên uốn tên.\n\n34. Như cá quăng lên cạn,\nVẫy vùng trên đất khô;\nTâm này cũng vùng vẫy,\nĐể thoát vòng ma vương.\n\n35. Khó nắm giữ, khinh động,\nTheo các dục quay cuồng;\nLành thay, điều phục tâm!\nTâm điều, an lạc đến.\n\nTâm ý con người vốn vượn chuyền cành, ngựa phi đồng nội. Thiền định chính là nghệ thuật thuần hóa con tuấn mã ngỗ nghịch ấy trở về với chuồng thanh tịnh.",
+            "quote": "Thắng ngàn quân địch ngoài chiến trường không bằng tự thắng tâm mình.",
+            "footnote": "Citta trong tiếng Pali chỉ tâm ý, dòng tư tưởng và tình cảm liên tục sinh diệt."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000002",
+    "slug": "trai-tim-cua-but",
+    "title": "Trái Tim Của Bụt",
+    "subtitle": "Đi vào cội nguồn giáo lý đạo Bụt qua thiền quán chánh niệm",
+    "author": "Thiền sư Thích Nhất Hạnh",
+    "translator": "Nguyên tác tiếng Việt",
+    "cover_image": "/images/books/trai_tim_cua_but.jpg",
+    "description": "Cuốn sách giới thiệu các giáo lý then chốt của đạo Phật qua lăng kính thiền quán và chánh niệm đầy chất thơ, sáng tỏ và gần gũi. Tác phẩm đi sâu vào Tứ Diệu Đế, Bát Chánh Đạo, Thập Nhị Nhân Duyên và Năm Uẩn dưới góc nhìn tươi mát, ứng dụng được ngay vào cuộc sống.",
+    "category": "TRIET_HOC",
+    "total_pages": 380,
+    "published_year": 2018,
+    "chapters": [
+      {
+        "title": "Lời Mở Đầu: Tình Thương và Hiểu Biết",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Lời Mở Đầu",
+            "title": "Đạo Bụt Của Tình Thương",
+            "content": "Bụt không phải là một vị thần linh ban phúc giáng họa. Bụt là một con người đã giác ngộ và chỉ cho chúng ta con đường để tự mình giác ngộ.\n\nGiáo lý của Bụt rất cụ thể và thực tế. Nó như dòng suối mát lành chảy qua sa mạc của những lo âu, bế tắc thời hiện đại. Khi ta biết dừng lại (Chỉ) và nhìn sâu (Quán), ta sẽ nhận ra rằng hạnh phúc chân thật luôn có mặt trong phút giây hiện tại, và chất liệu nuôi dưỡng tình thương chính là sự thấu hiểu sâu sắc nỗi khổ niềm đau của người khác.",
+            "quote": "Có hiểu mới có thương. Không hiểu biết thì không thể có tình thương chân thật.",
+            "footnote": "Trích giảng thoại của Thiền sư Thích Nhất Hạnh tại Tu viện Làng Mai."
+          }
+        ]
+      },
+      {
+        "title": "Chương 1: Bốn Sự Thật Màu Nhiệm (Tứ Diệu Đế)",
+        "startPage": 2,
+        "pages": [
+          {
+            "pageNumber": 2,
+            "chapterTitle": "Chương 1: Bốn Sự Thật Màu Nhiệm",
+            "title": "Khổ Đau Và Bông Sen",
+            "content": "Sự thật thứ nhất là Khổ (Dukkha). Cuộc đời có những nỗi đau: sinh, già, bệnh, chết, xa người thương, gần kẻ ghét, cầu không được.\n\nNhưng Bụt dạy về Khổ không phải để chúng ta bi quan chán đời, mà để chúng ta dám can đảm đối diện với sự thật. Khổ đau giống như bùn lầy dơ bẩn, còn hạnh phúc giải thoát giống như đóa hoa sen thanh khiết. Không có bùn thì không thể nào có sen. Người tu tập không chạy trốn khổ đau, mà học cách mỉm cười và chuyển hóa chất liệu bùn lầy thành hương hoa thơm ngát cho cuộc đời.",
+            "quote": "Không có bùn thì không có sen. Không có khổ đau thì không hiểu được hạnh phúc.",
+            "footnote": "Bài học then chốt về tương tức (interbeing) giữa khổ đau và giải thoát."
+          },
+          {
+            "pageNumber": 3,
+            "chapterTitle": "Chương 1: Bốn Sự Thật Màu Nhiệm",
+            "title": "Diệt Đế: Sự Vắng Mặt Của Lo Âu",
+            "content": "Sự thật thứ ba là Diệt (Nirodha) - sự chấm dứt của khổ đau, hay còn gọi là Niết bàn.\n\nNiết bàn không phải là một cõi xa xôi nào đó sau khi ta nhắm mắt lìa đời. Niết bàn là trạng thái mát mẻ, an tịnh ngay bây giờ và ở đây khi ngọn lửa tham lam, sân hận và si mê đã được dập tắt. Khi bạn thở một hơi thở nhẹ nhàng, buông hết gánh nặng ngàn cân trong lòng, giây phút ấy bạn đã chạm vào Niết bàn nhiệm mầu của Bụt.",
+            "quote": "Niết bàn không phải là điểm đến sau cái chết, Niết bàn là sự giải thoát ngay phút giây này.",
+            "footnote": "Nirodha: sự dập tắt, vắng lặng phiền não."
+          }
+        ]
+      },
+      {
+        "title": "Chương 2: Con Đường Tám Nhánh (Bát Chánh Đạo)",
+        "startPage": 4,
+        "pages": [
+          {
+            "pageNumber": 4,
+            "chapterTitle": "Chương 2: Con Đường Tám Nhánh",
+            "title": "Chánh Kiến: Đôi Mắt Tuệ Giác",
+            "content": "Chánh kiến (Samyak-drishti) là cái thấy đúng đắn, không bị thiên kiến, thành kiến hay sự phân biệt nhị nguyên che lấp.\n\nKhi nhìn một tờ giấy trắng, nếu có chánh kiến, ta sẽ thấy trong tờ giấy ấy có đám mây trôi (làm nên hạt mưa), có ánh nắng mặt trời (nuôi cây lớn), có người tiều phu đốn gỗ, và có cả hạt lúa người thợ ăn để làm ra giấy. Tờ giấy không thể tự mình tồn tại độc lập. Nó \"tương tức\" với tất cả vũ trụ vạn vật. Cái thấy tương tức ấy chính là đỉnh cao của Chánh kiến.",
+            "quote": "Bạn không hiện hữu một mình, bạn hiện hữu cùng với vạn vật (Inter-are).",
+            "footnote": "Thuật ngữ \"Tương tức\" do Thiền sư sáng tạo để giải thích tính Không và Duyên khởi."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000003",
+    "slug": "duong-xua-may-trang",
+    "title": "Đường Xưa Mây Trắng",
+    "subtitle": "Theo gót chân Bụt - thiên trường ca về cuộc đời Đức Thế Tôn",
+    "author": "Thiền sư Thích Nhất Hạnh",
+    "translator": "Nguyên tác tiếng Việt",
+    "cover_image": "/images/books/duong_xua_may_trang.jpg",
+    "description": "Tác phẩm văn học Phật giáo kinh điển kể lại trọn vẹn cuộc đời Đức Phật Thích Ca Mâu Ni từ lúc đản sinh, xuất gia tầm đạo, thành đạo dưới cội bồ đề cho đến ngày nhập Niết bàn. Ngòi bút thi vị, êm ả như một bài thơ thiền dẫn dắt người đọc bước đi bên cạnh Đức Từ Phụ.",
+    "category": "VANG_BONG",
+    "total_pages": 650,
+    "published_year": 2019,
+    "chapters": [
+      {
+        "title": "Chương 1: Chú Bé Chăn Trâu Svasti",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Chương 1: Chú Bé Chăn Trâu Svasti",
+            "title": "Gặp Gỡ Bên Rừng Uruvela",
+            "content": "Svasti là một cậu bé chăn trâu nghèo khổ mười một tuổi ở làng Uruvela. Chiều hôm ấy, khi đang lùa đàn trâu về bãi cỏ quen thuộc ven sông Ni Liên Thiền, cậu bỗng bắt gặp một vị sa môn đang ngồi tĩnh lặng dưới bóng cây bồ đề râm mát.\n\nVị sa môn khoác chiếc y màu đất bạc màu, dáng ngồi trang nghiêm, thư thái tựa ngọn núi đá vững chãi. Đôi mắt Người toát lên một vẻ nhân từ ấm áp mà trước giờ Svasti chưa từng thấy nơi bất kỳ ai trên cõi đời này. Cậu bé rón rén bước lại gần, lòng ngập tràn kính phục và yêu thương lạ thường.",
+            "quote": "Bước chân của người giải thoát êm đềm như áng mây trắng thong dong giữa bầu trời xanh.",
+            "footnote": "Svasti trong kinh văn tiếng Hán thường phiên âm là Cát Tường (Katthaka)."
+          },
+          {
+            "pageNumber": 2,
+            "chapterTitle": "Chương 1: Chú Bé Chăn Trâu Svasti",
+            "title": "Nắm Cỏ Kusa Dâng Lên Bụt",
+            "content": "Người mỉm cười nhìn Svasti, nụ cười làm tan biến mọi nỗi sợ hãi trong lòng cậu bé nghèo.\n\n- Em tên là gì?\n- Dạ thưa thầy, con tên là Svasti. Con cắt cỏ cho trâu ăn.\n\nNgười nhìn Svasti rồi nhìn bó cỏ xanh mướt trên tay cậu. Svasti chợt nhớ ra điều gì, vội kính cẩn dâng lên:\n- Thưa thầy, cỏ này thơm và sạch lắm. Thầy có muốn dùng làm tọa cụ để ngồi thiền không ạ?\n\nNgười mỉm cười đón nhận bó cỏ kusa từ tay Svasti, cảm ơn cậu với tất cả sự trân trọng chân thành của một bậc đại giác.",
+            "quote": "Một tấm lòng trong sáng dâng tặng một cọng cỏ cũng quý giá hơn ngàn cân vàng ngọc.",
+            "footnote": "Bó cỏ kusa mà Svasti cúng dường trở thành bồ đoàn bất toạ dưới cội cây Bồ Đề."
+          }
+        ]
+      },
+      {
+        "title": "Chương 2: Đêm Thành Đạo",
+        "startPage": 3,
+        "pages": [
+          {
+            "pageNumber": 3,
+            "chapterTitle": "Chương 2: Đêm Thành Đạo",
+            "title": "Sao Mai Mọc Dưới Cội Bồ Đề",
+            "content": "Đêm thứ bốn mươi chín, khi sao mai vừa mọc nơi chân trời phía đông, đại địa bỗng rúng động sáu cách. Sa môn Cù Đàm chứng đắc Vô Thượng Chánh Đẳng Chánh Giác.\n\nNgười thấy rõ nguồn gốc của sinh tử luân hồi, thấy rõ mọi chúng sanh đều có sẵn hạt giống giác ngộ sáng ngời nhưng vì màng nhện vô minh và tham ái che lấp nên phải chịu trôi lăn chìm nổi trong bể khổ trầm luân.\n\nNgười cất lên tiếng thở dài xót thương vô hạn: \"Kỳ diệu thay! Tất cả chúng sanh đều đầy đủ đức tướng và trí tuệ của Như Lai!\"",
+            "quote": "Mặt trời trí tuệ đã bừng nở, xua tan bóng đêm vô minh ngàn kiếp.",
+            "footnote": "Sự kiện Đức Phật thành đạo vào ngày mùng 8 tháng 12 âm lịch."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000004",
+    "slug": "tang-thu-song-chet",
+    "title": "Tạng Thư Sống Chết",
+    "subtitle": "Minh triết Tây Tạng về sinh tử và hành trình chuyển hóa tâm thức",
+    "author": "Sogyal Rinpoche",
+    "translator": "Ni sư Thích Nữ Trí Hải dịch",
+    "cover_image": "/images/books/tang_thu_song_chet.jpg",
+    "description": "Cuốn sách tâm linh lừng danh thế giới dung hợp giáo lý Bardo Thodol huyền bí của Phật giáo Tây Tạng với cái nhìn khoa học, tâm lý học hiện đại. Tác phẩm hướng dẫn nghệ thuật sống an lạc, hiểu thấu quy luật vô thường và thanh thản bước qua cánh cửa tử sinh.",
+    "category": "THIEN_HOC",
+    "total_pages": 520,
+    "published_year": 2017,
+    "chapters": [
+      {
+        "title": "Chương 1: Trong Tấm Gương Của Sự Chết",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Chương 1: Trong Tấm Gương Của Sự Chết",
+            "title": "Nỗi Sợ Cái Chết Và Ảo Tưởng Bất Diệt",
+            "content": "Xã hội hiện đại dạy con người chuẩn bị cho mọi thứ: nghề nghiệp, tài chính, hôn nhân, tuổi già... nhưng lại hoàn toàn chối bỏ và sợ hãi cái chết.\n\nChúng ta sống như thể mình sẽ tồn tại vĩnh viễn trên cõi đời này, tích cóp tiền của, danh vọng rồi bất chợt bàng hoàng hoảng loạn khi thần chết gõ cửa. Nhìn thẳng vào cái chết không phải là bi quan, mà là cách duy nhất để ta thức tỉnh, trân quý từng hơi thở quý báu và sống một cuộc đời có ý nghĩa sâu sắc nhất.",
+            "quote": "Cái chết là tấm gương phản chiếu chân thật nhất giá trị của sự sống.",
+            "footnote": "Bardo Thodol: Giải thoát qua sự lắng nghe trong cõi trung ấm."
+          },
+          {
+            "pageNumber": 2,
+            "chapterTitle": "Chương 1: Trong Tấm Gương Của Sự Chết",
+            "title": "Bản Tự Nhiên Của Tâm (Rigpa)",
+            "content": "Tâm ta giống như bầu trời trong vắt, còn những ý nghĩ vui buồn, lo âu, giận dữ chỉ là những áng mây trôi dạt. Dù mây đen giông bão có mù mịt đến đâu, bản chất bầu trời vẫn luôn quang đãng, bao la và tĩnh lặng.\n\nThiền định không phải là xua đuổi mây đen, mà là nhận biết bản tính bầu trời xanh thẳm ấy. Khi ta an trú trong tự tính Rigpa sáng ngời, cái chết chỉ là sự tan biến của thân xác tứ đại, còn Phật tính thanh tịnh vẫn trường tồn bất hoại.",
+            "quote": "Nhận ra bản tâm là tìm thấy ngôi nhà bình yên tuyệt đối giữa giông bão thế gian.",
+            "footnote": "Rigpa: Tuệ giác nguyên sơ, bản tính giác ngộ thanh tịnh thuần khiết."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000005",
+    "slug": "kinh-kim-cuong",
+    "title": "Kinh Kim Cương (Kim Cang Bát Nhã)",
+    "subtitle": "Gươm báu cắt đứt phiền não và phá tan vô minh chấp thủ",
+    "author": "Đức Phật Thích Ca Mâu Ni",
+    "translator": "Thiền sư Thích Nhất Hạnh bình giải",
+    "cover_image": "/images/books/kinh_kim_cuong.jpg",
+    "description": "Bộ kinh cốt tủy của hệ thống Bát Nhã Ba La Mật Đa. Kinh dạy về tinh thần vô trụ, vô tướng, vô cầu: làm tất cả việc lành, độ khắp chúng sanh mà không thấy mình là người làm, không thấy việc được làm, tâm không hề dính mắc.",
+    "category": "KINH_DIEN",
+    "total_pages": 280,
+    "published_year": 2021,
+    "chapters": [
+      {
+        "title": "Phẩm 1: Pháp Hội Nhân Duyên Khởi",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Phẩm 1: Pháp Hội Nhân Duyên Khởi",
+            "title": "Bữa Cơm Khất Thực Của Bụt",
+            "content": "Một thời Bụt ở nước Xá-vệ, tại rừng Kỳ-đà, vườn Cấp Cô Độc, cùng với chúng đại tỳ-kheo một ngàn hai trăm năm mươi người.\n\nĐến giờ thọ trai, Bụt đắp y, mang bát vào thành lớn Xá-vệ khất thực. Theo thứ tự từng nhà khất thực xong, Người trở về tịnh xá, dùng cơm, cất y bát, rửa chân, trải tòa mà ngồi.\n\nToàn bộ tinh hoa của Kinh Kim Cương bắt đầu từ những cử chỉ bình dị nhất: đắp y, ôm bát, đi từng bước, rửa chân. Chân lý tối thượng không nằm ở ngôn từ hoa mỹ, mà ngự trị ngay trong sự tĩnh lặng của nếp sống giải thoát thường ngày.",
+            "quote": "Đạo pháp hiện tiền nơi từng bước chân khất thực thanh tịnh.",
+            "footnote": "Vajracchedika Prajnaparamita Sutra - Kim Cương Bát Nhã Ba La Mật Kinh."
+          }
+        ]
+      },
+      {
+        "title": "Phẩm 3: Đại Thừa Chánh Tông",
+        "startPage": 2,
+        "pages": [
+          {
+            "pageNumber": 2,
+            "chapterTitle": "Phẩm 3: Đại Thừa Chánh Tông",
+            "title": "Độ Tận Chúng Sanh Mà Không Thấy Có Chúng Sanh Được Độ",
+            "content": "Bụt bảo Tu-bồ-đề:\n\"Bồ-tát ma-ha-tát nên hàng phục tâm mình như vầy: Hết thảy các loài chúng sanh, noãn sinh, thai sinh, thấp sinh, hóa sinh... Ta đều đưa vào cõi Vô Dư Niết Bàn khiến họ được giải thoát. Độ vô lượng vô biên chúng sanh như thế, mà thực ra không có chúng sanh nào được diệt độ.\n\nVì cớ sao? Này Tu-bồ-đề! Nếu Bồ-tát còn có tướng Ngã, tướng Nhân, tướng Chúng Sanh, tướng Thọ Giả, thời chẳng phải là Bồ-tát.\"",
+            "quote": "Ưng vô sở trụ, nhi sinh kỳ tâm. (Đừng trụ vào đâu mà phát khởi tâm thanh tịnh).",
+            "footnote": "Bốn tướng cơ bản của sự chấp ngã: Ngã, Nhân, Chúng sanh, Thọ giả."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000006",
+    "slug": "hanh-phuc-cam-tay",
+    "title": "Hạnh Phúc Cầm Tay",
+    "subtitle": "Cẩm nang nuôi dưỡng bình an và mỉm cười trong từng giây phút hiện tại",
+    "author": "Thiền sư Thích Nhất Hạnh",
+    "translator": "Nguyên tác tiếng Việt",
+    "cover_image": "/images/books/hanh_phuc_cam_tay.jpg",
+    "description": "Cuốn sách chắt lọc những hướng dẫn thực tập chánh niệm ngắn gọn, giản dị mà mầu nhiệm: cách thở, cách mỉm cười, cách ăn cơm, rửa bát, uống trà, cách buông bỏ muộn phiền để cảm nhận hạnh phúc đang có sẵn ngay trong lòng bàn tay.",
+    "category": "THIEN_HOC",
+    "total_pages": 220,
+    "published_year": 2021,
+    "chapters": [
+      {
+        "title": "Thực Tập 1: Hơi Thở Ý Thức",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Thực Tập 1: Hơi Thở Ý Thức",
+            "title": "Thở Vào Tâm Tĩnh Lặng",
+            "content": "Thở vào, tôi biết tôi đang thở vào.\nThở ra, tôi biết tôi đang thở ra.\n\nChỉ một hơi thở ý thức như thế thôi cũng đủ để đưa tâm bạn quay trở về với thân thể trong giây phút hiện tại. Khi tâm và thân hợp nhất, bạn mới thực sự có mặt, thực sự sống. Bạn sẽ nhận ra bầu trời vẫn xanh, mây vẫn trắng, chim vẫn hót, và trái tim bạn vẫn đang đập nhịp đập yêu thương mầu nhiệm.",
+            "quote": "Hạnh phúc không phải là chuyện tương lai. Hạnh phúc là nghệ thuật sống trong hiện tại.",
+            "footnote": "Phép quán niệm hơi thở theo Kinh Anapanasati."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000007",
+    "slug": "muon-kiep-nhan-sinh",
+    "title": "Muôn Kiếp Nhân Sinh",
+    "subtitle": "Bức tranh toàn cảnh về nhân quả, luân hồi và thức tỉnh tâm linh",
+    "author": "Nguyên Phong",
+    "translator": "Phóng tác và ghi chép",
+    "cover_image": "/images/books/muon_kiep_nhan_sinh.jpg",
+    "description": "Tác phẩm gây chấn động độc giả về hành trình luân hồi qua nhiều kiếp sống của doanh nhân Thomas tại Atlantis, Ai Cập cổ đại và Hy Lạp. Cuốn sách gióng lên hồi chuông cảnh tỉnh về định luật nhân quả khắt khe và tầm quan trọng của việc gieo rắc tình thương, nâng cao rung động tâm thức.",
+    "category": "NHAN_QUA",
+    "total_pages": 420,
+    "published_year": 2020,
+    "chapters": [
+      {
+        "title": "Chương 1: Nhân Duyên Kỳ Lạ Tại Đài Bắc",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Chương 1: Nhân Duyên Kỳ Lạ",
+            "title": "Hạt Mầm Luân Hồi",
+            "content": "Cuộc gặp gỡ tình cờ giữa tác giả và doanh nhân tài chính phố Wall Thomas tại một tu viện tĩnh mịch ở Đài Loan đã mở ra câu chuyện phi thường về ký ức muôn kiếp nhân sinh.\n\nThomas tâm sự: \"Trước đây tôi chỉ tin vào tiền bạc, logic và những con số khô khan. Cho đến khi những ký ức tiền kiếp ùa về, tôi mới hiểu rằng vũ trụ này vận hành bởi một luật lệ tuyệt đối chính xác: Luật Nhân Quả. Mọi ý nghĩ, lời nói, hành động của ta như những hạt giống gieo vào không gian, sớm muộn gì cũng trổ quả mà chính ta phải gánh chịu.\"",
+            "quote": "Nhân quả đừng đợi kiếp sau mới thấy. Từng hành động nhỏ hôm nay đang dệt nên số phận ngày mai.",
+            "footnote": "Tác phẩm được First News phát hành và trở thành hiện tượng văn hóa đọc."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000008",
+    "slug": "an-lac-tung-buoc-chan",
+    "title": "An Lạc Từng Bước Chân",
+    "subtitle": "Con đường chuyển hóa khổ đau tìm về an nhiên tự tại",
+    "author": "Thiền sư Thích Nhất Hạnh",
+    "translator": "Chân Pháp Khâm dịch",
+    "cover_image": "/images/books/an_lac_tung_buoc_chan.jpg",
+    "description": "Bản hướng dẫn tuyệt đẹp về thiền hành và nghệ thuật an trú trong hiện tại. Từng bước chân đặt trên mặt đất là một lời cầu nguyện cho hòa bình thế giới, nhắc nhở ta rằng sự an lạc đích thực bắt đầu từ một tâm hồn bình yên.",
+    "category": "THIEN_HOC",
+    "total_pages": 240,
+    "published_year": 2020,
+    "chapters": [
+      {
+        "title": "Phần 1: Nụ Cười Của Hiện Tại",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Phần 1: Nụ Cười Của Hiện Tại",
+            "title": "Đi Như Một Người Tự Do",
+            "content": "Khi bạn đi, hãy đặt bàn chân xuống đất với tất cả sự nâng niu, dịu dàng như đang hôn lên mặt đất mẹ.\n\nĐừng đi như bị ma đuổi, đừng mang theo những toan tính dự án vào từng bước chân. Hãy bước đi như một người hoàn toàn tự do, thong dong giữa cuộc đời. Trái đất này là tịnh độ, và mỗi bước chân an lạc là một bông hoa sen nở dưới gót hài của bạn.",
+            "quote": "Không có con đường đi đến hòa bình, hòa bình chính là con đường.",
+            "footnote": "Thiền hành (Kinh hành) là pháp môn đặc trưng của truyền thống Làng Mai."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000009",
+    "slug": "phat-hoc-pho-thong",
+    "title": "Phật Học Phổ Thông",
+    "subtitle": "Bộ giáo trình Phật học căn bản và nền tảng cho người sơ cơ đến chuyên tu",
+    "author": "Hòa thượng Thích Thiện Hoa",
+    "translator": "Nguyên bản tiếng Việt",
+    "cover_image": "/images/books/phat_hoc_pho_thong.jpg",
+    "description": "Bộ sách giáo khoa Phật học kinh điển gồm 12 khóa học do cố Hòa thượng Thích Thiện Hoa biên soạn. Hệ thống hóa toàn bộ giáo lý Phật đà từ Tam quy, Ngũ giới, Thập thiện, Bát Chánh Đạo đến các triết thuyết Đại thừa cao sâu như Duy Thức, Bát Nhã, Hoa Nghiêm.",
+    "category": "GIAO_LY",
+    "total_pages": 980,
+    "published_year": 2019,
+    "chapters": [
+      {
+        "title": "Khóa I: Bài 1 - Mười Lợi Ích Của Việc Học Phật",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Khóa I: Bài 1",
+            "title": "Ánh Sáng Khai Mở Trí Tuệ",
+            "content": "Đạo Phật là đạo giác ngộ, không phải là mê tín van xin. Người học Phật trước hết phải dùng chánh kiến để nhận định chân lý, phân biệt chánh tà.\n\nMười điều lợi ích tối thượng khi học Phật:\n1. Phá tan bóng đêm vô minh si ám.\n2. Dứt trừ lo âu phiền muộn trong lòng.\n3. Xây dựng đời sống đạo đức mẫu mực.\n4. Hiểu rõ quy luật nhân quả, không làm điều xằng bậy.\n5. Tự làm chủ tâm hồn, không bị hoàn cảnh lay chuyển.\n6. Mở rộng lòng từ bi yêu thương muôn loài.\n7. Xây dựng gia đình êm ấm, xã hội hòa bình.\n8. Giải thoát khỏi cạm bẫy danh lợi hão huyền.\n9. Thắp sáng hạt giống giác ngộ vô thượng.\n10. Đạt đến an lạc giải thoát rốt ráo Niết bàn.",
+            "quote": "Học Phật là để mở mang trí tuệ và nuôi lớn lòng từ bi, chẳng phải để cầu xin danh lợi.",
+            "footnote": "Hòa thượng Thích Thiện Hoa (1918 - 1973), viện trưởng Viện Hóa Đạo GHPGVNTN."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "90000000-0000-0000-0000-000000000010",
+    "slug": "kinh-dia-tang",
+    "title": "Kinh Địa Tạng Bồ Tát Bổn Nguyện",
+    "subtitle": "Nguyện lực bao la cứu vớt chúng sanh cõi u minh tăm tối",
+    "author": "Đức Phật Thích Ca Mâu Ni",
+    "translator": "HT. Thích Trí Tịnh dịch Việt",
+    "cover_image": "/images/books/kinh_dia_tang.jpg",
+    "description": "Bộ kinh hiếu đạo bậc nhất của Phật giáo Đại thừa. Kể lại tiền thân chí hiếu của Bồ Tát Địa Tạng cứu mẹ khỏi địa ngục và phát đại nguyện: \"Địa ngục vị không, thệ bất thành Phật; Chúng sanh độ tận, phương chứng Bồ đề\".",
+    "category": "KINH_DIEN",
+    "total_pages": 360,
+    "published_year": 2021,
+    "chapters": [
+      {
+        "title": "Phẩm 1: Thần Thông Tại Cung Trời Đao Lợi",
+        "startPage": 1,
+        "pages": [
+          {
+            "pageNumber": 1,
+            "chapterTitle": "Phẩm 1: Cung Trời Đao Lợi",
+            "title": "Đức Bụt Tán Thán Đại Nguyện Địa Tạng",
+            "content": "Như vầy tôi nghe. Một thời Đức Bụt ở tại cung trời Đao Lợi vì Thánh Mẫu Ma-da mà thuyết pháp.\n\nLúc bấy giờ, Bồ Tát Địa Tạng nương thần lực của Bụt mà hiện phân thân khắp trăm ngàn muôn ức thế giới, đến trước Đức Thế Tôn. Đức Bụt đưa bàn tay sắc vàng xoa đảnh Bồ Tát Địa Tạng mà phó chúc:\n\n\"Này Địa Tạng! Từ nay cho đến khi Phật Di Lặc ra đời, chúng sanh trong cõi Ta bà này can cường khó độ, Ta giao phó cho ông. Đừng để cho một chúng sanh nào bị đọa vào địa ngục chịu khổ dù chỉ một ngày một đêm!\"",
+            "quote": "Địa ngục chưa trống, thề chưa thành Phật. Chúng sanh độ hết, mới chứng Bồ đề.",
+            "footnote": "Kinh Địa Tạng được xem là Hiếu Kinh của đạo Phật phương Đông."
+          }
+        ]
+      }
+    ]
+  }
+];
+
+export const FALLBACK_AUDIO = [
+  {
+    id: '60000000-0000-0000-0000-000000000001',
+    title: 'Pháp âm an lạc: Nhận diện và chuyển hóa cơn giận',
+    speaker: 'Thầy Thích Minh Niệm • TV. Minh Đức',
+    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+    duration_seconds: 1560,
+    category: 'PHAP_THOAI',
+    cover_image: 'https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=600&auto=format&fit=crop&q=80',
+    description: 'Bài giảng sâu sắc về bản chất của tâm sân, phương pháp nhìn sâu vào cảm thọ để nuôi dưỡng từ bi và bao dung.',
+    listen_count: 0,
+  },
+  {
+    id: '60000000-0000-0000-0000-000000000002',
+    title: 'Kinh Bát Nhã Ba La Mật Đa (Tụng thanh tịnh)',
+    speaker: 'Chư Tăng Tổ Đình Vĩnh Nghiêm',
+    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    duration_seconds: 540,
+    category: 'KINH_TUNG',
+    cover_image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&auto=format&fit=crop&q=80',
+    description: 'Thời kinh tụng Bát Nhã với giọng tụng trang nghiêm, chuông mõ thanh thoát giúp lắng đọng tâm thức.',
+    listen_count: 0,
+  },
+  {
+    id: '60000000-0000-0000-0000-000000000003',
+    title: 'Thiền dẫn 15 phút: Hơi thở nuôi dưỡng bình an',
+    speaker: 'Thiền sư Thích Nhất Hạnh • Làng Mai',
+    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    duration_seconds: 900,
+    category: 'THIEN',
+    cover_image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=600&auto=format&fit=crop&q=80',
+    description: 'Bài thực hành thiền dẫn nhẹ nhàng đưa tâm về với thân, thư giãn từng thớ cơ và cảm nhận sự sống tươi mát.',
+    listen_count: 0,
+  },
+  {
+    id: '60000000-0000-0000-0000-000000000004',
+    title: 'Pháp thoại: Buông Xả Phiền Não Giữa Đời Thường',
+    speaker: 'ĐĐ. Thích Pháp Hòa • Tu Viện Trúc Lâm',
+    audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+    duration_seconds: 1820,
+    category: 'PHAP_THOAI',
+    cover_image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&auto=format&fit=crop&q=80',
+    description: 'Lời khuyên chân thành giúp người cư sĩ ứng dụng Phật pháp để tháo gỡ những khúc mắc trong gia đình và công việc.',
+    listen_count: 0,
+  },
+];
+
+export const FALLBACK_LEARNING_PATHS = [
+  { id: '40000000-0000-0000-0000-000000000001', title: 'Người mới tìm hiểu Phật giáo', slug: 'nguoi-moi-tim-hieu', description: 'Lộ trình nhập môn thân thiện giải thích nguồn gốc, cuộc đời Đức Phật, Tam Bảo và tinh thần khai phóng của đạo Phật.', level: 'BEGINNER', icon_name: 'Compass', estimated_hours: 6, total_modules: 4, sort_order: 1 },
+  { id: '40000000-0000-0000-0000-000000000002', title: 'Phật pháp Căn bản & Giới luật', slug: 'phat-phap-can-ban', description: 'Tìm hiểu sâu về Tứ Diệu Đế, Bát Chánh Đạo, Nghiệp, Tái sinh và Năm giới quý báu gìn giữ hạnh phúc gia đình.', level: 'BEGINNER', icon_name: 'BookOpen', estimated_hours: 12, total_modules: 6, sort_order: 2 },
+  { id: '40000000-0000-0000-0000-000000000003', title: 'Thiền quán & Chánh niệm ứng dụng', slug: 'thien-quan-chanh-niem-ung-dung', description: 'Phương pháp thiền tọa, thiền hành, quán niệm hơi thở Anapanasati và thực hành tỉnh giác giữa đời thường.', level: 'INTERMEDIATE', icon_name: 'Smile', estimated_hours: 10, total_modules: 5, sort_order: 3 },
+  { id: '40000000-0000-0000-0000-000000000004', title: 'Kinh điển & Triết học Đại thừa', slug: 'kinh-dien-triet-hoc-dai-thua', description: 'Khám phá tư tưởng Bát Nhã, Tánh Không, Kinh Kim Cương, Kinh Pháp Hoa và tinh thần Bồ Tát đạo độ sinh.', level: 'ADVANCED', icon_name: 'Scroll', estimated_hours: 20, total_modules: 8, sort_order: 4 },
+  { id: '40000000-0000-0000-0000-000000000005', title: 'Phật giáo trong Đời sống & Gia đình', slug: 'phat-giao-doi-song-gia-dinh', description: 'Nuôi dạy con cái trong tinh thần từ bi, quản lý tài chính theo lời Phật dạy và giải tỏa áp lực công sở.', level: 'BEGINNER', icon_name: 'Heart', estimated_hours: 8, total_modules: 4, sort_order: 5 },
+];
+
+export const FALLBACK_DAILY_PRACTICE = {
+  id: '30000000-0000-0000-0000-000000000001',
+  practice_date: new Date().toISOString().split('T')[0],
+  mindful_quote: 'Hận thù diệt hận thù, đời này không thể có. Từ bi diệt hận thù, là định luật ngàn thu.',
+  quote_source: 'Kinh Pháp Cú — Kệ số 5',
+  reflection_text: 'Mỗi khi đối diện với sự bực dọc hay hiểu lầm từ người khác, hãy nhớ rằng phản ứng bằng cơn giận chỉ châm thêm dầu vào lửa. Chỉ có lòng bao dung, sự điềm tĩnh và tâm từ bi mới có sức mạnh chuyển hóa mọi oán kết và đem lại bình an thật sự cho chính tâm hồn bạn.',
+  mindful_action: 'Dành 3 phút ngồi tĩnh lặng trước khi bắt đầu công việc. Gửi một lời chúc an lành trong tâm trí đến người bạn cảm thấy khó hòa hợp nhất.',
+  audio_title: 'Thiền dẫn 15 phút: Hơi thở nuôi dưỡng bình an',
+  audio_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+  duration_seconds: 900,
+};
+
+export const FALLBACK_EVENTS = [
+  {
+    id: 'a0000000-0000-0000-0000-000000000001',
+    title: 'Khóa tu Một Ngày An Lạc — Nuôi Dưỡng Tâm Từ',
+    slug: 'khoa-tu-mot-ngay-an-lac',
+    temple_id: '50000000-0000-0000-0000-000000000013',
+    temple_name: 'Chùa Quán Sứ',
+    description: 'Chương trình tu học trọn ngày dành cho Phật tử: Tọa thiền buổi sáng, nghe pháp thoại từ chư Tôn đức, thọ trai chánh niệm và pháp đàm chia sẻ.',
+    cover_image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&auto=format&fit=crop&q=80',
+    start_date: new Date(Date.now() + 3 * 86400000).toISOString(),
+    end_date: new Date(Date.now() + 3 * 86400000 + 8 * 3600000).toISOString(),
+    location: 'Chùa Quán Sứ, 73 Quán Sứ, Hoàn Kiếm, Hà Nội',
+    is_online: false,
+  },
+  {
+    id: 'a0000000-0000-0000-0000-000000000002',
+    title: 'Đêm Hoa Đăng Cầu Quốc Thái Dân An & Thuyết Giảng Phật Pháp',
+    slug: 'dem-hoa-dang-cau-an',
+    temple_id: '50000000-0000-0000-0000-000000000012',
+    temple_name: 'Chùa Hoằng Pháp',
+    description: 'Lễ thắp nến hoa đăng tri ân chư Phật, tụng kinh Phước Đức và lắng nghe pháp thoại về đạo hiếu trong gia đình Phật tử.',
+    cover_image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=800&auto=format&fit=crop&q=80',
+    start_date: new Date(Date.now() + 7 * 86400000).toISOString(),
+    end_date: new Date(Date.now() + 7 * 86400000 + 4 * 3600000).toISOString(),
+    location: 'Chùa Hoằng Pháp, Xã Tân Hiệp, Huyện Hóc Môn, TP. Hồ Chí Minh',
+    is_online: false,
+  },
+  {
+    id: 'a0000000-0000-0000-0000-000000000003',
+    title: 'Khóa Thiền Tĩnh Tâm Cuối Tuần — Trở Về Hơi Thở Chánh Niệm',
+    slug: 'khoa-thien-tinh-tam-cuoi-tuan',
+    temple_id: '50000000-0000-0000-0000-000000000011',
+    temple_name: 'Thiền Viện Trúc Lâm Đà Lạt',
+    description: 'Khóa thực hành thiền tọa, thiền hành giữa rừng thông thanh tịnh và lắng nghe chư Tăng khai thị phương pháp buông xả vọng tưởng.',
+    cover_image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=80',
+    start_date: new Date(Date.now() + 12 * 86400000).toISOString(),
+    end_date: new Date(Date.now() + 13 * 86400000).toISOString(),
+    location: 'Thiền Viện Trúc Lâm Đà Lạt, Đồi Phụng Hoàng, Lâm Đồng',
+    is_online: false,
+  },
+];
+
+export const FALLBACK_ORGANIZATIONS = [
+  {
+    id: 'b0000000-0000-0000-0000-000000000001',
+    name: 'Giáo hội Phật giáo Việt Nam',
+    slug: 'giao-hoi-phat-giao-viet-nam',
+    org_type: 'GIAO_HOI',
+    logo_url: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
+    cover_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=1200&auto=format&fit=crop&q=80',
+    description: 'Tổ chức tôn giáo đại diện cho Tăng Ni, Phật tử Việt Nam ở trong và ngoài nước với phương châm Đạo pháp - Dân tộc.',
+    address: 'Chùa Quán Sứ, 73 Quán Sứ, Hoàn Kiếm, Hà Nội',
+    phone: '024.39422427',
+    email: 'vanphong@ghpgvn.vn',
+    website: 'https://phatgiao.org.vn',
+    is_verified: true,
+  },
+  {
+    id: 'b0000000-0000-0000-0000-000000000002',
+    name: 'Viện Nghiên cứu Phật học Việt Nam',
+    slug: 'vien-nghien-cuu-phat-hoc-viet-nam',
+    org_type: 'VIEN_NGHIEN_CUU',
+    logo_url: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=200&auto=format&fit=crop&q=80',
+    cover_url: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=1200&auto=format&fit=crop&q=80',
+    description: 'Trung tâm dịch thuật, ấn hành Đại Tạng Kinh Việt Nam và nghiên cứu di sản văn hóa, triết học Phật giáo.',
+    address: 'Thiền Viện Vạn Hạnh, 750 Nguyễn Kiệm, Phú Nhuận, TP. Hồ Chí Minh',
+    phone: '028.38446489',
+    email: 'vnphvn@gmail.com',
+    website: 'https://viennghiencuuphathoc.com',
+    is_verified: true,
+  },
+];
+
+export const FALLBACK_MEDITATION_PRESETS = [
+  { id: '80000000-0000-0000-0000-000000000001', title: '5 phút: Tĩnh tâm đầu ngày', duration_seconds: 300, bell_interval_seconds: 60, sound_type: 'BELL', description: 'Khoảng dừng ngắn ngủi giúp bạn quay về với hơi thở trước khi bước vào ngày làm việc năng động.' },
+  { id: '80000000-0000-0000-0000-000000000002', title: '10 phút: Buông xả âu lo', duration_seconds: 600, bell_interval_seconds: 120, sound_type: 'RAIN', description: 'Tiếng mưa rơi nhẹ hạt kết hợp tiếng chuông ngân nhắc nhở tâm buông thư hoàn toàn.' },
+  { id: '80000000-0000-0000-0000-000000000003', title: '20 phút: Tọa thiền chánh niệm', duration_seconds: 1200, bell_interval_seconds: 300, sound_type: 'FOREST', description: 'Thời thiền sâu lắng với âm hưởng rừng xanh thanh bình, nuôi dưỡng định lực và trí tuệ.' },
+  { id: '80000000-0000-0000-0000-000000000004', title: '30 phút: Không gian an định', duration_seconds: 1800, bell_interval_seconds: 600, sound_type: 'SILENCE', description: 'Khoảng lặng thuần khiết không tạp âm, dành cho hành giả thực hành thiền quán chỉ và quán.' },
+];

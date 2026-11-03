@@ -120,12 +120,12 @@ export function VideoSection({ initialVideos }: VideoSectionProps) {
                       ? 'Kinh tụng'
                       : 'Di sản Cổ tự'}
                   </span>
-                  {vid.view_count && (
+                  {vid.view_count ? (
                     <span className="flex items-center gap-1 text-charcoal-500 dark:text-charcoal-400 whitespace-nowrap flex-shrink-0">
                       <Eye className="w-3 h-3" />
                       {vid.view_count.toLocaleString('vi-VN')}
                     </span>
-                  )}
+                  ) : null}
                 </div>
 
                 <h3 className="font-heading text-sm font-bold text-charcoal-900 dark:text-charcoal-50 line-clamp-2 leading-snug group-hover:text-saffron-600 transition-colors">

@@ -2,11 +2,13 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AuthProvider } from '@/components/auth/AuthContext';
 import { AudioProvider } from '@/components/audio/AudioContext';
+import { LanguageProvider } from '@/components/i18n/LanguageContext';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { GlobalAudioPlayer } from '@/components/audio/GlobalAudioPlayer';
 import { AuthModal } from '@/components/auth/AuthModal';
+import FloatingDharmaAI from '@/components/ai/FloatingDharmaAI';
 
 export const dynamic = 'force-dynamic';
 
@@ -75,16 +77,19 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-ivory-50 text-charcoal-900 overflow-x-hidden selection:bg-saffron-500/20 selection:text-saffron-800">
-        <AuthProvider>
-          <AudioProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <MobileBottomNav />
-            <GlobalAudioPlayer />
-            <AuthModal />
-          </AudioProvider>
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <AudioProvider>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <MobileBottomNav />
+              <GlobalAudioPlayer />
+              <FloatingDharmaAI />
+              <AuthModal />
+            </AudioProvider>
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
