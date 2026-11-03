@@ -106,7 +106,7 @@ export default function PersonalDestinyAnalysisPage() {
           lunarMonth: info.lunarMonth,
           dayCanChi: info.dayCanChi,
           star: info.hoangDaoStar.replace(' Hoàng Đạo', ''),
-          auspiciousHours: info.auspiciousHours.slice(0, 3),
+          auspiciousHours: (info.hoangDaoHours || []).slice(0, 3),
         });
       }
     }
