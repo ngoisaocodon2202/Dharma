@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
-import Link from 'next/link';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   Sparkles,
   Palette,
@@ -10,521 +9,733 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  Sun,
-  Shield,
+  ShieldCheck,
+  User,
+  Briefcase,
+  Coins,
   Heart,
-  ArrowRight,
+  Activity,
+  BookOpen,
+  RefreshCw,
+  Info,
 } from 'lucide-react';
-import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { useAuth } from '@/components/auth/AuthContext';
-import { calculateCanChiAndMenh } from '@/lib/tu-vi-calc';
+import { calculateCanChiAndMenh, GIO_SINH_OPTIONS, FOCUS_AREAS } from '@/lib/tu-vi-calc';
 import { getLunarDate, NGU_HANH_COLOR_MAP } from '@/lib/lunar-calendar';
+import type { TuViAnalysisResult } from '@/app/api/tu-vi/route';
 import { cn } from '@/lib/utils';
 
-export default function LuckyColorAndGoodDayPage() {
+export default function PersonalDestinyAnalysisPage() {
   const { user } = useAuth();
   const today = useMemo(() => new Date(), []);
+  const resultRef = useRef<HTMLDivElement>(null);
 
-  // User birth info for Color & Element calculation
-  const [birthYear, setBirthYear] = useState<number>(1996);
+  // Personal Information Form State
+  const [fullName, setFullName] = useState<string>('');
   const [gender, setGender] = useState<'Nam' | 'Nữ'>('Nam');
+  const [birthDay, setBirthDay] = useState<number>(15);
+  const [birthMonth, setBirthMonth] = useState<number>(6);
+  const [birthYear, setBirthYear] = useState<number>(1996);
+  const [calendarType, setCalendarType] = useState<'solar' | 'lunar'>('solar');
+  const [birthHour, setBirthHour] = useState<string>('KhongRo');
+  const [viewYear, setViewYear] = useState<number>(today.getFullYear());
+  const [focusArea, setFocusArea] = useState<string>('tong_quan');
+  const [wishes, setWishes] = useState<string>('');
 
-  // Selected date for Good Day (Ngày Tốt) lookup
-  const [checkYear, setCheckYear] = useState<number>(today.getFullYear());
-  const [checkMonth, setCheckMonth] = useState<number>(today.getMonth() + 1);
-  const [checkDay, setCheckDay] = useState<number>(today.getDate());
+  // Processing & Result State
+  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<TuViAnalysisResult | null>(null);
+  const [submittedInfo, setSubmittedInfo] = useState<{
+    fullName: string;
+    gender: 'Nam' | 'Nữ';
+    birthDateFormatted: string;
+    birthYear: number;
+    birthHourLabel: string;
+    calendarType: 'solar' | 'lunar';
+    viewYear: number;
+    focusLabel: string;
+  } | null>(null);
 
+  // Prefill from logged-in Dharma profile if available
   useEffect(() => {
-    if (user?.gender) {
-      setGender(user.gender === 'female' ? 'Nữ' : 'Nam');
+    if (user) {
+      if (!fullName && (user.dharma_name || user.full_name)) {
+        setFullName(user.dharma_name || user.full_name);
+      }
+      if (user.gender) {
+        setGender(user.gender === 'female' || user.gender === 'Nữ' ? 'Nữ' : 'Nam');
+      }
     }
-  }, [user]);
+  }, [user, fullName]);
 
-  // Calculate User's Can Chi, Menh & Color Profile
-  const canChiInfo = useMemo(() => {
-    return calculateCanChiAndMenh(birthYear, gender, today.getFullYear());
-  }, [birthYear, gender, today]);
+  // Active Can Chi & Color Profile for the analyzed user
+  const activeCanChi = useMemo(() => {
+    const targetYear = submittedInfo ? submittedInfo.birthYear : birthYear;
+    const targetGender = submittedInfo ? submittedInfo.gender : gender;
+    const targetViewYear = submittedInfo ? submittedInfo.viewYear : viewYear;
+    return calculateCanChiAndMenh(targetYear, targetGender, targetViewYear);
+  }, [submittedInfo, birthYear, gender, viewYear]);
 
   const colorProfile = useMemo(() => {
-    return NGU_HANH_COLOR_MAP[canChiInfo.nguHanh] || NGU_HANH_COLOR_MAP.Kim;
-  }, [canChiInfo]);
+    return NGU_HANH_COLOR_MAP[activeCanChi.nguHanh] || NGU_HANH_COLOR_MAP.Kim;
+  }, [activeCanChi]);
 
-  // Calculate Selected Day's Lunar & Hoang Dao Info
-  const selectedDayInfo = useMemo(() => {
-    return getLunarDate(checkYear, checkMonth, checkDay);
-  }, [checkYear, checkMonth, checkDay]);
+  // Good days (Hoàng Đạo) in current month for reference
+  const auspiciousDaysThisMonth = useMemo(() => {
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const totalDays = new Date(year, month, 0).getDate();
+    const list: {
+      day: number;
+      month: number;
+      lunarDay: number;
+      lunarMonth: number;
+      dayCanChi: string;
+      star: string;
+      auspiciousHours: string[];
+    }[] = [];
 
-  // List all Hoang Dao (Good Days) in the selected month
-  const goodDaysInMonth = useMemo(() => {
-    const totalDays = new Date(checkYear, checkMonth, 0).getDate();
-    const list: { day: number; lunarDay: number; lunarMonth: number; dayCanChi: string; star: string }[] = [];
     for (let d = 1; d <= totalDays; d++) {
-      const info = getLunarDate(checkYear, checkMonth, d);
+      const info = getLunarDate(year, month, d);
       if (info.isHoangDao) {
         list.push({
           day: d,
+          month,
           lunarDay: info.lunarDay,
           lunarMonth: info.lunarMonth,
           dayCanChi: info.dayCanChi,
           star: info.hoangDaoStar.replace(' Hoàng Đạo', ''),
+          auspiciousHours: info.auspiciousHours.slice(0, 3),
         });
       }
     }
-    return list;
-  }, [checkYear, checkMonth]);
+    return list.slice(0, 8);
+  }, [today]);
+
+  const handleAnalyzeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg(null);
+
+    const trimmedName = fullName.trim();
+    if (!trimmedName) {
+      setErrorMsg('Vui lòng nhập Họ tên hoặc Pháp danh của bạn để bắt đầu phân tích.');
+      return;
+    }
+
+    const paddedMonth = String(birthMonth).padStart(2, '0');
+    const paddedDay = String(birthDay).padStart(2, '0');
+    const birthDateISO = `${birthYear}-${paddedMonth}-${paddedDay}`;
+
+    setIsAnalyzing(true);
+    try {
+      const res = await fetch('/api/tu-vi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: trimmedName,
+          gender,
+          birthDate: birthDateISO,
+          birthHour,
+          calendarType,
+          viewYear,
+          focusArea,
+          wishes: wishes.trim(),
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok || !json.data) {
+        throw new Error(json.error || 'Không thể phân tích dữ liệu lúc này.');
+      }
+
+      const hourObj = GIO_SINH_OPTIONS.find((g) => g.value === birthHour) || GIO_SINH_OPTIONS[0];
+      const focusObj = FOCUS_AREAS.find((f) => f.value === focusArea) || FOCUS_AREAS[0];
+
+      setAnalysisResult(json.data);
+      setSubmittedInfo({
+        fullName: trimmedName,
+        gender,
+        birthDateFormatted: `${paddedDay}/${paddedMonth}/${birthYear}`,
+        birthYear,
+        birthHourLabel: hourObj.label,
+        calendarType,
+        viewYear,
+        focusLabel: focusObj.label,
+      });
+
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Có lỗi xảy ra, vui lòng thử lại.';
+      setErrorMsg(message);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   return (
-    <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 sm:space-y-10">
-      {/* 1. Hero Header */}
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-charcoal-950 via-stone-900 to-amber-950 text-white p-5 sm:p-8 shadow-xl border border-amber-500/30">
-        <div className="relative z-10 max-w-3xl space-y-2.5 sm:space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold whitespace-nowrap">
-            <Palette className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span>Năng Lượng Ngũ Hành • Màu Chủ Đạo & Cát Nhật</span>
+    <div className="max-w-5xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 sm:space-y-8">
+      {/* 1. Hero Header with Clear Anti-Superstition Orientation */}
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#3d1f0d] via-[#5c1616] to-[#2b1408] text-white p-5 sm:p-8 shadow-xl border border-[#d4af37]/40">
+        <div className="relative z-10 max-w-3xl space-y-2.5">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#ffd966] text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">
+            <Compass className="w-3.5 h-3.5 text-[#ffd966] shrink-0" />
+            <span>Phân Tích Bản Mệnh • Màu Hợp & Ngày Tốt</span>
           </div>
 
-          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-amber-50 leading-tight">
-            Xem Màu Chủ Đạo Bản Mệnh & Ngày Tốt Hoàng Đạo
+          <h1 className="font-heading text-xl sm:text-3xl font-bold text-amber-50 leading-snug">
+            Nhập Thông Tin Cá Nhân & Phân Tích Bản Mệnh Hướng Thiện
           </h1>
 
-          <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-            Khám phá màu sắc chủ đạo tương sinh theo Ngũ hành Nạp âm của bạn và tra cứu Ngày tốt, Giờ Hoàng Đạo,
-            Hướng xuất hành cát tường để khởi sự hanh thông, tâm an vạn sự lành.
+          <p className="text-xs sm:text-sm text-[#e8d5b5] leading-relaxed">
+            Nhập họ tên, ngày tháng năm sinh và giờ sinh để hệ thống tổng hợp thông số{' '}
+            <strong>Can Chi, Ngũ Hành Nạp Âm, Màu Chủ Đạo, Ngày Tốt</strong> và gợi ý định hướng sống chánh niệm.
           </p>
+
+          {/* Explicit Non-Superstition Disclaimer Badge */}
+          <div className="pt-1">
+            <div className="inline-flex items-start sm:items-center gap-2 px-3.5 py-2 rounded-2xl bg-black/25 border border-amber-300/25 text-[11px] sm:text-xs text-amber-200/95">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 sm:mt-0" />
+              <span>
+                <strong>Lưu ý Chánh kiến:</strong> Kết quả phân tích dựa trên văn hóa lịch pháp Đông phương và triết lý Nhân Quả,{' '}
+                <span className="underline decoration-amber-400/60">chỉ mang tính chất tham khảo</span>, hoàn toàn không cổ xúy mê tín dị đoan.
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* 2. SECTION A: XEM MÀU CHỦ ĐẠO & BẢN MỆNH NGƯỜI DÙNG */}
-      <section className="bg-white dark:bg-charcoal-800 rounded-3xl border border-ivory-200 dark:border-charcoal-700 shadow-md p-5 sm:p-7 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ivory-200 dark:border-charcoal-700 pb-5">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-saffron-700 dark:text-saffron-400 block whitespace-nowrap">
-              Phần 1 • Sắc Màu Hộ Mệnh Của Bạn
-            </span>
-            <h2 className="font-heading text-xl sm:text-2xl font-bold text-charcoal-900 dark:text-charcoal-50">
-              Tra Cứu Màu Chủ Đạo & Ngũ Hành Bản Mệnh
-            </h2>
+      {/* 2. PERSONAL INFORMATION INPUT FORM */}
+      <section className="bg-white dark:bg-charcoal-800 rounded-3xl border border-[#e6dfd3] dark:border-charcoal-700 shadow-md p-4 sm:p-7">
+        <div className="flex items-center justify-between gap-3 border-b border-stone-100 dark:border-charcoal-700 pb-4 mb-5">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 flex items-center justify-center text-[#b5892e] shrink-0">
+              <User className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#b5892e] block whitespace-nowrap">
+                Bước 1 • Thông Tin Của Bạn
+              </span>
+              <h2 className="font-heading text-base sm:text-xl font-bold text-stone-800 dark:text-stone-100 whitespace-nowrap truncate">
+                Nhập Dữ Liệu Cá Nhân Cần Phân Tích
+              </h2>
+            </div>
           </div>
 
-          {/* Quick Input Controls: Birth Year & Gender */}
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            <div className="flex items-center gap-2 bg-ivory-50 dark:bg-charcoal-900 px-3 py-1.5 rounded-xl border border-ivory-200 dark:border-charcoal-700">
-              <span className="text-xs font-semibold text-charcoal-500 whitespace-nowrap">Năm sinh:</span>
+          {analysisResult && (
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold whitespace-nowrap">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Đã xử lý hồ sơ</span>
+            </span>
+          )}
+        </div>
+
+        <form onSubmit={handleAnalyzeSubmit} className="space-y-5">
+          {errorMsg && (
+            <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-xs font-medium text-rose-700 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          {/* Row 1: Full Name & Gender */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className="md:col-span-7 space-y-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                1. Họ và Tên hoặc Pháp Danh *
+              </label>
+              <input
+                type="text"
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Ví dụ: Nguyễn Văn An (hoặc Pháp danh Thiện Tâm)..."
+                className="w-full px-4 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-sm font-medium text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:border-[#b5892e] focus:ring-2 focus:ring-[#b5892e]/15 transition-all"
+              />
+            </div>
+
+            <div className="md:col-span-5 space-y-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                2. Giới Tính *
+              </label>
+              <div className="grid grid-cols-2 gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setGender('Nam')}
+                  className={cn(
+                    'py-3 px-3 rounded-2xl border-2 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all whitespace-nowrap cursor-pointer',
+                    gender === 'Nam'
+                      ? 'bg-gradient-to-br from-amber-50 to-[#fff8e6] border-[#b5892e] text-[#4a2508] shadow-2xs'
+                      : 'bg-[#fdfbf7] dark:bg-charcoal-900 border-stone-200 dark:border-charcoal-700 text-stone-600 dark:text-stone-400'
+                  )}
+                >
+                  <span>🙏</span>
+                  <span>Nam Mạng</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setGender('Nữ')}
+                  className={cn(
+                    'py-3 px-3 rounded-2xl border-2 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all whitespace-nowrap cursor-pointer',
+                    gender === 'Nữ'
+                      ? 'bg-gradient-to-br from-amber-50 to-[#fff8e6] border-[#b5892e] text-[#4a2508] shadow-2xs'
+                      : 'bg-[#fdfbf7] dark:bg-charcoal-900 border-stone-200 dark:border-charcoal-700 text-stone-600 dark:text-stone-400'
+                  )}
+                >
+                  <span>🪷</span>
+                  <span>Nữ Mạng</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Row 2: Birth Date (Day / Month / Year) & Calendar Type */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className="md:col-span-8 space-y-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                3. Ngày Tháng Năm Sinh *
+              </label>
+              <div className="grid grid-cols-3 gap-2.5">
+                <div className="relative">
+                  <select
+                    value={birthDay}
+                    onChange={(e) => setBirthDay(Number(e.target.value))}
+                    className="w-full px-3 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
+                  >
+                    {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                      <option key={d} value={d}>
+                        Ngày {d}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="relative">
+                  <select
+                    value={birthMonth}
+                    onChange={(e) => setBirthMonth(Number(e.target.value))}
+                    className="w-full px-3 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
+                  >
+                    {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                      <option key={m} value={m}>
+                        Tháng {m}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="relative">
+                  <select
+                    value={birthYear}
+                    onChange={(e) => setBirthYear(Number(e.target.value))}
+                    className="w-full px-3 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
+                  >
+                    {Array.from({ length: 95 }, (_, i) => 1935 + i).map((y) => (
+                      <option key={y} value={y}>
+                        Năm {y}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="md:col-span-4 space-y-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                Loại Lịch Ngày Sinh
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setCalendarType('solar')}
+                  className={cn(
+                    'py-3 px-3 rounded-2xl border text-xs font-bold whitespace-nowrap transition-all cursor-pointer',
+                    calendarType === 'solar'
+                      ? 'bg-stone-800 text-white border-stone-800'
+                      : 'bg-[#fdfbf7] border-stone-200 text-stone-600'
+                  )}
+                >
+                  Dương Lịch
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCalendarType('lunar')}
+                  className={cn(
+                    'py-3 px-3 rounded-2xl border text-xs font-bold whitespace-nowrap transition-all cursor-pointer',
+                    calendarType === 'lunar'
+                      ? 'bg-stone-800 text-white border-stone-800'
+                      : 'bg-[#fdfbf7] border-stone-200 text-stone-600'
+                  )}
+                >
+                  Âm Lịch
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Row 3: Birth Hour & Focus Area & View Year */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="space-y-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                4. Giờ Sinh (12 Canh Giờ)
+              </label>
               <select
-                value={birthYear}
-                onChange={(e) => setBirthYear(Number(e.target.value))}
-                className="bg-transparent font-heading font-bold text-sm text-saffron-700 dark:text-saffron-400 focus:outline-none cursor-pointer"
+                value={birthHour}
+                onChange={(e) => setBirthHour(e.target.value)}
+                className="w-full px-3.5 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-medium text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
               >
-                {Array.from({ length: 95 }, (_, i) => 1935 + i).map((y) => (
-                  <option key={y} value={y}>
-                    {y}
+                {GIO_SINH_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
                   </option>
                 ))}
               </select>
             </div>
 
-            <div className="inline-flex rounded-xl bg-ivory-100 dark:bg-charcoal-900 p-1 border border-ivory-200 dark:border-charcoal-700">
-              <button
-                type="button"
-                onClick={() => setGender('Nam')}
-                className={cn(
-                  'px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer',
-                  gender === 'Nam'
-                    ? 'bg-saffron-600 text-white shadow-xs'
-                    : 'text-charcoal-600 dark:text-charcoal-400'
-                )}
+            <div className="space-y-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                5. Khía Cạnh Cần Tham Khảo
+              </label>
+              <select
+                value={focusArea}
+                onChange={(e) => setFocusArea(e.target.value)}
+                className="w-full px-3.5 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-medium text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
               >
-                Nam Mạng
-              </button>
-              <button
-                type="button"
-                onClick={() => setGender('Nữ')}
-                className={cn(
-                  'px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer',
-                  gender === 'Nữ'
-                    ? 'bg-saffron-600 text-white shadow-xs'
-                    : 'text-charcoal-600 dark:text-charcoal-400'
-                )}
+                {FOCUS_AREAS.map((area) => (
+                  <option key={area.value} value={area.value}>
+                    {area.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                6. Năm Phân Tích Vận Trình
+              </label>
+              <select
+                value={viewYear}
+                onChange={(e) => setViewYear(Number(e.target.value))}
+                className="w-full px-3.5 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-100 focus:outline-none focus:border-[#b5892e] cursor-pointer"
               >
-                Nữ Mạng
-              </button>
+                {[2025, 2026, 2027, 2028, 2029, 2030].map((y) => (
+                  <option key={y} value={y}>
+                    Năm {y}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-        </div>
 
-        {/* Summary Badges */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-          <div className="p-4 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60">
-            <span className="text-[11px] font-semibold uppercase text-amber-800 dark:text-amber-300 block whitespace-nowrap">
-              Tuổi Can Chi
-            </span>
-            <p className="font-heading font-bold text-base sm:text-lg text-charcoal-900 dark:text-charcoal-50 mt-0.5 whitespace-nowrap">
-              Tuổi {canChiInfo.canChi} ({birthYear})
-            </p>
+          {/* Row 4: Optional Personal Wishes / Questions */}
+          <div className="space-y-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 whitespace-nowrap truncate">
+              7. Mong Muốn Hoặc Điều Đang Trăn Trở (Tùy chọn)
+            </label>
+            <input
+              type="text"
+              value={wishes}
+              onChange={(e) => setWishes(e.target.value)}
+              placeholder="Ví dụ: Mong cầu gia đạo bình an, công việc thuận lợi, tìm hiểu màu sắc hợp mệnh..."
+              className="w-full px-4 py-3 rounded-2xl bg-[#fdfbf7] dark:bg-charcoal-900 border border-stone-200/90 dark:border-charcoal-700 text-xs sm:text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:border-[#b5892e]"
+            />
           </div>
 
-          <div className="p-4 rounded-2xl bg-saffron-50/80 dark:bg-saffron-950/30 border border-saffron-200/80 dark:border-saffron-800/60">
-            <span className="text-[11px] font-semibold uppercase text-saffron-800 dark:text-saffron-300 block whitespace-nowrap">
-              Mệnh Ngũ Hành Nạp Âm
-            </span>
-            <p className="font-heading font-bold text-base sm:text-lg text-saffron-700 dark:text-saffron-300 mt-0.5 whitespace-nowrap truncate">
-              {canChiInfo.menh}
+          {/* Submit Action Bar */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-stone-100 dark:border-charcoal-700">
+            <p className="text-[11px] text-stone-500 flex items-center gap-1.5">
+              <Info className="w-3.5 h-3.5 text-[#b5892e] shrink-0" />
+              <span>Hệ thống xử lý dữ liệu trực tiếp theo Ngũ hành Nạp âm & Bát trạch.</span>
             </p>
-          </div>
 
-          <div className="p-4 rounded-2xl bg-jade-50/80 dark:bg-jade-950/30 border border-jade-200/80 dark:border-jade-800/60">
-            <span className="text-[11px] font-semibold uppercase text-jade-800 dark:text-jade-300 block whitespace-nowrap">
-              Cung Phi Bát Trạch ({gender})
-            </span>
-            <p className="font-heading font-bold text-base sm:text-lg text-jade-800 dark:text-jade-300 mt-0.5 whitespace-nowrap truncate">
-              Cung {canChiInfo.cung}
-            </p>
+            <button
+              type="submit"
+              disabled={isAnalyzing}
+              className="w-full sm:w-auto min-w-[260px] px-6 py-3.5 rounded-2xl bg-gradient-to-r from-[#b5892e] via-[#c99a36] to-[#8c6514] hover:from-[#9a721c] hover:to-[#70500e] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg active:scale-98 transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer disabled:opacity-60"
+            >
+              {isAnalyzing ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin shrink-0" />
+                  <span>Đang phân tích dữ liệu...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4 shrink-0" />
+                  <span>Phân Tích Bản Mệnh & Xem Kết Quả</span>
+                </>
+              )}
+            </button>
           </div>
-        </div>
+        </form>
+      </section>
 
-        {/* Color Swatches Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Primary & Support Colors (8 cols) */}
-          <div className="lg:col-span-8 space-y-5">
-            {/* Màu Bản Mệnh */}
-            <div className="space-y-3">
-              <h3 className="font-heading font-bold text-sm sm:text-base text-charcoal-900 dark:text-charcoal-100 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-saffron-600 shrink-0" />
-                <span>1. Màu Chủ Đạo Bản Mệnh ({colorProfile.elementTitle})</span>
-              </h3>
+      {/* 3. PERSONALIZED ANALYSIS RESULT (Only shown after user submits personal info) */}
+      <div ref={resultRef}>
+        {analysisResult && submittedInfo ? (
+          <div className="space-y-6 animate-in fade-in duration-300">
+            {/* A. Summary Card of Processed Personal Data */}
+            <section className="bg-white dark:bg-charcoal-800 rounded-3xl border-2 border-[#d4af37]/50 shadow-lg p-5 sm:p-7 space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-100 dark:border-charcoal-700 pb-4">
+                <div>
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
+                    ☸ Hồ Sơ Phân Tích Cá Nhân (Tham Khảo)
+                  </span>
+                  <h2 className="font-heading text-lg sm:text-2xl font-bold text-stone-900 dark:text-white mt-1">
+                    {submittedInfo.fullName} • {submittedInfo.gender} Mạng
+                  </h2>
+                  <p className="text-xs text-stone-500 mt-0.5">
+                    Sinh ngày {submittedInfo.birthDateFormatted} (
+                    {submittedInfo.calendarType === 'lunar' ? 'Âm lịch' : 'Dương lịch'}) •{' '}
+                    {submittedInfo.birthHourLabel}
+                  </p>
+                </div>
+
+                <div className="shrink-0 px-3.5 py-2 rounded-2xl bg-amber-50 border border-amber-200 text-right">
+                  <span className="text-[10px] font-bold uppercase text-amber-700 block whitespace-nowrap">
+                    Năm chiêm nghiệm {submittedInfo.viewYear}
+                  </span>
+                  <span className="font-heading font-bold text-sm text-stone-800 whitespace-nowrap">
+                    Năm {analysisResult.namXemCanChi} • {analysisResult.tuoiAm} tuổi âm
+                  </span>
+                </div>
+              </div>
+
+              {/* 4 Key Pillars Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="p-3.5 rounded-2xl bg-[#fdfbf7] border border-stone-200/80">
+                  <span className="text-[10px] font-bold uppercase text-stone-400 block whitespace-nowrap">
+                    Tuổi Can Chi
+                  </span>
+                  <p className="font-heading font-bold text-sm sm:text-base text-stone-800 mt-0.5 whitespace-nowrap truncate">
+                    Tuổi {analysisResult.canChi}
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80">
+                  <span className="text-[10px] font-bold uppercase text-amber-800 block whitespace-nowrap">
+                    Ngũ Hành Nạp Âm
+                  </span>
+                  <p className="font-heading font-bold text-sm sm:text-base text-amber-900 mt-0.5 whitespace-nowrap truncate">
+                    {analysisResult.menh}
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80">
+                  <span className="text-[10px] font-bold uppercase text-emerald-800 block whitespace-nowrap">
+                    Cung Phi Bát Trạch
+                  </span>
+                  <p className="font-heading font-bold text-sm sm:text-base text-emerald-900 mt-0.5 whitespace-nowrap truncate">
+                    {analysisResult.cung}
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+                  <span className="text-[10px] font-bold uppercase text-stone-500 block whitespace-nowrap">
+                    Hướng & Số Cát Tường
+                  </span>
+                  <p className="font-heading font-bold text-xs sm:text-sm text-stone-800 mt-0.5 whitespace-nowrap truncate">
+                    Số: {colorProfile.luckyNumbers}
+                  </p>
+                </div>
+              </div>
+
+              {/* B. Detailed Analysis Cards (5 Life Aspects) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                <div className="md:col-span-2 p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-50/90 to-[#fffdf7] border border-amber-200/90 space-y-1.5">
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-[#5c1616] flex items-center gap-2">
+                    <Compass className="w-4 h-4 text-[#b5892e] shrink-0" />
+                    <span>1. Tổng Quan Vận Trình & Bản Mệnh Năm {submittedInfo.viewYear}</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-700 leading-relaxed">
+                    {analysisResult.tongQuan}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#fdfbf7] border border-stone-200/80 space-y-1.5">
+                  <h3 className="font-heading font-bold text-sm text-stone-800 flex items-center gap-2">
+                    <Briefcase className="w-4 h-4 text-[#b5892e] shrink-0" />
+                    <span>2. Công Danh & Sự Nghiệp</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    {analysisResult.congDanh}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#fdfbf7] border border-stone-200/80 space-y-1.5">
+                  <h3 className="font-heading font-bold text-sm text-stone-800 flex items-center gap-2">
+                    <Coins className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span>3. Tài Chính & Phúc Lộc</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    {analysisResult.taiLoc}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#fdfbf7] border border-stone-200/80 space-y-1.5">
+                  <h3 className="font-heading font-bold text-sm text-stone-800 flex items-center gap-2">
+                    <Heart className="w-4 h-4 text-rose-600 shrink-0" />
+                    <span>4. Gia Đạo & Nhân Duyên</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    {analysisResult.tinhDuyen}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#fdfbf7] border border-stone-200/80 space-y-1.5">
+                  <h3 className="font-heading font-bold text-sm text-stone-800 flex items-center gap-2">
+                    <Activity className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>5. Sức Khỏe Thân Tâm</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    {analysisResult.sucKhoe}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* C. Personalized Lucky Colors & Element Harmony */}
+            <section className="bg-white dark:bg-charcoal-800 rounded-3xl border border-[#e6dfd3] shadow-md p-5 sm:p-7 space-y-5">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#b5892e] block whitespace-nowrap">
+                  Màu Sắc Ngũ Hành Của {submittedInfo.fullName}
+                </span>
+                <h3 className="font-heading text-lg sm:text-xl font-bold text-stone-800 mt-0.5">
+                  Màu Chủ Đạo Bản Mệnh & Màu Tương Sinh ({colorProfile.elementTitle})
+                </h3>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {colorProfile.primaryColors.map((c) => (
                   <div
                     key={c.name}
-                    className="p-3.5 rounded-2xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 flex items-start gap-3"
+                    className="p-3.5 rounded-2xl bg-[#fdfbf7] border border-stone-200/80 flex items-start gap-3"
                   >
                     <div
-                      className="w-11 h-11 rounded-xl shrink-0 shadow-sm border border-black/10 dark:border-white/20"
+                      className="w-10 h-10 rounded-xl shrink-0 shadow-xs border border-black/10"
                       style={{ backgroundColor: c.hex }}
                     />
                     <div className="min-w-0">
-                      <div className="font-heading font-bold text-xs sm:text-sm text-charcoal-900 dark:text-charcoal-100 whitespace-nowrap truncate">
-                        {c.name}
+                      <div className="font-heading font-bold text-xs sm:text-sm text-stone-800 whitespace-nowrap truncate">
+                        {c.name} (Bản mệnh)
                       </div>
-                      <p className="text-[11px] text-charcoal-500 dark:text-charcoal-400 leading-snug mt-0.5">
-                        {c.desc}
-                      </p>
+                      <p className="text-[11px] text-stone-500 leading-snug mt-0.5">{c.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Màu Tương Sinh */}
-            <div className="space-y-3">
-              <h3 className="font-heading font-bold text-sm sm:text-base text-charcoal-900 dark:text-charcoal-100 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>2. Màu Tương Sinh Đại Cát (Thu Hút Quý Nhân & Bình An)</span>
-              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {colorProfile.supportColors.map((c) => (
                   <div
                     key={c.name}
-                    className="p-3.5 rounded-2xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 flex items-start gap-3"
+                    className="p-3.5 rounded-2xl bg-emerald-50/40 border border-emerald-200/70 flex items-start gap-3"
                   >
                     <div
-                      className="w-11 h-11 rounded-xl shrink-0 shadow-sm border border-black/10 dark:border-white/20"
+                      className="w-10 h-10 rounded-xl shrink-0 shadow-xs border border-black/10"
                       style={{ backgroundColor: c.hex }}
                     />
                     <div className="min-w-0">
-                      <div className="font-heading font-bold text-xs sm:text-sm text-charcoal-900 dark:text-charcoal-100 whitespace-nowrap truncate">
-                        {c.name}
+                      <div className="font-heading font-bold text-xs sm:text-sm text-emerald-950 whitespace-nowrap truncate">
+                        {c.name} (Tương sinh)
                       </div>
-                      <p className="text-[11px] text-charcoal-500 dark:text-charcoal-400 leading-snug mt-0.5">
-                        {c.desc}
-                      </p>
+                      <p className="text-[11px] text-stone-600 leading-snug mt-0.5">{c.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </section>
 
-            {/* Màu Nên Hạn Chế */}
-            <div className="p-4 rounded-2xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200/70 dark:border-rose-800/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-xs font-semibold text-rose-800 dark:text-rose-300">
-                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                <span>Màu tương khắc nên hạn chế dùng làm màu chủ đạo:</span>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                {colorProfile.avoidColors.map((c) => (
-                  <span
-                    key={c.name}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white dark:bg-charcoal-900 border border-rose-200 dark:border-rose-800 text-xs font-medium text-charcoal-700 dark:text-charcoal-300 whitespace-nowrap"
-                  >
-                    <span
-                      className="w-3 h-3 rounded-full border border-black/10"
-                      style={{ backgroundColor: c.hex }}
-                    />
-                    <span>{c.name}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Right 4 cols: Sacred Items, Directions & Dharma Advice */}
-          <div className="lg:col-span-4 space-y-4">
-            <div className="p-4 sm:p-5 rounded-2xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 space-y-3 h-full flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="space-y-1">
-                  <span className="text-[11px] font-bold uppercase text-saffron-700 dark:text-saffron-400 block whitespace-nowrap">
-                    Hướng Tốt & Số Cát Tường
-                  </span>
-                  <p className="text-xs text-charcoal-700 dark:text-charcoal-300">
-                    <strong>Hướng hợp:</strong> {colorProfile.luckyDirection}
-                  </p>
-                  <p className="text-xs text-charcoal-700 dark:text-charcoal-300">
-                    <strong>Số may mắn:</strong> {colorProfile.luckyNumbers}
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-ivory-200 dark:border-charcoal-800 space-y-1.5">
-                  <span className="text-[11px] font-bold uppercase text-saffron-700 dark:text-saffron-400 block whitespace-nowrap">
-                    Pháp Bảo & Vật Phẩm Hộ Thân Hợp Mệnh
-                  </span>
-                  <ul className="space-y-1.5 text-xs text-charcoal-700 dark:text-charcoal-300">
-                    {colorProfile.sacredItems.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5">
-                        <span className="text-saffron-500 mt-0.5">✦</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-xs text-charcoal-700 dark:text-charcoal-200 leading-relaxed">
-                <strong className="text-saffron-800 dark:text-saffron-300 block mb-1">
-                  ☸ Lời khuyên Chánh niệm:
-                </strong>
-                {colorProfile.dharmaAdvice}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. SECTION B: XEM NGÀY TỐT / NGÀY HOÀNG ĐẠO & GIỜ TỐT */}
-      <section className="bg-white dark:bg-charcoal-800 rounded-3xl border border-ivory-200 dark:border-charcoal-700 shadow-md p-5 sm:p-7 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ivory-200 dark:border-charcoal-700 pb-5">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-jade-700 dark:text-jade-400 block whitespace-nowrap">
-              Phần 2 • Chọn Ngày Lành Tháng Tốt
-            </span>
-            <h2 className="font-heading text-xl sm:text-2xl font-bold text-charcoal-900 dark:text-charcoal-50">
-              Xem Ngày Tốt, Giờ Hoàng Đạo & Hướng Xuất Hành
-            </h2>
-          </div>
-
-          {/* Date Picker Controls */}
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
-            <select
-              value={checkDay}
-              onChange={(e) => setCheckDay(Number(e.target.value))}
-              className="px-3 py-1.5 rounded-xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 text-xs sm:text-sm font-bold text-charcoal-900 dark:text-charcoal-100 cursor-pointer"
-            >
-              {Array.from({ length: new Date(checkYear, checkMonth, 0).getDate() }, (_, i) => i + 1).map(
-                (d) => (
-                  <option key={d} value={d}>
-                    Ngày {d}
-                  </option>
-                )
-              )}
-            </select>
-
-            <select
-              value={checkMonth}
-              onChange={(e) => {
-                setCheckMonth(Number(e.target.value));
-                setCheckDay(1);
-              }}
-              className="px-3 py-1.5 rounded-xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 text-xs sm:text-sm font-bold text-charcoal-900 dark:text-charcoal-100 cursor-pointer"
-            >
-              {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                <option key={m} value={m}>
-                  Tháng {m}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={checkYear}
-              onChange={(e) => setCheckYear(Number(e.target.value))}
-              className="px-3 py-1.5 rounded-xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 text-xs sm:text-sm font-bold text-saffron-700 dark:text-saffron-400 cursor-pointer"
-            >
-              {Array.from({ length: 30 }, (_, i) => 2024 + i).map((y) => (
-                <option key={y} value={y}>
-                  Năm {y}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Selected Date Evaluation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left 7 cols: Full Analysis of Selected Date */}
-          <div className="lg:col-span-7 space-y-4">
-            <div
-              className={cn(
-                'p-5 rounded-3xl border space-y-4',
-                selectedDayInfo.isHoangDao
-                  ? 'bg-emerald-50/60 dark:bg-emerald-950/25 border-emerald-300 dark:border-emerald-800/60'
-                  : 'bg-ivory-50 dark:bg-charcoal-900 border-ivory-200 dark:border-charcoal-700'
-              )}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <span className="text-xs text-charcoal-500 dark:text-charcoal-400 block">
-                    Dương lịch: <strong>{checkDay}/{checkMonth}/{checkYear}</strong> • Âm lịch:{' '}
-                    <strong>
-                      {selectedDayInfo.lunarDay}/{selectedDayInfo.lunarMonth} ({selectedDayInfo.yearCanChi})
-                    </strong>
-                  </span>
-                  <h3 className="font-heading text-lg sm:text-xl font-bold text-charcoal-900 dark:text-charcoal-50 mt-0.5">
-                    Ngày {selectedDayInfo.dayCanChi} — {selectedDayInfo.hoangDaoStar}
+            {/* D. Mindful Buddhist Guidance ("Đức Năng Thắng Số") & Auspicious Days */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <section className="lg:col-span-7 bg-white rounded-3xl border border-[#e6dfd3] shadow-md p-5 sm:p-6 space-y-4">
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-[#b5892e] shrink-0" />
+                  <h3 className="font-heading text-base sm:text-lg font-bold text-stone-800">
+                    Định Hướng Chánh Niệm • &ldquo;Đức Năng Thắng Số&rdquo;
                   </h3>
                 </div>
 
-                <span
-                  className={cn(
-                    'px-3 py-1 rounded-full text-xs font-extrabold whitespace-nowrap',
-                    selectedDayInfo.isHoangDao
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-stone-600 text-white'
-                  )}
-                >
-                  {selectedDayInfo.isHoangDao ? '★ Ngày Hoàng Đạo (Ngày Tốt)' : 'Ngày Bình Thường / Tĩnh Tâm'}
-                </span>
-              </div>
+                <div className="space-y-3 text-xs sm:text-sm text-stone-700 leading-relaxed">
+                  <div className="p-3.5 rounded-2xl bg-amber-50/60 border border-amber-200/70">
+                    <strong className="text-[#5c1616] block mb-0.5">✦ Quán chiếu Nhân Quả:</strong>
+                    {analysisResult.loiKhuyenPhatPhap.nghiepDuyen}
+                  </div>
+                  <div className="p-3.5 rounded-2xl bg-[#fdfbf7] border border-stone-200/80">
+                    <strong className="text-stone-800 block mb-0.5">✦ Phương pháp chuyển hóa tâm thức:</strong>
+                    {analysisResult.loiKhuyenPhatPhap.phuongPhapHoaGiai}
+                  </div>
+                  <div className="p-3.5 rounded-2xl bg-[#fdfbf7] border border-stone-200/80">
+                    <strong className="text-stone-800 block mb-0.5">✦ Kinh điển & Thực hành gợi ý:</strong>
+                    {analysisResult.loiKhuyenPhatPhap.kinhChuPhuHop}
+                  </div>
+                </div>
+              </section>
 
-              {/* Giờ Hoàng Đạo */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-bold text-charcoal-800 dark:text-charcoal-200 flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-saffron-600" />
-                  <span>Các Khung Giờ Tốt (Giờ Hoàng Đạo) Trong Ngày:</span>
-                </span>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {selectedDayInfo.goodHours.map((h) => (
+              <section className="lg:col-span-5 bg-white rounded-3xl border border-[#e6dfd3] shadow-md p-5 sm:p-6 space-y-4">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-emerald-700 shrink-0" />
+                  <h3 className="font-heading text-base sm:text-lg font-bold text-stone-800">
+                    Ngày Tốt Hoàng Đạo Trong Tháng
+                  </h3>
+                </div>
+                <p className="text-xs text-stone-500">
+                  Các ngày cát lành trong tháng {today.getMonth() + 1}/{today.getFullYear()} thuận lợi để khởi sự việc thiện, đi chùa, xuất hành:
+                </p>
+
+                <div className="grid grid-cols-2 gap-2.5">
+                  {auspiciousDaysThisMonth.map((item) => (
                     <div
-                      key={h}
-                      className="px-3 py-2 rounded-xl bg-white dark:bg-charcoal-800 border border-ivory-200 dark:border-charcoal-700 text-xs font-semibold text-charcoal-800 dark:text-charcoal-200 text-center whitespace-nowrap"
+                      key={item.day}
+                      className="p-3 rounded-2xl bg-[#fdfbf7] border border-stone-200/80 space-y-1"
                     >
-                      {h}
+                      <div className="flex items-center justify-between">
+                        <span className="font-heading font-bold text-xs sm:text-sm text-stone-800">
+                          {item.day}/{item.month} DL
+                        </span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                          {item.lunarDay}/{item.lunarMonth} ÂL
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-stone-500 truncate">
+                        Ngày {item.dayCanChi} • Sao {item.star}
+                      </p>
                     </div>
                   ))}
                 </div>
-              </div>
-
-              {/* Hướng Xuất Hành */}
-              <div className="p-3.5 rounded-2xl bg-white dark:bg-charcoal-800 border border-ivory-200 dark:border-charcoal-700 text-xs space-y-1">
-                <span className="font-bold text-charcoal-900 dark:text-charcoal-100 flex items-center gap-1.5">
-                  <Compass className="w-4 h-4 text-saffron-600" />
-                  <span>Hướng Xuất Hành Cát Tường:</span>
-                </span>
-                <p className="text-charcoal-600 dark:text-charcoal-300 pl-5">
-                  {selectedDayInfo.goodDirections}
-                </p>
-              </div>
-
-              {/* Việc Nên Làm */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-charcoal-800 border border-ivory-200 dark:border-charcoal-700 space-y-1.5">
-                  <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 block">
-                    ✓ Việc Thiện Lành Nên Làm:
-                  </span>
-                  <ul className="space-y-1 text-xs text-charcoal-600 dark:text-charcoal-300">
-                    {selectedDayInfo.recommendedActions.map((act, i) => (
-                      <li key={i}>• {act}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-charcoal-800 border border-ivory-200 dark:border-charcoal-700 space-y-1.5">
-                  <span className="text-xs font-bold text-amber-700 dark:text-amber-400 block">
-                    ☸ Lời Nhắc Tỉnh Thức:
-                  </span>
-                  <ul className="space-y-1 text-xs text-charcoal-600 dark:text-charcoal-300">
-                    {selectedDayInfo.avoidActions.map((act, i) => (
-                      <li key={i}>• {act}</li>
-                    ))}
-                    <li>• Tâm thiện, lời lành thì mọi ngày đều là ngày lành.</li>
-                  </ul>
-                </div>
-              </div>
+              </section>
             </div>
           </div>
-
-          {/* Right 5 cols: Quick List of All Good Days in Month */}
-          <div className="lg:col-span-5 bg-ivory-50/80 dark:bg-charcoal-900/80 rounded-3xl border border-ivory-200 dark:border-charcoal-700 p-4 sm:p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="font-heading font-bold text-sm sm:text-base text-charcoal-900 dark:text-charcoal-100 whitespace-nowrap">
-                Danh Sách Ngày Tốt Tháng {checkMonth}/{checkYear}
-              </h3>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[11px] font-bold whitespace-nowrap">
-                {goodDaysInMonth.length} ngày đẹp
-              </span>
+        ) : (
+          /* Empty State Prompt Before Submitting */
+          <div className="rounded-3xl bg-[#fdfbf7] border border-dashed border-[#d4af37]/60 p-6 sm:p-8 text-center space-y-2">
+            <div className="w-12 h-12 rounded-2xl bg-amber-100/80 text-[#b5892e] flex items-center justify-center mx-auto">
+              <Sparkles className="w-6 h-6" />
             </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-80 overflow-y-auto pr-1">
-              {goodDaysInMonth.map((gd) => {
-                const isSelected = gd.day === checkDay;
-                return (
-                  <button
-                    key={gd.day}
-                    type="button"
-                    onClick={() => setCheckDay(gd.day)}
-                    className={cn(
-                      'p-2.5 rounded-xl border text-left transition-all cursor-pointer',
-                      isSelected
-                        ? 'bg-saffron-600 text-white border-saffron-600 shadow-xs'
-                        : 'bg-white dark:bg-charcoal-800 border-ivory-200 dark:border-charcoal-700 hover:border-saffron-400 text-charcoal-800 dark:text-charcoal-200'
-                    )}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-heading font-bold text-sm whitespace-nowrap">
-                        Ngày {gd.day}/{checkMonth}
-                      </span>
-                      <span
-                        className={cn(
-                          'text-[10px] font-semibold whitespace-nowrap',
-                          isSelected ? 'text-amber-100' : 'text-charcoal-400'
-                        )}
-                      >
-                        {gd.lunarDay}/{gd.lunarMonth} ÂL
-                      </span>
-                    </div>
-                    <div
-                      className={cn(
-                        'text-[10.5px] font-medium mt-1 truncate',
-                        isSelected ? 'text-white' : 'text-emerald-700 dark:text-emerald-400'
-                      )}
-                    >
-                      ★ {gd.star}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="pt-2 border-t border-ivory-200 dark:border-charcoal-700 flex items-center justify-between text-xs">
-              <span className="text-charcoal-500">Muốn đặt lịch nhắc ngày giỗ?</span>
-              <Link
-                href="/lich-phat-giao"
-                className="font-bold text-saffron-700 dark:text-saffron-400 hover:underline flex items-center gap-1 whitespace-nowrap"
-              >
-                <span>Mở Lịch Vạn Niên</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
+            <h3 className="font-heading text-base sm:text-lg font-bold text-stone-800">
+              Nhập Thông Tin Cá Nhân Ở Trên Để Xem Phân Tích
+            </h3>
+            <p className="text-xs sm:text-sm text-stone-500 max-w-xl mx-auto leading-relaxed">
+              Sau khi bạn điền Họ tên, Ngày tháng năm sinh và bấm{' '}
+              <strong>&ldquo;Phân Tích Bản Mệnh & Xem Kết Quả&rdquo;</strong>, hệ thống sẽ tính toán bảng Màu Chủ Đạo, Ngũ Hành Nạp Âm, Luận Giải Vận Trình và Ngày Tốt dành riêng cho bạn.
+            </p>
           </div>
+        )}
+      </div>
+
+      {/* 4. Bottom Ethical & Non-Superstition Disclaimer */}
+      <div className="rounded-2xl bg-amber-50/70 border border-amber-200/80 p-4 sm:p-5 flex items-start gap-3">
+        <ShieldCheck className="w-5 h-5 text-[#b5892e] shrink-0 mt-0.5" />
+        <div className="text-xs text-stone-600 leading-relaxed space-y-1">
+          <p className="font-bold text-stone-800">
+            Nguyên tắc Tham khảo Văn hóa & Không Mê tín Dị đoan:
+          </p>
+          <p>
+            Toàn bộ dữ liệu phân tích Can Chi, Ngũ Hành, Màu Sắc Chủ Đạo và Ngày Tốt trên trang này được tổng hợp từ lịch pháp truyền thống Đông phương nhằm mục đích tham khảo văn hóa và khích lệ đời sống hướng thiện. Đạo Phật dạy rằng mọi ngày đều là ngày lành khi thân làm việc thiện, miệng nói lời hay, tâm giữ ý lành (<em>&ldquo;Đức năng thắng số&rdquo;</em>).
+          </p>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

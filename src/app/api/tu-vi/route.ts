@@ -32,6 +32,7 @@ export interface TuViAnalysisResult {
 function generateIntelligentBuddhistReading(
   fullName: string,
   gender: 'Nam' | 'Nữ',
+  birthDate: string,
   canChi: string,
   menh: string,
   nguHanh: string,
@@ -40,10 +41,13 @@ function generateIntelligentBuddhistReading(
   viewYear: number,
   namXemCanChi: string,
   focusAreaLabel: string,
-  birthHourLabel: string
+  birthHourLabel: string,
+  wishes?: string
 ): TuViAnalysisResult {
-  const isHopHanh = nguHanh === 'Kim' || nguHanh === 'Thủy';
-  
+  const wishNote = wishes
+    ? ` Đặc biệt với mong muốn "${wishes}", việc giữ tâm bình hòa và kiên trì hành thiện sẽ giúp bạn sớm đạt thành tựu viên mãn.`
+    : '';
+
   return {
     canChi,
     menh,
@@ -51,16 +55,16 @@ function generateIntelligentBuddhistReading(
     cung,
     namXemCanChi,
     tuoiAm,
-    tongQuan: `Quý chủ ${fullName} (${gender}), tuổi ${canChi}, nạp âm ${menh}, bước vào năm ${viewYear} (${namXemCanChi}) ở độ tuổi mụ ${tuoiAm}. Chiêm nghiệm tinh bàn cho thấy đây là một chu kỳ có sự giao thoa mạnh mẽ giữa thiên thời và nhân quả quá khứ. Sinh vào ${birthHourLabel}, bản mệnh mang bản chất kiên định, giàu lòng từ ái nhưng đôi khi chất chứa nhiều suy tư nội tâm. Trong năm ${namXemCanChi}, vận trình chuyển biến từ biến động sang ổn định. Mọi sự cát hung đều do tâm dẫn dắt; khi tâm định và giữ chánh niệm, hung tinh tự khắc hóa lành.`,
-    congDanh: `Về đường công danh, đây là thời kỳ thích hợp để tích lũy nội lực, trau dồi chuyên môn hơn là mạo hiểm bứt phá mù quáng. Đối với trọng tâm "${focusAreaLabel}", quý bạn sẽ gặp được quý nhân chỉ dẫn hoặc bạn đồng tu nâng đỡ trong các thời khắc quyết định. Hãy giữ phong thái khiêm cung, minh bạch trong các bản hợp đồng và kiên nhẫn vượt qua các thử thách đầu năm, quý ba và quý bốn sẽ đón nhận quả ngọt xứng đáng.`,
-    taiLoc: `Dòng tiền trong năm ${viewYear} có sự luân chuyển đều đặn. Cần cảnh giác với những lời mời gọi đầu tư lướt sóng hoặc các cơ hội sinh lời phi thực tế. Đức Phật dạy "Của phi nghĩa vào cửa trước sẽ ra cửa sau", do đó việc chăm chỉ làm ăn chân chính kết hợp với thói quen trích một phần tài chính làm thiện nguyện, cúng dường Tam Bảo sẽ giúp củng cố kho tài lộc bền vững, tránh nạn hao tài tán của.`,
-    tinhDuyen: `Gia đạo và các mối tương quan nhân duyên trong năm có nhiều xúc cảm sâu sắc. Có những nút thắt hoặc hiểu lầm đến từ việc thiếu lắng nghe ái ngữ. Lời khuyên cho bạn là hãy thực tập "Lắng nghe với tâm từ", tránh nóng giận buông lời làm tổn thương người thân thương. Đối với người độc thân, duyên lành sẽ khởi phát khi bạn tham gia vào các hoạt động thiện nguyện, khóa tu hoặc môi trường cộng đồng thanh tịnh.`,
-    sucKhoe: `Thể trạng bản mệnh chịu ảnh hưởng của ngũ hành ${nguHanh}. Cần lưu tâm dưỡng khí huyết, hệ tiêu hóa và hạn chế thức khuya âu lo. Tinh thần an lạc là liều thuốc dưỡng sinh tối thượng. Mỗi ngày nên dành ít nhất 15-30 phút ngồi tĩnh tọa, niệm Phật hoặc đi kinh hành để xả bỏ căng thẳng, giữ năng lượng tích cực cho thân tâm an định.`,
+    tongQuan: `Hồ sơ phân tích tham khảo của ${fullName} (${gender} mạng, sinh ngày ${birthDate}, ${birthHourLabel}): Bạn thuộc tuổi ${canChi}, bản mệnh Ngũ hành Nạp âm là ${menh}, cung phi ${cung}. Bước vào năm ${viewYear} (${namXemCanChi} — ${tuoiAm} tuổi âm), dữ liệu ngũ hành cho thấy đây là giai đoạn thuận lợi để củng cố nền tảng nội lực và phát triển chiều sâu tri thức. Theo tinh thần chánh kiến Phật giáo, vận mệnh không phải là định mệnh bất biến mà luôn chuyển dịch theo tâm niệm và hành động thiện lành mỗi ngày.${wishNote}`,
+    congDanh: `Về phương diện Công danh & Sự nghiệp (trọng tâm tham khảo: "${focusAreaLabel}"): Bản mệnh ${menh} mang năng lượng của sự kiên trì và trách nhiệm. Trong năm ${viewYear}, bạn phù hợp với lộ trình phát triển bền vững, trau dồi chuyên môn và mở rộng hợp tác chân thành. Khi giữ chữ Tín và thái độ khiêm cung, bạn sẽ tự nhiên thu hút được sự quý mến, hỗ trợ từ đồng nghiệp và quý nhân.`,
+    taiLoc: `Về phương diện Tài chính & Phúc lộc: Dòng chảy tài chính trong năm ${viewYear} duy trì sự ổn định nếu bạn ưu tiên quản trị kế hoạch rõ ràng, tránh các quyết định đầu tư vội vàng theo cảm tính. Triết lý Nhân Quả chỉ rõ phúc lộc bền vững luôn khởi nguồn từ lao động chân chính kết hợp với tâm rộng mở sẻ chia, giúp đỡ cộng đồng.`,
+    tinhDuyen: `Về phương diện Gia đạo & Nhân duyên: Năng lượng ngũ hành ${nguHanh} nhắc nhở bạn đề cao sự lắng nghe (Ái ngữ và Lắng nghe sâu) trong gia đình cũng như các mối quan hệ xã hội. Sự bao dung, nhường nhịn và thấu cảm sẽ hóa giải mọi hiểu lầm nhỏ nhặt, gìn giữ hòa khí ấm êm trong gia đạo.`,
+    sucKhoe: `Về phương diện Sức khỏe Thân tâm: Người mệnh ${nguHanh} cần chú trọng cân bằng giữa nhịp độ làm việc và nghỉ ngơi, hạn chế thức khuya hoặc suy nghĩ quá mức. Dành 15 phút mỗi ngày để tập thở chánh niệm, đi bộ thư giãn hoặc tĩnh tâm sẽ giúp tái tạo năng lượng tích cực rất hiệu quả.`,
     loiKhuyenPhatPhap: {
-      nghiepDuyen: `Phật giáo quán chiếu rằng "Tướng do tâm sinh, cảnh tùy tâm chuyển, số do nghiệp tạo". Lá số tử vi phản ánh một phần quả vị của nghiệp nhân nhiều đời, nhưng hoàn toàn có thể cải biến nhờ vào ý chí tu tập và hành thiện trong hiện tại. Vận trình năm nay nhắc nhở bạn cần trả bớt nghiệp cũ bằng sự nhẫn nhịn và gieo thêm nhân lành phước báu mới.`,
-      phuongPhapHoaGiai: `Thực hành "Đức năng thắng số": Hàng tháng vào các ngày rằm, mùng một nên ăn chay, hạn chế sát sinh, chủ động phóng sinh các loài thủy sản, chim muông để tích phước thọ mạng và bình an. Mở rộng tâm lượng bố thí, giúp đỡ người cơ nhỡ.`,
-      kinhChuPhuHop: `Kinh Dược Sư Lưu Ly Quang Vương Như Lai (cầu bình an, tiêu tai diệt tội), Chú Đại Bi (84 câu, thanh lọc từ trường, giải tỏa chướng duyên), Kinh Phổ Môn (quán chiếu hạnh từ bi của Bồ Tát Quán Thế Âm).`,
-      hanhThienBoThi: `Trích 5-10% lợi tức làm công đức hồi hướng gia tiên và chúng sinh; tham gia các khóa tu Bát Quan Trai hoặc thực tập thiền hơi thở tại gia để tâm an vạn sự an.`
+      nghiepDuyen: `Dữ liệu Can Chi - Ngũ hành trên đây chỉ đóng vai trò tham khảo văn hóa Đông phương để bạn hiểu thêm về xu hướng tính cách và nhịp sinh học của bản thân. Đạo Phật dạy "Tâm dẫn đầu các pháp" — chính suy nghĩ, lời nói và hành động thiện lành ở hiện tại mới là yếu tố quyết định hạnh phúc của bạn.`,
+      phuongPhapHoaGiai: `Thực hành "Đức năng thắng số" một cách thiết thực, không mê tín: Sống trung thực, giữ tâm bình tĩnh trước thử thách, hiếu thảo với cha mẹ và thường xuyên làm việc có ích cho xã hội.`,
+      kinhChuPhuHop: `Gợi ý thực hành tâm linh thanh tịnh: Đọc Kinh Pháp Cú, Kinh Từ Bi (Metta Sutta) hoặc thực tập Thiền Quán Niệm Hơi Thở để nuôi dưỡng sự sáng suốt, bình an nội tâm.`,
+      hanhThienBoThi: `Gieo trồng phước lành qua những việc làm cụ thể hằng ngày: Nói lời hòa ái khích lệ người khác, bảo vệ thiên nhiên và san sẻ giúp đỡ những hoàn cảnh khó khăn.`
     },
     tuoiHop: ['Giáp Dần', 'Kỷ Tỵ', 'Ất Mão', 'Đinh Mùi'],
     tuoiKac: ['Canh Thân', 'Mậu Dần', 'Nhâm Tý'],
@@ -196,6 +200,7 @@ YÊU CẦU ĐẶC BIỆT:
           result = generateIntelligentBuddhistReading(
             fullName,
             gender as 'Nam' | 'Nữ',
+            birthDate,
             canChiData.canChi,
             canChiData.menh,
             canChiData.nguHanh,
@@ -204,7 +209,8 @@ YÊU CẦU ĐẶC BIỆT:
             viewYear,
             canChiData.namXemCanChi,
             focusAreaObj.label,
-            birthHourObj.label
+            birthHourObj.label,
+            wishes
           );
         }
       } catch (e) {
@@ -212,6 +218,7 @@ YÊU CẦU ĐẶC BIỆT:
         result = generateIntelligentBuddhistReading(
           fullName,
           gender as 'Nam' | 'Nữ',
+          birthDate,
           canChiData.canChi,
           canChiData.menh,
           canChiData.nguHanh,
@@ -220,7 +227,8 @@ YÊU CẦU ĐẶC BIỆT:
           viewYear,
           canChiData.namXemCanChi,
           focusAreaObj.label,
-          birthHourObj.label
+          birthHourObj.label,
+          wishes
         );
       }
     } else {
@@ -228,6 +236,7 @@ YÊU CẦU ĐẶC BIỆT:
       result = generateIntelligentBuddhistReading(
         fullName,
         gender as 'Nam' | 'Nữ',
+        birthDate,
         canChiData.canChi,
         canChiData.menh,
         canChiData.nguHanh,
@@ -236,7 +245,8 @@ YÊU CẦU ĐẶC BIỆT:
         viewYear,
         canChiData.namXemCanChi,
         focusAreaObj.label,
-        birthHourObj.label
+        birthHourObj.label,
+        wishes
       );
     }
 
