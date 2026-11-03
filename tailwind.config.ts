@@ -73,10 +73,10 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["Lora", "serif"],
-        serif: ["Lora", "serif"],
-        sans: ["Be Vietnam Pro", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        heading: ["'Lora'", "Georgia", "serif"],
+        serif: ["'Lora'", "Georgia", "serif"],
+        sans: ["'Be Vietnam Pro'", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "sans-serif"],
+        mono: ["'Be Vietnam Pro'", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
       },
       maxWidth: {
         reading: "760px",

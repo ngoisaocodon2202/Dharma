@@ -96,20 +96,19 @@ export function BookCard({ book, onOpenReader, className }: BookCardProps) {
 
       {/* Footer Info & Action */}
       <div className="pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-ivory-100 dark:border-charcoal-700/80 flex items-center justify-between gap-1">
-        <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] text-charcoal-500 dark:text-charcoal-400 font-mono truncate">
-          <span className="flex items-center gap-1">
-            <Layers className="w-2.5 h-2.5 sm:w-3 sm:h-3 opacity-60" />
-            {book.total_pages} tr
+        <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] text-charcoal-500 dark:text-charcoal-400 font-sans tabular-nums truncate">
+          <span className="flex items-center gap-1 whitespace-nowrap">
+            <Layers className="w-2.5 h-2.5 sm:w-3 sm:h-3 opacity-60 shrink-0" />
+            {book.chapters?.reduce((acc, c) => acc + c.pages.length, 0) || 8} trang • {book.chapters?.length || 4} chương
           </span>
-          <span className="hidden xs:inline">• {book.published_year || 2020}</span>
         </div>
 
         <button
           onClick={() => onOpenReader(book)}
-          className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[11px] sm:text-xs font-semibold text-saffron-700 dark:text-saffron-400 hover:text-white hover:bg-saffron-600 transition-all flex items-center gap-1 border border-saffron-200 dark:border-saffron-800/60 shrink-0 active:scale-95"
+          className="px-2.5 py-1 sm:px-3 sm:py-1 rounded-lg text-[11px] sm:text-xs font-semibold text-saffron-700 dark:text-saffron-400 hover:text-white hover:bg-saffron-600 transition-all flex items-center gap-1 border border-saffron-200 dark:border-saffron-800/60 shrink-0 whitespace-nowrap active:scale-95"
         >
-          <BookOpen className="w-3 h-3" />
-          <span>Đọc</span>
+          <BookOpen className="w-3 h-3 shrink-0" />
+          <span>Đọc sách</span>
         </button>
       </div>
     </div>

@@ -123,3 +123,61 @@ export function playWoodenFishSound(volume = 0.5) {
     console.error('Wooden fish sound error:', err);
   }
 }
+
+/**
+ * Play a realistic paper page-flip / page-turn rustle sound
+ */
+export function playPageTurnSound(volume = 0.25) {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const duration = 0.26;
+    const sampleRate = ctx.sampleRate;
+    const bufferSize = Math.floor(sampleRate * duration);
+    const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+    const data = buffer.getChannelData(0);
+
+    // Generate soft pink/brown-ish noise with an S-curve paper rustle envelope
+    let lastOut = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const t = i / bufferSize;
+      const white = Math.random() * 2 - 1;
+      lastOut = (lastOut + 0.08 * white) / 1.08;
+      // Double-peak envelope simulating lifting & laying down a paper leaf
+      const env = Math.sin(Math.PI * t) * (0.75 + 0.25 * Math.sin(Math.PI * 3 * t));
+      data[i] = lastOut * env * 2.2;
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    // Bandpass filter sweeping up slightly like a turning page
+    const bandpass = ctx.createBiquadFilter();
+    bandpass.type = 'bandpass';
+    bandpass.frequency.setValueAtTime(950, now);
+    bandpass.frequency.exponentialRampToValueAtTime(1950, now + duration * 0.65);
+    bandpass.frequency.exponentialRampToValueAtTime(1100, now + duration);
+    bandpass.Q.setValueAtTime(1.1, now);
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.005, now + duration);
+
+    noise.connect(bandpass);
+    bandpass.connect(gain);
+    gain.connect(ctx.destination);
+
+    noise.start(now);
+    noise.stop(now + duration);
+
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      try {
+        navigator.vibrate(10);
+      } catch {}
+    }
+  } catch (err) {
+    // Ignore audio context restrictions quietly
+  }
+}

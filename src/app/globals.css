@@ -207,6 +207,113 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   background: rgba(181, 137, 46, 0.65);
 }
 
+/* Realistic 3D Book Page-Flip Animations & Physical Paper Effects */
+.book-stage-3d {
+  perspective: 2200px;
+  transform-style: preserve-3d;
+}
+
+.book-paper-stack-light {
+  box-shadow:
+    2px 0 0 #f3ecde,
+    3px 0 0 #d8cbb3,
+    5px 0 0 #efe7d6,
+    6px 0 0 #d0c1a5,
+    8px 0 0 #ebe1cd,
+    9px 0 0 #c6b697,
+    0 20px 50px -10px rgba(44, 26, 14, 0.28);
+}
+
+.book-paper-stack-dark {
+  box-shadow:
+    2px 0 0 #262320,
+    3px 0 0 #141210,
+    5px 0 0 #221f1c,
+    6px 0 0 #12100e,
+    8px 0 0 #1e1b18,
+    9px 0 0 #0d0c0a,
+    0 20px 50px -10px rgba(0, 0, 0, 0.65);
+}
+
+@keyframes flipPageNext3D {
+  0% {
+    transform: rotateY(0deg) skewY(0deg);
+    box-shadow: -4px 0 18px rgba(0, 0, 0, 0.08);
+  }
+  35% {
+    transform: rotateY(-65deg) skewY(1.8deg);
+    box-shadow: -28px 10px 45px rgba(0, 0, 0, 0.26);
+  }
+  70% {
+    transform: rotateY(-140deg) skewY(0.8deg);
+    box-shadow: -16px 6px 30px rgba(0, 0, 0, 0.18);
+  }
+  100% {
+    transform: rotateY(-180deg) skewY(0deg);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+  }
+}
+
+@keyframes flipPagePrev3D {
+  0% {
+    transform: rotateY(-180deg) skewY(0deg);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+  }
+  35% {
+    transform: rotateY(-115deg) skewY(1.6deg);
+    box-shadow: -26px 10px 42px rgba(0, 0, 0, 0.24);
+  }
+  70% {
+    transform: rotateY(-45deg) skewY(0.9deg);
+    box-shadow: -18px 6px 28px rgba(0, 0, 0, 0.16);
+  }
+  100% {
+    transform: rotateY(0deg) skewY(0deg);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+  }
+}
+
+@keyframes flipUnderlayShadow {
+  0% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.22;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-page-flip-next {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  animation: flipPageNext3D 0.56s cubic-bezier(0.32, 0.08, 0.24, 1) forwards;
+  will-change: transform, box-shadow;
+}
+
+.animate-page-flip-prev {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  animation: flipPagePrev3D 0.56s cubic-bezier(0.32, 0.08, 0.24, 1) forwards;
+  will-change: transform, box-shadow;
+}
+
+.animate-flip-shadow {
+  animation: flipUnderlayShadow 0.56s ease-out forwards;
+}
+
+.page-face-front {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.page-face-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
 /* Responsive typography refinement on mobile devices */
 @media (max-width: 640px) {
   .editorial-content p {

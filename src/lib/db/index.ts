@@ -320,8 +320,8 @@ export async function query<T extends QueryResultRow = any>(
 ): Promise<QueryResult<T>> {
   const sqlLower = text.toLowerCase();
 
-  // For articles, always prefer dynamic daily rotation so new articles from Monks & Temples appear fresh every day
-  if (sqlLower.includes('from articles')) {
+  // For articles and books, always prefer the enriched curated dataset
+  if (sqlLower.includes('from articles') || sqlLower.includes('from books')) {
     return resolveFallbackQuery<T>(text, params);
   }
 
