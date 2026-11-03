@@ -65,7 +65,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </svg>
         )}
-        <span className="relative z-10 flex items-center gap-1.5">{children}</span>
+        <span className="relative z-10 flex items-center gap-1.5 whitespace-nowrap truncate">{children}</span>
       </button>
     );
   }

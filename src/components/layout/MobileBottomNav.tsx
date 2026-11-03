@@ -9,15 +9,15 @@ import { cn } from '@/lib/utils';
 
 const BOTTOM_NAV_ITEMS = [
   { name: 'Trang chủ', href: '/', icon: BuddhaBodhiIcon },
-  { name: 'Lịch Nhắc', href: '/lich-phat-giao', icon: Calendar },
+  { name: 'Lịch Vạn Niên', href: '/lich-phat-giao', icon: Calendar },
   {
-    name: 'Màu & Ngày',
+    name: 'Ngày Tốt',
     href: '/tu-vi',
     icon: Sparkles,
     videoSrc: '/tuvi.mp4',
     isCenter: true,
   },
-  { name: 'AI Pháp', href: '/hoi-dap-ai', icon: Sparkles },
+  { name: 'Hỏi Đáp AI', href: '/hoi-dap-ai', icon: Sparkles },
   { name: 'Hồ sơ', href: '/ho-so', icon: User },
 ];
 
@@ -114,16 +114,16 @@ export function MobileBottomNav() {
                     </div>
                   </div>
 
-                  {/* Nút nhộng hình viên nang (Pill Capsule Badge) "TỬ VI" có khoảng cách thoáng */}
+                  {/* Nút nhộng hình viên nang (Pill Capsule Badge) có whitespace-nowrap không xuống dòng */}
                   <div
                     className={cn(
-                      'mt-1 px-3.5 py-0.5 rounded-full font-extrabold text-[10.5px] sm:text-[11px] uppercase tracking-wide transition-all shadow-xs flex items-center justify-center leading-none',
+                      'mt-1 px-2.5 py-0.5 rounded-full font-extrabold text-[10px] uppercase tracking-tight transition-all shadow-xs flex items-center justify-center leading-none whitespace-nowrap',
                       isActive
                         ? 'bg-gradient-to-r from-saffron-600 via-amber-600 to-saffron-700 text-white shadow-[0_2px_8px_rgba(217,119,6,0.4)] ring-1.5 ring-saffron-300'
                         : 'bg-gradient-to-r from-amber-500 via-saffron-500 to-amber-600 text-white shadow-[0_2px_6px_rgba(217,119,6,0.25)] group-hover:from-amber-600 group-hover:to-saffron-700'
                     )}
                   >
-                    {item.name}
+                    <span className="whitespace-nowrap">{item.name}</span>
                   </div>
                 </div>
               </Link>
@@ -161,7 +161,7 @@ export function MobileBottomNav() {
 
               <span
                 className={cn(
-                  'text-[10px] mt-0.5 tracking-tight leading-none whitespace-nowrap transition-colors',
+                  'text-[9.5px] mt-0.5 tracking-tight leading-none whitespace-nowrap truncate max-w-[68px] transition-colors',
                   isActive ? 'font-bold text-saffron-700 dark:text-saffron-400' : 'font-medium'
                 )}
               >

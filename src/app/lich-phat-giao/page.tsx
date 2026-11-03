@@ -8,12 +8,7 @@ import {
   Plus,
   Bell,
   Trash2,
-  Sparkles,
   Clock,
-  Compass,
-  CheckCircle2,
-  Flame,
-  Star,
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { getLunarDate, LunarDateInfo } from '@/lib/lunar-calendar';
@@ -33,7 +28,7 @@ export interface PersonalReminder {
   createdAt: string;
 }
 
-const REMINDER_STORAGE_KEY = 'phatphap_personal_reminders';
+const REMINDER_STORAGE_KEY = 'phatphap_personal_reminders_v1';
 
 const WEEKDAYS = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
 
@@ -57,7 +52,9 @@ export default function BuddhistCalendarPage() {
   // Load saved reminders from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(REMINDER_STORAGE_KEY);
+      const saved =
+        localStorage.getItem(REMINDER_STORAGE_KEY) ||
+        localStorage.getItem('phatphap_personal_reminders');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) setReminders(parsed);
@@ -196,67 +193,69 @@ export default function BuddhistCalendarPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6 sm:space-y-8">
-      {/* 1. Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ivory-200 dark:border-charcoal-800 pb-5">
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-saffron-700 dark:text-saffron-400 whitespace-nowrap">
-            <CalendarIcon className="w-4 h-4 shrink-0" />
-            <span>Lịch Vạn Niên Âm Dương • Sổ Ghi Nhớ Ngày Giỗ & Trai Giới</span>
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-5 sm:space-y-7">
+      {/* 1. Header Banner — Clean & Mobile Friendly */}
+      <div className="bg-gradient-to-r from-[#3d1f0d] via-[#5c1616] to-[#3d1f0d] text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-[#d4af37]/40 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#ffd966] whitespace-nowrap">
+            <CalendarIcon className="w-3.5 h-3.5 shrink-0" />
+            <span>Lịch Vạn Niên Âm Dương</span>
           </div>
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-charcoal-900 dark:text-charcoal-50 leading-tight">
-            Lịch Phật Giáo & Nhắc Nhở Ngày Quan Trọng
+          <h1 className="font-heading text-lg sm:text-2xl md:text-3xl font-bold text-white leading-snug">
+            Lịch Phật Giáo & Nhắc Nhở Ngày Giỗ
           </h1>
-          <p className="text-xs sm:text-sm text-charcoal-600 dark:text-charcoal-400 max-w-2xl">
-            Tra cứu lịch Âm – Dương vĩnh cửu, ngày trai, ngày vía Phật và bấm vào bất kỳ ngày nào để ghi chú{' '}
-            <strong className="text-charcoal-900 dark:text-charcoal-100">Ngày Giỗ gia tiên</strong> hoặc{' '}
-            <strong className="text-charcoal-900 dark:text-charcoal-100">Ngày quan trọng</strong> của riêng bạn.
+          <p className="text-xs text-[#e8d5b5] max-w-2xl leading-relaxed">
+            Chọn bất kỳ ngày nào trên lịch để xem Âm lịch, Giờ Hoàng Đạo hoặc ghi chú Ngày Giỗ, Ngày Quan Trọng của gia đình.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
-          <Button variant="outline" size="sm" onClick={handleGoToday} className="whitespace-nowrap">
-            Hôm nay ({today.getDate()}/{today.getMonth() + 1}/{today.getFullYear()})
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => setIsAddingNote(true)}
-            className="whitespace-nowrap"
+        <div className="grid grid-cols-2 sm:flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={handleGoToday}
+            className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-[#d4af37]/40 text-xs font-semibold text-[#ffd966] whitespace-nowrap text-center transition-colors cursor-pointer"
           >
-            <Plus className="w-4 h-4 mr-1 shrink-0" />
-            <span>Thêm Ngày Giỗ / Nhắc Nhở</span>
-          </Button>
+            Hôm nay ({today.getDate()}/{today.getMonth() + 1})
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsAddingNote(true)}
+            className="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-saffron-600 hover:from-amber-400 hover:to-saffron-500 text-charcoal-950 text-xs font-bold whitespace-nowrap flex items-center justify-center gap-1 shadow-xs transition-all cursor-pointer"
+          >
+            <Plus className="w-3.5 h-3.5 shrink-0" />
+            <span className="whitespace-nowrap">Thêm Nhắc Nhở</span>
+          </button>
         </div>
       </div>
 
       {/* 2. Main Layout: Left 7 Cols Calendar Grid | Right 5 Cols Day Detail & Reminders */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
         {/* LEFT: Perpetual Calendar Grid */}
-        <div className="lg:col-span-7 bg-white dark:bg-charcoal-800 rounded-3xl border border-ivory-200 dark:border-charcoal-700 shadow-md p-4 sm:p-6 space-y-4">
-          {/* Month / Year Controls */}
-          <div className="flex items-center justify-between gap-2 pb-3 border-b border-ivory-100 dark:border-charcoal-700">
+        <div className="lg:col-span-7 bg-white dark:bg-charcoal-800 rounded-2xl sm:rounded-3xl border border-[#e5d8c1] dark:border-charcoal-700 shadow-md p-3 sm:p-5 space-y-3.5">
+          {/* Single-Row Month / Year Controls (Never wraps on mobile) */}
+          <div className="flex items-center justify-between gap-1.5 bg-[#fbf7ef] dark:bg-charcoal-900 p-1.5 sm:p-2 rounded-2xl border border-[#eadcc5] dark:border-charcoal-700">
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="p-2 rounded-xl bg-ivory-100 dark:bg-charcoal-700 hover:bg-saffron-100 text-charcoal-700 dark:text-charcoal-200 transition-colors cursor-pointer shrink-0"
+              className="w-9 h-9 rounded-xl bg-white dark:bg-charcoal-800 hover:bg-amber-50 border border-[#e5d8c1] dark:border-charcoal-700 flex items-center justify-center text-charcoal-700 dark:text-charcoal-200 transition-colors cursor-pointer shrink-0 shadow-2xs"
               aria-label="Tháng trước"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
 
-            <div className="flex items-center gap-2 flex-wrap justify-center">
+            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
               <select
                 value={viewMonth}
                 onChange={(e) => {
                   setViewMonth(Number(e.target.value));
                   setSelectedDay(1);
                 }}
-                className="px-3 py-1.5 rounded-xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 font-heading font-bold text-sm sm:text-base text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:border-saffron-500 cursor-pointer"
+                aria-label="Chọn tháng"
+                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white dark:bg-charcoal-800 border border-[#e5d8c1] dark:border-charcoal-700 font-heading font-bold text-xs sm:text-sm text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:border-saffron-500 cursor-pointer whitespace-nowrap"
               >
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
                   <option key={m} value={m}>
-                    Tháng {m} Dương lịch
+                    Tháng {m}
                   </option>
                 ))}
               </select>
@@ -267,11 +266,12 @@ export default function BuddhistCalendarPage() {
                   setViewYear(Number(e.target.value));
                   setSelectedDay(1);
                 }}
-                className="px-3 py-1.5 rounded-xl bg-ivory-50 dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-700 font-heading font-bold text-sm sm:text-base text-saffron-700 dark:text-saffron-400 focus:outline-none focus:border-saffron-500 cursor-pointer"
+                aria-label="Chọn năm"
+                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-white dark:bg-charcoal-800 border border-[#e5d8c1] dark:border-charcoal-700 font-heading font-bold text-xs sm:text-sm text-saffron-700 dark:text-saffron-400 focus:outline-none focus:border-saffron-500 cursor-pointer whitespace-nowrap"
               >
-                {Array.from({ length: 60 }, (_, i) => 2020 + i).map((y) => (
+                {Array.from({ length: 65 }, (_, i) => 2020 + i).map((y) => (
                   <option key={y} value={y}>
-                    Năm {y}
+                    {y}
                   </option>
                 ))}
               </select>
@@ -280,180 +280,190 @@ export default function BuddhistCalendarPage() {
             <button
               type="button"
               onClick={handleNextMonth}
-              className="p-2 rounded-xl bg-ivory-100 dark:bg-charcoal-700 hover:bg-saffron-100 text-charcoal-700 dark:text-charcoal-200 transition-colors cursor-pointer shrink-0"
+              className="w-9 h-9 rounded-xl bg-white dark:bg-charcoal-800 hover:bg-amber-50 border border-[#e5d8c1] dark:border-charcoal-700 flex items-center justify-center text-charcoal-700 dark:text-charcoal-200 transition-colors cursor-pointer shrink-0 shadow-2xs"
               aria-label="Tháng sau"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Weekday Headers */}
-          <div className="grid grid-cols-7 gap-1 sm:gap-2 text-center">
-            {WEEKDAYS.map((w, idx) => (
-              <div
-                key={w}
-                className={cn(
-                  'py-1.5 text-xs font-bold uppercase tracking-wider whitespace-nowrap',
-                  idx === 6 ? 'text-rose-600 dark:text-rose-400' : 'text-charcoal-500 dark:text-charcoal-400'
-                )}
-              >
-                {w}
-              </div>
-            ))}
-          </div>
-
-          {/* Calendar Cells Grid */}
-          <div className="grid grid-cols-7 gap-1 sm:gap-2">
-            {calendarDays.map((cell, idx) => {
-              if (!cell.day || !cell.lunar) {
-                return <div key={`empty-${idx}`} className="h-14 sm:h-20 rounded-xl bg-ivory-50/40 dark:bg-charcoal-900/20" />;
-              }
-
-              const isToday =
-                cell.day === today.getDate() &&
-                viewMonth === today.getMonth() + 1 &&
-                viewYear === today.getFullYear();
-              const isSelected = cell.day === selectedDay;
-              const hasReminders = (cell.dayReminders?.length || 0) > 0;
-              const hasGio = cell.dayReminders?.some((r) => r.type === 'gio');
-
-              return (
-                <button
-                  key={cell.day}
-                  type="button"
-                  onClick={() => setSelectedDay(cell.day!)}
+          {/* Calendar Board Container */}
+          <div className="bg-[#f8f2e6] dark:bg-charcoal-900/80 p-1.5 sm:p-2.5 rounded-2xl border border-[#e6d8c0] dark:border-charcoal-700 space-y-1.5">
+            {/* Weekday Headers */}
+            <div className="grid grid-cols-7 gap-1 sm:gap-1.5 text-center">
+              {WEEKDAYS.map((w, idx) => (
+                <div
+                  key={w}
                   className={cn(
-                    'relative h-14 sm:h-20 p-1 sm:p-2 rounded-xl border flex flex-col justify-between text-left transition-all cursor-pointer select-none overflow-hidden',
-                    isSelected
-                      ? 'bg-saffron-600 text-white border-saffron-600 shadow-md scale-[1.02] z-10'
-                      : isToday
-                      ? 'bg-amber-50 dark:bg-amber-950/50 border-amber-400 text-charcoal-900 dark:text-charcoal-100 ring-1 ring-amber-400'
-                      : hasReminders
-                      ? 'bg-rose-50/70 dark:bg-rose-950/30 border-rose-300 dark:border-rose-800 text-charcoal-900 dark:text-charcoal-100'
-                      : cell.lunar.isMainTraiDay
-                      ? 'bg-saffron-50/60 dark:bg-charcoal-900 border-saffron-200 dark:border-charcoal-700 text-charcoal-900 dark:text-charcoal-100'
-                      : 'bg-white dark:bg-charcoal-900/60 border-ivory-200 dark:border-charcoal-700 hover:border-saffron-300 text-charcoal-800 dark:text-charcoal-200'
+                    'py-1 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider whitespace-nowrap',
+                    idx === 6
+                      ? 'text-rose-600 dark:text-rose-400'
+                      : 'text-[#6b4f2a] dark:text-charcoal-300'
                   )}
                 >
-                  {/* Top Row: Solar Day + Indicator Dots */}
-                  <div className="w-full flex items-start justify-between">
-                    <span
-                      className={cn(
-                        'font-heading font-bold text-xs sm:text-base leading-none whitespace-nowrap',
-                        isSelected
-                          ? 'text-white'
-                          : isToday
-                          ? 'text-saffron-700 dark:text-saffron-300'
-                          : 'text-charcoal-900 dark:text-charcoal-100'
-                      )}
-                    >
-                      {cell.day}
-                    </span>
+                  {w}
+                </div>
+              ))}
+            </div>
 
-                    <div className="flex items-center gap-0.5">
-                      {hasReminders && (
+            {/* Calendar Cells Grid — Symmetrical & Crisp on Mobile */}
+            <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
+              {calendarDays.map((cell, idx) => {
+                if (!cell.day || !cell.lunar) {
+                  return (
+                    <div
+                      key={`empty-${idx}`}
+                      className="h-12 sm:h-16 rounded-xl bg-white/40 dark:bg-charcoal-800/20"
+                    />
+                  );
+                }
+
+                const isToday =
+                  cell.day === today.getDate() &&
+                  viewMonth === today.getMonth() + 1 &&
+                  viewYear === today.getFullYear();
+                const isSelected = cell.day === selectedDay;
+                const hasReminders = (cell.dayReminders?.length || 0) > 0;
+                const hasGio = cell.dayReminders?.some((r) => r.type === 'gio');
+                const isFirstLunar = cell.lunar.lunarDay === 1 || cell.day === 1;
+
+                return (
+                  <button
+                    key={cell.day}
+                    type="button"
+                    onClick={() => setSelectedDay(cell.day!)}
+                    className={cn(
+                      'relative h-12 sm:h-16 px-1 py-1 sm:p-2 rounded-xl border flex flex-col items-center sm:items-stretch justify-between transition-all cursor-pointer select-none overflow-hidden',
+                      isSelected
+                        ? 'bg-gradient-to-b from-[#b56708] to-[#8c4600] text-white border-[#8c4600] shadow-md scale-[1.02] z-10'
+                        : isToday
+                        ? 'bg-amber-100/90 dark:bg-amber-950/60 border-amber-500 text-charcoal-900 dark:text-charcoal-100 ring-1 ring-amber-400'
+                        : hasReminders
+                        ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-700 text-charcoal-900 dark:text-charcoal-100'
+                        : cell.lunar.isMainTraiDay
+                        ? 'bg-[#fff9eb] dark:bg-charcoal-800 border-amber-300/90 dark:border-amber-700/60 text-charcoal-900 dark:text-charcoal-100'
+                        : 'bg-white dark:bg-charcoal-800 border-[#e9decb] dark:border-charcoal-700 hover:border-amber-400 text-charcoal-800 dark:text-charcoal-200 shadow-2xs'
+                    )}
+                  >
+                    {/* Top Row: Solar Day + Indicator Dots */}
+                    <div className="w-full flex items-center justify-center sm:justify-between relative">
+                      <span
+                        className={cn(
+                          'font-heading font-bold text-xs sm:text-base leading-none whitespace-nowrap',
+                          isSelected
+                            ? 'text-white'
+                            : isToday
+                            ? 'text-amber-900 dark:text-amber-300 font-extrabold'
+                            : 'text-charcoal-900 dark:text-charcoal-100'
+                        )}
+                      >
+                        {cell.day}
+                      </span>
+
+                      {/* Top-right indicator dot/icon */}
+                      <div className="absolute right-0 top-0 sm:static flex items-center gap-0.5">
+                        {hasReminders ? (
+                          <span
+                            className="text-[8px] sm:text-[10px] leading-none"
+                            title="Có ngày giỗ / lời nhắc"
+                          >
+                            {hasGio ? '🕯️' : '⭐'}
+                          </span>
+                        ) : cell.lunar.isMainTraiDay ? (
+                          <span
+                            className={cn(
+                              'w-1.5 h-1.5 rounded-full',
+                              isSelected ? 'bg-amber-200' : 'bg-amber-500'
+                            )}
+                            title="Ngày Trai (Mùng 1 / Rằm)"
+                          />
+                        ) : null}
+                      </div>
+                    </div>
+
+                    {/* Bottom Row: Compact Lunar Day/Month (never overflows mobile cell) */}
+                    <div className="w-full flex items-center justify-center sm:justify-between">
+                      <span
+                        className={cn(
+                          'text-[9px] sm:text-[11px] leading-none whitespace-nowrap tracking-tight',
+                          isSelected
+                            ? 'text-amber-100 font-semibold'
+                            : cell.lunar.isMainTraiDay || isFirstLunar
+                            ? 'text-[#b4690e] dark:text-amber-400 font-bold'
+                            : 'text-stone-400 dark:text-charcoal-400 font-medium'
+                        )}
+                      >
+                        {isFirstLunar
+                          ? `${cell.lunar.lunarDay}/${cell.lunar.lunarMonth}`
+                          : cell.lunar.lunarDay}
+                      </span>
+
+                      {cell.lunar.isHoangDao && (
                         <span
                           className={cn(
-                            'text-[10px] leading-none',
-                            isSelected ? 'text-amber-200' : 'text-rose-600'
+                            'hidden sm:inline-block w-1.5 h-1.5 rounded-full',
+                            isSelected ? 'bg-emerald-300' : 'bg-emerald-500/80'
                           )}
-                          title="Có ngày giỗ / lời nhắc"
-                        >
-                          {hasGio ? '🕯️' : '⭐'}
-                        </span>
-                      )}
-                      {!hasReminders && cell.lunar.isMainTraiDay && (
-                        <span
-                          className={cn(
-                            'w-1.5 h-1.5 rounded-full',
-                            isSelected ? 'bg-amber-200' : 'bg-saffron-500'
-                          )}
-                          title="Ngày Sóc Vọng (Mùng 1 / Rằm)"
+                          title="Ngày Hoàng Đạo"
                         />
                       )}
                     </div>
-                  </div>
-
-                  {/* Bottom Row: Lunar Day/Month */}
-                  <div className="w-full flex items-end justify-between">
-                    <span
-                      className={cn(
-                        'text-[9.5px] sm:text-[11px] font-medium leading-none whitespace-nowrap',
-                        isSelected
-                          ? 'text-amber-100'
-                          : cell.lunar.isMainTraiDay
-                          ? 'text-saffron-700 dark:text-saffron-400 font-bold'
-                          : 'text-charcoal-400 dark:text-charcoal-500'
-                      )}
-                    >
-                      {cell.lunar.lunarDay === 1 || cell.day === 1
-                        ? `${cell.lunar.lunarDay}/${cell.lunar.lunarMonth} ÂL`
-                        : cell.lunar.lunarDay}
-                    </span>
-
-                    {cell.lunar.isHoangDao && (
-                      <span
-                        className={cn(
-                          'hidden sm:inline-block w-1.5 h-1.5 rounded-full',
-                          isSelected ? 'bg-emerald-300' : 'bg-emerald-500/80'
-                        )}
-                        title="Ngày Hoàng Đạo"
-                      />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Legend */}
-          <div className="pt-3 border-t border-ivory-100 dark:border-charcoal-700 flex flex-wrap items-center gap-3 text-[11px] text-charcoal-500 dark:text-charcoal-400">
-            <span className="flex items-center gap-1 whitespace-nowrap">
-              <span className="w-2 h-2 rounded-full bg-saffron-500" /> Ngày Trai (Mùng 1, Rằm)
-            </span>
-            <span className="flex items-center gap-1 whitespace-nowrap">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" /> Ngày Hoàng Đạo
-            </span>
-            <span className="flex items-center gap-1 whitespace-nowrap">
-              <span>🕯️</span> Ngày Giỗ / Kỵ Nhật
-            </span>
-            <span className="flex items-center gap-1 whitespace-nowrap">
-              <span>⭐</span> Ngày Quan Trọng Của Bạn
-            </span>
+          <div className="pt-1 flex flex-wrap items-center justify-between gap-2 text-[11px] text-charcoal-600 dark:text-charcoal-400">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="flex items-center gap-1 whitespace-nowrap">
+                <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0" /> Ngày Trai (1, 15 ÂL)
+              </span>
+              <span className="flex items-center gap-1 whitespace-nowrap">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" /> Hoàng Đạo
+              </span>
+              <span className="flex items-center gap-1 whitespace-nowrap">
+                <span>🕯️</span> Ngày Giỗ
+              </span>
+              <span className="flex items-center gap-1 whitespace-nowrap">
+                <span>⭐</span> Quan Trọng
+              </span>
+            </div>
           </div>
         </div>
 
         {/* RIGHT: Selected Date Details + Personal Reminders Manager */}
-        <div className="lg:col-span-5 space-y-5">
+        <div className="lg:col-span-5 space-y-4 sm:space-y-5">
           {/* Card 1: Selected Day Sheet */}
-          <div className="bg-gradient-to-br from-charcoal-900 via-stone-900 to-charcoal-950 text-white rounded-3xl p-5 sm:p-6 shadow-xl border border-amber-500/30 space-y-4">
+          <div className="bg-gradient-to-br from-charcoal-900 via-stone-900 to-charcoal-950 text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl border border-amber-500/30 space-y-4">
             <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-3">
-              <div>
-                <span className="text-[11px] text-amber-300 font-semibold uppercase tracking-wider block whitespace-nowrap">
-                  Chi Tiết Ngày Đang Chọn
+              <div className="min-w-0">
+                <span className="text-[10px] sm:text-[11px] text-amber-300 font-semibold uppercase tracking-wider block whitespace-nowrap">
+                  Dương Lịch Đang Chọn
                 </span>
-                <h2 className="font-heading text-xl sm:text-2xl font-bold text-white whitespace-nowrap">
-                  Ngày {selectedDay} tháng {viewMonth} năm {viewYear}
+                <h2 className="font-heading text-lg sm:text-xl font-bold text-white whitespace-nowrap truncate">
+                  Ngày {selectedDay}/{viewMonth}/{viewYear}
                 </h2>
               </div>
               <div className="px-3 py-1.5 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-right shrink-0">
                 <div className="text-[10px] text-amber-200 uppercase whitespace-nowrap">Âm Lịch</div>
-                <div className="font-heading font-extrabold text-sm sm:text-base text-amber-300 whitespace-nowrap">
-                  {selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ({selectedLunarInfo.yearCanChi})
+                <div className="font-heading font-extrabold text-xs sm:text-sm text-amber-300 whitespace-nowrap">
+                  {selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} • {selectedLunarInfo.yearCanChi}
                 </div>
               </div>
             </div>
 
             {/* Can Chi & Hoang Dao Status */}
-            <div className="grid grid-cols-2 gap-2.5 text-xs">
-              <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
-                <span className="text-[10px] text-stone-400 block whitespace-nowrap">Can Chi Ngày / Tháng</span>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 min-w-0">
+                <span className="text-[10px] text-stone-400 block whitespace-nowrap">Can Chi Ngày</span>
                 <span className="font-semibold text-amber-100 mt-0.5 block whitespace-nowrap truncate">
-                  Ngày {selectedLunarInfo.dayCanChi} • Tháng {selectedLunarInfo.monthCanChi}
+                  {selectedLunarInfo.dayCanChi}
                 </span>
               </div>
-              <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
-                <span className="text-[10px] text-stone-400 block whitespace-nowrap">Trực / Sao Hoàng Đạo</span>
+              <div className="p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 min-w-0">
+                <span className="text-[10px] text-stone-400 block whitespace-nowrap">Trực / Hoàng Đạo</span>
                 <span
                   className={cn(
                     'font-semibold mt-0.5 block whitespace-nowrap truncate',
@@ -467,7 +477,7 @@ export default function BuddhistCalendarPage() {
 
             {/* Buddhist Holiday or Trai Day Banner */}
             {(selectedLunarInfo.buddhistEvent || selectedLunarInfo.isTraiDay) && (
-              <div className="p-3.5 rounded-2xl bg-amber-500/15 border border-amber-400/30 space-y-1">
+              <div className="p-3 rounded-2xl bg-amber-500/15 border border-amber-400/30 space-y-1">
                 {selectedLunarInfo.buddhistEvent && (
                   <div className="flex items-center gap-1.5 text-xs font-bold text-amber-300">
                     <BuddhaBodhiIcon className="w-4 h-4 shrink-0" />
@@ -475,8 +485,8 @@ export default function BuddhistCalendarPage() {
                   </div>
                 )}
                 {selectedLunarInfo.isTraiDay && (
-                  <div className="text-[11px] text-amber-100/90">
-                    🪷 Ngày Trai Giới (Mùng {selectedLunarInfo.lunarDay} Âm lịch): Khuyến tấn ăn chay, niệm Phật, phóng sinh làm lành.
+                  <div className="text-[11px] text-amber-100/90 leading-relaxed">
+                    🪷 Ngày Trai Giới ({selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL): Khuyến tấn ăn chay, niệm Phật, làm việc thiện lành.
                   </div>
                 )}
               </div>
@@ -485,7 +495,7 @@ export default function BuddhistCalendarPage() {
             {/* Good Hours */}
             <div className="space-y-1.5">
               <span className="text-[11px] text-stone-400 font-medium flex items-center gap-1 whitespace-nowrap">
-                <Clock className="w-3.5 h-3.5 text-amber-400" /> Giờ Hoàng Đạo (Giờ Tốt) trong ngày:
+                <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Giờ Hoàng Đạo trong ngày:
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {selectedLunarInfo.goodHours.map((h) => (
@@ -503,19 +513,19 @@ export default function BuddhistCalendarPage() {
             {selectedDayReminders.length > 0 && (
               <div className="pt-2 border-t border-white/10 space-y-2">
                 <span className="text-xs font-bold text-rose-300 block">
-                  📌 Ghi chú / Ngày giỗ của bạn trong ngày này:
+                  📌 Ghi chú / Ngày giỗ trong ngày này:
                 </span>
                 {selectedDayReminders.map((rem) => (
                   <div
                     key={rem.id}
-                    className="p-3 rounded-xl bg-rose-500/20 border border-rose-400/40 flex items-start justify-between gap-2"
+                    className="p-2.5 rounded-xl bg-rose-500/20 border border-rose-400/40 flex items-start justify-between gap-2"
                   >
                     <div className="min-w-0">
                       <div className="text-xs font-bold text-white flex items-center gap-1.5">
                         <span>{rem.type === 'gio' ? '🕯️' : rem.type === 'trai_gioi' ? '🪷' : '⭐'}</span>
                         <span className="truncate">{rem.title}</span>
                       </div>
-                      {rem.note && <p className="text-[11px] text-stone-200 mt-1">{rem.note}</p>}
+                      {rem.note && <p className="text-[11px] text-stone-200 mt-0.5">{rem.note}</p>}
                     </div>
                     <button
                       type="button"
@@ -530,17 +540,16 @@ export default function BuddhistCalendarPage() {
               </div>
             )}
 
-            {/* Quick Button to Add Note for Selected Date */}
+            {/* Quick Button to Add Note for Selected Date (Concise, single line) */}
             <Button
               variant="primary"
               size="md"
               onClick={() => setIsAddingNote(true)}
-              className="w-full text-xs font-bold whitespace-nowrap"
+              className="w-full text-xs font-bold whitespace-nowrap truncate"
             >
-              <Plus className="w-4 h-4 mr-1.5 shrink-0" />
-              <span>
-                Ghi chú Ngày Giỗ / Việc Quan Trọng vào ngày {selectedDay}/{viewMonth} ({selectedLunarInfo.lunarDay}/
-                {selectedLunarInfo.lunarMonth} ÂL)
+              <Plus className="w-4 h-4 mr-1 shrink-0" />
+              <span className="whitespace-nowrap truncate">
+                Ghi Chú Ngày Giỗ / Nhắc Nhở ({selectedDay}/{viewMonth})
               </span>
             </Button>
           </div>
@@ -549,23 +558,23 @@ export default function BuddhistCalendarPage() {
           {isAddingNote && (
             <form
               onSubmit={handleAddReminder}
-              className="bg-white dark:bg-charcoal-800 rounded-3xl border-2 border-saffron-400 dark:border-saffron-600 p-5 space-y-4 shadow-lg animate-in fade-in duration-200"
+              className="bg-white dark:bg-charcoal-800 rounded-2xl sm:rounded-3xl border-2 border-saffron-400 dark:border-saffron-600 p-4 sm:p-5 space-y-3.5 shadow-lg animate-in fade-in duration-200"
             >
-              <div className="flex items-center justify-between">
-                <h3 className="font-heading font-bold text-base text-charcoal-900 dark:text-charcoal-50 whitespace-nowrap">
-                  Đặt Lịch Nhắc Nhở ({selectedDay}/{viewMonth} — {selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL)
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="font-heading font-bold text-sm sm:text-base text-charcoal-900 dark:text-charcoal-50 whitespace-nowrap truncate">
+                  Tạo Lịch Nhắc ({selectedDay}/{viewMonth} — {selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL)
                 </h3>
                 <button
                   type="button"
                   onClick={() => setIsAddingNote(false)}
-                  className="text-xs text-charcoal-400 hover:text-charcoal-700"
+                  className="text-xs text-charcoal-400 hover:text-charcoal-700 whitespace-nowrap shrink-0"
                 >
                   Đóng
                 </button>
               </div>
 
               {/* Type Selector */}
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-1.5">
                 {[
                   { id: 'gio', label: '🕯️ Ngày Giỗ', repeat: 'lunar_yearly' },
                   { id: 'quan_trong', label: '⭐ Quan Trọng', repeat: 'solar_yearly' },
@@ -579,7 +588,7 @@ export default function BuddhistCalendarPage() {
                       setRepeatType(t.repeat as any);
                     }}
                     className={cn(
-                      'py-2 px-2 rounded-xl text-xs font-bold border text-center whitespace-nowrap transition-all cursor-pointer',
+                      'py-2 px-1.5 rounded-xl text-[11px] sm:text-xs font-bold border text-center whitespace-nowrap truncate transition-all cursor-pointer',
                       noteType === t.id
                         ? 'bg-saffron-600 text-white border-saffron-600'
                         : 'bg-ivory-50 dark:bg-charcoal-900 text-charcoal-700 dark:text-charcoal-300 border-ivory-200 dark:border-charcoal-700'
@@ -599,8 +608,8 @@ export default function BuddhistCalendarPage() {
                   required
                   value={noteTitle}
                   onChange={(e) => setNoteTitle(e.target.value)}
-                  placeholder="Ví dụ: Ngày giỗ Ông Nội, Sinh nhật Mẹ, Cúng Rằm..."
-                  className="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm bg-ivory-50 dark:bg-charcoal-900 border border-ivory-300 dark:border-charcoal-700 text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:border-saffron-500"
+                  placeholder="Ví dụ: Ngày giỗ Ông Nội, Sinh nhật Mẹ..."
+                  className="w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm bg-ivory-50 dark:bg-charcoal-900 border border-ivory-300 dark:border-charcoal-700 text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:border-saffron-500"
                 />
               </div>
 
@@ -611,15 +620,15 @@ export default function BuddhistCalendarPage() {
                 <select
                   value={repeatType}
                   onChange={(e) => setRepeatType(e.target.value as any)}
-                  className="w-full px-3.5 py-2 rounded-xl text-xs bg-ivory-50 dark:bg-charcoal-900 border border-ivory-300 dark:border-charcoal-700 text-charcoal-900 dark:text-charcoal-100"
+                  className="w-full px-3 py-2 rounded-xl text-xs bg-ivory-50 dark:bg-charcoal-900 border border-ivory-300 dark:border-charcoal-700 text-charcoal-900 dark:text-charcoal-100"
                 >
                   <option value="lunar_yearly">
-                    Lặp lại hằng năm theo Âm lịch ({selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL — Khuyên dùng cho Ngày Giỗ)
+                    Hằng năm theo Âm lịch ({selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL — Ngày Giỗ)
                   </option>
                   <option value="solar_yearly">
-                    Lặp lại hằng năm theo Dương lịch ({selectedDay}/{viewMonth} DL)
+                    Hằng năm theo Dương lịch ({selectedDay}/{viewMonth} DL)
                   </option>
-                  <option value="once">Chỉ nhắc một lần vào ngày {selectedDateStr}</option>
+                  <option value="once">Chỉ nhắc 1 lần ({selectedDateStr})</option>
                 </select>
               </div>
 
@@ -636,23 +645,23 @@ export default function BuddhistCalendarPage() {
                 />
               </div>
 
-              <Button type="submit" variant="primary" size="md" className="w-full text-xs font-bold">
+              <Button type="submit" variant="primary" size="md" className="w-full text-xs font-bold whitespace-nowrap">
                 Lưu Vào Lịch Nhắc Nhở
               </Button>
             </form>
           )}
 
           {/* Card 3: All Saved Personal Reminders List */}
-          <div className="bg-white dark:bg-charcoal-800 rounded-3xl border border-ivory-200 dark:border-charcoal-700 p-5 space-y-3.5 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Bell className="w-4 h-4 text-saffron-600" />
-                <h3 className="font-heading font-bold text-sm sm:text-base text-charcoal-900 dark:text-charcoal-50 whitespace-nowrap">
+          <div className="bg-white dark:bg-charcoal-800 rounded-2xl sm:rounded-3xl border border-[#e5d8c1] dark:border-charcoal-700 p-4 sm:p-5 space-y-3 shadow-sm">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <Bell className="w-4 h-4 text-saffron-600 shrink-0" />
+                <h3 className="font-heading font-bold text-sm sm:text-base text-charcoal-900 dark:text-charcoal-50 whitespace-nowrap truncate">
                   Sổ Ghi Nhớ Ngày Giỗ & Sự Kiện ({reminders.length})
                 </h3>
               </div>
               {user && (
-                <span className="text-[11px] text-saffron-700 dark:text-saffron-400 font-semibold whitespace-nowrap">
+                <span className="text-[11px] text-saffron-700 dark:text-saffron-400 font-semibold whitespace-nowrap shrink-0">
                   ☸ {user.dharma_name || user.full_name}
                 </span>
               )}
@@ -664,15 +673,15 @@ export default function BuddhistCalendarPage() {
                   Chưa có ngày giỗ hoặc lời nhắc cá nhân nào.
                 </p>
                 <p className="text-[11px] text-charcoal-400">
-                  Hãy bấm vào một ngày trên lịch rồi chọn &ldquo;Ghi chú Ngày Giỗ / Việc Quan Trọng&rdquo; để lưu lại vĩnh viễn.
+                  Bấm vào một ngày trên lịch rồi chọn &ldquo;Ghi Chú Ngày Giỗ / Nhắc Nhở&rdquo; để lưu lại.
                 </p>
               </div>
             ) : (
-              <div className="space-y-2.5 max-h-80 overflow-y-auto pr-1">
+              <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
                 {reminders.map((rem) => (
                   <div
                     key={rem.id}
-                    className="p-3.5 rounded-2xl bg-ivory-50/90 dark:bg-charcoal-900/70 border border-ivory-200 dark:border-charcoal-700 flex items-start justify-between gap-3"
+                    className="p-3 rounded-2xl bg-ivory-50/90 dark:bg-charcoal-900/70 border border-ivory-200 dark:border-charcoal-700 flex items-start justify-between gap-2.5"
                   >
                     <div className="space-y-1 min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
@@ -681,9 +690,9 @@ export default function BuddhistCalendarPage() {
                         </span>
                         <span className="px-2 py-0.5 rounded-full bg-saffron-100 dark:bg-saffron-950 text-saffron-800 dark:text-saffron-300 text-[10px] font-bold whitespace-nowrap">
                           {rem.repeatType === 'lunar_yearly'
-                            ? `${rem.lunarDay}/${rem.lunarMonth} Âm lịch hằng năm`
+                            ? `${rem.lunarDay}/${rem.lunarMonth} ÂL hằng năm`
                             : rem.repeatType === 'solar_yearly'
-                            ? `${rem.solarDate.slice(5)} Dương lịch hằng năm`
+                            ? `${rem.solarDate.slice(5)} DL hằng năm`
                             : rem.solarDate}
                         </span>
                       </div>
@@ -711,4 +720,3 @@ export default function BuddhistCalendarPage() {
     </div>
   );
 }
-

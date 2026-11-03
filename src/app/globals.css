@@ -54,7 +54,22 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 button, a, input, select, textarea {
-  touch-action: manipulation;
+  touch-action: pan-x pan-y;
+}
+
+/* Completely hide Next.js 'N' DevTools / Indicator badge */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dev-tools-button],
+[data-next-badge-root],
+[data-next-badge],
+#__next-build-watcher {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {

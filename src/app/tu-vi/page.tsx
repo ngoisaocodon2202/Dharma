@@ -36,7 +36,7 @@ export default function LuckyColorAndGoodDayPage() {
 
   useEffect(() => {
     if (user?.gender) {
-      setGender(user.gender);
+      setGender(user.gender === 'female' ? 'Nữ' : 'Nam');
     }
   }, [user]);
 

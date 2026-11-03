@@ -102,20 +102,20 @@ export default function FloatingDharmaAI() {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Button: Compact Circle by default, expands horizontally on hover */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
           aria-label="Mở AI Hỏi Đáp Phật Pháp"
-          className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-40 flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-gradient-to-r from-[#800000] via-[#6b140b] to-[#4a0e0e] text-[#ffd966] border border-[#d4af37]/60 shadow-[0_8px_28px_rgba(128,0,0,0.4)] hover:scale-105 transition-all group"
+          title="AI Phật Pháp — Hỏi đáp 24/7"
+          className="fixed bottom-20 lg:bottom-6 right-3.5 lg:right-6 z-40 h-11 max-w-[44px] hover:max-w-[185px] rounded-full bg-gradient-to-r from-[#800000] via-[#6b140b] to-[#4a0e0e] text-[#ffd966] border-2 border-[#d4af37]/80 shadow-[0_6px_20px_rgba(128,0,0,0.45)] flex items-center p-1.5 transition-all duration-300 ease-out overflow-hidden group cursor-pointer"
         >
-          <span className="w-7 h-7 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/50 flex items-center justify-center text-sm shrink-0">
+          <span className="w-7 h-7 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/60 flex items-center justify-center text-sm shrink-0 shadow-inner">
             🪷
           </span>
-          <span className="text-xs font-bold tracking-wide whitespace-nowrap pr-0.5">
+          <span className="text-xs font-bold tracking-wide whitespace-nowrap opacity-0 group-hover:opacity-100 pl-2 pr-2.5 transition-opacity duration-200">
             AI Phật Pháp
           </span>
-          <Sparkles className="w-3.5 h-3.5 text-[#ffd966] shrink-0 animate-pulse" />
         </button>
       )}
 

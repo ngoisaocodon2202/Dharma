@@ -65,10 +65,10 @@ const FILTER_TAGS = ['Tất cả', 'Bình an', 'Trừ chướng ngại', 'Sức 
 export function OmManiMantrasSection() {
   const [selectedTag, setSelectedTag] = useState('Tất cả');
   const [chantCounters, setChantCounters] = useState<Record<string, number>>({
-    'om-mani': 42,
-    'om-ah-hum': 14,
-    'dai-bi': 3,
-    'duoc-su': 7,
+    'om-mani': 0,
+    'om-ah-hum': 0,
+    'dai-bi': 0,
+    'duoc-su': 0,
   });
 
   const filteredMantras =
@@ -143,9 +143,9 @@ export function OmManiMantrasSection() {
                 </div>
 
                 {/* Counter Pill */}
-                <div className="px-2.5 py-1 rounded-xl bg-ivory-100 dark:bg-charcoal-700 text-center shrink-0">
-                  <div className="text-[9px] text-charcoal-500 uppercase">Đã trì</div>
-                  <div className="font-mono font-bold text-xs text-amber-700 dark:text-amber-400">
+                <div className="px-2.5 py-1 rounded-xl bg-ivory-100 dark:bg-charcoal-700 text-center shrink-0 whitespace-nowrap">
+                  <div className="text-[9px] text-charcoal-500 uppercase whitespace-nowrap">Đã trì</div>
+                  <div className="font-mono font-bold text-xs text-amber-700 dark:text-amber-400 whitespace-nowrap">
                     {currentCount} biến
                   </div>
                 </div>
@@ -165,18 +165,18 @@ export function OmManiMantrasSection() {
               <div className="pt-2 border-t border-ivory-100 dark:border-charcoal-700 flex items-center justify-between gap-2">
                 <button
                   onClick={() => playBellSound(0.4)}
-                  className="px-3 py-1.5 rounded-xl bg-ivory-100 dark:bg-charcoal-700 hover:bg-ivory-200 text-charcoal-700 dark:text-charcoal-300 text-xs font-medium flex items-center gap-1.5 transition-colors"
+                  className="px-3 py-1.5 rounded-xl bg-ivory-100 dark:bg-charcoal-700 hover:bg-ivory-200 text-charcoal-700 dark:text-charcoal-300 text-xs font-medium flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0"
                 >
-                  <Volume2 className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Nghe chuông</span>
+                  <Volume2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                  <span className="whitespace-nowrap">Nghe chuông</span>
                 </button>
 
                 <button
                   onClick={() => handleChantMantra(mantra.id)}
-                  className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-saffron-600 hover:from-amber-400 hover:to-saffron-500 text-charcoal-950 font-bold text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1.5"
+                  className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-saffron-600 hover:from-amber-400 hover:to-saffron-500 text-charcoal-950 font-bold text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Trì Tụng (+1 Biến)</span>
+                  <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">Trì Tụng (+1)</span>
                 </button>
               </div>
             </div>
