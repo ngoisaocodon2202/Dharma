@@ -12,8 +12,14 @@ import { DharmaBookIcon } from '@/components/icons/DharmaBookIcon';
 export function Footer() {
   const pathname = usePathname();
 
-  // Hide on group chat pages to keep chat input full height
-  if (/^\/cong-dong\/.+/.test(pathname)) return null;
+  // Hide on group chat pages or dedicated 100vh sanctuary pages
+  if (
+    /^\/cong-dong\/.+/.test(pathname) ||
+    pathname === '/cau-nguyen' ||
+    pathname === '/di-chua-online'
+  ) {
+    return null;
+  }
 
   // On non-home pages (where footer is omitted), render a bottom spacer on mobile
   // so the entire UI can always scroll completely above the fixed MobileBottomNav

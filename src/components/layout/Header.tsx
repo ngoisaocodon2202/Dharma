@@ -213,8 +213,14 @@ export function Header() {
   const pathname = usePathname();
   const { user, openAuthModal, logout } = useAuth();
 
-  // Hide on group chat pages
-  if (/^\/cong-dong\/.+/.test(pathname)) return null;
+  // Hide on group chat pages or dedicated 100vh sanctuary pages
+  if (
+    /^\/cong-dong\/.+/.test(pathname) ||
+    pathname === '/cau-nguyen' ||
+    pathname === '/di-chua-online'
+  ) {
+    return null;
+  }
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
