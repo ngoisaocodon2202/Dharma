@@ -45,8 +45,13 @@ export default function FloatingDharmaAI() {
     }
   }, [messages, open]);
 
-  // Hide floating widget on the dedicated AI page to avoid duplicate UI
-  if (pathname === "/hoi-dap-ai" || pathname?.startsWith("/cong-dong")) {
+  // Hide floating widget on dedicated AI page or sanctuary to avoid overlapping controls
+  if (
+    pathname === "/hoi-dap-ai" ||
+    pathname?.startsWith("/cong-dong") ||
+    pathname === "/cau-nguyen" ||
+    pathname === "/di-chua-online"
+  ) {
     return null;
   }
 

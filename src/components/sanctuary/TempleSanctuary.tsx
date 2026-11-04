@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   Flame,
@@ -14,7 +14,6 @@ import {
   ArrowLeft,
   Calendar,
   History,
-  Check,
   Plus,
   Minus,
   Play,
@@ -110,10 +109,9 @@ export function TempleSanctuary() {
 
   // Scripture Reader states
   const [selectedSutraIndex, setSelectedSutraIndex] = useState(0);
-  const [fontSizePx, setFontSizePx] = useState(24); // Senior friendly default: 24px
+  const [fontSizePx, setFontSizePx] = useState(24);
   const [isAutoScrolling, setIsAutoScrolling] = useState(false);
   const [activeVerseIndex, setActiveVerseIndex] = useState(0);
-  const [isAutoWoodfish, setIsAutoWoodfish] = useState(false);
 
   // Prayer state
   const [prayerName, setPrayerName] = useState('');
@@ -123,7 +121,6 @@ export function TempleSanctuary() {
 
   const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
   const autoScrollTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const autoWoodfishTimerRef = useRef<NodeJS.Timeout | null>(null);
   const scriptureScrollRef = useRef<HTMLDivElement | null>(null);
 
   // Load saved prayers from localStorage
@@ -159,7 +156,6 @@ export function TempleSanctuary() {
       5500
     );
 
-    // Stop bowing after 3 full bowing cycles (~3.2s)
     setTimeout(() => {
       setIsBowing(false);
     }, 3200);
@@ -182,7 +178,7 @@ export function TempleSanctuary() {
     }, 2800);
   };
 
-  // 3. ACTION: ĐỌC KINH (SCRIPTURE OVERLAY)
+  // 3. ACTION: ĐỌC KINH
   const handleOpenScripture = () => {
     setIsScriptureModalOpen(true);
     if (soundEnabled) {
@@ -202,7 +198,7 @@ export function TempleSanctuary() {
           }
           return next;
         });
-      }, 5500); // 5.5s per verse for easy senior reading
+      }, 5500);
     } else {
       if (autoScrollTimerRef.current) clearInterval(autoScrollTimerRef.current);
     }
@@ -210,22 +206,6 @@ export function TempleSanctuary() {
       if (autoScrollTimerRef.current) clearInterval(autoScrollTimerRef.current);
     };
   }, [isAutoScrolling, isScriptureModalOpen, selectedSutraIndex, soundEnabled]);
-
-  // Auto wooden fish rhythm
-  useEffect(() => {
-    if (isAutoWoodfish && isScriptureModalOpen) {
-      autoWoodfishTimerRef.current = setInterval(() => {
-        if (soundEnabled) {
-          playWoodenFishSound(0.35);
-        }
-      }, 1000); // 60 bpm chanting pace
-    } else {
-      if (autoWoodfishTimerRef.current) clearInterval(autoWoodfishTimerRef.current);
-    }
-    return () => {
-      if (autoWoodfishTimerRef.current) clearInterval(autoWoodfishTimerRef.current);
-    };
-  }, [isAutoWoodfish, isScriptureModalOpen, soundEnabled]);
 
   // 4. ACTION: DÂNG LỜI CẦU NGUYỆN
   const handleSubmitPrayer = (e?: React.FormEvent) => {
@@ -252,7 +232,6 @@ export function TempleSanctuary() {
       localStorage.setItem('phatphap_sanctuary_prayers', JSON.stringify(updated));
     } catch {}
 
-    // Trigger floating lotus lantern animation in sanctuary
     setFloatingPrayer(content);
     setIsPrayerModalOpen(false);
     setIsBowing(true);
@@ -275,50 +254,50 @@ export function TempleSanctuary() {
   const currentSutra = SUTRA_COLLECTIONS[selectedSutraIndex];
 
   return (
-    <div className="relative w-screen h-[100dvh] overflow-hidden bg-[#1E110A] text-[#FDFBF7] select-none font-sans flex flex-col justify-between">
+    <div className="relative w-screen h-[100dvh] overflow-hidden bg-[#180C06] text-[#FDFBF7] select-none font-sans flex flex-col justify-between">
       {/* ========================================================================= */}
-      {/* 1. TOP HEADER NAVIGATION BAR (SENIOR-FRIENDLY & HIGH-CONTRAST)            */}
+      {/* 1. TOP HEADER NAVIGATION BAR                                              */}
       {/* ========================================================================= */}
-      <header className="relative z-30 h-14 sm:h-16 px-3 sm:px-6 bg-[#2C1A12]/95 border-b border-[#D4AF37]/30 backdrop-blur-md flex items-center justify-between shrink-0 shadow-lg">
+      <header className="relative z-30 h-14 sm:h-16 px-3 sm:px-6 bg-[#24130A]/95 border-b border-[#D4AF37]/35 backdrop-blur-md flex items-center justify-between shrink-0 shadow-lg">
         {/* Back to Home Button */}
         <Link
           href="/"
-          className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-black/35 hover:bg-black/55 border border-[#D4AF37]/40 text-[#FDFBF7] font-bold text-sm sm:text-base active:scale-95 transition-all"
+          className="flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-black/40 hover:bg-black/60 border border-[#D4AF37]/40 text-[#FDFBF7] font-bold text-xs sm:text-sm active:scale-95 transition-all shadow-xs"
         >
-          <ArrowLeft className="w-5 h-5 text-[#D4AF37]" />
+          <ArrowLeft className="w-4 h-4 text-[#D4AF37]" />
           <span className="hidden xs:inline">Trang Chủ</span>
         </Link>
 
-        {/* Sanctuary Title */}
+        {/* Sanctuary Title with Auspicious Symbols */}
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center gap-1.5 text-[#D4AF37]">
-            <Sparkles className="w-4 h-4 animate-pulse" />
-            <h1 className="font-heading text-base sm:text-xl font-bold tracking-wide uppercase text-[#FFE082]">
-              Cầu Nguyện Online
+            <Sparkles className="w-4 h-4 animate-pulse text-[#FFE082]" />
+            <h1 className="font-heading text-base sm:text-xl font-bold tracking-wide uppercase text-[#FFE082] drop-shadow-md">
+              Đi Chùa & Cầu Nguyện Online
             </h1>
-            <Sparkles className="w-4 h-4 animate-pulse" />
+            <Sparkles className="w-4 h-4 animate-pulse text-[#FFE082]" />
           </div>
-          <p className="text-[11px] sm:text-xs text-[#D7C4A5] opacity-90 hidden sm:block">
-            Không Gian Đi Chùa & Cầu Nguyện Tam Bảo Thanh Tịnh
+          <p className="text-[10.5px] sm:text-xs text-[#D7C4A5] opacity-90 hidden sm:block">
+            Không Gian Tam Bảo Trang Nghiêm • Nhất Tâm Chiêm Bái
           </p>
         </div>
 
-        {/* Action Shortcuts: Sổ Cầu Nguyện + Link Xem Ngày Tốt + Âm Thanh */}
+        {/* Action Shortcuts */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           {/* CRITICAL: "Xem Ngày Tốt" link preserved as requested by user! */}
           <Link
             href="/tu-vi"
-            className="flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/35 border border-[#D4AF37]/50 text-[#FFE082] text-xs sm:text-sm font-bold active:scale-95 transition-all shadow-xs"
+            className="flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-[#D4AF37]/20 hover:bg-[#D4AF37]/35 border border-[#D4AF37]/60 text-[#FFE082] text-xs sm:text-sm font-bold active:scale-95 transition-all shadow-xs"
             title="Tra cứu Màu Hợp & Ngày Tốt Hoàng Đạo"
           >
             <Calendar className="w-4 h-4 text-[#FFE082]" />
             <span className="hidden md:inline">Xem Ngày Tốt</span>
           </Link>
 
-          {/* Sổ Lời Nguyện Cầu (Xem lịch sử) */}
+          {/* Sổ Lời Nguyện Cầu */}
           <button
             onClick={() => setIsHistoryModalOpen(true)}
-            className="flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-black/35 hover:bg-black/55 border border-[#D4AF37]/40 text-[#FDFBF7] text-xs sm:text-sm font-bold active:scale-95 transition-all"
+            className="flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-black/40 hover:bg-black/60 border border-[#D4AF37]/40 text-[#FDFBF7] text-xs sm:text-sm font-bold active:scale-95 transition-all shadow-xs"
             title="Xem Sổ Lời Nguyện Cầu Đã Dâng"
           >
             <History className="w-4 h-4 text-[#D4AF37]" />
@@ -334,7 +313,7 @@ export function TempleSanctuary() {
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
             className={cn(
-              'p-2 rounded-xl border transition-all active:scale-95',
+              'p-2 rounded-xl border transition-all active:scale-95 shadow-xs',
               soundEnabled
                 ? 'bg-[#D4AF37]/25 border-[#D4AF37]/60 text-[#FFE082]'
                 : 'bg-black/40 border-stone-700 text-stone-400'
@@ -351,8 +330,8 @@ export function TempleSanctuary() {
       {/* ========================================================================= */}
       {toastMessage && (
         <div className="absolute top-18 sm:top-20 inset-x-3 sm:inset-x-8 z-40 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="max-w-2xl bg-[#2C1A12]/95 border-2 border-[#D4AF37] rounded-2xl p-3.5 sm:p-5 shadow-[0_8px_30px_rgba(0,0,0,0.7)] text-center backdrop-blur-md">
-            <p className="font-heading text-base sm:text-xl font-bold text-[#FFE082] leading-snug">
+          <div className="max-w-2xl bg-[#24130A]/95 border-2 border-[#D4AF37] rounded-2xl p-3.5 sm:p-5 shadow-[0_12px_40px_rgba(0,0,0,0.85)] text-center backdrop-blur-md">
+            <p className="font-heading text-sm sm:text-lg md:text-xl font-bold text-[#FFE082] leading-snug">
               {toastMessage}
             </p>
           </div>
@@ -360,480 +339,414 @@ export function TempleSanctuary() {
       )}
 
       {/* ========================================================================= */}
-      {/* 3. MAIN 2.5D SANCTUARY VIEWPORT (FIXED 100VH - ZERO BODY SCROLL)          */}
+      {/* 3. REALISTIC & COHESIVE 2.5D CHÁNH ĐIỆN (TEMPLE SANCTUARY HALL)           */}
       {/* ========================================================================= */}
-      <main className="relative flex-1 min-h-0 w-full overflow-hidden flex flex-col justify-between">
-        {/* Deep temple sanctuary architectural backdrop */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#180C06] via-[#2A160C] to-[#120804] pointer-events-none" />
+      <main className="relative flex-1 min-h-0 w-full overflow-hidden flex flex-col justify-end">
+        {/* Real Temple Sanctuary Background with Warm Teakwood Pillars & Ambient Fog */}
+        <div className="absolute inset-0 z-0">
+          {/* Subtle real temple hall image texture */}
+          <img
+            src="/images/buddha_temple.jpg"
+            alt="Chánh Điện Chùa Cổ"
+            className="w-full h-full object-cover object-center opacity-30 filter brightness-75 contrast-125"
+          />
+          {/* Deep sacred ambient gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#140804] via-[#200F07]/90 to-[#120703]/95" />
 
-        {/* Traditional carved wooden lattice background wall (Mành nan gỗ lim) */}
-        <div
-          className="absolute inset-0 opacity-15 pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(#D4AF37 1px, transparent 1px), radial-gradient(#D4AF37 1px, #180C06 1px)`,
-            backgroundSize: '28px 28px',
-            backgroundPosition: '0 0, 14px 14px',
-          }}
-        />
+          {/* Left & Right Red-Gold Temple Pillars (Cột Gỗ Lim Chùa Cổ) */}
+          <div className="absolute inset-y-0 left-0 w-8 sm:w-16 md:w-24 bg-gradient-to-r from-[#200A04] via-[#3E160A] to-transparent border-r border-[#D4AF37]/20 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-8 sm:w-16 md:w-24 bg-gradient-to-l from-[#200A04] via-[#3E160A] to-transparent border-l border-[#D4AF37]/20 pointer-events-none" />
 
-        {/* Giant breathing golden halo behind Buddha statue */}
-        <div
-          className="absolute top-2 sm:top-4 left-1/2 -translate-x-1/2 w-[340px] sm:w-[500px] md:w-[620px] aspect-square rounded-full animate-halo-breathing pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle, rgba(255,224,130,0.45) 0%, rgba(212,175,55,0.25) 45%, rgba(180,83,9,0.08) 70%, transparent 100%)',
-          }}
-        />
-
-        {/* ----------------------------------------------------------------------- */}
-        {/* UPPER CENTER ZONE: THE SOLEMN BUDDHA STATUE & LOTUS THRONE (TOP 42%)   */}
-        {/* ----------------------------------------------------------------------- */}
-        <div className="relative z-10 w-full flex flex-col items-center pt-1 sm:pt-3">
-          {/* Floating Prayer Lotus Lantern (rises towards Buddha when prayer is submitted) */}
-          {floatingPrayer && (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 z-30 pointer-events-none animate-prayer-lotus-float flex flex-col items-center">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-[0_0_20px_#FFE082]">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                  <circle cx="50" cy="50" r="30" fill="url(#lotusGlow)" opacity="0.6" />
-                  {/* Golden Lotus Lantern Petals */}
-                  <path d="M50 20 C40 38 35 60 50 72 C65 60 60 38 50 20 Z" fill="#FFE082" />
-                  <path d="M30 40 C28 55 35 68 50 72 C40 68 35 52 30 40 Z" fill="#F59E0B" />
-                  <path d="M70 40 C72 55 65 68 50 72 C60 68 65 52 70 40 Z" fill="#F59E0B" />
-                  <circle cx="50" cy="46" r="6" fill="#FFF" />
-                </svg>
-              </div>
-              <div className="px-3 py-1 rounded-full bg-[#2C1A12]/90 border border-[#D4AF37] text-[#FFE082] text-xs font-bold whitespace-nowrap mt-1 shadow-lg">
-                &ldquo;{floatingPrayer}&rdquo;
-              </div>
-            </div>
-          )}
-
-          {/* INLINE SVG: Serene Buddha Statue seated in Lotus Pedestal */}
-          <div className="relative w-44 sm:w-56 md:w-64 aspect-[1/1.1] filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)]">
-            <svg viewBox="0 0 240 260" className="w-full h-full" fill="none">
-              <defs>
-                <radialGradient id="buddhaGlow" cx="50%" cy="40%" r="50%">
-                  <stop offset="0%" stopColor="#FFF2B2" />
-                  <stop offset="50%" stopColor="#D4AF37" />
-                  <stop offset="100%" stopColor="#8A6715" />
-                </radialGradient>
-                <linearGradient id="goldThrone" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#E6C265" />
-                  <stop offset="50%" stopColor="#B38B22" />
-                  <stop offset="100%" stopColor="#664D0E" />
-                </linearGradient>
-                <linearGradient id="robeDrape" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#C8780A" />
-                  <stop offset="50%" stopColor="#E8920A" />
-                  <stop offset="100%" stopColor="#92400E" />
-                </linearGradient>
-              </defs>
-
-              {/* Head Halo Circle */}
-              <circle cx="120" cy="72" r="48" fill="url(#buddhaGlow)" opacity="0.35" />
-              <circle cx="120" cy="72" r="44" stroke="#D4AF37" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.8" />
-
-              {/* Ushnisha (Top hair knot) & Jewel */}
-              <circle cx="120" cy="38" r="9" fill="#B38B22" />
-              <circle cx="120" cy="30" r="3.5" fill="#EF4444" />
-
-              {/* Buddha Head and Hair Curls */}
-              <ellipse cx="120" cy="68" rx="26" ry="30" fill="url(#buddhaGlow)" />
-              {/* Hairline curls */}
-              <path
-                d="M96 60 C98 48 142 48 144 60 C140 54 100 54 96 60 Z"
-                fill="#8A6715"
-              />
-
-              {/* Serene Face Details */}
-              {/* Urna (Wisdom mark between brows) */}
-              <circle cx="120" cy="62" r="1.6" fill="#DC2626" />
-              {/* Eyes downcast in deep meditation */}
-              <path d="M106 68 Q113 72 117 68" stroke="#5A4308" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M123 68 Q127 72 134 68" stroke="#5A4308" strokeWidth="1.8" strokeLinecap="round" />
-              {/* Gentle serene nose & smile */}
-              <path d="M120 68 L119 75 L122 75" stroke="#7A5C10" strokeWidth="1.4" strokeLinecap="round" />
-              <path d="M113 82 Q120 86 127 82" stroke="#684B08" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-              {/* Elongated earlobes */}
-              <path d="M93 64 C91 74 93 84 96 86" stroke="#B38B22" strokeWidth="3" strokeLinecap="round" />
-              <path d="M147 64 C149 74 147 84 144 86" stroke="#B38B22" strokeWidth="3" strokeLinecap="round" />
-
-              {/* Torso & Monk Layrobe */}
-              <path
-                d="M94 94 C76 112 70 148 72 176 L168 176 C170 148 164 112 146 94 Z"
-                fill="url(#buddhaGlow)"
-              />
-              {/* Kasaya Robe Drapes over left shoulder */}
-              <path
-                d="M94 94 Q116 110 142 135 L148 176 L72 176 Q78 126 94 94 Z"
-                fill="url(#robeDrape)"
-                opacity="0.9"
-              />
-
-              {/* Hands in Dhyana Mudra (Thiền Định Ấn) */}
-              <ellipse cx="120" cy="166" rx="20" ry="8" fill="#F5D77F" stroke="#9A7432" strokeWidth="1" />
-              <path d="M112 165 C116 163 124 163 128 165" stroke="#7A5C10" strokeWidth="1.2" />
-
-              {/* Crossed Legs in Lotus (Vajrasana) */}
-              <path
-                d="M56 172 C62 162 90 166 120 168 C150 166 178 162 184 172 C188 184 172 196 120 196 C68 196 52 184 56 172 Z"
-                fill="url(#buddhaGlow)"
-                stroke="#8A6715"
-                strokeWidth="1.2"
-              />
-
-              {/* Multi-tiered Golden Lotus Pedestal (Đài Sen Tam Cấp) */}
-              <g transform="translate(0, 186)">
-                {/* Upper lotus petals */}
-                <path d="M68 10 C80 -4 95 -6 102 10" fill="url(#goldThrone)" stroke="#D4AF37" strokeWidth="1" />
-                <path d="M96 10 C108 -8 132 -8 144 10" fill="#E6C265" stroke="#FFE082" strokeWidth="1" />
-                <path d="M138 10 C145 -6 160 -4 172 10" fill="url(#goldThrone)" stroke="#D4AF37" strokeWidth="1" />
-                <path d="M50 16 C62 2 76 2 86 16" fill="#B38B22" />
-                <path d="M154 16 C164 2 178 2 190 16" fill="#B38B22" />
-
-                {/* Base throne */}
-                <path d="M42 22 L198 22 L190 38 L50 38 Z" fill="url(#goldThrone)" />
-                <rect x="36" y="38" width="168" height="14" rx="4" fill="#664D0E" stroke="#B38B22" strokeWidth="1.5" />
-                {/* Traditional lotus relief dots on pedestal */}
-                <circle cx="60" cy="45" r="2.5" fill="#FFE082" />
-                <circle cx="80" cy="45" r="2.5" fill="#FFE082" />
-                <circle cx="100" cy="45" r="2.5" fill="#FFE082" />
-                <circle cx="120" cy="45" r="3" fill="#FFE082" />
-                <circle cx="140" cy="45" r="2.5" fill="#FFE082" />
-                <circle cx="160" cy="45" r="2.5" fill="#FFE082" />
-                <circle cx="180" cy="45" r="2.5" fill="#FFE082" />
-              </g>
-            </svg>
+          {/* Traditional Carved Wooden Frieze at Top (Hoành Phi) */}
+          <div className="absolute top-0 inset-x-8 sm:inset-x-20 h-6 sm:h-8 bg-[#3E160A]/90 border-b border-[#D4AF37]/40 flex items-center justify-center shadow-lg">
+            <span className="font-heading text-[11px] sm:text-xs font-bold tracking-[0.3em] text-[#FFE082] uppercase">
+              ✦ Phật Quang Phổ Chiếu • Vạn Đức Trang Nghiêm ✦
+            </span>
           </div>
+
+          {/* Polished Lacquer Temple Floor (Sàn Chùa Bóng Gương) */}
+          <div className="absolute bottom-0 inset-x-0 h-44 sm:h-52 bg-gradient-to-t from-[#0C0402] via-[#1B0C06] to-transparent pointer-events-none border-t border-[#D4AF37]/15" />
         </div>
 
-        {/* ----------------------------------------------------------------------- */}
-        {/* MIDDLE ZONE: ALTAR TABLE + INCENSE BURNER + BODHI TREE + TEMPLE BELL     */}
-        {/* ----------------------------------------------------------------------- */}
-        <div className="relative z-15 w-full flex items-center justify-between px-3 sm:px-8 md:px-14 -mt-2 sm:-mt-4">
-          {/* MIDDLE LEFT: Potted Bodhi Tree (Cây Bồ Đề chậu gốm cổ) */}
-          <div className="relative w-28 sm:w-36 md:w-44 aspect-[1/1.4] shrink-0">
-            {/* Drifting Bodhi Leaves Animations */}
-            <div className="absolute top-8 left-4 w-4 h-4 pointer-events-none animate-bodhi-leaf-1">
-              <svg viewBox="0 0 20 24" className="w-full h-full fill-[#84CC16] drop-shadow-sm">
-                <path d="M10 0 C6 8 0 14 0 18 C0 22 5 24 10 24 C15 24 20 22 20 18 C20 14 14 8 10 0 Z" />
+        {/* Floating Lotus Prayer (rises towards Buddha when prayer is submitted) */}
+        {floatingPrayer && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 z-35 pointer-events-none animate-prayer-lotus-float flex flex-col items-center">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-[0_0_25px_#FFE082]">
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                <circle cx="50" cy="50" r="30" fill="url(#lotusGlow)" opacity="0.6" />
+                <path d="M50 20 C40 38 35 60 50 72 C65 60 60 38 50 20 Z" fill="#FFE082" />
+                <path d="M30 40 C28 55 35 68 50 72 C40 68 35 52 30 40 Z" fill="#F59E0B" />
+                <path d="M70 40 C72 55 65 68 50 72 C60 68 65 52 70 40 Z" fill="#F59E0B" />
+                <circle cx="50" cy="46" r="6" fill="#FFF" />
               </svg>
             </div>
-            <div className="absolute top-12 right-2 w-3.5 h-3.5 pointer-events-none animate-bodhi-leaf-2">
-              <svg viewBox="0 0 20 24" className="w-full h-full fill-[#A3E635] drop-shadow-sm">
-                <path d="M10 0 C6 8 0 14 0 18 C0 22 5 24 10 24 C15 24 20 22 20 18 C20 14 14 8 10 0 Z" />
-              </svg>
+            <div className="px-3.5 py-1.5 rounded-full bg-[#24130A]/95 border-2 border-[#D4AF37] text-[#FFE082] text-xs sm:text-sm font-bold whitespace-nowrap mt-1 shadow-2xl">
+              &ldquo;{floatingPrayer}&rdquo;
+            </div>
+          </div>
+        )}
+
+        {/* ======================================================================= */}
+        {/* THE INTEGRATED 3D SANCTUARY STAGE (GROUNDED ARCHITECTURAL COMPOSITION)  */}
+        {/* ======================================================================= */}
+        <div className="relative z-10 w-full max-w-4xl mx-auto h-full flex flex-col justify-end px-3 sm:px-8 pb-1">
+          {/* --------------------------------------------------------------------- */}
+          {/* 1. UPPER ALTAR: SACRED GOLDEN BUDDHA STATUE & GOLDEN HALO             */}
+          {/* --------------------------------------------------------------------- */}
+          <div className="relative flex flex-col items-center mb-1 sm:mb-2">
+            {/* Giant Breathing Golden Halo Glow */}
+            <div
+              className="absolute -top-4 left-1/2 -translate-x-1/2 w-52 sm:w-72 md:w-84 aspect-square rounded-full animate-halo-breathing pointer-events-none"
+              style={{
+                background:
+                  'radial-gradient(circle, rgba(255,224,130,0.55) 0%, rgba(212,175,55,0.3) 45%, rgba(180,83,9,0.1) 70%, transparent 100%)',
+              }}
+            />
+
+            {/* Sacred Buddha Shrine Portal with Golden Gilded Arch */}
+            <div className="relative w-44 sm:w-56 md:w-64 aspect-[1/1.15] rounded-t-full border-2 border-[#D4AF37]/70 p-1.5 bg-gradient-to-b from-[#3E160A]/80 via-[#200A04]/90 to-[#140804] shadow-[0_0_35px_rgba(212,175,55,0.4)]">
+              {/* Authentic Golden Buddha Image */}
+              <div className="relative w-full h-full rounded-t-full overflow-hidden border border-[#D4AF37]/40 shadow-inner">
+                <img
+                  src="/images/golden_buddha.jpg"
+                  alt="Đức Bổn Sư Thích Ca Mâu Ni Phật"
+                  className="w-full h-full object-cover object-top filter brightness-105 contrast-110"
+                />
+                {/* Soft ambient lighting gradient at the bottom of the statue */}
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#140804] to-transparent pointer-events-none" />
+              </div>
             </div>
 
-            {/* INLINE SVG: Bodhi Tree in Ancient Lotus Pot */}
-            <svg viewBox="0 0 140 190" className="w-full h-full" fill="none">
-              {/* Wooden Stand */}
-              <rect x="35" y="172" width="70" height="8" rx="2" fill="#3E2723" />
-              <rect x="42" y="180" width="10" height="8" fill="#2E1C18" />
-              <rect x="88" y="180" width="10" height="8" fill="#2E1C18" />
-
-              {/* Antique Ceramic Planter (Chậu gốm hoa văn men lam) */}
-              <path d="M38 125 L102 125 L94 172 L46 172 Z" fill="#E0E7FF" stroke="#3730A3" strokeWidth="1.5" />
-              <path d="M34 121 L106 121 L102 126 L38 126 Z" fill="#C7D2FE" stroke="#312E81" strokeWidth="1.2" />
-              {/* Blue Lotus motif on pot */}
-              <circle cx="70" cy="148" r="10" fill="#818CF8" opacity="0.4" />
-              <path d="M60 152 Q70 140 80 152" stroke="#3730A3" strokeWidth="1.5" fill="none" />
-
-              {/* Bodhi Tree Trunk (Gnarled sacred wood) */}
-              <path d="M68 125 Q64 95 54 75 Q70 65 72 45" stroke="#5D4037" strokeWidth="8" strokeLinecap="round" />
-              <path d="M64 90 Q78 80 88 65" stroke="#4E342E" strokeWidth="5" strokeLinecap="round" />
-              <path d="M56 75 Q42 62 38 48" stroke="#4E342E" strokeWidth="4.5" strokeLinecap="round" />
-
-              {/* Canopy of Heart-shaped Bodhi Leaves */}
-              <g fill="#65A30D" stroke="#365314" strokeWidth="0.8">
-                <path d="M38 42 C32 32 44 22 50 34 C56 22 68 32 62 42 Z" />
-                <path d="M68 38 C62 26 76 18 82 28 C88 18 102 26 96 38 Z" fill="#84CC16" />
-                <path d="M88 56 C82 46 94 38 100 48 C106 38 118 46 112 56 Z" />
-                <path d="M26 50 C20 42 32 34 36 42 C40 34 52 42 46 50 Z" fill="#4D7C0F" />
-                <path d="M68 55 C64 48 72 42 76 48 C80 42 88 48 84 55 Z" fill="#84CC16" />
-                <path d="M50 68 C44 60 54 54 58 60 C62 54 72 60 66 68 Z" fill="#65A30D" />
-              </g>
-            </svg>
+            {/* Multi-tiered Lotus Throne (Đài Sen Tam Cấp) */}
+            <div className="w-52 sm:w-64 md:w-72 -mt-3 relative z-10 flex flex-col items-center">
+              <div className="w-full h-4 bg-gradient-to-r from-[#8A6715] via-[#FFE082] to-[#8A6715] rounded-t-lg border border-[#D4AF37] shadow-md flex items-center justify-around px-2">
+                {[...Array(9)].map((_, i) => (
+                  <div key={i} className="w-2.5 h-2 rounded-full bg-[#FFE082] opacity-80 shadow-xs" />
+                ))}
+              </div>
+              <div className="w-[92%] h-3 bg-gradient-to-r from-[#4A3508] via-[#8A6715] to-[#4A3508] rounded-b-md border-x border-b border-[#D4AF37]/50" />
+            </div>
           </div>
 
-          {/* MIDDLE CENTER: Altar Table & Antique Bronze Incense Burner (Lư Hương) */}
-          <div className="relative flex flex-col items-center">
-            {/* 3 Rising Wispy Incense Smoke Particles (when lit) */}
-            {isIncenseLit && (
-              <div className="absolute -top-16 inset-x-0 flex justify-center items-end h-24 pointer-events-none">
-                <div className="w-1.5 h-16 bg-gradient-to-t from-white/70 to-transparent rounded-full blur-[1px] animate-incense-smoke-1 mr-3" />
-                <div className="w-2 h-20 bg-gradient-to-t from-amber-100/80 to-transparent rounded-full blur-[1px] animate-incense-smoke-2" />
-                <div className="w-1.5 h-16 bg-gradient-to-t from-white/70 to-transparent rounded-full blur-[1px] animate-incense-smoke-3 ml-3" />
+          {/* --------------------------------------------------------------------- */}
+          {/* 2. MIDDLE ALTAR TABLE + INCENSE BURNER + BODHI TREE + TEMPLE BELL      */}
+          {/* --------------------------------------------------------------------- */}
+          <div className="relative w-full flex items-end justify-between px-1 sm:px-4 -mt-2 sm:-mt-3">
+            {/* LEFT FLANK: Potted Bodhi Tree (Cây Bồ Đề Cổ Thụ) */}
+            <div className="relative w-24 sm:w-32 md:w-40 flex flex-col items-center shrink-0 z-15">
+              {/* Drifting Bodhi Leaves */}
+              <div className="absolute top-4 left-2 w-3.5 h-3.5 pointer-events-none animate-bodhi-leaf-1">
+                <svg viewBox="0 0 20 24" className="w-full h-full fill-[#A3E635] drop-shadow-sm">
+                  <path d="M10 0 C6 8 0 14 0 18 C0 22 5 24 10 24 C15 24 20 22 20 18 C20 14 14 8 10 0 Z" />
+                </svg>
               </div>
-            )}
+              <div className="absolute top-10 right-2 w-3 h-3 pointer-events-none animate-bodhi-leaf-2">
+                <svg viewBox="0 0 20 24" className="w-full h-full fill-[#FACC15] drop-shadow-sm">
+                  <path d="M10 0 C6 8 0 14 0 18 C0 22 5 24 10 24 C15 24 20 22 20 18 C20 14 14 8 10 0 Z" />
+                </svg>
+              </div>
 
-            {/* Bronze Incense Burner (Lư Hương Đồng Tam Túc) */}
+              {/* Bodhi Tree Branch Canopy with Heart Leaves */}
+              <div className="w-20 sm:w-28 md:w-34 aspect-square mb-[-6px]">
+                <svg viewBox="0 0 120 120" className="w-full h-full drop-shadow-md">
+                  {/* Trunk */}
+                  <path d="M60 115 Q56 80 48 60 Q62 50 64 35" stroke="#5D4037" strokeWidth="6" strokeLinecap="round" fill="none" />
+                  <path d="M54 75 Q40 65 35 50" stroke="#4E342E" strokeWidth="4" strokeLinecap="round" fill="none" />
+                  <path d="M58 85 Q72 75 80 62" stroke="#4E342E" strokeWidth="4" strokeLinecap="round" fill="none" />
+                  {/* Leaves */}
+                  <g fill="#65A30D" stroke="#365314" strokeWidth="0.6">
+                    <path d="M35 48 C28 38 40 28 46 40 C52 28 64 38 58 48 Z" fill="#84CC16" />
+                    <path d="M64 32 C58 20 72 12 78 22 C84 12 98 20 92 32 Z" fill="#A3E635" />
+                    <path d="M80 58 C74 48 86 40 92 50 C98 40 110 48 104 58 Z" fill="#65A30D" />
+                    <path d="M25 56 C19 48 31 40 35 48 C39 40 51 48 45 56 Z" fill="#4D7C0F" />
+                    <path d="M50 72 C44 64 54 58 58 64 C62 58 72 64 66 72 Z" fill="#84CC16" />
+                  </g>
+                </svg>
+              </div>
+
+              {/* Ceramic Blue-and-White Lotus Planter (Chậu Gốm Cổ) */}
+              <div className="w-14 sm:w-20 md:w-24 h-10 sm:h-14 bg-gradient-to-b from-[#E0E7FF] to-[#C7D2FE] border-2 border-[#3730A3] rounded-b-xl shadow-lg flex flex-col items-center justify-center relative">
+                <span className="text-[9px] font-bold text-[#312E81] uppercase tracking-wider">✦ Sen Lam ✦</span>
+                <div className="w-full h-1.5 bg-[#312E81] absolute -top-1 rounded-sm" />
+              </div>
+              {/* Wooden Stand */}
+              <div className="w-16 sm:w-22 md:w-26 h-3 bg-[#3E2723] rounded-sm shadow-md mt-0.5" />
+            </div>
+
+            {/* CENTER: Grand Altar Table & Bronze Incense Burner (Lư Hương) */}
+            <div className="relative flex-1 flex flex-col items-center z-20 px-2">
+              {/* Realistic Wispy Incense Smoke Particles (when lit) */}
+              {isIncenseLit && (
+                <div className="absolute -top-16 inset-x-0 flex justify-center items-end h-24 pointer-events-none">
+                  <div className="w-1.5 h-16 bg-gradient-to-t from-white/80 to-transparent rounded-full blur-[1px] animate-incense-smoke-1 mr-3" />
+                  <div className="w-2 h-20 bg-gradient-to-t from-amber-100/90 to-transparent rounded-full blur-[1px] animate-incense-smoke-2" />
+                  <div className="w-1.5 h-16 bg-gradient-to-t from-white/80 to-transparent rounded-full blur-[1px] animate-incense-smoke-3 ml-3" />
+                </div>
+              )}
+
+              {/* Bronze Incense Burner (Lư Hương Đồng Tam Túc) */}
+              <div
+                onClick={handleLightIncense}
+                className="relative cursor-pointer group active:scale-95 transition-transform"
+                title="Nhấn vào Lư Hương để thắp 3 nén nhang trầm"
+              >
+                <svg viewBox="0 0 120 84" className="w-24 sm:w-32 md:w-36 h-auto drop-shadow-2xl" fill="none">
+                  <defs>
+                    <linearGradient id="bronzeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFE082" />
+                      <stop offset="35%" stopColor="#D4AF37" />
+                      <stop offset="70%" stopColor="#8A6715" />
+                      <stop offset="100%" stopColor="#4A3508" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* 3 Incense Sticks */}
+                  <line x1="50" y1={isIncenseLit ? 16 : 24} x2="55" y2="48" stroke="#991B1B" strokeWidth="2.2" strokeLinecap="round" />
+                  {isIncenseLit && (
+                    <circle cx="50" cy="16" r="2.4" fill="#EF4444" className="animate-ping" />
+                  )}
+
+                  <line x1="60" y1={isIncenseLit ? 10 : 20} x2="60" y2="48" stroke="#991B1B" strokeWidth="2.4" strokeLinecap="round" />
+                  {isIncenseLit && (
+                    <circle cx="60" cy="10" r="2.6" fill="#F97316" className="animate-pulse" />
+                  )}
+
+                  <line x1="70" y1={isIncenseLit ? 16 : 24} x2="65" y2="48" stroke="#991B1B" strokeWidth="2.2" strokeLinecap="round" />
+                  {isIncenseLit && (
+                    <circle cx="70" cy="16" r="2.4" fill="#EF4444" className="animate-ping" />
+                  )}
+
+                  {/* Burner Body */}
+                  <path d="M30 42 Q60 38 90 42 L86 64 Q60 70 34 64 Z" fill="url(#bronzeGrad)" stroke="#FFE082" strokeWidth="1" />
+                  {/* Rim with Sandalwood Ash */}
+                  <ellipse cx="60" cy="42" rx="32" ry="6" fill="#8A6715" stroke="#D4AF37" strokeWidth="1.2" />
+                  <ellipse cx="60" cy="42" rx="27" ry="4" fill="#E7E5E4" />
+
+                  {/* Handles */}
+                  <path d="M28 46 C18 46 18 58 30 60" stroke="url(#bronzeGrad)" strokeWidth="3" fill="none" />
+                  <path d="M92 46 C102 46 102 58 90 60" stroke="url(#bronzeGrad)" strokeWidth="3" fill="none" />
+
+                  {/* Feet */}
+                  <path d="M42 64 L38 78 L46 78 Z" fill="#664D0E" />
+                  <path d="M60 67 L57 80 L63 80 Z" fill="#8A6715" />
+                  <path d="M78 64 L82 78 L74 78 Z" fill="#664D0E" />
+                </svg>
+              </div>
+
+              {/* Grand Carved Altar Table (Bàn Thờ Tam Bảo Thếp Vàng) */}
+              <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[480px] bg-gradient-to-r from-[#2A0E06] via-[#4A1A0C] to-[#2A0E06] rounded-t-xl border-t-2 border-x-2 border-[#D4AF37] shadow-2xl p-1.5 sm:p-2 flex items-center justify-between">
+                {/* Left Altar Oil Lamp / Candle */}
+                <div className="flex items-center gap-1 pl-1">
+                  <div className="w-3 h-5 rounded-full bg-gradient-to-t from-orange-600 via-amber-400 to-yellow-100 animate-candle-glow shadow-[0_0_12px_#F59E0B]" />
+                  <div className="w-2.5 h-4 bg-[#8A6715] rounded-xs" />
+                </div>
+
+                {/* Central Altar Gold Inscription */}
+                <div className="text-center">
+                  <span className="font-heading text-xs sm:text-sm font-bold tracking-widest text-[#FFE082] uppercase drop-shadow-sm">
+                    ✦ Tam Bảo Chứng Minh ✦
+                  </span>
+                </div>
+
+                {/* Right Altar Oil Lamp / Candle */}
+                <div className="flex items-center gap-1 pr-1">
+                  <div className="w-2.5 h-4 bg-[#8A6715] rounded-xs" />
+                  <div className="w-3 h-5 rounded-full bg-gradient-to-t from-orange-600 via-amber-400 to-yellow-100 animate-candle-glow shadow-[0_0_12px_#F59E0B]" />
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT FLANK: Hanging Temple Bell (Đại Hồng Chung) */}
             <div
-              onClick={handleLightIncense}
-              className="relative cursor-pointer group active:scale-95 transition-transform"
-              title="Nhấn để thắp 3 nén nhang trầm"
+              onClick={handleRingBell}
+              className="relative w-24 sm:w-32 md:w-40 flex flex-col items-center shrink-0 z-15 cursor-pointer group active:scale-95 transition-transform"
+              title="Nhấn để Thỉnh Đại Hồng Chung"
             >
-              <svg viewBox="0 0 120 90" className="w-24 sm:w-32 md:w-36 h-auto drop-shadow-xl" fill="none">
+              {/* Expanding Ripple Waves */}
+              {isBellRippling && (
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full border-2 border-[#FFE082] pointer-events-none animate-bell-ripple" />
+              )}
+
+              {/* Timber Bell Frame & Bronze Bell */}
+              <div className="w-20 sm:w-28 md:w-34 aspect-[1/1.3] relative flex flex-col items-center">
+                <svg viewBox="0 0 120 140" className="w-full h-full drop-shadow-2xl" fill="none">
+                  <defs>
+                    <linearGradient id="bellGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#4A3508" />
+                      <stop offset="35%" stopColor="#D4AF37" />
+                      <stop offset="70%" stopColor="#FFE082" />
+                      <stop offset="100%" stopColor="#5A4308" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Frame */}
+                  <rect x="10" y="8" width="100" height="10" rx="2" fill="#3E2723" stroke="#5D4037" strokeWidth="1.2" />
+                  <rect x="14" y="18" width="8" height="120" fill="#2E1C18" />
+                  <rect x="98" y="18" width="8" height="120" fill="#2E1C18" />
+
+                  {/* Hanging loop */}
+                  <rect x="58" y="18" width="4" height="14" fill="#B45309" />
+                  <circle cx="60" cy="34" r="5" fill="#8A6715" />
+
+                  {/* Bell Body */}
+                  <path
+                    d="M44 42 C44 38 76 38 76 42 C78 64 84 94 88 104 L32 104 C36 94 42 64 44 42 Z"
+                    fill="url(#bellGrad)"
+                    stroke="#FFE082"
+                    strokeWidth="1.2"
+                  />
+                  {/* Bands */}
+                  <line x1="41" y1="54" x2="79" y2="54" stroke="#5A4308" strokeWidth="1.8" />
+                  <line x1="38" y1="76" x2="82" y2="76" stroke="#5A4308" strokeWidth="1.8" />
+                  <line x1="34" y1="96" x2="86" y2="96" stroke="#FFE082" strokeWidth="2.2" />
+                  {/* Lotus strike boss */}
+                  <circle cx="60" cy="84" r="5" fill="#F59E0B" stroke="#78350F" strokeWidth="1" />
+                  <circle cx="60" cy="84" r="2" fill="#FFF" />
+
+                  {/* Striker */}
+                  <rect x="72" y="80" width="28" height="9" rx="3" fill="#5D4037" stroke="#3E2723" strokeWidth="1" transform="rotate(-15 72 80)" />
+                </svg>
+              </div>
+
+              {/* Bell Stand Base */}
+              <div className="w-18 sm:w-26 md:w-30 h-3 bg-[#2E1C18] rounded-sm shadow-md -mt-1" />
+            </div>
+          </div>
+
+          {/* --------------------------------------------------------------------- */}
+          {/* 3. FOREGROUND: SEATED PRACTITIONER ON MAT + SCRIPTURE LOW DESK         */}
+          {/* --------------------------------------------------------------------- */}
+          <div className="relative z-25 w-full flex items-end justify-center gap-3 sm:gap-8 pt-1 sm:pt-2">
+            {/* SEATED PRACTITIONER IN ÁO LAM (Phật Tử Cung Kính Lễ Phật) */}
+            <div
+              className={cn(
+                'relative w-36 sm:w-46 md:w-52 aspect-[1/1.05] transition-transform duration-500 origin-bottom drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]',
+                isBowing ? 'animate-practitioner-bow' : 'animate-practitioner-breathe'
+              )}
+            >
+              <svg viewBox="0 0 200 210" className="w-full h-full" fill="none">
                 <defs>
-                  <linearGradient id="bronzeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#D4AF37" />
-                    <stop offset="50%" stopColor="#8A6715" />
-                    <stop offset="100%" stopColor="#4A3508" />
+                  <linearGradient id="aoLamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#94A3B8" />
+                    <stop offset="50%" stopColor="#64748B" />
+                    <stop offset="100%" stopColor="#475569" />
+                  </linearGradient>
+                  <linearGradient id="matStraw" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#D7C4A5" />
+                    <stop offset="50%" stopColor="#F5EBE0" />
+                    <stop offset="100%" stopColor="#B89F7D" />
                   </linearGradient>
                 </defs>
 
-                {/* 3 Incense Sticks */}
-                {/* Stick 1 (Left) */}
-                <line x1="50" y1={isIncenseLit ? 20 : 26} x2="55" y2="52" stroke="#991B1B" strokeWidth="2.2" strokeLinecap="round" />
-                {isIncenseLit && (
-                  <circle cx="50" cy="20" r="2.2" fill="#EF4444" className="animate-ping" />
-                )}
+                {/* Woven Lotus Mat */}
+                <ellipse cx="100" cy="190" rx="84" ry="16" fill="url(#matStraw)" stroke="#92734F" strokeWidth="2" />
+                <ellipse cx="100" cy="190" rx="76" ry="12" stroke="#B89F7D" strokeWidth="1" strokeDasharray="4 3" />
 
-                {/* Stick 2 (Center) */}
-                <line x1="60" y1={isIncenseLit ? 14 : 22} x2="60" y2="52" stroke="#991B1B" strokeWidth="2.4" strokeLinecap="round" />
-                {isIncenseLit && (
-                  <circle cx="60" cy="14" r="2.5" fill="#F97316" className="animate-pulse" />
-                )}
+                {/* Crossed Legs in Full Lotus covered by Áo Lam */}
+                <path
+                  d="M36 162 C44 148 72 150 100 154 C128 150 156 148 164 162 C170 178 156 192 100 192 C44 192 30 178 36 162 Z"
+                  fill="url(#aoLamGrad)"
+                  stroke="#334155"
+                  strokeWidth="1.5"
+                />
 
-                {/* Stick 3 (Right) */}
-                <line x1="70" y1={isIncenseLit ? 20 : 26} x2="65" y2="52" stroke="#991B1B" strokeWidth="2.2" strokeLinecap="round" />
-                {isIncenseLit && (
-                  <circle cx="70" cy="20" r="2.2" fill="#EF4444" className="animate-ping" />
-                )}
+                {/* Torso in Vietnamese Buddhist Lay Robe (Áo Lam truyền thống) */}
+                <path
+                  d="M68 88 C56 110 54 144 56 168 L144 168 C146 144 144 110 132 88 Z"
+                  fill="url(#aoLamGrad)"
+                  stroke="#334155"
+                  strokeWidth="1.5"
+                />
+                <path d="M100 82 L100 120 L110 162" stroke="#334155" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M88 88 Q100 94 112 88" stroke="#475569" strokeWidth="2" fill="none" />
 
-                {/* Burner Body (Cauldron shape) */}
-                <path d="M30 46 Q60 42 90 46 L86 70 Q60 76 34 70 Z" fill="url(#bronzeGrad)" stroke="#FFE082" strokeWidth="1" />
-                {/* Burner Rim with Sandalwood Ash */}
-                <ellipse cx="60" cy="46" rx="32" ry="7" fill="#8A6715" stroke="#D4AF37" strokeWidth="1.2" />
-                <ellipse cx="60" cy="46" rx="27" ry="5" fill="#D6D3D1" />
+                {/* Clasped Hands in Anjali Mudra (Chắp Tay Búp Sen) */}
+                <g transform="translate(0, -4)">
+                  <ellipse cx="100" cy="120" rx="8" ry="15" fill="#FBD38D" stroke="#B7791F" strokeWidth="1.2" />
+                  <path d="M96 108 C98 104 102 104 104 108 L104 130 C102 132 98 132 96 130 Z" fill="#FEEBC8" />
+                  <ellipse cx="86" cy="132" rx="7" ry="9" fill="#64748B" />
+                  <ellipse cx="114" cy="132" rx="7" ry="9" fill="#64748B" />
+                </g>
 
-                {/* Two Ear Handles (Quai rồng mây) */}
-                <path d="M28 50 C18 50 18 64 30 66" stroke="url(#bronzeGrad)" strokeWidth="3" fill="none" />
-                <path d="M92 50 C102 50 102 64 90 66" stroke="url(#bronzeGrad)" strokeWidth="3" fill="none" />
+                {/* Head & Serene Visage */}
+                <rect x="94" y="70" width="12" height="14" fill="#F6AD55" rx="3" />
+                <ellipse cx="100" cy="56" rx="19" ry="22" fill="#FBD38D" />
+                <path d="M82 52 C82 34 118 34 118 52 C114 44 86 44 82 52 Z" fill="#1F2937" />
+                <circle cx="100" cy="34" r="5.5" fill="#1F2937" />
 
-                {/* Three Tripod Feet (Chân tam túc) */}
-                <path d="M42 70 L38 84 L46 84 Z" fill="#664D0E" />
-                <path d="M60 73 L57 86 L63 86 Z" fill="#8A6715" />
-                <path d="M78 70 L82 84 L74 84 Z" fill="#664D0E" />
+                {/* Peaceful Eyes in Gentle Prayer */}
+                <path d="M91 55 Q95 58 98 55" stroke="#7B341E" strokeWidth="1.4" strokeLinecap="round" />
+                <path d="M102 55 Q105 58 109 55" stroke="#7B341E" strokeWidth="1.4" strokeLinecap="round" />
+                <path d="M100 55 L99 61 L102 61" stroke="#9C4221" strokeWidth="1.2" strokeLinecap="round" />
+                <path d="M94 66 Q100 70 106 66" stroke="#7B341E" strokeWidth="1.4" strokeLinecap="round" fill="none" />
               </svg>
             </div>
 
-            {/* Carved Wooden Altar Table (Bàn Thờ Gỗ Hương) */}
-            <div className="w-56 sm:w-72 md:w-84 h-5 sm:h-7 bg-gradient-to-r from-[#3E2723] via-[#5D4037] to-[#3E2723] rounded-md border-t-2 border-[#D4AF37] shadow-2xl flex items-center justify-center">
-              <span className="text-[10px] sm:text-xs font-heading tracking-widest text-[#FFE082] opacity-80 uppercase">
-                ✦ Vạn Đức Trang Nghiêm ✦
-              </span>
+            {/* SCRIPTURE LOW DESK (Bàn Kỷ Gỗ & Sách Kinh Vàng) */}
+            <div
+              onClick={handleOpenScripture}
+              className="relative w-36 sm:w-46 md:w-52 aspect-[1.2/1] shrink-0 cursor-pointer group active:scale-95 transition-transform"
+              title="Nhấn vào Bàn Kỷ hoặc Sách Kinh để Đọc Kinh Tụng Niệm"
+            >
+              {/* Quick Helper Pill Badge */}
+              <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-[#D4AF37] text-[#2C1A12] text-[10px] sm:text-xs font-bold whitespace-nowrap shadow-md opacity-90 group-hover:opacity-100 flex items-center gap-1 animate-bounce">
+                <BookOpen className="w-3 h-3 text-[#2C1A12]" />
+                <span>Chạm Đọc Kinh</span>
+              </div>
+
+              {/* INLINE SVG: Low Rosewood Desk with Open Sutra Book & Wooden Fish */}
+              <svg viewBox="0 0 180 140" className="w-full h-full drop-shadow-2xl" fill="none">
+                {/* Desk Top Surface */}
+                <path d="M15 68 L165 68 L175 82 L5 82 Z" fill="#4E342E" stroke="#6D4C41" strokeWidth="1.5" />
+                <rect x="5" y="82" width="170" height="10" fill="#3E2723" />
+
+                {/* Curved Legs */}
+                <path d="M20 92 C15 115 10 125 15 132 L28 132 C24 120 28 105 32 92 Z" fill="#2E1C18" />
+                <path d="M160 92 C165 115 170 125 165 132 L152 132 C156 120 152 105 148 92 Z" fill="#2E1C18" />
+
+                {/* OPEN SCRIPTURE BOOK (Sách Kinh Vàng Kim) */}
+                <g transform="translate(25, 38)">
+                  <path d="M10 24 Q45 16 75 22 Q105 16 140 24 L135 52 Q105 44 75 50 Q45 44 15 52 Z" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.2" />
+                  <path d="M12 26 Q45 18 75 24 L75 52 Q45 46 17 54 Z" fill="#FFFBEB" />
+                  <path d="M75 24 Q105 18 138 26 L133 54 Q105 46 75 52 Z" fill="#FFFBEB" />
+                  <line x1="75" y1="22" x2="75" y2="52" stroke="#B45309" strokeWidth="1.5" />
+                  <line x1="24" y1="32" x2="65" y2="32" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="24" y1="38" x2="68" y2="38" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="24" y1="44" x2="60" y2="44" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="82" y1="32" x2="126" y2="32" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="82" y1="38" x2="122" y2="38" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="82" y1="44" x2="118" y2="44" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
+                </g>
+
+                {/* WOODEN FISH GONG & MALLET */}
+                <g transform="translate(136, 48)">
+                  <ellipse cx="14" cy="24" rx="14" ry="5" fill="#DC2626" />
+                  <ellipse cx="14" cy="15" rx="11" ry="9" fill="#92400E" stroke="#B45309" strokeWidth="1" />
+                  <circle cx="10" cy="13" r="2" fill="#FEF3C7" />
+                  <path d="M12 18 Q16 20 22 17" stroke="#451A03" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="22" y1="8" x2="32" y2="24" stroke="#D97706" strokeWidth="2.5" strokeLinecap="round" />
+                  <circle cx="21" cy="7" r="3.5" fill="#EF4444" />
+                </g>
+              </svg>
             </div>
-          </div>
-
-          {/* MIDDLE RIGHT: Hanging Temple Bell (Đại Hồng Chung) */}
-          <div
-            onClick={handleRingBell}
-            className="relative w-28 sm:w-36 md:w-44 aspect-[1/1.4] shrink-0 flex flex-col items-center cursor-pointer group active:scale-95 transition-transform"
-            title="Nhấn để Thỉnh Đại Hồng Chung"
-          >
-            {/* Concentric Golden Soundwave Ripple when bell is rung */}
-            {isBellRippling && (
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full border-2 border-[#FFE082] pointer-events-none animate-bell-ripple" />
-            )}
-
-            {/* INLINE SVG: Traditional Bronze Temple Bell & Timber Frame */}
-            <svg viewBox="0 0 140 190" className="w-full h-full drop-shadow-xl" fill="none">
-              <defs>
-                <linearGradient id="bellBronze" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#4A3508" />
-                  <stop offset="35%" stopColor="#D4AF37" />
-                  <stop offset="70%" stopColor="#FFE082" />
-                  <stop offset="100%" stopColor="#5A4308" />
-                </linearGradient>
-              </defs>
-
-              {/* Wooden Frame Beam */}
-              <rect x="15" y="10" width="110" height="12" rx="2" fill="#4E342E" stroke="#3E2723" strokeWidth="1.5" />
-              <rect x="20" y="22" width="12" height="160" fill="#3E2723" />
-              <rect x="108" y="22" width="12" height="160" fill="#3E2723" />
-
-              {/* Hanging Rope / Iron Link */}
-              <rect x="68" y="22" width="4" height="20" fill="#B45309" />
-
-              {/* Dragon Crown (Quai chuông Bồ Lao) */}
-              <path d="M58 42 C58 32 82 32 82 42 Z" fill="#8A6715" stroke="#FFE082" strokeWidth="1" />
-
-              {/* Bell Body (Đại Hồng Chung) */}
-              <path
-                d="M50 50 C50 44 90 44 90 50 C92 78 98 115 104 126 L36 126 C42 115 48 78 50 50 Z"
-                fill="url(#bellBronze)"
-                stroke="#FFE082"
-                strokeWidth="1.2"
-              />
-
-              {/* Bell Traditional Relief Bands & Inscriptions */}
-              <line x1="47" y1="62" x2="93" y2="62" stroke="#5A4308" strokeWidth="2" />
-              <line x1="43" y1="88" x2="97" y2="88" stroke="#5A4308" strokeWidth="2" />
-              <line x1="39" y1="116" x2="101" y2="116" stroke="#FFE082" strokeWidth="2.5" />
-
-              {/* Lotus Relief Bosses on Bell (Núm chuông điểm gõ) */}
-              <circle cx="70" cy="98" r="6" fill="#F59E0B" stroke="#78350F" strokeWidth="1" />
-              <circle cx="70" cy="98" r="2.5" fill="#FFF" />
-
-              {/* Bell Striker (Chày gỗ gõ chuông) */}
-              <g transform="translate(10, 0)">
-                <rect x="86" y="92" width="34" height="12" rx="4" fill="#5D4037" stroke="#3E2723" strokeWidth="1" transform="rotate(-15 86 92)" />
-                <line x1="112" y1="22" x2="108" y2="86" stroke="#B45309" strokeWidth="1.5" />
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        {/* ----------------------------------------------------------------------- */}
-        {/* LOWER FOREGROUND: PRACTITIONER ON MAT + LOW SCRIPTURE DESK (BOTTOM)     */}
-        {/* ----------------------------------------------------------------------- */}
-        <div className="relative z-20 w-full flex items-end justify-center px-4 sm:px-12 pb-2 sm:pb-3 gap-3 sm:gap-8">
-          {/* PRACTITIONER MASCOT (Nhân vật Phật tử trung niên trong Áo Lam trang nghiêm) */}
-          <div
-            className={cn(
-              'relative w-36 sm:w-48 md:w-56 aspect-[1/1.1] transition-transform duration-500 origin-bottom',
-              isBowing ? 'animate-practitioner-bow' : 'animate-practitioner-breathe'
-            )}
-          >
-            {/* INLINE SVG: Middle-aged Vietnamese Practitioner in Lotus Posture with Clasped Hands */}
-            <svg viewBox="0 0 200 220" className="w-full h-full drop-shadow-2xl" fill="none">
-              <defs>
-                <linearGradient id="aoLamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#94A3B8" />
-                  <stop offset="50%" stopColor="#64748B" />
-                  <stop offset="100%" stopColor="#475569" />
-                </linearGradient>
-                <linearGradient id="matStraw" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#D7C4A5" />
-                  <stop offset="50%" stopColor="#F5EBE0" />
-                  <stop offset="100%" stopColor="#B89F7D" />
-                </linearGradient>
-              </defs>
-
-              {/* 1. Woven Lotus Meditation Mat (Tọa Cụ Búp Sen) */}
-              <ellipse cx="100" cy="198" rx="88" ry="18" fill="url(#matStraw)" stroke="#92734F" strokeWidth="2" />
-              <ellipse cx="100" cy="198" rx="80" ry="14" stroke="#B89F7D" strokeWidth="1" strokeDasharray="4 3" />
-
-              {/* 2. Crossed Legs in Full Lotus covered by Áo Lam */}
-              <path
-                d="M32 170 C40 156 70 158 100 162 C130 158 160 156 168 170 C174 186 160 200 100 200 C40 200 26 186 32 170 Z"
-                fill="url(#aoLamGrad)"
-                stroke="#334155"
-                strokeWidth="1.5"
-              />
-
-              {/* 3. Dignified Torso in Vietnamese Buddhist Lay Robe (Áo Lam truyền thống) */}
-              <path
-                d="M66 94 C54 116 52 152 54 176 L146 176 C148 152 146 116 134 94 Z"
-                fill="url(#aoLamGrad)"
-                stroke="#334155"
-                strokeWidth="1.5"
-              />
-              {/* Layrobe folds & mandarin collar line */}
-              <path d="M100 86 L100 126 L112 170" stroke="#334155" strokeWidth="1.8" strokeLinecap="round" />
-              <path d="M86 92 Q100 98 114 92" stroke="#475569" strokeWidth="2" fill="none" />
-
-              {/* 4. Clasped Hands in Anjali Mudra (Chắp tay búp sen cung kính) */}
-              <g transform="translate(0, -2)">
-                <ellipse cx="100" cy="126" rx="9" ry="16" fill="#FBD38D" stroke="#B7791F" strokeWidth="1.2" />
-                <path d="M96 114 C98 110 102 110 104 114 L104 136 C102 138 98 138 96 136 Z" fill="#FEEBC8" />
-                {/* Sleeve cuffs gathering */}
-                <ellipse cx="86" cy="138" rx="8" ry="10" fill="#64748B" />
-                <ellipse cx="114" cy="138" rx="8" ry="10" fill="#64748B" />
-              </g>
-
-              {/* 5. Middle-aged Practitioner Head & Serene Visage */}
-              {/* Neck */}
-              <rect x="93" y="76" width="14" height="14" fill="#F6AD55" rx="3" />
-              {/* Dignified Face (45 - 65 yrs old, calm, wisdom, no chibi cartoon) */}
-              <ellipse cx="100" cy="62" rx="20" ry="24" fill="#FBD38D" />
-              {/* Neat Black/Salt-and-Pepper Hair bun / cut */}
-              <path
-                d="M80 58 C80 38 120 38 120 58 C116 50 84 50 80 58 Z"
-                fill="#1F2937"
-              />
-              <circle cx="100" cy="38" r="6" fill="#1F2937" />
-
-              {/* Peaceful Eyes in Gentle Prayer */}
-              <path d="M90 60 Q94 63 97 60" stroke="#7B341E" strokeWidth="1.5" strokeLinecap="round" />
-              <path d="M103 60 Q106 63 110 60" stroke="#7B341E" strokeWidth="1.5" strokeLinecap="round" />
-              {/* Gentle serene nose & warm compassionate smile */}
-              <path d="M100 60 L99 66 L102 66" stroke="#9C4221" strokeWidth="1.2" strokeLinecap="round" />
-              <path d="M94 72 Q100 76 106 72" stroke="#7B341E" strokeWidth="1.5" strokeLinecap="round" fill="none" />
-            </svg>
-          </div>
-
-          {/* SCRIPTURE LOW DESK (Bàn Kỷ Gỗ Đọc Kinh & Mõ Gỗ) */}
-          <div
-            onClick={handleOpenScripture}
-            className="relative w-36 sm:w-48 md:w-56 aspect-[1.2/1] shrink-0 cursor-pointer group active:scale-95 transition-transform"
-            title="Nhấn vào Bàn Kỷ hoặc Sách Kinh để Đọc Kinh Tụng Niệm"
-          >
-            {/* Quick helper badge above desk */}
-            <div className="absolute -top-7 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-[#D4AF37] text-[#2C1A12] text-[10px] sm:text-xs font-bold whitespace-nowrap shadow-md opacity-90 group-hover:opacity-100 flex items-center gap-1 animate-bounce">
-              <BookOpen className="w-3 h-3" />
-              <span>Chạm Đọc Kinh</span>
-            </div>
-
-            {/* INLINE SVG: Low Rosewood Desk with Open Scripture Book & Wooden Fish */}
-            <svg viewBox="0 0 180 150" className="w-full h-full drop-shadow-xl" fill="none">
-              {/* Wooden Table Top (Mặt kỷ gỗ trắc) */}
-              <path d="M15 72 L165 72 L175 88 L5 88 Z" fill="#4E342E" stroke="#6D4C41" strokeWidth="1.5" />
-              <rect x="5" y="88" width="170" height="12" fill="#3E2723" />
-
-              {/* Curved Scroll Legs (Chân quỳ chạm hoa văn) */}
-              <path d="M20 100 C15 125 10 135 15 142 L28 142 C24 130 28 115 32 100 Z" fill="#2E1C18" />
-              <path d="M160 100 C165 125 170 135 165 142 L152 142 C156 130 152 115 148 100 Z" fill="#2E1C18" />
-
-              {/* OPEN GOLDEN SCRIPTURE BOOK (Sách Kinh Vàng Kim) */}
-              <g transform="translate(25, 42)">
-                {/* Book Pages Base */}
-                <path d="M10 24 Q45 16 75 22 Q105 16 140 24 L135 52 Q105 44 75 50 Q45 44 15 52 Z" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.2" />
-                <path d="M12 26 Q45 18 75 24 L75 52 Q45 46 17 54 Z" fill="#FFFBEB" />
-                <path d="M75 24 Q105 18 138 26 L133 54 Q105 46 75 52 Z" fill="#FFFBEB" />
-                {/* Spine crease */}
-                <line x1="75" y1="22" x2="75" y2="52" stroke="#B45309" strokeWidth="1.5" />
-                {/* Legible Sutra Lines representation */}
-                <line x1="24" y1="32" x2="65" y2="32" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="24" y1="38" x2="68" y2="38" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="24" y1="44" x2="60" y2="44" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="82" y1="32" x2="126" y2="32" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="82" y1="38" x2="122" y2="38" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
-                <line x1="82" y1="44" x2="118" y2="44" stroke="#78350F" strokeWidth="1.5" strokeLinecap="round" />
-              </g>
-
-              {/* WOODEN FISH GONG & MALLET (Mõ Gỗ Mít & Dùi Gõ) */}
-              <g transform="translate(136, 52)">
-                {/* Cushion */}
-                <ellipse cx="14" cy="24" rx="14" ry="5" fill="#DC2626" />
-                {/* Fish Gong Body */}
-                <ellipse cx="14" cy="15" rx="11" ry="9" fill="#92400E" stroke="#B45309" strokeWidth="1" />
-                <circle cx="10" cy="13" r="2" fill="#FEF3C7" />
-                {/* Sound Slit */}
-                <path d="M12 18 Q16 20 22 17" stroke="#451A03" strokeWidth="1.5" strokeLinecap="round" />
-                {/* Mallet */}
-                <line x1="22" y1="8" x2="32" y2="24" stroke="#D97706" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="21" cy="7" r="3.5" fill="#EF4444" />
-              </g>
-            </svg>
           </div>
         </div>
       </main>
 
       {/* ========================================================================= */}
-      {/* 4. FIXED BOTTOM CONTROL BAR (OVERSIZED, SENIOR-FRIENDLY, MIN-HEIGHT 68PX) */}
+      {/* 4. FIXED BOTTOM CONTROL BAR (OVERSIZED, SENIOR-FRIENDLY, MIN-HEIGHT 72PX) */}
       {/* ========================================================================= */}
-      <footer className="relative z-30 w-full bg-[#2C1A12] border-t-2 border-[#D4AF37]/50 shadow-[0_-10px_35px_rgba(0,0,0,0.85)] p-2 sm:p-3 shrink-0 pb-safe">
-        <div className="grid grid-cols-4 gap-2 sm:gap-3 max-w-4xl mx-auto">
+      <footer className="relative z-30 w-full bg-gradient-to-t from-[#140804] via-[#24130A] to-[#2C1A12] border-t-2 border-[#D4AF37]/60 shadow-[0_-12px_40px_rgba(0,0,0,0.95)] p-2.5 sm:p-3.5 shrink-0 pb-safe">
+        <div className="grid grid-cols-4 gap-2 sm:gap-3.5 max-w-4xl mx-auto">
           {/* Button 1: THẮP NHANG */}
           <button
             onClick={handleLightIncense}
-            className="min-h-[68px] sm:min-h-[74px] rounded-xl sm:rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#854D0E] to-[#5C3005] hover:from-[#A16207] hover:to-[#713F12] border-2 border-[#EAB308] text-[#FEF08A] shadow-md flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
+            className="min-h-[70px] sm:min-h-[76px] rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#854D0E] to-[#4A2803] hover:from-[#A16207] hover:to-[#5C3005] border-2 border-[#EAB308] text-[#FEF08A] shadow-lg flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
           >
             <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500/25 flex items-center justify-center group-hover:scale-110 transition-transform">
               <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-[#FACC15]" />
             </div>
-            <span className="font-heading text-sm sm:text-base font-bold whitespace-nowrap tracking-wide">
+            <span className="font-heading text-xs sm:text-base font-bold whitespace-nowrap tracking-wide">
               Thắp Nhang
             </span>
           </button>
@@ -841,12 +754,12 @@ export function TempleSanctuary() {
           {/* Button 2: ĐỌC KINH */}
           <button
             onClick={handleOpenScripture}
-            className="min-h-[68px] sm:min-h-[74px] rounded-xl sm:rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#78350F] to-[#451A03] hover:from-[#92400E] hover:to-[#5A2406] border-2 border-[#F59E0B] text-[#FEF3C7] shadow-md flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
+            className="min-h-[70px] sm:min-h-[76px] rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#78350F] to-[#3B1502] hover:from-[#92400E] hover:to-[#4D1D04] border-2 border-[#F59E0B] text-[#FEF3C7] shadow-lg flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
           >
             <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500/25 flex items-center justify-center group-hover:scale-110 transition-transform">
               <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-[#FCD34D]" />
             </div>
-            <span className="font-heading text-sm sm:text-base font-bold whitespace-nowrap tracking-wide">
+            <span className="font-heading text-xs sm:text-base font-bold whitespace-nowrap tracking-wide">
               Đọc Kinh
             </span>
           </button>
@@ -854,12 +767,12 @@ export function TempleSanctuary() {
           {/* Button 3: THỈNH CHUÔNG */}
           <button
             onClick={handleRingBell}
-            className="min-h-[68px] sm:min-h-[74px] rounded-xl sm:rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#854D0E] to-[#5C3005] hover:from-[#A16207] hover:to-[#713F12] border-2 border-[#EAB308] text-[#FEF08A] shadow-md flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
+            className="min-h-[70px] sm:min-h-[76px] rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#854D0E] to-[#4A2803] hover:from-[#A16207] hover:to-[#5C3005] border-2 border-[#EAB308] text-[#FEF08A] shadow-lg flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
           >
             <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-500/25 flex items-center justify-center group-hover:scale-110 transition-transform">
               <Bell className="w-5 h-5 sm:w-6 sm:h-6 text-[#FACC15]" />
             </div>
-            <span className="font-heading text-sm sm:text-base font-bold whitespace-nowrap tracking-wide">
+            <span className="font-heading text-xs sm:text-base font-bold whitespace-nowrap tracking-wide">
               Thỉnh Chuông
             </span>
           </button>
@@ -867,12 +780,12 @@ export function TempleSanctuary() {
           {/* Button 4: CẦU NGUYỆN */}
           <button
             onClick={() => setIsPrayerModalOpen(true)}
-            className="min-h-[68px] sm:min-h-[74px] rounded-xl sm:rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#B45309] to-[#78350F] hover:from-[#D97706] hover:to-[#92400E] border-2 border-[#FBBF24] text-[#FFFBEB] shadow-md flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
+            className="min-h-[70px] sm:min-h-[76px] rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-[#B45309] to-[#612404] hover:from-[#D97706] hover:to-[#78350F] border-2 border-[#FBBF24] text-[#FFFBEB] shadow-lg flex flex-col items-center justify-center gap-1 active:scale-95 transition-all group"
           >
             <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-400/30 flex items-center justify-center group-hover:scale-110 transition-transform">
               <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-[#FDE047]" />
             </div>
-            <span className="font-heading text-sm sm:text-base font-bold whitespace-nowrap tracking-wide">
+            <span className="font-heading text-xs sm:text-base font-bold whitespace-nowrap tracking-wide">
               Cầu Nguyện
             </span>
           </button>
@@ -910,7 +823,6 @@ export function TempleSanctuary() {
 
               {/* Senior Font Resizer & Audio Toggles */}
               <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-                {/* Font Size Minus */}
                 <button
                   onClick={() => setFontSizePx((prev) => Math.max(18, prev - 2))}
                   className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white border border-[#D4AF37] text-xs sm:text-sm font-bold flex items-center gap-0.5 active:scale-95"
@@ -919,7 +831,6 @@ export function TempleSanctuary() {
                   <Minus className="w-3.5 h-3.5" /> A-
                 </button>
 
-                {/* Font Size Plus */}
                 <button
                   onClick={() => setFontSizePx((prev) => Math.min(36, prev + 2))}
                   className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-white border border-[#D4AF37] text-xs sm:text-sm font-bold flex items-center gap-0.5 active:scale-95"
@@ -928,7 +839,6 @@ export function TempleSanctuary() {
                   <Plus className="w-3.5 h-3.5" /> A+
                 </button>
 
-                {/* Single Tap Gõ Mõ */}
                 <button
                   onClick={() => {
                     if (soundEnabled) playWoodenFishSound(0.5);
@@ -939,7 +849,6 @@ export function TempleSanctuary() {
                   🪘 Gõ Mõ
                 </button>
 
-                {/* Auto Chanting Toggle */}
                 <button
                   onClick={() => setIsAutoScrolling(!isAutoScrolling)}
                   className={cn(
@@ -954,7 +863,6 @@ export function TempleSanctuary() {
                   <span className="hidden md:inline">Tụng Tự Động</span>
                 </button>
 
-                {/* Close Button Top */}
                 <button
                   onClick={() => setIsScriptureModalOpen(false)}
                   className="p-1.5 sm:p-2 rounded-lg bg-red-600 hover:bg-red-700 text-white active:scale-95 shadow-xs ml-1"
@@ -975,7 +883,7 @@ export function TempleSanctuary() {
               </p>
             </div>
 
-            {/* Scripture Main Reading Body (Extra large readable font for seniors) */}
+            {/* Scripture Main Reading Body */}
             <div
               ref={scriptureScrollRef}
               className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-4 sm:space-y-6 leading-relaxed custom-dropdown-scroll select-text"
@@ -996,7 +904,7 @@ export function TempleSanctuary() {
               ))}
             </div>
 
-            {/* Modal Bottom Close Button (Senior-Friendly Large Touch Target) */}
+            {/* Modal Bottom Close Button */}
             <div className="p-3 bg-[#F5EADB] border-t-2 border-[#D4AF37]/50 flex items-center justify-between gap-3 shrink-0">
               <span className="text-xs sm:text-sm font-semibold text-[#78350F]">
                 ✦ Cỡ chữ: <strong>{fontSizePx}px</strong> • Dùng A+/A- để tăng giảm ✦
@@ -1036,7 +944,6 @@ export function TempleSanctuary() {
             </div>
 
             <form onSubmit={handleSubmitPrayer} className="space-y-4">
-              {/* Dharma Name or Full Name */}
               <div>
                 <label className="block font-heading font-bold text-sm sm:text-base text-[#78350F] mb-1">
                   1. Họ Tên hoặc Pháp Danh của Quý Phật Tử:
@@ -1050,7 +957,6 @@ export function TempleSanctuary() {
                 />
               </div>
 
-              {/* Quick Suggestion Chips (Critical for middle-aged/elderly to avoid long typing) */}
               <div>
                 <label className="block font-heading font-bold text-sm sm:text-base text-[#78350F] mb-2">
                   2. Chọn Nhanh Tâm Nguyện (Nhấn để chọn):
@@ -1074,7 +980,6 @@ export function TempleSanctuary() {
                 </div>
               </div>
 
-              {/* Custom Prayer Text */}
               <div>
                 <label className="block font-heading font-bold text-sm sm:text-base text-[#78350F] mb-1">
                   3. Hoặc Viết Tâm Nguyện Riêng Của Bạn:
@@ -1088,7 +993,6 @@ export function TempleSanctuary() {
                 />
               </div>
 
-              {/* Action Buttons */}
               <div className="pt-2 flex items-center justify-end gap-3">
                 <button
                   type="button"
@@ -1179,4 +1083,3 @@ export function TempleSanctuary() {
 }
 
 export default TempleSanctuary;
-
