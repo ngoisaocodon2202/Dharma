@@ -218,7 +218,7 @@ export default function PersonalDestinyAnalysisPage() {
           </p>
 
           {/* Explicit Non-Superstition Disclaimer Badge */}
-          <div className="pt-1">
+          <div className="pt-1 flex flex-wrap items-center gap-2">
             <div className="inline-flex items-start sm:items-center gap-2 px-3.5 py-2 rounded-2xl bg-black/25 border border-amber-300/25 text-[11px] sm:text-xs text-amber-200/95">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 sm:mt-0" />
               <span>
@@ -226,6 +226,13 @@ export default function PersonalDestinyAnalysisPage() {
                 <span className="underline decoration-amber-400/60">chỉ mang tính chất tham khảo</span>, hoàn toàn không cổ xúy mê tín dị đoan.
               </span>
             </div>
+
+            <Link
+              href="/cau-nguyen"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-[#d4af37] hover:bg-[#b89528] text-[#2C1A12] font-bold text-xs shadow-md active:scale-95 transition-all whitespace-nowrap"
+            >
+              <span>🙏 Đi Chùa & Cầu Nguyện Online</span>
+            </Link>
           </div>
         </div>
       </div>

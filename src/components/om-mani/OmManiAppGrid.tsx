@@ -55,6 +55,15 @@ export function OmManiAppGrid({ onOpenIncense, onOpenMala }: OmManiAppGridProps)
       href: '/lich-phat-giao',
     },
     {
+      id: 'cau-nguyen',
+      title: 'Đi Chùa Online',
+      icon: Flame,
+      imageSrc: '/images/apps/thap-huong.jpg',
+      gradient: 'from-amber-600 to-red-800',
+      badge: 'CẦU NGUYỆN',
+      href: '/cau-nguyen',
+    },
+    {
       id: 'tu-vi',
       title: 'Màu & Ngày Tốt',
       icon: Sparkles,

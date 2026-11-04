@@ -125,6 +125,57 @@ export function playWoodenFishSound(volume = 0.5) {
 }
 
 /**
+ * Play a resonant Đại Hồng Chung (Grand Temple Bell) with deep warm bronze drone
+ */
+export function playGrandTempleBellSound(volume = 0.45) {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const master = ctx.createGain();
+    master.gain.setValueAtTime(volume, now);
+    master.connect(ctx.destination);
+
+    // Sacred harmonic partials of a large bronze temple bell (Đại Hồng Chung)
+    const bellPartials = [
+      { freq: 108, gain: 0.85, decay: 8.5 }, // Deep fundamental hum (108 sacred number)
+      { freq: 216, gain: 0.65, decay: 7.0 }, // Octave harmonic
+      { freq: 324, gain: 0.35, decay: 5.5 }, // Quint
+      { freq: 432, gain: 0.22, decay: 4.0 }, // Universal 432Hz healing pitch
+      { freq: 648, gain: 0.12, decay: 2.8 }, // Overtone shimmer
+      { freq: 972, gain: 0.06, decay: 1.8 }, // Bronze edge strike
+    ];
+
+    bellPartials.forEach(({ freq, gain, decay }) => {
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+
+      gainNode.gain.setValueAtTime(0, now);
+      gainNode.gain.linearRampToValueAtTime(gain, now + 0.012);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+      osc.connect(gainNode);
+      gainNode.connect(master);
+
+      osc.start(now);
+      osc.stop(now + decay);
+    });
+
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      try {
+        navigator.vibrate([40, 60, 40]);
+      } catch {}
+    }
+  } catch (err) {
+    console.error('Grand temple bell sound error:', err);
+  }
+}
+
+/**
  * Play a realistic paper page-flip / page-turn rustle sound
  */
 export function playPageTurnSound(volume = 0.25) {

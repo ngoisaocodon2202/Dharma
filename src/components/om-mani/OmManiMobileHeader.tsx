@@ -17,6 +17,7 @@ interface OmManiMobileHeaderProps {
 
 const CATEGORY_TABS = [
   { id: 'all', name: 'Trang chủ', href: '/' },
+  { id: 'cau-nguyen', name: 'Cầu Nguyện Online', href: '/cau-nguyen', badge: 'Linh thiêng' },
   { id: 'lich-su', name: 'Lịch Sử Phật Giáo', href: '/lich-su-phat-giao', badge: 'Mới' },
   { id: 'lich-nhac', name: 'Lịch Nhắc Nhở', href: '/lich-phat-giao' },
   { id: 'tu-vi', name: 'Màu & Ngày Tốt', href: '/tu-vi' },

@@ -11,8 +11,8 @@ const BOTTOM_NAV_ITEMS = [
   { name: 'Trang chủ', href: '/', icon: BuddhaBodhiIcon },
   { name: 'Lịch Vạn Niên', href: '/lich-phat-giao', icon: Calendar },
   {
-    name: 'Ngày Tốt',
-    href: '/tu-vi',
+    name: 'Cầu Nguyện',
+    href: '/cau-nguyen',
     icon: Sparkles,
     videoSrc: '/tuvi.mp4',
     isCenter: true,
@@ -24,8 +24,8 @@ const BOTTOM_NAV_ITEMS = [
 export function MobileBottomNav() {
   const pathname = usePathname();
 
-  // Hide on group chat pages to keep chat input full height
-  if (/^\/cong-dong\/.+/.test(pathname)) return null;
+  // Hide on group chat pages or full-screen sanctuary to keep full height
+  if (/^\/cong-dong\/.+/.test(pathname) || pathname === '/cau-nguyen' || pathname === '/di-chua-online') return null;
 
   return (
     <nav

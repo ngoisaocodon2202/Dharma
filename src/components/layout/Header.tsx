@@ -24,6 +24,7 @@ import {
   Building,
   Sparkles,
   ChevronDown,
+  Flame,
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { OmManiMobileHeader } from '@/components/om-mani/OmManiMobileHeader';
@@ -102,6 +103,13 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
     name: 'Lịch & Tu tập',
     children: [
       {
+        name: 'Cầu Nguyện Online',
+        href: '/cau-nguyen',
+        icon: Flame,
+        description: 'Đi chùa online, thắp nhang bái Phật, thỉnh chuông & cầu bình an',
+        badge: 'Linh thiêng',
+      },
+      {
         name: 'Lịch Vạn Niên & Nhắc Nhở',
         href: '/lich-phat-giao',
         icon: Calendar,
@@ -114,7 +122,7 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
         icon: Sparkles,
         videoSrc: '/tuvi.mp4',
         description: 'Xem màu hợp bản mệnh Ngũ Hành, Ngày Hoàng Đạo & Giờ Tốt',
-        badge: 'Mới',
+        badge: 'Bản Mệnh',
       },
       {
         name: 'Phòng thiền trực tuyến',
@@ -175,8 +183,9 @@ const MOBILE_SECTIONS = [
   {
     title: 'Lịch Vạn Niên & Tiện Ích',
     items: [
+      { name: 'Cầu Nguyện Online', href: '/cau-nguyen', icon: Flame, description: 'Đi chùa online, thắp nhang & đọc kinh', badge: 'Mới' },
       { name: 'Lịch Vạn Niên & Nhắc Nhở', href: '/lich-phat-giao', icon: Calendar, description: '', badge: 'Ngày Giỗ' },
-      { name: 'Xem Màu Chủ Đạo & Ngày Tốt', href: '/tu-vi', icon: Sparkles, videoSrc: '/tuvi.mp4', description: '', badge: 'Mới' },
+      { name: 'Xem Màu Chủ Đạo & Ngày Tốt', href: '/tu-vi', icon: Sparkles, videoSrc: '/tuvi.mp4', description: '', badge: 'Bản Mệnh' },
       { name: 'Phòng thiền trực tuyến', href: '/phong-thien', icon: Wind, description: '' },
       { name: 'Thực hành chánh niệm', href: '/thuc-hanh', icon: BuddhaBodhiIcon, description: '' },
     ],
