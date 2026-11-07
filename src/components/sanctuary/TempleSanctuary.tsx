@@ -980,7 +980,7 @@ export function TempleSanctuary() {
               </p>
             </div>
 
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-2 gap-2">
               <button
                 onClick={() => {
                   if (navigator.clipboard) {
@@ -988,15 +988,15 @@ export function TempleSanctuary() {
                     showToast('Đã sao chép lời Phật dạy để gửi tặng người thân an lành.', 4000);
                   }
                 }}
-                className="px-4 py-2 rounded-xl border border-[#D4AF37] bg-white text-xs font-bold text-[#854D0E] flex items-center gap-1.5 active:scale-95 shadow-sm"
+                className="px-4 py-2 rounded-xl border border-[#D4AF37] bg-white text-xs font-bold text-[#854D0E] flex items-center gap-1.5 active:scale-95 shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
               >
-                <Share2 className="w-3.5 h-3.5" />
+                <Share2 className="w-3.5 h-3.5 shrink-0" />
                 <span>Sao Chép Lời Chúc</span>
               </button>
 
               <button
                 onClick={() => setIsDharmaQuoteModalOpen(false)}
-                className="px-5 py-2 rounded-xl bg-[#854D0E] text-white text-xs font-bold shadow-md active:scale-95"
+                className="px-5 py-2 rounded-xl bg-[#854D0E] text-white text-xs font-bold shadow-md active:scale-95 whitespace-nowrap shrink-0 cursor-pointer"
               >
                 Hoan Hỷ
               </button>
@@ -1012,9 +1012,9 @@ export function TempleSanctuary() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
           <div className="relative w-full max-w-2xl h-[92vh] max-h-[760px] bg-[#FDF8EC] text-[#2A1810] rounded-2xl sm:rounded-3xl border-4 border-[#D4AF37] shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col justify-between overflow-hidden">
             {/* Modal Header & Accessibility Controls */}
-            <div className="p-3 bg-[#F5EADB] border-b-2 border-[#D4AF37]/50 flex items-center justify-between gap-1.5 shrink-0">
+            <div className="p-2.5 sm:p-3 bg-[#F5EADB] border-b-2 border-[#D4AF37]/50 flex items-center justify-between gap-1.5 shrink-0">
               {/* Sutra Selector Tabs */}
-              <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+              <div className="flex items-center gap-1 overflow-x-auto no-scrollbar min-w-0">
                 {SUTRA_COLLECTIONS.map((sutra, idx) => (
                   <button
                     key={sutra.id}
@@ -1023,7 +1023,7 @@ export function TempleSanctuary() {
                       setActiveVerseIndex(0);
                     }}
                     className={cn(
-                      'px-2.5 py-1.5 rounded-xl font-heading text-xs sm:text-sm font-bold whitespace-nowrap transition-all cursor-pointer',
+                      'px-2.5 py-1.5 rounded-xl font-heading text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer',
                       selectedSutraIndex === idx
                         ? 'bg-[#854D0E] text-white shadow-xs'
                         : 'bg-white/80 text-[#5C3005] hover:bg-white border border-[#D4AF37]/40'
@@ -1038,47 +1038,50 @@ export function TempleSanctuary() {
               <div className="flex items-center gap-1 shrink-0">
                 <button
                   onClick={() => setFontSizePx((prev) => Math.max(18, prev - 2))}
-                  className="p-1.5 px-2 rounded-lg bg-white border border-[#D4AF37] text-xs font-bold active:scale-95 cursor-pointer"
+                  className="p-1.5 px-2 rounded-lg bg-white border border-[#D4AF37] text-xs font-bold active:scale-95 inline-flex items-center gap-0.5 whitespace-nowrap shrink-0 cursor-pointer"
                   title="Thu nhỏ cỡ chữ"
                 >
-                  <Minus className="w-3.5 h-3.5" /> A-
+                  <Minus className="w-3 h-3 shrink-0" />
+                  <span>A-</span>
                 </button>
 
                 <button
                   onClick={() => setFontSizePx((prev) => Math.min(36, prev + 2))}
-                  className="p-1.5 px-2 rounded-lg bg-white border border-[#D4AF37] text-xs font-bold active:scale-95 cursor-pointer"
+                  className="p-1.5 px-2 rounded-lg bg-white border border-[#D4AF37] text-xs font-bold active:scale-95 inline-flex items-center gap-0.5 whitespace-nowrap shrink-0 cursor-pointer"
                   title="Phóng to cỡ chữ cho dễ đọc"
                 >
-                  <Plus className="w-3.5 h-3.5" /> A+
+                  <Plus className="w-3 h-3 shrink-0" />
+                  <span>A+</span>
                 </button>
 
                 <button
                   onClick={() => {
                     if (soundEnabled) playWoodenFishSound(0.5);
                   }}
-                  className="p-1.5 px-2.5 rounded-lg bg-[#854D0E] text-white font-bold text-xs active:scale-95 shadow-xs cursor-pointer"
+                  className="p-1.5 px-2 rounded-lg bg-[#854D0E] text-white font-bold text-xs active:scale-95 shadow-xs inline-flex items-center gap-1 whitespace-nowrap shrink-0 cursor-pointer"
                   title="Gõ Mõ"
                 >
-                  🪘 Gõ Mõ
+                  <span>🪘</span>
+                  <span>Gõ Mõ</span>
                 </button>
 
                 <button
                   onClick={() => setIsAutoScrolling(!isAutoScrolling)}
                   className={cn(
-                    'p-1.5 px-2.5 rounded-lg text-xs font-bold flex items-center gap-1 active:scale-95 transition-all cursor-pointer',
+                    'p-1.5 px-2 rounded-lg text-xs font-bold inline-flex items-center gap-1 active:scale-95 transition-all whitespace-nowrap shrink-0 cursor-pointer',
                     isAutoScrolling
                       ? 'bg-emerald-700 text-white'
                       : 'bg-white border border-[#D4AF37] text-[#5C3005]'
                   )}
                   title="Tự động đọc tụng từng câu (Karaoke)"
                 >
-                  {isAutoScrolling ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                  {isAutoScrolling ? <Pause className="w-3.5 h-3.5 shrink-0" /> : <Play className="w-3.5 h-3.5 shrink-0" />}
                   <span className="hidden sm:inline">Tụng Tự Động</span>
                 </button>
 
                 <button
                   onClick={() => setIsScriptureModalOpen(false)}
-                  className="p-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white active:scale-95 shadow-xs ml-0.5 cursor-pointer"
+                  className="p-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white active:scale-95 shadow-xs ml-0.5 shrink-0 cursor-pointer"
                   title="Đóng Sách Kinh"
                 >
                   <X className="w-4 h-4" />

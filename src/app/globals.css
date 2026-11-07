@@ -590,6 +590,11 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   hyphens: none;
 }
 
+/* Global safeguard: prevent inline buttons, filter pills, and tab chips from breaking onto 2 lines */
+button:not(.flex-col):not(.items-start):not(.text-left):not(.whitespace-normal) {
+  white-space: nowrap;
+}
+
 /* Fluid responsive labels for tabs and control bars */
 .tab-label-fluid {
   font-size: clamp(10px, 2.7vw, 13px);

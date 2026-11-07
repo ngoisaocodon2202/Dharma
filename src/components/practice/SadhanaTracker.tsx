@@ -68,40 +68,40 @@ export function SadhanaTracker() {
     <div className="w-full max-w-xl mx-auto space-y-6">
       {/* Vườn Sen Tâm Linh (Mindful Lotus Garden) */}
       <div className="bg-gradient-to-b from-[#24130A] via-[#1B0C06] to-[#140804] text-[#FDFBF7] rounded-3xl border-2 border-[#D4AF37]/50 shadow-2xl p-5 sm:p-7 space-y-4">
-        <div className="flex items-center justify-between border-b border-[#D4AF37]/30 pb-3">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-[#FFE082]" />
-            <div>
-              <h3 className="font-heading font-bold text-lg sm:text-xl text-[#FFE082]">
+        <div className="flex items-center justify-between gap-2 border-b border-[#D4AF37]/30 pb-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <Sparkles className="w-5 h-5 text-[#FFE082] shrink-0" />
+            <div className="min-w-0">
+              <h3 className="font-heading font-bold text-base sm:text-xl text-[#FFE082] whitespace-nowrap truncate">
                 Vườn Sen Tâm Linh
               </h3>
-              <p className="text-xs text-stone-300">
-                Mỗi ngày tinh tấn công phu là một đóa sen tươi thắm nở rộ
+              <p className="text-[11px] sm:text-xs text-stone-300 truncate">
+                Mỗi ngày tinh tấn là một đóa sen tươi thắm nở rộ
               </p>
             </div>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#854D0E] text-white">
+          <span className="text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 rounded-full bg-[#854D0E] text-white whitespace-nowrap shrink-0">
             {totalDays} ngày tinh tấn
           </span>
         </div>
 
         {/* Lotus Bloom Grid (Visualizing past 14 days) */}
-        <div className="grid grid-cols-7 gap-2.5 py-2">
+        <div className="grid grid-cols-7 gap-1.5 sm:gap-2.5 py-2">
           {[...Array(14)].map((_, idx) => {
             const hasPractice = idx < totalDays;
             return (
               <div
                 key={idx}
                 className={cn(
-                  'aspect-square rounded-2xl border flex flex-col items-center justify-center p-1 transition-all',
+                  'aspect-square rounded-xl sm:rounded-2xl border flex flex-col items-center justify-center p-1 transition-all',
                   hasPractice
                     ? 'border-[#FFE082] bg-gradient-to-b from-amber-500/20 to-amber-900/40 shadow-sm'
                     : 'border-stone-800 bg-black/30 opacity-40'
                 )}
                 title={hasPractice ? `Ngày tinh tấn thứ ${idx + 1}` : 'Chưa có nhật ký'}
               >
-                <span className="text-xl sm:text-2xl">{hasPractice ? '🪷' : '🌱'}</span>
-                <span className="text-[9px] text-[#FFE082] mt-0.5">Ngày {idx + 1}</span>
+                <span className="text-lg sm:text-2xl leading-none">{hasPractice ? '🪷' : '🌱'}</span>
+                <span className="text-[8px] sm:text-[9px] text-[#FFE082] mt-0.5 whitespace-nowrap">Ngày {idx + 1}</span>
               </div>
             );
           })}
@@ -109,22 +109,22 @@ export function SadhanaTracker() {
 
         {/* Stats Summary Bar */}
         <div className="grid grid-cols-3 gap-2 pt-3 border-t border-[#D4AF37]/30 text-center">
-          <div className="p-2 rounded-xl bg-black/40 border border-[#D4AF37]/30">
-            <p className="text-[11px] text-stone-400">Tọa thiền</p>
-            <p className="font-heading text-base sm:text-lg font-bold text-[#FFE082]">
-              {totalMeditation} <span className="text-xs font-normal">phút</span>
+          <div className="p-2 rounded-xl bg-black/40 border border-[#D4AF37]/30 min-w-0">
+            <p className="text-[10px] sm:text-[11px] text-stone-400 whitespace-nowrap">Tọa thiền</p>
+            <p className="font-heading text-sm sm:text-lg font-bold text-[#FFE082] whitespace-nowrap truncate">
+              {totalMeditation} <span className="text-[11px] font-normal">phút</span>
             </p>
           </div>
-          <div className="p-2 rounded-xl bg-black/40 border border-[#D4AF37]/30">
-            <p className="text-[11px] text-stone-400">Niệm Phật</p>
-            <p className="font-heading text-base sm:text-lg font-bold text-[#FFE082]">
-              {totalBeads} <span className="text-xs font-normal">biến</span>
+          <div className="p-2 rounded-xl bg-black/40 border border-[#D4AF37]/30 min-w-0">
+            <p className="text-[10px] sm:text-[11px] text-stone-400 whitespace-nowrap">Niệm Phật</p>
+            <p className="font-heading text-sm sm:text-lg font-bold text-[#FFE082] whitespace-nowrap truncate">
+              {totalBeads} <span className="text-[11px] font-normal">biến</span>
             </p>
           </div>
-          <div className="p-2 rounded-xl bg-black/40 border border-[#D4AF37]/30">
-            <p className="text-[11px] text-stone-400">Ngày tu tập</p>
-            <p className="font-heading text-base sm:text-lg font-bold text-[#FFE082]">
-              {totalDays} <span className="text-xs font-normal">ngày</span>
+          <div className="p-2 rounded-xl bg-black/40 border border-[#D4AF37]/30 min-w-0">
+            <p className="text-[10px] sm:text-[11px] text-stone-400 whitespace-nowrap">Ngày tu tập</p>
+            <p className="font-heading text-sm sm:text-lg font-bold text-[#FFE082] whitespace-nowrap truncate">
+              {totalDays} <span className="text-[11px] font-normal">ngày</span>
             </p>
           </div>
         </div>

@@ -9,11 +9,11 @@ export interface GlossaryItem {
 }
 
 export const GLOSSARY_CATEGORIES: Record<string, string> = {
-  all: 'Tất cả thuật ngữ',
+  all: 'Tất cả',
   can_ban: 'Giáo lý căn bản',
-  tu_tap: 'Phương pháp tu học',
+  tu_tap: 'Pháp môn tu học',
   tam_hoc: 'Giới - Định - Tuệ',
-  triet_hoc: 'Triết học Phật giáo',
+  triet_hoc: 'Triết học',
   nghi_le: 'Nghi lễ & Đời sống',
 };
 

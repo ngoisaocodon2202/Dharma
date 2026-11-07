@@ -61,20 +61,20 @@ export default function BuddhistGlossaryPage() {
           </Link>
 
           {/* Font Resizer for Elderly Users */}
-          <div className="flex items-center gap-1 bg-ivory-100 dark:bg-charcoal-800 p-1 rounded-xl border border-ivory-200 dark:border-charcoal-700">
+          <div className="flex items-center gap-1 bg-ivory-100 dark:bg-charcoal-800 p-1 rounded-xl border border-ivory-200 dark:border-charcoal-700 shrink-0 whitespace-nowrap">
             <button
               onClick={() => setFontSize((p) => Math.max(14, p - 2))}
-              className="px-2 py-1 rounded-lg text-xs font-bold bg-white dark:bg-charcoal-700 shadow-2xs hover:bg-ivory-50 active:scale-95"
+              className="px-2 py-1 rounded-lg text-xs font-bold bg-white dark:bg-charcoal-700 shadow-2xs hover:bg-ivory-50 active:scale-95 whitespace-nowrap cursor-pointer"
               title="Thu nhỏ chữ"
             >
               <Minus className="w-3 h-3" />
             </button>
-            <span className="text-xs px-2 font-bold text-charcoal-600 dark:text-charcoal-300">
+            <span className="text-xs px-2 font-bold text-charcoal-600 dark:text-charcoal-300 whitespace-nowrap">
               {fontSize}px
             </span>
             <button
               onClick={() => setFontSize((p) => Math.min(24, p + 2))}
-              className="px-2 py-1 rounded-lg text-xs font-bold bg-white dark:bg-charcoal-700 shadow-2xs hover:bg-ivory-50 active:scale-95"
+              className="px-2 py-1 rounded-lg text-xs font-bold bg-white dark:bg-charcoal-700 shadow-2xs hover:bg-ivory-50 active:scale-95 whitespace-nowrap cursor-pointer"
               title="Phóng to chữ dễ đọc"
             >
               <Plus className="w-3 h-3" />
@@ -83,14 +83,14 @@ export default function BuddhistGlossaryPage() {
         </div>
 
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-1.5 text-xs text-saffron-700 dark:text-saffron-400 font-semibold uppercase tracking-wider">
-            <BookOpen className="w-4 h-4 text-saffron-600 dark:text-saffron-400 animate-pulse-glow" />
+          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-saffron-700 dark:text-saffron-400 font-semibold uppercase tracking-wider whitespace-nowrap">
+            <BookOpen className="w-4 h-4 text-saffron-600 dark:text-saffron-400 animate-pulse-glow shrink-0" />
             <span>Pháp Bảo Vô Giá • Tra Cứu Chánh Kiến</span>
           </div>
-          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50">
+          <h1 className="font-heading text-2xl sm:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50">
             Từ Điển Phật Học Bỏ Túi
           </h1>
-          <p className="text-sm text-charcoal-600 dark:text-charcoal-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-charcoal-600 dark:text-charcoal-400 max-w-xl mx-auto leading-relaxed">
             Giải nghĩa các thuật ngữ cốt lõi trong kinh sách Phật giáo bằng ngôn ngữ bình dị, dễ hiểu, giúp người tu học vững bước trên con đường tuệ giác.
           </p>
         </div>
@@ -103,18 +103,18 @@ export default function BuddhistGlossaryPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm thuật ngữ (ví dụ: Vô ngã, Bát chánh đạo, Duyên khởi, Anatta...)"
-            className="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-ivory-300 dark:border-charcoal-600 bg-white dark:bg-charcoal-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-saffron-500 shadow-xs"
+            className="w-full pl-10 pr-4 py-3 rounded-2xl border-2 border-ivory-300 dark:border-charcoal-600 bg-white dark:bg-charcoal-800 text-xs sm:text-base focus:outline-none focus:ring-2 focus:ring-saffron-500 shadow-xs"
           />
         </div>
 
-        {/* Category Pills */}
-        <div className="flex items-center justify-center gap-1.5 overflow-x-auto no-scrollbar pt-2">
+        {/* Category Pills — Horizontal scroll on mobile, centered wrap on desktop, zero word wrap */}
+        <div className="flex items-center sm:justify-center gap-1.5 overflow-x-auto no-scrollbar pt-2 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
           {Object.entries(GLOSSARY_CATEGORIES).map(([key, label]) => (
             <button
               key={key}
               onClick={() => setSelectedCategory(key)}
               className={cn(
-                'px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all active:scale-95',
+                'px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold whitespace-nowrap shrink-0 transition-all active:scale-95 cursor-pointer',
                 selectedCategory === key
                   ? 'bg-saffron-600 text-white shadow-xs'
                   : 'bg-ivory-100 dark:bg-charcoal-800 text-charcoal-700 dark:text-charcoal-300 hover:bg-ivory-200'

@@ -37,24 +37,24 @@ export default function VegetarianRecipesPage() {
         </Link>
 
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-semibold uppercase tracking-wider">
-            <UtensilsCrossed className="w-4 h-4 text-emerald-600 animate-pulse-glow" />
+          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-emerald-700 dark:text-emerald-400 font-semibold uppercase tracking-wider whitespace-nowrap">
+            <UtensilsCrossed className="w-4 h-4 text-emerald-600 animate-pulse-glow shrink-0" />
             <span>Nuôi Dưỡng Tâm Từ Bi • Dưỡng Thân An Lạc</span>
           </div>
-          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50">
+          <h1 className="font-heading text-2xl sm:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50">
             Sổ Tay Món Chay Dưỡng Sinh
           </h1>
-          <p className="text-sm text-charcoal-600 dark:text-charcoal-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-charcoal-600 dark:text-charcoal-400 max-w-xl mx-auto leading-relaxed">
             Tuyển tập các món ăn chay thuần Việt thanh đạm, giàu dinh dưỡng và dễ nấu, giúp bồi bổ sức khỏe cho gia đình và vun đắp lòng thương xót muôn loài.
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex items-center justify-center gap-2 pt-2">
+        {/* Category Filter — Always single-line pills on mobile & desktop */}
+        <div className="grid grid-cols-3 sm:flex items-center justify-center gap-1.5 sm:gap-2.5 pt-2 max-w-md mx-auto">
           <button
             onClick={() => setSelectedCategory('all')}
             className={cn(
-              'px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95',
+              'px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-xs font-bold whitespace-nowrap transition-all active:scale-95 text-center cursor-pointer',
               selectedCategory === 'all'
                 ? 'bg-emerald-700 text-white shadow-xs'
                 : 'bg-ivory-100 dark:bg-charcoal-800 text-charcoal-700 dark:text-charcoal-300 hover:bg-ivory-200'
@@ -65,7 +65,7 @@ export default function VegetarianRecipesPage() {
           <button
             onClick={() => setSelectedCategory('kho')}
             className={cn(
-              'px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95',
+              'px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-xs font-bold whitespace-nowrap transition-all active:scale-95 text-center cursor-pointer',
               selectedCategory === 'kho'
                 ? 'bg-emerald-700 text-white shadow-xs'
                 : 'bg-ivory-100 dark:bg-charcoal-800 text-charcoal-700 dark:text-charcoal-300 hover:bg-ivory-200'
@@ -76,7 +76,7 @@ export default function VegetarianRecipesPage() {
           <button
             onClick={() => setSelectedCategory('canh')}
             className={cn(
-              'px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95',
+              'px-2 sm:px-4 py-2.5 rounded-xl text-[11px] sm:text-xs font-bold whitespace-nowrap transition-all active:scale-95 text-center cursor-pointer',
               selectedCategory === 'canh'
                 ? 'bg-emerald-700 text-white shadow-xs'
                 : 'bg-ivory-100 dark:bg-charcoal-800 text-charcoal-700 dark:text-charcoal-300 hover:bg-ivory-200'
@@ -91,7 +91,7 @@ export default function VegetarianRecipesPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Recipe Cards Selection */}
         <div className="lg:col-span-5 space-y-3">
-          <h2 className="font-heading font-bold text-sm text-charcoal-700 dark:text-charcoal-300 uppercase tracking-wider px-1">
+          <h2 className="font-heading font-bold text-sm text-charcoal-700 dark:text-charcoal-300 uppercase tracking-wider px-1 whitespace-nowrap">
             Danh Sách Món Ăn ({filtered.length}):
           </h2>
 
@@ -114,15 +114,15 @@ export default function VegetarianRecipesPage() {
                       {item.name}
                     </h3>
                     <div className="flex items-center gap-3 text-xs text-charcoal-500 dark:text-charcoal-400">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5 text-emerald-600" /> {item.cookTime}
+                      <span className="flex items-center gap-1 whitespace-nowrap">
+                        <Clock className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> {item.cookTime}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="w-3.5 h-3.5 text-emerald-600" /> {item.servings}
+                      <span className="flex items-center gap-1 whitespace-nowrap">
+                        <Users className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> {item.servings}
                       </span>
                     </div>
                   </div>
-                  <ChevronRight className={cn('w-4 h-4 text-charcoal-400', isSelected && 'text-emerald-600 translate-x-1 transition-transform')} />
+                  <ChevronRight className={cn('w-4 h-4 text-charcoal-400 shrink-0', isSelected && 'text-emerald-600 translate-x-1 transition-transform')} />
                 </div>
               );
             })}
@@ -132,7 +132,7 @@ export default function VegetarianRecipesPage() {
         {/* Right: Detailed Cooking Recipe */}
         <div className="lg:col-span-7 bg-white dark:bg-charcoal-800 rounded-3xl border border-ivory-200 dark:border-charcoal-700 shadow-md p-5 sm:p-7 space-y-6 animate-fade-in">
           <div className="space-y-2 border-b border-ivory-100 dark:border-charcoal-700 pb-4">
-            <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold uppercase tracking-wider">
+            <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold uppercase tracking-wider whitespace-nowrap">
               {activeRecipe.category === 'kho' ? 'Món kho dưỡng sinh' : 'Canh dưỡng tâm'}
             </span>
             <h2 className="font-heading font-bold text-2xl sm:text-3xl text-charcoal-900 dark:text-ivory-100">
@@ -145,17 +145,17 @@ export default function VegetarianRecipesPage() {
 
           {/* Quick Metrics */}
           <div className="grid grid-cols-3 gap-2 text-center p-3 rounded-2xl bg-ivory-50 dark:bg-charcoal-900/60 border border-ivory-200 dark:border-charcoal-700">
-            <div>
-              <p className="text-[11px] text-charcoal-500">Thời gian</p>
-              <p className="font-bold text-sm text-emerald-700 dark:text-emerald-400">{activeRecipe.cookTime}</p>
+            <div className="min-w-0">
+              <p className="text-[11px] text-charcoal-500 whitespace-nowrap">Thời gian</p>
+              <p className="font-bold text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 whitespace-nowrap truncate">{activeRecipe.cookTime}</p>
             </div>
-            <div>
-              <p className="text-[11px] text-charcoal-500">Khẩu phần</p>
-              <p className="font-bold text-sm text-emerald-700 dark:text-emerald-400">{activeRecipe.servings}</p>
+            <div className="min-w-0">
+              <p className="text-[11px] text-charcoal-500 whitespace-nowrap">Khẩu phần</p>
+              <p className="font-bold text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 whitespace-nowrap truncate">{activeRecipe.servings}</p>
             </div>
-            <div>
-              <p className="text-[11px] text-charcoal-500">Độ khó</p>
-              <p className="font-bold text-sm text-emerald-700 dark:text-emerald-400">{activeRecipe.difficulty}</p>
+            <div className="min-w-0">
+              <p className="text-[11px] text-charcoal-500 whitespace-nowrap">Độ khó</p>
+              <p className="font-bold text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 whitespace-nowrap truncate">{activeRecipe.difficulty}</p>
             </div>
           </div>
 

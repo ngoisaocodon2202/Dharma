@@ -67,9 +67,9 @@ export function MindfulnessModal() {
 
               <button
                 onClick={triggerManualBell}
-                className="px-3 py-1.5 rounded-xl bg-[#854D0E] hover:bg-[#A16207] text-white text-xs font-bold flex items-center gap-1 active:scale-95 transition-all shadow-sm shrink-0"
+                className="px-3 py-1.5 rounded-xl bg-[#854D0E] hover:bg-[#A16207] text-white text-xs font-bold flex items-center gap-1 active:scale-95 transition-all shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
               >
-                <Volume2 className="w-3.5 h-3.5" />
+                <Volume2 className="w-3.5 h-3.5 shrink-0" />
                 <span>Thử chuông</span>
               </button>
             </div>
@@ -81,14 +81,14 @@ export function MindfulnessModal() {
                   key={item.value}
                   onClick={() => setBellIntervalMinutes(item.value)}
                   className={cn(
-                    'py-2 px-3 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-between transition-all active:scale-95',
+                    'py-2 px-3 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-between transition-all active:scale-95 whitespace-nowrap cursor-pointer',
                     bellIntervalMinutes === item.value
                       ? 'bg-[#854D0E] text-white border-[#713F12] shadow-sm'
                       : 'bg-white dark:bg-charcoal-800 text-[#78350F] dark:text-ivory-200 border-[#D4AF37]/40 hover:bg-amber-50'
                   )}
                 >
                   <span>{item.label}</span>
-                  {bellIntervalMinutes === item.value && <Check className="w-4 h-4 ml-1" />}
+                  {bellIntervalMinutes === item.value && <Check className="w-4 h-4 ml-1 shrink-0" />}
                 </button>
               ))}
             </div>

@@ -85,14 +85,14 @@ export default function DedicationParchmentPage() {
         </Link>
 
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400 font-semibold uppercase tracking-wider">
-            <Scroll className="w-4 h-4 text-amber-600 animate-pulse-glow" />
+          <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-amber-700 dark:text-amber-400 font-semibold uppercase tracking-wider whitespace-nowrap">
+            <Scroll className="w-4 h-4 text-amber-600 animate-pulse-glow shrink-0" />
             <span>Phụng Thỉnh Tam Bảo • Chứng Minh Hồi Hướng</span>
           </div>
-          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50">
+          <h1 className="font-heading text-2xl sm:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50">
             Lập Sớ Hồi Hướng Cho Gia Tộc &amp; Tiên Tổ
           </h1>
-          <p className="text-sm text-charcoal-600 dark:text-charcoal-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-charcoal-600 dark:text-charcoal-400 max-w-xl mx-auto leading-relaxed">
             Điền danh tánh thân bằng quyến thuộc và cửu huyền thất tổ để tạo bản sớ trang trọng, dâng lời hồi hướng phước lành sau mỗi thời khóa tu tập.
           </p>
         </div>
@@ -100,13 +100,13 @@ export default function DedicationParchmentPage() {
 
       {/* Input Form Section (Hidden when printing) */}
       <div className="bg-white dark:bg-charcoal-800 rounded-3xl border border-ivory-200 dark:border-charcoal-700 shadow-md p-5 sm:p-7 space-y-6 print:hidden">
-        <h2 className="font-heading font-bold text-lg text-charcoal-900 dark:text-ivory-100 flex items-center gap-2 border-b border-ivory-100 dark:border-charcoal-700 pb-3">
+        <h2 className="font-heading font-bold text-base sm:text-lg text-charcoal-900 dark:text-ivory-100 flex items-center gap-2 border-b border-ivory-100 dark:border-charcoal-700 pb-3 whitespace-nowrap truncate">
           <span>1. Thông Tin Chủ Hộ / Tín Chủ:</span>
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label className="block text-xs font-semibold text-charcoal-600 dark:text-charcoal-300 mb-1">
+            <label className="block text-xs font-semibold text-charcoal-600 dark:text-charcoal-300 mb-1 whitespace-nowrap">
               Họ tên tín chủ:
             </label>
             <input
@@ -117,7 +117,7 @@ export default function DedicationParchmentPage() {
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-charcoal-600 dark:text-charcoal-300 mb-1">
+            <label className="block text-xs font-semibold text-charcoal-600 dark:text-charcoal-300 mb-1 whitespace-nowrap">
               Pháp danh (nếu có):
             </label>
             <input
@@ -128,7 +128,7 @@ export default function DedicationParchmentPage() {
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-charcoal-600 dark:text-charcoal-300 mb-1">
+            <label className="block text-xs font-semibold text-charcoal-600 dark:text-charcoal-300 mb-1 whitespace-nowrap">
               Cư ngụ tại:
             </label>
             <input
@@ -142,15 +142,15 @@ export default function DedicationParchmentPage() {
 
         {/* Section 2: Cầu An Thân Bằng Quyến Thuộc */}
         <div className="space-y-3 pt-3 border-t border-ivory-100 dark:border-charcoal-700">
-          <div className="flex items-center justify-between">
-            <h3 className="font-heading font-bold text-sm text-[#854D0E] uppercase tracking-wider">
-              2. Danh Sách Cầu An (Người Hiện Tiền):
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="font-heading font-bold text-xs sm:text-sm text-[#854D0E] uppercase tracking-wider min-w-0 truncate">
+              2. Danh Sách Cầu An (Hiện Tiền):
             </h3>
             <button
               onClick={addFamilyMember}
-              className="text-xs px-3 py-1.5 rounded-xl bg-amber-100 text-[#854D0E] font-bold hover:bg-amber-200 flex items-center gap-1"
+              className="text-xs px-3 py-1.5 rounded-xl bg-amber-100 text-[#854D0E] font-bold hover:bg-amber-200 flex items-center gap-1 whitespace-nowrap shrink-0 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" /> Thêm người
+              <Plus className="w-3.5 h-3.5 shrink-0" /> Thêm người
             </button>
           </div>
 
@@ -203,15 +203,15 @@ export default function DedicationParchmentPage() {
 
         {/* Section 3: Cầu Siêu Tiên Tổ */}
         <div className="space-y-3 pt-3 border-t border-ivory-100 dark:border-charcoal-700">
-          <div className="flex items-center justify-between">
-            <h3 className="font-heading font-bold text-sm text-[#854D0E] uppercase tracking-wider">
-              3. Danh Sách Cầu Siêu (Cửu Huyền Thất Tổ):
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="font-heading font-bold text-xs sm:text-sm text-[#854D0E] uppercase tracking-wider min-w-0 truncate">
+              3. Danh Sách Cầu Siêu (Tiên Tổ):
             </h3>
             <button
               onClick={addAncestor}
-              className="text-xs px-3 py-1.5 rounded-xl bg-amber-100 text-[#854D0E] font-bold hover:bg-amber-200 flex items-center gap-1"
+              className="text-xs px-3 py-1.5 rounded-xl bg-amber-100 text-[#854D0E] font-bold hover:bg-amber-200 flex items-center gap-1 whitespace-nowrap shrink-0 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" /> Thêm tiên tổ
+              <Plus className="w-3.5 h-3.5 shrink-0" /> Thêm tiên tổ
             </button>
           </div>
 
@@ -267,10 +267,10 @@ export default function DedicationParchmentPage() {
       <div className="relative bg-[#FFFDF5] text-[#2A1810] rounded-3xl border-4 border-[#D4AF37] shadow-2xl p-6 sm:p-10 space-y-6">
         {/* Ornate Gold Border Corners */}
         <div className="text-center space-y-2 border-b-2 border-[#D4AF37]/50 pb-4">
-          <p className="text-xs tracking-[0.3em] font-heading font-bold text-[#854D0E] uppercase">
+          <p className="text-[10px] sm:text-xs tracking-[0.15em] sm:tracking-[0.3em] font-heading font-bold text-[#854D0E] uppercase whitespace-nowrap">
             ✦ Nam Mô Bổn Sư Thích Ca Mâu Ni Phật ✦
           </p>
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-[#854D0E] tracking-wider uppercase">
+          <h2 className="font-heading text-xl sm:text-3xl font-bold text-[#854D0E] tracking-wider uppercase">
             Sớ Hồi Hướng Công Đức Tam Bảo
           </h2>
           <p className="text-xs italic text-[#78350F]">
