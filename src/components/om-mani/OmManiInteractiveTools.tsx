@@ -6,6 +6,7 @@ import { X, Sparkles, Volume2, Flame, RefreshCw, Heart, Check, Bell } from 'luci
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { playBellSound, playWoodenFishSound } from '@/lib/buddhistSounds';
 import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
+import { RealisticMalaWheel } from './RealisticMalaWheel';
 import { cn } from '@/lib/utils';
 
 // ==========================================
@@ -372,64 +373,26 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
         </div>
 
         {/* Main Interactive Bead Area */}
-        <div
-          onClick={handleNextBead}
-          className="p-6 flex flex-col items-center text-center cursor-pointer select-none active:scale-98 transition-transform"
-        >
+        <div className="p-5 sm:p-6 flex flex-col items-center text-center select-none">
           {/* Current Chant Display */}
           <div className="text-amber-300/80 text-[11px] uppercase tracking-wider mb-1">
             Đang Trì Niệm
           </div>
-          <div className="font-heading font-bold text-lg sm:text-xl text-amber-100 min-h-[56px] flex items-center justify-center max-w-xs">
+          <div className="font-heading font-bold text-lg sm:text-xl text-amber-100 min-h-[48px] flex items-center justify-center max-w-xs mb-2">
             {selectedChant.name}
           </div>
 
-          {/* Circular Mala Beads Wheel */}
-          <div className="relative w-52 h-52 my-4 flex items-center justify-center">
-            {/* Pulsing ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-dashed border-amber-500/20 animate-spin" style={{ animationDuration: '40s' }} />
+          {/* 3D Realistic Wooden Mala Beads Wheel */}
+          <RealisticMalaWheel
+            currentBead={beadIndex + 1}
+            totalBeads={108}
+            onAdvanceBead={handleNextBead}
+            chantLabel={selectedChant.name}
+          />
 
-            {/* Glowing Golden Beads Around Perimeter */}
-            {[...Array(12)].map((_, i) => {
-              const angle = (i / 12) * 2 * Math.PI - Math.PI / 2;
-              const radius = 88;
-              const x = Math.cos(angle) * radius;
-              const y = Math.sin(angle) * radius;
-              const isCurrent = Math.floor(beadIndex / 9) === i;
-
-              return (
-                <div
-                  key={i}
-                  className={cn(
-                    "absolute w-5 h-5 rounded-full transition-all duration-200 flex items-center justify-center",
-                    isCurrent
-                      ? "bg-gradient-to-tr from-amber-400 via-amber-200 to-white shadow-[0_0_15px_#f59e0b] scale-135 z-10"
-                      : "bg-gradient-to-tr from-amber-700 via-amber-800 to-amber-900 border border-amber-600/40"
-                  )}
-                  style={{
-                    transform: `translate(${x}px, ${y}px)`,
-                  }}
-                />
-              );
-            })}
-
-            {/* Center Golden Core (Big Tap Target) */}
-            <div className="w-28 h-28 rounded-full bg-gradient-to-b from-amber-500/20 via-amber-900/60 to-charcoal-950 border-2 border-amber-400/50 shadow-[inset_0_2px_10px_rgba(245,158,11,0.3)] flex flex-col items-center justify-center p-2 group hover:border-amber-300">
-              <span className="text-[10px] uppercase tracking-widest text-amber-300/80 font-bold">
-                Hạt số
-              </span>
-              <span className="font-mono text-3xl font-extrabold text-amber-200 my-0.5 leading-none">
-                {beadIndex + 1}
-              </span>
-              <span className="text-[9px] text-stone-400">
-                / 108 hạt
-              </span>
-            </div>
-          </div>
-
-          <div className="text-xs text-amber-300/80 font-medium flex items-center gap-1.5 mt-1">
+          <div className="text-xs text-amber-300/80 font-medium flex items-center gap-1.5 mt-3">
             <Volume2 className="w-3.5 h-3.5 text-amber-400" />
-            <span>Chạm bất kỳ đâu để niệm tiếp & gõ mõ</span>
+            <span>Chạm vào tràng hạt để lần từng hạt &amp; gõ mõ</span>
           </div>
 
           {/* Stats Bar */}

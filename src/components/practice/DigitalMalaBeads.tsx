@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, RotateCcw, Volume2, VolumeX, CheckCircle, Award } from 'lucide-react';
 import { playWoodenFishSound, playBellSound } from '@/lib/buddhistSounds';
 import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
+import { RealisticMalaWheel } from '@/components/om-mani/RealisticMalaWheel';
 import { cn } from '@/lib/utils';
 
 interface DigitalMalaProps {
@@ -174,45 +175,24 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
         </div>
       </div>
 
-      {/* MAIN DIGITAL BEAD WHEEL INTERACTION */}
-      <div
-        onClick={triggerBeadAdvance}
-        className="relative aspect-square max-w-[280px] sm:max-w-[320px] mx-auto rounded-full border-4 border-[#D4AF37]/60 bg-gradient-to-b from-[#3E1A0C] via-[#2A1106] to-[#170802] shadow-[0_0_35px_rgba(212,175,55,0.35)] flex flex-col items-center justify-center p-6 cursor-pointer active:scale-95 transition-all group"
-      >
-        {/* Ring of Mala Beads */}
-        <div className="absolute inset-2 rounded-full border border-dashed border-[#D4AF37]/40 pointer-events-none" />
-
-        {/* Lotus emblem center */}
-        <div className="text-center space-y-1.5 z-10">
-          <p className="text-[11px] font-bold text-[#D4AF37] uppercase tracking-widest">
-            {mantraObj.short}
-          </p>
-
-          <div className="font-heading text-5xl sm:text-6xl font-black text-[#FFE082] drop-shadow-md tracking-tight">
-            {currentBead}
-            <span className="text-xl sm:text-2xl text-stone-400 font-normal">/{beadSize}</span>
-          </div>
-
-          <p className="text-xs text-amber-200/80 font-semibold">
-            {completedRounds > 0 ? (
-              <span className="inline-flex items-center gap-1 text-emerald-400">
-                <CheckCircle className="w-3.5 h-3.5" /> Đã xong {completedRounds} chuỗi ({completedRounds * beadSize} biến)
-              </span>
-            ) : (
-              'Chạm vào giữa để lần 1 hạt'
-            )}
-          </p>
-        </div>
-
-        {/* Bead Indicator Glow */}
-        <div
-          className="absolute w-6 h-6 rounded-full bg-gradient-to-r from-amber-300 to-yellow-500 shadow-[0_0_15px_#FFE082] pointer-events-none transition-all duration-300"
-          style={{
-            top: `${50 - 45 * Math.cos((currentBead / beadSize) * 2 * Math.PI)}%`,
-            left: `${50 + 45 * Math.sin((currentBead / beadSize) * 2 * Math.PI)}%`,
-            transform: 'translate(-50%, -50%)',
-          }}
+      {/* MAIN 3D WOODEN MALA BEADS INTERACTION */}
+      <div className="py-2 flex flex-col items-center">
+        <RealisticMalaWheel
+          currentBead={currentBead === 0 ? 1 : currentBead}
+          totalBeads={beadSize}
+          onAdvanceBead={triggerBeadAdvance}
+          chantLabel={mantraObj.name}
         />
+
+        <p className="text-xs text-amber-200/80 font-semibold mt-3 text-center">
+          {completedRounds > 0 ? (
+            <span className="inline-flex items-center gap-1 text-emerald-400">
+              <CheckCircle className="w-3.5 h-3.5" /> Đã xong {completedRounds} chuỗi ({completedRounds * beadSize} biến)
+            </span>
+          ) : (
+            'Chạm vào tràng hạt để lần từng hạt & gõ mõ'
+          )}
+        </p>
       </div>
 
       {/* Toast Feedback */}

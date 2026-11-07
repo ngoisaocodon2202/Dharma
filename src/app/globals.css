@@ -639,5 +639,25 @@ button:not(.flex-col):not(.items-start):not(.text-left):not(.whitespace-normal) 
   animation: lotusAuraPulse 3.5s ease-in-out infinite;
 }
 
+@keyframes floatUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.03);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-38px) scale(0.95);
+  }
+}
+
+.animate-float-up-fade {
+  animation: floatUpFade 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
 
 
