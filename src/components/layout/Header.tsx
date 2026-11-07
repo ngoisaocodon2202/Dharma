@@ -26,6 +26,7 @@ import {
   Sparkles,
   ChevronDown,
   Flame,
+  Bell,
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { OmManiMobileHeader } from '@/components/om-mani/OmManiMobileHeader';
