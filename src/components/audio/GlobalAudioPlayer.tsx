@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAudio } from './AudioContext';
 import { formatDuration } from '@/lib/utils';
-import { Play, Pause, RotateCcw, RotateCw, Volume2, X, Music } from 'lucide-react';
+import { Play, Pause, RotateCcw, RotateCw, Volume2, X, Music, Moon, Clock } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export function GlobalAudioPlayer() {
   const {
@@ -19,6 +20,32 @@ export function GlobalAudioPlayer() {
     setVolume,
     closePlayer,
   } = useAudio();
+
+  // Sleep Timer State (minutes remaining, 0 = off)
+  const [sleepTimerMinutes, setSleepTimerMinutes] = useState<number>(0);
+  const [isSleepMenuOpen, setIsSleepMenuOpen] = useState<boolean>(false);
+  const sleepTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (sleepTimerRef.current) clearInterval(sleepTimerRef.current);
+
+    if (sleepTimerMinutes > 0 && isPlaying) {
+      sleepTimerRef.current = setInterval(() => {
+        setSleepTimerMinutes((prev) => {
+          if (prev <= 1) {
+            // Timer expired -> pause audio
+            if (isPlaying) togglePlay();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 60000); // every minute
+    }
+
+    return () => {
+      if (sleepTimerRef.current) clearInterval(sleepTimerRef.current);
+    };
+  }, [sleepTimerMinutes, isPlaying]);
 
   if (!currentTrack) return null;
 
@@ -86,6 +113,16 @@ export function GlobalAudioPlayer() {
               aria-label={isPlaying ? 'Tạm dừng' : 'Tiếp tục phát'}
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+            </button>
+            <button
+              onClick={() => setIsSleepMenuOpen(!isSleepMenuOpen)}
+              className={cn(
+                'p-2 rounded-lg transition-colors',
+                sleepTimerMinutes > 0 ? 'text-amber-500 font-bold' : 'text-charcoal-400'
+              )}
+              title="Hẹn giờ ngủ"
+            >
+              <Moon className="w-4 h-4" />
             </button>
             <button
               onClick={closePlayer}
@@ -186,8 +223,48 @@ export function GlobalAudioPlayer() {
             </div>
           </div>
 
-          {/* Volume & Close */}
-          <div className="flex items-center justify-end gap-3 w-1/4">
+          {/* Volume, Sleep Timer & Close */}
+          <div className="flex items-center justify-end gap-2.5 w-1/4">
+            {/* Sleep Timer */}
+            <div className="relative">
+              <button
+                onClick={() => setIsSleepMenuOpen(!isSleepMenuOpen)}
+                className={cn(
+                  'p-1.5 rounded-lg border transition-all flex items-center gap-1 text-xs',
+                  sleepTimerMinutes > 0
+                    ? 'bg-amber-100 dark:bg-amber-950/60 border-amber-400 text-amber-800 dark:text-amber-300 font-bold'
+                    : 'text-charcoal-400 hover:text-charcoal-700 dark:hover:text-charcoal-200 border-transparent hover:bg-ivory-100 dark:hover:bg-charcoal-800'
+                )}
+                title="Hẹn giờ tắt âm thanh"
+              >
+                <Moon className="w-4 h-4" />
+                {sleepTimerMinutes > 0 && <span className="text-[10px]">{sleepTimerMinutes}p</span>}
+              </button>
+
+              {isSleepMenuOpen && (
+                <div className="absolute right-0 bottom-full mb-2 w-36 bg-white dark:bg-charcoal-800 rounded-xl shadow-xl border border-ivory-200 dark:border-charcoal-700 p-1.5 z-50 text-xs">
+                  <p className="px-2 py-1 text-[10px] text-charcoal-400 font-bold uppercase">Hẹn giờ ngủ:</p>
+                  {[0, 15, 30, 45, 60].map((mins) => (
+                    <button
+                      key={mins}
+                      onClick={() => {
+                        setSleepTimerMinutes(mins);
+                        setIsSleepMenuOpen(false);
+                      }}
+                      className={cn(
+                        'w-full text-left px-2 py-1.5 rounded-lg transition-colors flex items-center justify-between',
+                        sleepTimerMinutes === mins
+                          ? 'bg-saffron-500 text-white font-bold'
+                          : 'hover:bg-ivory-100 dark:hover:bg-charcoal-700 text-charcoal-700 dark:text-charcoal-200'
+                      )}
+                    >
+                      <span>{mins === 0 ? 'Tắt hẹn giờ' : `${mins} phút`}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="flex items-center gap-1.5">
               <Volume2 className="w-4 h-4 text-charcoal-400" />
               <input

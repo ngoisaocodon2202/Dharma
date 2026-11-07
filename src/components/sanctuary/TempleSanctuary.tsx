@@ -13,6 +13,10 @@ import {
   Minus,
   Play,
   Pause,
+  Sparkles,
+  Share2,
+  Download,
+  Scroll,
 } from 'lucide-react';
 import { playBellSound, playWoodenFishSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { cn } from '@/lib/utils';
@@ -79,9 +83,80 @@ const HeartNavIcon = ({ className }: { className?: string }) => (
 );
 
 // =============================================================================
-// PRE-LOADED SUTRAS & ACCESSIBILITY DATA
+// ALTAR SPACES (ĐA ĐIỆN THỜ TAM BẢO)
 // =============================================================================
 
+export type AltarType = 'thich-ca' | 'quan-am' | 'duoc-su' | 'dia-tang';
+
+interface AltarInfo {
+  id: AltarType;
+  title: string;
+  subtitle: string;
+  buddhaName: string;
+  mantra: string;
+  toneColor: string;
+}
+
+const ALTAR_SPACES: Record<AltarType, AltarInfo> = {
+  'thich-ca': {
+    id: 'thich-ca',
+    title: 'Chánh Điện Bổn Sư',
+    subtitle: 'Đức Bổn Sư Thích Ca Mâu Ni Phật • Trí Tuệ & Bình An',
+    buddhaName: 'Nam Mô Bổn Sư Thích Ca Mâu Ni Phật',
+    mantra: 'Tâm hương vừa thắp, nguyện mười phương thanh tịnh, phiền não đoạn trừ.',
+    toneColor: 'from-amber-500/20 to-transparent',
+  },
+  'quan-am': {
+    id: 'quan-am',
+    title: 'Điện Quán Thế Âm',
+    subtitle: 'Nam Hải Quán Thế Âm Bồ Tát • Cứu Khổ Cứu Nạn',
+    buddhaName: 'Nam Mô Đại Bi Quán Thế Âm Bồ Tát',
+    mantra: 'Cành dương nước mát sái mười phương, tai qua nạn khỏi vạn sự tường.',
+    toneColor: 'from-sky-500/20 to-transparent',
+  },
+  'duoc-su': {
+    id: 'duoc-su',
+    title: 'Điện Phật Dược Sư',
+    subtitle: 'Dược Sư Lưu Ly Quang Vương Phật • Tiêu Trừ Tật Bệnh',
+    buddhaName: 'Nam Mô Dược Sư Lưu Ly Quang Vương Phật',
+    mantra: 'Ánh sáng lưu ly diệt trừ thân bệnh, tâm bệnh, thân tâm thường lạc.',
+    toneColor: 'from-emerald-500/20 to-transparent',
+  },
+  'dia-tang': {
+    id: 'dia-tang',
+    title: 'Điện Địa Tạng Vương',
+    subtitle: 'Đại Nguyện Địa Tạng Vương Bồ Tát • Cầu Siêu Tiên Tổ',
+    buddhaName: 'Nam Mô Đại Nguyện Địa Tạng Vương Bồ Tát',
+    mantra: 'Trượng thiếc chấn khai địa ngục môn, cửu huyền thất tổ siêu sanh tịnh độ.',
+    toneColor: 'from-rose-500/20 to-transparent',
+  },
+};
+
+// Daily Dharma Zen Verses
+const DAILY_DHARMA_VERSES = [
+  {
+    verse: 'Hận thù diệt hận thù, đời này không thể có. Từ bi diệt hận thù, là định luật ngàn thu.',
+    source: 'Kinh Pháp Cú — Câu 5',
+    reflection: 'Lấy lòng bao dung để hóa giải mọi khúc mắc, tâm tự tại ắt đời an vui.',
+  },
+  {
+    verse: 'Tâm dẫn đầu muôn pháp, tâm làm chủ tạo tác. Tâm thanh tịnh an lành, hạnh phúc bước theo sau.',
+    source: 'Kinh Pháp Cú — Câu 2',
+    reflection: 'Giữ tâm ý trong sáng như bóng theo hình, an lạc tự nhiên hiển hiện.',
+  },
+  {
+    verse: 'Chiến thắng vạn quân giặc nơi chiến trường, không bằng tự chiến thắng chính mình.',
+    source: 'Kinh Pháp Cú — Câu 103',
+    reflection: 'Chiến thắng lòng tham, sân, si của tự thân là chiến công oanh liệt nhất.',
+  },
+  {
+    verse: 'Không làm các điều ác, nguyện làm các việc lành, giữ tâm ý thanh tịnh, đó là lời Phật dạy.',
+    source: 'Kinh Pháp Cú — Câu 183',
+    reflection: 'Cốt tủy của đạo Phật là lối sống thiện lương và tâm hồn thuần khiết.',
+  },
+];
+
+// Pre-loaded Sutras
 interface SutraText {
   id: string;
   title: string;
@@ -105,6 +180,23 @@ const SUTRA_COLLECTIONS: SutraText[] = [
       'Tam thế chư Phật, y Bát Nhã Ba La Mật Đa cố, đắc A Nậu Đa La Tam Miệu Tam Bồ Đề.',
       'Cố tri Bát Nhã Ba La Mật Đa, thị đại thần chú, thị đại minh chú, thị vô thượng chú, thị vô đẳng đẳng chú, năng trừ nhất thiết khổ, chân thật bất hư.',
       'Cố thuyết Bát Nhã Ba La Mật Đa chú. Tức thuyết chú viết:\nYết đế, yết đế, Ba la yết đế, Ba la tăng yết đế, Bồ đề tát bà ha! (3 lần)',
+    ],
+  },
+  {
+    id: 'dai-bi',
+    title: 'Chú Đại Bi (Đại Bi Thần Chú)',
+    subtitle: 'Thần chú cứu khổ cứu nạn của Bồ Tát Quán Thế Âm',
+    verses: [
+      'Nam mô Hắc Ra Đát Na, Đá Ra Dạ Da. Nam mô A Rị Da, Bà Lô Yết Đế, Thước Bát Ra Da, Bồ Đề Tát Đỏa Bà Da.',
+      'Ma Ha Tát Đỏa Bà Da, Ma Ha Ca Lô Ni Ca Da. Án, Tát Bàn Ra Phạt Duệ, Số Đát Na Đát Tỏa.',
+      'Nam mô Tất Kiết Lật Đỏa Y Mông A Rị Da, Bà Lô Kiết Đế Thất Phật Ra Lăng Đà Bà.',
+      'Nam mô Na Ra Cẩn Trì, Hê Rị Ma Ha Bàn Đà Sa Mế, Tát Bà A Tha Đậu Thâu Bằng, A Thệ Dựng.',
+      'Tát Bà Tát Đa, Na Ma Bà Tát Đa, Na Ma Bà Già, Ma Phạt Đạt Đậu. Đát Điệt Tha: Án, A Bà Lô Hê, Lô Ca Đế, Ca Ra Đế, Di Hê Rị.',
+      'Ma Ha Bồ Đề Tát Đỏa, Tát Bà Tát Bà, Ma Ra Ma Ra, Ma Hê Ma Hê, Rị Đà Dựng. Cu Lô Cu Lô Kiết Mông, Độ Lô Độ Lô, Phạt Xà Da Đế.',
+      'Ma Ha Phạt Xà Da Đế, Đà Ra Đà Ra, Địa Rị Ni, Thất Phật Ra Da, Giá Ra Giá Ra, Mạ Mạ Phạt Ma Ra, Mục Đế Lệ.',
+      'Y Hê Y Hê, Thất Na Thất Na, A Ra Sâm Phật Ra Xá Lợi, Phạt Sa Phạt Sâm, Phật Ra Xá Da.',
+      'Hô Lô Hô Lô Ma Ra, Hô Lô Hô Lô Hê Rị, Sa Ra Sa Ra, Tất Rị Tất Rị, Tô Rô Tô Rô, Bồ Đề Dạ Bồ Đề Dạ, Bồ Đà Dạ Bồ Đà Dạ.',
+      'Di Đế Rị Dạ, Na Ra Cẩn Trì, Địa Rị Sắc Ni Na, Ba Dạ Ma Na, Ta Bà Ha.',
     ],
   },
   {
@@ -150,11 +242,19 @@ interface SavedPrayer {
   name: string;
   content: string;
   date: string;
+  altarId?: string;
 }
 
 export function TempleSanctuary() {
+  // Current active altar
+  const [activeAltar, setActiveAltar] = useState<AltarType>('thich-ca');
+  const [isAltarMenuOpen, setIsAltarMenuOpen] = useState(false);
+
   // Sanctuary interactive states
   const [isIncenseLit, setIsIncenseLit] = useState(false);
+  const [isOfferingLotus, setIsOfferingLotus] = useState(false);
+  const [isOfferingWater, setIsOfferingWater] = useState(false);
+  const [isLanternFloating, setIsLanternFloating] = useState(false);
   const [isBowing, setIsBowing] = useState(false);
   const [isBellRippling, setIsBellRippling] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -164,6 +264,8 @@ export function TempleSanctuary() {
   const [isScriptureModalOpen, setIsScriptureModalOpen] = useState(false);
   const [isPrayerModalOpen, setIsPrayerModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [isOfferingsDrawerOpen, setIsOfferingsDrawerOpen] = useState(false);
+  const [isDharmaQuoteModalOpen, setIsDharmaQuoteModalOpen] = useState(false);
 
   // Scripture Reader states
   const [selectedSutraIndex, setSelectedSutraIndex] = useState(0);
@@ -177,6 +279,9 @@ export function TempleSanctuary() {
   const [floatingPrayer, setFloatingPrayer] = useState<string | null>(null);
   const [savedPrayers, setSavedPrayers] = useState<SavedPrayer[]>([]);
 
+  // Daily Quote state
+  const [todayQuoteIndex] = useState(() => Math.floor(Math.random() * DAILY_DHARMA_VERSES.length));
+
   const toastTimerRef = useRef<NodeJS.Timeout | null>(null);
   const autoScrollTimerRef = useRef<NodeJS.Timeout | null>(null);
   const scriptureScrollRef = useRef<HTMLDivElement | null>(null);
@@ -188,7 +293,7 @@ export function TempleSanctuary() {
       if (stored) {
         setSavedPrayers(JSON.parse(stored));
       }
-    } catch {}
+    } catch { }
   }, []);
 
   // Display toast with automatic fade-out
@@ -200,17 +305,20 @@ export function TempleSanctuary() {
     }, durationMs);
   };
 
+  const currentAltar = ALTAR_SPACES[activeAltar];
+
   // 1. ACTION: THẮP NHANG
   const handleLightIncense = () => {
     setIsIncenseLit(true);
     setIsBowing(true);
+    setIsOfferingsDrawerOpen(false);
 
     if (soundEnabled) {
       playBellSound(0.4);
     }
 
     showToast(
-      'Nam Mô Bổn Sư Thích Ca Mâu Ni Phật. Tâm hương vừa thắp, nguyện cầu mười phương an lành, tật bệnh tiêu trừ.',
+      `${currentAltar.buddhaName}. ${currentAltar.mantra}`,
       5500
     );
 
@@ -219,7 +327,67 @@ export function TempleSanctuary() {
     }, 3200);
   };
 
-  // 2. ACTION: THỈNH CHUÔNG (ĐẠI HỒNG CHUNG)
+  // 2. ACTION: DÂNG HOA SEN
+  const handleOfferLotus = () => {
+    setIsOfferingLotus(true);
+    setIsBowing(true);
+    setIsOfferingsDrawerOpen(false);
+
+    if (soundEnabled) {
+      playBellSound(0.45);
+    }
+
+    showToast(
+      'Dâng đóa sen tinh khiết cúng dường Tam Bảo. Nguyện tâm thanh tịnh, nở hoa tuệ giác, lìa xa trần cấu.',
+      5000
+    );
+
+    setTimeout(() => {
+      setIsBowing(false);
+    }, 3000);
+  };
+
+  // 3. ACTION: DÂNG NƯỚC CAM LỘ
+  const handleOfferWater = () => {
+    setIsOfferingWater(true);
+    setIsBowing(true);
+    setIsOfferingsDrawerOpen(false);
+
+    if (soundEnabled) {
+      playBellSound(0.4);
+    }
+
+    showToast(
+      'Dâng chén nước trong lành cúng dường Phật - Pháp - Tăng. Nguyện tâm trong sáng phẳng lặng như gương.',
+      5000
+    );
+
+    setTimeout(() => {
+      setIsBowing(false);
+    }, 3000);
+  };
+
+  // 4. ACTION: THẢ HOA ĐĂNG CẦU NGUYỆN
+  const handleLanternRelease = () => {
+    setIsLanternFloating(true);
+    setIsBowing(true);
+    setIsOfferingsDrawerOpen(false);
+
+    if (soundEnabled) {
+      playGrandTempleBellSound(0.5);
+    }
+
+    showToast(
+      'Đèn hoa đăng nguyện ước đã xuôi dòng ánh sáng. Nguyện cầu quốc thái dân an, âm siêu dương thới.',
+      5500
+    );
+
+    setTimeout(() => {
+      setIsBowing(false);
+    }, 3200);
+  };
+
+  // 5. ACTION: THỈNH CHUÔNG (ĐẠI HỒNG CHUNG)
   const handleRingBell = () => {
     setIsBellRippling(true);
     if (soundEnabled) {
@@ -236,7 +404,7 @@ export function TempleSanctuary() {
     }, 2800);
   };
 
-  // 3. ACTION: MINH / GÕ MÕ THANH TỊNH
+  // 6. ACTION: MINH / GÕ MÕ THANH TỊNH
   const handleMinhChime = () => {
     if (soundEnabled) {
       playWoodenFishSound(0.5);
@@ -247,7 +415,7 @@ export function TempleSanctuary() {
     );
   };
 
-  // 4. ACTION: ĐỌC KINH
+  // 7. ACTION: ĐỌC KINH
   const handleOpenScripture = () => {
     setIsScriptureModalOpen(true);
     if (soundEnabled) {
@@ -255,7 +423,7 @@ export function TempleSanctuary() {
     }
   };
 
-  // Auto-chanting verse ticker
+  // Auto-chanting verse ticker (Chanting Karaoke)
   useEffect(() => {
     if (isAutoScrolling && isScriptureModalOpen) {
       autoScrollTimerRef.current = setInterval(() => {
@@ -263,7 +431,7 @@ export function TempleSanctuary() {
           const currentVerses = SUTRA_COLLECTIONS[selectedSutraIndex].verses;
           const next = (prev + 1) % currentVerses.length;
           if (soundEnabled) {
-            playWoodenFishSound(0.3);
+            playWoodenFishSound(0.35);
           }
           return next;
         });
@@ -276,7 +444,7 @@ export function TempleSanctuary() {
     };
   }, [isAutoScrolling, isScriptureModalOpen, selectedSutraIndex, soundEnabled]);
 
-  // 5. ACTION: DÂNG LỜI CẦU NGUYỆN
+  // 8. ACTION: DÂNG LỜI CẦU NGUYỆN
   const handleSubmitPrayer = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     const content = prayerContent.trim() || 'Cầu gia đạo bình an, tai qua nạn khỏi, vạn sự cát tường';
@@ -286,6 +454,7 @@ export function TempleSanctuary() {
       id: Date.now().toString(),
       name,
       content,
+      altarId: activeAltar,
       date: new Date().toLocaleDateString('vi-VN', {
         year: 'numeric',
         month: '2-digit',
@@ -299,7 +468,7 @@ export function TempleSanctuary() {
     setSavedPrayers(updated);
     try {
       localStorage.setItem('phatphap_sanctuary_prayers', JSON.stringify(updated));
-    } catch {}
+    } catch { }
 
     setFloatingPrayer(content);
     setIsPrayerModalOpen(false);
@@ -310,7 +479,7 @@ export function TempleSanctuary() {
     }
 
     showToast(
-      `Đã dâng lời cầu nguyện của "${name}" lên mười phương Tam Bảo. Nguyện cầu vạn sự hanh thông, cát tường như ý.`,
+      `Đã dâng lời cầu nguyện của "${name}" lên ${currentAltar.buddhaName}. Nguyện vạn sự hanh thông, cát tường như ý.`,
       6000
     );
 
@@ -321,6 +490,7 @@ export function TempleSanctuary() {
   };
 
   const currentSutra = SUTRA_COLLECTIONS[selectedSutraIndex];
+  const todayDharma = DAILY_DHARMA_VERSES[todayQuoteIndex];
 
   return (
     <div className="relative w-full h-[100dvh] bg-[#0c0502] flex items-center justify-center overflow-hidden select-none">
@@ -333,15 +503,24 @@ export function TempleSanctuary() {
           {/* Back to Home Button (Left Circle Button) */}
           <Link
             href="/"
-            className="w-10 h-10 rounded-full border border-[#D4AF37]/40 bg-black/40 hover:bg-black/60 flex items-center justify-center text-[#F9D783] active:scale-95 transition-all shadow-sm"
+            className="w-10 h-10 rounded-full border border-[#D4AF37]/40 bg-black/40 hover:bg-black/60 flex items-center justify-center text-[#F9D783] active:scale-95 transition-all shadow-sm shrink-0"
             title="Trở về Trang Chủ"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
 
           {/* Sanctuary Center Title with Lotus Glyphs (Exact 2-line layout) */}
-          <div className="flex flex-col items-center justify-center text-center px-1">
-            <HeaderLotusGlyph className="w-4 h-3 text-[#E5B548] drop-shadow-sm mb-0.5" />
+          <div
+            onClick={() => setIsAltarMenuOpen(!isAltarMenuOpen)}
+            className="flex flex-col items-center justify-center text-center px-1 cursor-pointer group active:scale-98 transition-transform"
+            title="Nhấn để Chọn Điện Thờ Tam Bảo"
+          >
+            <div className="flex items-center gap-1">
+              <HeaderLotusGlyph className="w-4 h-3 text-[#E5B548] drop-shadow-sm mb-0.5" />
+              <span className="text-[10px] text-[#FFE082] uppercase tracking-widest font-semibold opacity-90">
+                {currentAltar.title}
+              </span>
+            </div>
             <h1 className="font-heading text-[13px] sm:text-[14px] font-bold tracking-[0.14em] uppercase text-[#F9D783] leading-[1.25] drop-shadow-md">
               ĐI CHÙA &amp; CẦU<br />
               NGUYỆN ONLINE
@@ -349,9 +528,18 @@ export function TempleSanctuary() {
             <HeaderLotusGlyph className="w-3.5 h-2.5 text-[#E5B548] drop-shadow-sm mt-0.5" />
           </div>
 
-          {/* Right Action Icons (3 circular buttons: Calendar, History, Sound) */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* 1. Calendar (Xem Ngày Tốt) */}
+          {/* Right Action Icons (Calendar, Daily Quote, History, Sound) */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* 1. Lời Phật Dạy Hằng Ngày */}
+            <button
+              onClick={() => setIsDharmaQuoteModalOpen(true)}
+              className="w-9 h-9 rounded-full border border-[#D4AF37]/40 bg-black/40 hover:bg-black/60 flex items-center justify-center text-[#F9D783] active:scale-95 transition-all shadow-sm"
+              title="Trích Lộc Pháp Cú & Thư Pháp Thiền"
+            >
+              <Scroll className="w-4 h-4" />
+            </button>
+
+            {/* 2. Calendar (Xem Ngày Tốt) */}
             <Link
               href="/tu-vi"
               className="w-9 h-9 rounded-full border border-[#D4AF37]/40 bg-black/40 hover:bg-black/60 flex items-center justify-center text-[#F9D783] active:scale-95 transition-all shadow-sm"
@@ -360,7 +548,7 @@ export function TempleSanctuary() {
               <Calendar className="w-4 h-4" />
             </Link>
 
-            {/* 2. Sổ Lời Nguyện Cầu (History) */}
+            {/* 3. Sổ Lời Nguyện Cầu (History) */}
             <button
               onClick={() => setIsHistoryModalOpen(true)}
               className="relative w-9 h-9 rounded-full border border-[#D4AF37]/40 bg-black/40 hover:bg-black/60 flex items-center justify-center text-[#F9D783] active:scale-95 transition-all shadow-sm"
@@ -374,7 +562,7 @@ export function TempleSanctuary() {
               )}
             </button>
 
-            {/* 3. Audio Mute/Unmute */}
+            {/* 4. Audio Mute/Unmute */}
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
               className={cn(
@@ -389,6 +577,51 @@ export function TempleSanctuary() {
             </button>
           </div>
         </header>
+
+        {/* ========================================================================= */}
+        {/* 1.1. ALTAR SPACES SELECTOR DROPDOWN (ĐỔI ĐIỆN THỜ)                       */}
+        {/* ========================================================================= */}
+        {isAltarMenuOpen && (
+          <div className="absolute top-[74px] inset-x-3 z-40 bg-[#24130A]/95 border-2 border-[#D4AF37] rounded-2xl p-2.5 shadow-2xl backdrop-blur-md animate-fade-in-down">
+            <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#D4AF37]/30">
+              <span className="text-xs font-bold text-[#FFE082] uppercase tracking-wider">
+                Chọn Điện Thờ Tam Bảo Chiêm Bái:
+              </span>
+              <button
+                onClick={() => setIsAltarMenuOpen(false)}
+                className="text-stone-400 hover:text-white p-1"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {(Object.keys(ALTAR_SPACES) as AltarType[]).map((key) => {
+                const item = ALTAR_SPACES[key];
+                const isSelected = activeAltar === key;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      setActiveAltar(key);
+                      setIsAltarMenuOpen(false);
+                      if (soundEnabled) playBellSound(0.35);
+                      showToast(`Đã chuyển tới ${item.title}. ${item.subtitle}`, 4000);
+                    }}
+                    className={cn(
+                      'p-2 rounded-xl text-left border transition-all active:scale-95 flex flex-col gap-0.5',
+                      isSelected
+                        ? 'bg-[#854D0E] text-white border-[#FFE082] shadow-sm'
+                        : 'bg-black/30 hover:bg-black/50 text-[#F9D783] border-[#D4AF37]/40'
+                    )}
+                  >
+                    <span className="font-heading font-bold text-xs">{item.title}</span>
+                    <span className="text-[10px] opacity-80 truncate">{item.subtitle.split('•')[1] || item.subtitle}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* ========================================================================= */}
         {/* 2. TOAST BLESSING NOTIFICATION                                            */}
@@ -414,12 +647,64 @@ export function TempleSanctuary() {
             className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
           />
 
+          {/* Altar Sacred Aura Tint (changes subtly per deity) */}
+          <div className={cn('absolute inset-0 bg-gradient-to-t pointer-events-none transition-colors duration-700', currentAltar.toneColor)} />
+
           {/* Animated Wispy Incense Smoke Particles over Incense Burner */}
           {isIncenseLit && (
             <div className="absolute top-[28%] left-[49%] -translate-x-1/2 z-20 pointer-events-none flex justify-center items-end h-20 w-16">
               <div className="w-1.5 h-14 bg-gradient-to-t from-red-500/90 via-amber-200/70 to-transparent rounded-full blur-[1px] animate-incense-smoke-1 mr-2" />
               <div className="w-2 h-18 bg-gradient-to-t from-orange-500/90 via-amber-100/80 to-transparent rounded-full blur-[1px] animate-incense-smoke-2" />
               <div className="w-1.5 h-14 bg-gradient-to-t from-red-500/90 via-amber-200/70 to-transparent rounded-full blur-[1px] animate-incense-smoke-3 ml-2" />
+            </div>
+          )}
+
+          {/* Dâng Hoa Sen Tươi (Blooming Lotus Offering Aura) */}
+          {isOfferingLotus && (
+            <div className="absolute top-[35%] left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center animate-fade-in">
+              <div className="w-16 h-16 drop-shadow-[0_0_25px_#F472B6] animate-pulse">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <circle cx="50" cy="50" r="28" fill="#F472B6" opacity="0.35" />
+                  <path d="M50 15 C40 32 30 55 50 75 C70 55 60 32 50 15 Z" fill="#F43F5E" />
+                  <path d="M28 35 C25 50 35 68 50 75 C40 65 30 50 28 35 Z" fill="#FB7185" />
+                  <path d="M72 35 C75 50 65 68 50 75 C60 65 70 50 72 35 Z" fill="#FB7185" />
+                  <circle cx="50" cy="46" r="6" fill="#FDE047" />
+                </svg>
+              </div>
+              <span className="text-[11px] font-bold text-pink-200 bg-black/60 px-2 py-0.5 rounded-full mt-1">
+                ✦ Hoa Sen Cúng Dường ✦
+              </span>
+            </div>
+          )}
+
+          {/* Dâng Nước Cam Lộ (Pure Water Offering) */}
+          {isOfferingWater && (
+            <div className="absolute top-[35%] left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center animate-fade-in">
+              <div className="w-14 h-14 drop-shadow-[0_0_25px_#38BDF8] animate-pulse">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <path d="M50 20 C45 35 32 55 32 68 C32 80 40 88 50 88 C60 88 68 80 68 68 C68 55 55 35 50 20 Z" fill="#38BDF8" opacity="0.9" />
+                  <circle cx="44" cy="62" r="5" fill="#FFF" opacity="0.8" />
+                </svg>
+              </div>
+              <span className="text-[11px] font-bold text-sky-200 bg-black/60 px-2 py-0.5 rounded-full mt-1">
+                ✦ Nước Cam Lộ Thanh Tịnh ✦
+              </span>
+            </div>
+          )}
+
+          {/* Thả Hoa Đăng Cầu Nguyện Ban Đêm */}
+          {isLanternFloating && (
+            <div className="absolute top-[48%] left-1/2 -translate-x-1/2 z-25 pointer-events-none flex flex-col items-center animate-prayer-lotus-float">
+              <div className="w-14 h-14 drop-shadow-[0_0_30px_#F59E0B]">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <circle cx="50" cy="50" r="28" fill="#F59E0B" opacity="0.4" />
+                  <path d="M50 22 C42 36 36 55 50 68 C64 55 58 36 50 22 Z" fill="#FCD34D" />
+                  <circle cx="50" cy="42" r="4.5" fill="#FFF" />
+                </svg>
+              </div>
+              <span className="text-[11px] font-bold text-amber-200 bg-black/60 px-2 py-0.5 rounded-full mt-1">
+                🏮 Đèn Hoa Đăng Nguyện Ước
+              </span>
             </div>
           )}
 
@@ -453,22 +738,22 @@ export function TempleSanctuary() {
           {/* CALIBRATED INTERACTIVE HOTSPOTS OVER ARTWORK ELEMENTS                    */}
           {/* ----------------------------------------------------------------------- */}
 
-          {/* Hotspot 1: Incense Burner (Lư Hương) */}
+          {/* Hotspot 1: Incense Burner (Lư Hương) -> Opens Offerings Drawer */}
           <button
-            onClick={handleLightIncense}
+            onClick={() => setIsOfferingsDrawerOpen(true)}
             className="absolute top-[31%] left-[40%] w-[20%] h-[11%] rounded-full cursor-pointer z-20 focus:outline-none group active:scale-95"
-            title="Chạm vào Lư Hương để Thắp Nhang"
+            title="Chạm vào Lư Hương để Dâng Hương & Hoa Quả"
           >
-            <span className="sr-only">Thắp Nhang</span>
+            <span className="sr-only">Cúng Dường Tam Bảo</span>
           </button>
 
           {/* Hotspot 2: Center Glowing Menu Card */}
           <div className="absolute top-[40.5%] left-[28%] w-[44%] h-[16.5%] z-20 flex flex-col justify-between">
             {/* Row 1: TAM BẢO */}
             <button
-              onClick={handleLightIncense}
+              onClick={() => setIsOfferingsDrawerOpen(true)}
               className="w-full h-[32%] rounded-lg cursor-pointer hover:bg-amber-500/10 active:bg-amber-500/25 transition-colors focus:outline-none"
-              title="Đảnh lễ Tam Bảo & Thắp Nhang"
+              title="Đảnh lễ Tam Bảo & Cúng Dường"
             >
               <span className="sr-only">Tam Bảo</span>
             </button>
@@ -506,7 +791,7 @@ export function TempleSanctuary() {
             onClick={() => {
               setIsBowing(true);
               if (soundEnabled) playBellSound(0.35);
-              showToast('Nam Mô A Di Đà Phật. Nhất tâm kính lễ mười phương Tam Bảo.', 4000);
+              showToast(`${currentAltar.buddhaName}. Nhất tâm đảnh lễ mười phương Tam Bảo.`, 4000);
               setTimeout(() => setIsBowing(false), 2400);
             }}
             className={cn(
@@ -542,9 +827,9 @@ export function TempleSanctuary() {
         {/* ========================================================================= */}
         <footer className="relative z-30 h-[92px] px-3 py-2.5 bg-gradient-to-t from-[#140804] via-[#1d0e07] to-[#24130a] border-t border-[#D4AF37]/35 flex items-center shrink-0 shadow-[0_-8px_25px_rgba(0,0,0,0.85)]">
           <div className="grid grid-cols-4 gap-2 w-full h-full">
-            {/* Button 1: THẮP NHANG */}
+            {/* Button 1: THẮP NHANG & CÚNG DƯỜNG */}
             <button
-              onClick={handleLightIncense}
+              onClick={() => setIsOfferingsDrawerOpen(true)}
               className="h-full rounded-2xl border border-[#D4AF37]/80 bg-gradient-to-b from-[#3E210F]/90 to-[#221008]/95 hover:from-[#4E2A13] hover:to-[#2B140A] flex flex-col items-center justify-center gap-1 shadow-[0_0_12px_rgba(212,175,55,0.18)] active:scale-95 transition-all group cursor-pointer"
             >
               <LotusNavIcon className="w-6 h-6 text-[#F9D783] group-hover:scale-110 transition-transform drop-shadow-sm" />
@@ -588,6 +873,137 @@ export function TempleSanctuary() {
           </div>
         </footer>
       </div>
+
+      {/* ========================================================================= */}
+      {/* 4.1. OFFERINGS DRAWER (NGHI THỨC CÚNG DƯỜNG TỊNH TÂM)                     */}
+      {/* ========================================================================= */}
+      {isOfferingsDrawerOpen && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="w-full max-w-md bg-[#24130A] border-t-2 sm:border-2 border-[#D4AF37] rounded-t-3xl sm:rounded-3xl p-5 text-[#FDF8EC] shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-[#D4AF37]/30 pb-3">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-[#FFE082]" />
+                <h3 className="font-heading font-bold text-base text-[#FFE082]">
+                  Nghi Thức Cúng Dường Tam Bảo
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsOfferingsDrawerOpen(false)}
+                className="p-1 rounded-lg text-stone-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                onClick={handleLightIncense}
+                className="p-3 rounded-2xl border border-[#D4AF37]/50 bg-black/40 hover:bg-black/60 flex flex-col items-center gap-1.5 text-center active:scale-95 transition-all"
+              >
+                <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-lg">
+                  🔥
+                </div>
+                <span className="font-heading text-xs font-bold text-[#FFE082]">Thắp Nhang Trầm</span>
+                <span className="text-[10px] text-stone-400">3 nén tâm hương</span>
+              </button>
+
+              <button
+                onClick={handleOfferLotus}
+                className="p-3 rounded-2xl border border-[#D4AF37]/50 bg-black/40 hover:bg-black/60 flex flex-col items-center gap-1.5 text-center active:scale-95 transition-all"
+              >
+                <div className="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-300 text-lg">
+                  🪷
+                </div>
+                <span className="font-heading text-xs font-bold text-[#FFE082]">Dâng Hoa Sen</span>
+                <span className="text-[10px] text-stone-400">Hoa thơm thanh tịnh</span>
+              </button>
+
+              <button
+                onClick={handleOfferWater}
+                className="p-3 rounded-2xl border border-[#D4AF37]/50 bg-black/40 hover:bg-black/60 flex flex-col items-center gap-1.5 text-center active:scale-95 transition-all"
+              >
+                <div className="w-10 h-10 rounded-full bg-sky-500/20 flex items-center justify-center text-sky-300 text-lg">
+                  💧
+                </div>
+                <span className="font-heading text-xs font-bold text-[#FFE082]">Dâng Nước Cam Lộ</span>
+                <span className="text-[10px] text-stone-400">Tâm trong như nước</span>
+              </button>
+
+              <button
+                onClick={handleLanternRelease}
+                className="p-3 rounded-2xl border border-[#D4AF37]/50 bg-black/40 hover:bg-black/60 flex flex-col items-center gap-1.5 text-center active:scale-95 transition-all"
+              >
+                <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-300 text-lg">
+                  🏮
+                </div>
+                <span className="font-heading text-xs font-bold text-[#FFE082]">Thả Hoa Đăng</span>
+                <span className="text-[10px] text-stone-400">Ánh sáng nguyện ước</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 4.2. TRÍCH LỘC PHÁP CÚ & THƯ PHÁP THIỀN NGỮ                             */}
+      {/* ========================================================================= */}
+      {isDharmaQuoteModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-md bg-[#FDF8EC] text-[#2A1810] rounded-3xl border-4 border-[#D4AF37] shadow-2xl p-6 overflow-hidden space-y-4">
+            <div className="flex items-center justify-between border-b border-[#D4AF37]/30 pb-3">
+              <div className="flex items-center gap-2 text-[#854D0E]">
+                <Scroll className="w-5 h-5 text-[#B45309]" />
+                <h3 className="font-heading font-bold text-base sm:text-lg">
+                  Lời Phật Dạy Hôm Nay
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsDharmaQuoteModalOpen(false)}
+                className="p-1 rounded-lg text-stone-500 hover:text-black"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Calligraphy Card Canvas */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#FFFDF5] to-[#F5EEDB] border-2 border-[#D4AF37]/50 shadow-inner text-center space-y-3">
+              <HeaderLotusGlyph className="w-6 h-4 mx-auto text-[#B45309] opacity-70" />
+              <p className="font-heading text-base sm:text-lg font-bold text-[#854D0E] leading-relaxed italic">
+                &ldquo;{todayDharma.verse}&rdquo;
+              </p>
+              <div className="w-12 h-0.5 bg-[#D4AF37] mx-auto opacity-60" />
+              <p className="text-xs font-bold text-[#A16207] tracking-wider uppercase">
+                {todayDharma.source}
+              </p>
+              <p className="text-xs text-stone-600 italic">
+                {todayDharma.reflection}
+              </p>
+            </div>
+
+            <div className="flex items-center justify-between pt-2">
+              <button
+                onClick={() => {
+                  if (navigator.clipboard) {
+                    navigator.clipboard.writeText(`${todayDharma.verse} — ${todayDharma.source}`);
+                    showToast('Đã sao chép lời Phật dạy để gửi tặng người thân an lành.', 4000);
+                  }
+                }}
+                className="px-4 py-2 rounded-xl border border-[#D4AF37] bg-white text-xs font-bold text-[#854D0E] flex items-center gap-1.5 active:scale-95 shadow-sm"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>Sao Chép Lời Chúc</span>
+              </button>
+
+              <button
+                onClick={() => setIsDharmaQuoteModalOpen(false)}
+                className="px-5 py-2 rounded-xl bg-[#854D0E] text-white text-xs font-bold shadow-md active:scale-95"
+              >
+                Hoan Hỷ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* 5. SCRIPTURE READING MODAL (ĐỌC KINH OVERLAY - SENIOR ACCESSIBILITY)      */}
@@ -654,7 +1070,7 @@ export function TempleSanctuary() {
                       ? 'bg-emerald-700 text-white'
                       : 'bg-white border border-[#D4AF37] text-[#5C3005]'
                   )}
-                  title="Tự động đọc tụng từng câu"
+                  title="Tự động đọc tụng từng câu (Karaoke)"
                 >
                   {isAutoScrolling ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                   <span className="hidden sm:inline">Tụng Tự Động</span>
@@ -680,7 +1096,7 @@ export function TempleSanctuary() {
               </p>
             </div>
 
-            {/* Scripture Main Reading Body */}
+            {/* Scripture Main Reading Body with Chanting Karaoke Highlights */}
             <div
               ref={scriptureScrollRef}
               className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 leading-relaxed custom-dropdown-scroll select-text"
@@ -728,9 +1144,14 @@ export function TempleSanctuary() {
             <div className="flex items-center justify-between border-b-2 border-[#D4AF37]/40 pb-3 mb-4">
               <div className="flex items-center gap-2 text-[#854D0E]">
                 <HeartNavIcon className="w-6 h-6 text-[#DC2626]" />
-                <h3 className="font-heading text-lg sm:text-2xl font-bold">
-                  Dâng Lời Cầu Nguyện
-                </h3>
+                <div>
+                  <h3 className="font-heading text-lg sm:text-2xl font-bold">
+                    Dâng Lời Cầu Nguyện
+                  </h3>
+                  <p className="text-xs text-stone-600">
+                    Chiêm bái: {currentAltar.buddhaName}
+                  </p>
+                </div>
               </div>
               <button
                 onClick={() => setIsPrayerModalOpen(false)}

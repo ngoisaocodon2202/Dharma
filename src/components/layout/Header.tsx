@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { SearchModal } from './SearchModal';
 import { useAuth } from '@/components/auth/AuthContext';
+import { useMindfulness } from '@/components/mindfulness/MindfulnessContext';
 import {
   Search,
   Menu,
@@ -96,6 +97,13 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
         icon: Scroll,
         description: 'Kho tàng kinh điển Đại thừa & sách Phật học quý',
       },
+      {
+        name: 'Từ điển Phật học',
+        href: '/tu-dien-phat-hoc',
+        icon: BookOpen,
+        description: 'Tra cứu thuật ngữ giáo lý căn bản Pāli, Phạn - Hán - Việt',
+        badge: 'Tra cứu',
+      },
     ],
   },
   {
@@ -125,16 +133,31 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
         badge: 'Bản Mệnh',
       },
       {
+        name: 'Sổ tay món chay dưỡng sinh',
+        href: '/mon-chay',
+        icon: Sparkles,
+        description: 'Gợi ý thực đơn món chay thanh tịnh, bổ dưỡng cho ngày trai giới',
+        badge: 'Món Chay',
+      },
+      {
+        name: 'Sớ Cầu An & Hồi Hướng',
+        href: '/hoi-huong',
+        icon: Scroll,
+        description: 'Soạn văn sớ cầu an gia quyến, cầu siêu tiên tổ chuẩn truyền thống',
+        badge: 'In Sớ',
+      },
+      {
         name: 'Phòng thiền trực tuyến',
         href: '/phong-thien',
         icon: Wind,
         description: 'Không gian thiền định chuông mõ trực tuyến thanh tịnh',
       },
       {
-        name: 'Thực hành hàng ngày',
+        name: 'Thực hành & Tràng hạt',
         href: '/thuc-hanh',
         icon: BuddhaBodhiIcon,
-        description: 'Thời khóa niệm Phật, sám hối & chánh niệm mỗi ngày',
+        description: 'Niệm Phật tràng hạt số, quán chiếu & Vườn Sen Tinh Tấn',
+        badge: 'Tràng Hạt',
       },
     ],
   },
@@ -185,14 +208,17 @@ const MOBILE_SECTIONS = [
     items: [
       { name: 'Cầu Nguyện Online', href: '/cau-nguyen', icon: Flame, description: 'Đi chùa online, thắp nhang & đọc kinh', badge: 'Mới' },
       { name: 'Lịch Vạn Niên & Nhắc Nhở', href: '/lich-phat-giao', icon: Calendar, description: '', badge: 'Ngày Giỗ' },
+      { name: 'Sổ Tay Món Chay', href: '/mon-chay', icon: Sparkles, description: 'Món chay dưỡng sinh', badge: 'Món Chay' },
+      { name: 'Sớ Cầu An & Hồi Hướng', href: '/hoi-huong', icon: Scroll, description: 'Soạn sớ trang nghiêm', badge: 'In Sớ' },
       { name: 'Xem Màu Chủ Đạo & Ngày Tốt', href: '/tu-vi', icon: Sparkles, videoSrc: '/tuvi.mp4', description: '', badge: 'Bản Mệnh' },
+      { name: 'Tràng Hạt & Tu Tập', href: '/thuc-hanh', icon: BuddhaBodhiIcon, description: 'Đếm chuỗi 108 hạt & Vườn Sen', badge: '108 hạt' },
       { name: 'Phòng thiền trực tuyến', href: '/phong-thien', icon: Wind, description: '' },
-      { name: 'Thực hành chánh niệm', href: '/thuc-hanh', icon: BuddhaBodhiIcon, description: '' },
     ],
   },
   {
     title: 'Học Phật & Tri Thức Mỗi Ngày',
     items: [
+      { name: 'Từ Điển Phật Học', href: '/tu-dien-phat-hoc', icon: BookOpen, description: 'Tra cứu thuật ngữ căn bản', badge: 'Mới' },
       { name: 'Bài giảng Sư Thầy & Chùa', href: '/bai-viet', icon: BookOpen, description: '', badge: 'Hàng ngày' },
       { name: 'Pháp thoại & Video', href: '/phap-thoai', icon: Music, description: '' },
       { name: 'Lộ trình học Phật', href: '/lo-trinh-hoc', icon: Compass, description: '' },
@@ -212,6 +238,7 @@ const MOBILE_SECTIONS = [
 export function Header() {
   const pathname = usePathname();
   const { user, openAuthModal, logout } = useAuth();
+  const { setIsMindfulnessModalOpen, bellIntervalMinutes, seniorMode } = useMindfulness();
 
   // Hide on group chat pages or dedicated 100vh sanctuary pages
   if (
@@ -475,6 +502,25 @@ export function Header() {
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 whitespace-nowrap">
             {/* Multi-language switcher */}
             <LanguageSwitcher />
+
+            {/* Mindfulness Bell & Senior Mode Shortcut */}
+            <button
+              onClick={() => setIsMindfulnessModalOpen(true)}
+              className={cn(
+                'relative flex items-center gap-1 p-2 sm:px-2.5 sm:py-1.5 rounded-lg text-xs border transition-all cursor-pointer whitespace-nowrap shrink-0',
+                bellIntervalMinutes > 0 || seniorMode
+                  ? 'bg-amber-100 dark:bg-amber-950/50 border-amber-400 text-amber-800 dark:text-amber-300 font-bold'
+                  : 'text-charcoal-600 dark:text-charcoal-300 bg-ivory-100/70 dark:bg-charcoal-800 border-ivory-200 dark:border-charcoal-700 hover:border-amber-400'
+              )}
+              title="Chuông Chánh Niệm & Chế Độ Chữ Lớn"
+              aria-label="Chuông Chánh Niệm & Chế Độ Chữ Lớn"
+            >
+              <Bell className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+              <span className="hidden xl:inline">Chánh Niệm</span>
+              {bellIntervalMinutes > 0 && (
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping absolute -top-0.5 -right-0.5" />
+              )}
+            </button>
 
             {/* Search Trigger */}
             <button

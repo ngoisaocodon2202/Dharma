@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import {
   Calendar as CalendarIcon,
   ChevronLeft,
@@ -9,6 +10,8 @@ import {
   Bell,
   Trash2,
   Clock,
+  UtensilsCrossed,
+  ScrollText,
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { getLunarDate, LunarDateInfo } from '@/lib/lunar-calendar';
@@ -33,6 +36,15 @@ const REMINDER_STORAGE_KEY = 'phatphap_personal_reminders_v1';
 
 const WEEKDAYS = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
 
+export type TraiKyMode = 'all' | 'nhi_trai' | 'tu_trai' | 'luc_trai' | 'thap_trai';
+
+const TRAI_DAYS: Record<Exclude<TraiKyMode, 'all'>, number[]> = {
+  nhi_trai: [1, 15],
+  tu_trai: [1, 14, 15, 30, 29],
+  luc_trai: [8, 14, 15, 23, 28, 29, 30],
+  thap_trai: [1, 8, 14, 15, 18, 23, 24, 28, 29, 30],
+};
+
 export default function BuddhistCalendarPage() {
   const { user } = useAuth();
   const today = useMemo(() => new Date(), []);
@@ -40,6 +52,7 @@ export default function BuddhistCalendarPage() {
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth() + 1); // 1..12
   const [selectedDay, setSelectedDay] = useState(today.getDate());
+  const [traiFilter, setTraiFilter] = useState<TraiKyMode>('all');
 
   const [reminders, setReminders] = useState<PersonalReminder[]>([]);
   const [isAddingNote, setIsAddingNote] = useState(false);
@@ -287,6 +300,34 @@ export default function BuddhistCalendarPage() {
             </button>
           </div>
 
+          {/* Trai Kỳ Fasting Selector Bar */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none">
+            <span className="text-[11px] font-bold text-amber-900 dark:text-amber-300 whitespace-nowrap flex items-center gap-1 shrink-0">
+              <UtensilsCrossed className="w-3.5 h-3.5 text-amber-600" /> Trai Kỳ:
+            </span>
+            {[
+              { id: 'all', label: 'Tất cả' },
+              { id: 'nhi_trai', label: 'Nhị Trai (1, 15 ÂL)' },
+              { id: 'tu_trai', label: 'Tứ Trai (1, 14, 15, 30)' },
+              { id: 'luc_trai', label: 'Lục Trai (6 ngày)' },
+              { id: 'thap_trai', label: 'Thập Trai (10 ngày)' },
+            ].map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setTraiFilter(t.id as TraiKyMode)}
+                className={cn(
+                  'px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap transition-colors cursor-pointer shrink-0 border',
+                  traiFilter === t.id
+                    ? 'bg-amber-600 text-white border-amber-600 shadow-2xs font-bold'
+                    : 'bg-white dark:bg-charcoal-800 text-charcoal-700 dark:text-charcoal-300 border-[#e5d8c1] dark:border-charcoal-700 hover:bg-amber-50'
+                )}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
           {/* Calendar Board Container */}
           <div className="bg-[#f8f2e6] dark:bg-charcoal-900/80 p-1.5 sm:p-2.5 rounded-2xl border border-[#e6d8c0] dark:border-charcoal-700 space-y-1.5">
             {/* Weekday Headers */}
@@ -326,6 +367,7 @@ export default function BuddhistCalendarPage() {
                 const hasReminders = (cell.dayReminders?.length || 0) > 0;
                 const hasGio = cell.dayReminders?.some((r) => r.type === 'gio');
                 const isFirstLunar = cell.lunar.lunarDay === 1 || cell.day === 1;
+                const isTraiMatch = traiFilter !== 'all' && TRAI_DAYS[traiFilter]?.includes(cell.lunar.lunarDay);
 
                 return (
                   <button
@@ -340,6 +382,8 @@ export default function BuddhistCalendarPage() {
                         ? 'bg-amber-100/90 dark:bg-amber-950/60 border-amber-500 text-charcoal-900 dark:text-charcoal-100 ring-1 ring-amber-400'
                         : hasReminders
                         ? 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-700 text-charcoal-900 dark:text-charcoal-100'
+                        : isTraiMatch
+                        ? 'bg-[#fff5dc] dark:bg-amber-950/40 border-amber-500 text-amber-950 dark:text-amber-100 ring-1 ring-amber-400 shadow-2xs'
                         : cell.lunar.isMainTraiDay
                         ? 'bg-[#fff9eb] dark:bg-charcoal-800 border-amber-300/90 dark:border-amber-700/60 text-charcoal-900 dark:text-charcoal-100'
                         : 'bg-white dark:bg-charcoal-800 border-[#e9decb] dark:border-charcoal-700 hover:border-amber-400 text-charcoal-800 dark:text-charcoal-200 shadow-2xs'
@@ -368,6 +412,13 @@ export default function BuddhistCalendarPage() {
                             title="Có ngày giỗ / lời nhắc"
                           >
                             {hasGio ? '🕯️' : '⭐'}
+                          </span>
+                        ) : isTraiMatch ? (
+                          <span
+                            className="text-[9px] leading-none"
+                            title="Ngày ăn chay theo Trai Kỳ đang chọn"
+                          >
+                            🪷
                           </span>
                         ) : cell.lunar.isMainTraiDay ? (
                           <span
@@ -477,7 +528,7 @@ export default function BuddhistCalendarPage() {
 
             {/* Buddhist Holiday or Trai Day Banner */}
             {(selectedLunarInfo.buddhistEvent || selectedLunarInfo.isTraiDay) && (
-              <div className="p-3 rounded-2xl bg-amber-500/15 border border-amber-400/30 space-y-1">
+              <div className="p-3 rounded-2xl bg-amber-500/15 border border-amber-400/30 space-y-1.5">
                 {selectedLunarInfo.buddhistEvent && (
                   <div className="flex items-center gap-1.5 text-xs font-bold text-amber-300">
                     <BuddhaBodhiIcon className="w-4 h-4 shrink-0" />
@@ -485,8 +536,16 @@ export default function BuddhistCalendarPage() {
                   </div>
                 )}
                 {selectedLunarInfo.isTraiDay && (
-                  <div className="text-[11px] text-amber-100/90 leading-relaxed">
-                    🪷 Ngày Trai Giới ({selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL): Khuyến tấn ăn chay, niệm Phật, làm việc thiện lành.
+                  <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+                    <div className="text-[11px] text-amber-100/90 leading-relaxed">
+                      🪷 Ngày Trai Giới ({selectedLunarInfo.lunarDay}/{selectedLunarInfo.lunarMonth} ÂL): Khuyến tấn ăn chay, niệm Phật, làm việc thiện lành.
+                    </div>
+                    <Link
+                      href="/mon-chay"
+                      className="px-2.5 py-1 rounded-xl bg-amber-500/30 hover:bg-amber-500/50 text-[10px] font-bold text-amber-200 border border-amber-400/40 whitespace-nowrap shrink-0 transition-colors"
+                    >
+                      Món chay dưỡng sinh →
+                    </Link>
                   </div>
                 )}
               </div>
@@ -720,6 +779,45 @@ export default function BuddhistCalendarPage() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Card 4: Useful Practice Shortcuts */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Link
+              href="/mon-chay"
+              className="p-3.5 rounded-2xl bg-gradient-to-br from-[#fdfaf3] to-[#fbf4e4] dark:from-charcoal-800 dark:to-charcoal-900 border border-[#e8dac1] dark:border-charcoal-700 hover:border-amber-400 dark:hover:border-amber-600 transition-all shadow-xs group flex flex-col justify-between"
+            >
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-950 dark:text-amber-300">
+                  <span className="text-sm">🥗</span>
+                  <span className="truncate">Sổ Tay Món Chay</span>
+                </div>
+                <p className="text-[11px] text-charcoal-600 dark:text-charcoal-400 leading-snug">
+                  20+ món chay thanh đạm, dinh dưỡng cho ngày trai giới và gia đình.
+                </p>
+              </div>
+              <div className="text-[11px] font-bold text-amber-700 dark:text-amber-400 mt-2 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                Xem công thức →
+              </div>
+            </Link>
+
+            <Link
+              href="/hoi-huong"
+              className="p-3.5 rounded-2xl bg-gradient-to-br from-[#fdfaf3] to-[#fbf4e4] dark:from-charcoal-800 dark:to-charcoal-900 border border-[#e8dac1] dark:border-charcoal-700 hover:border-amber-400 dark:hover:border-amber-600 transition-all shadow-xs group flex flex-col justify-between"
+            >
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-950 dark:text-amber-300">
+                  <span className="text-sm">📜</span>
+                  <span className="truncate">Sớ Cầu An & Hồi Hướng</span>
+                </div>
+                <p className="text-[11px] text-charcoal-600 dark:text-charcoal-400 leading-snug">
+                  Soạn văn sớ cầu siêu ngày giỗ, cầu an gia quyến & in ấn trang nghiêm.
+                </p>
+              </div>
+              <div className="text-[11px] font-bold text-amber-700 dark:text-amber-400 mt-2 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                Soạn văn sớ →
+              </div>
+            </Link>
           </div>
         </div>
       </div>

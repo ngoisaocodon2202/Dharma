@@ -9,6 +9,8 @@ import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { GlobalAudioPlayer } from '@/components/audio/GlobalAudioPlayer';
 import { AuthModal } from '@/components/auth/AuthModal';
 import FloatingDharmaAI from '@/components/ai/FloatingDharmaAI';
+import { MindfulnessProvider } from '@/components/mindfulness/MindfulnessContext';
+import { MindfulnessModal } from '@/components/mindfulness/MindfulnessModal';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,6 +71,10 @@ export default function RootLayout({
         />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -80,13 +86,16 @@ export default function RootLayout({
         <LanguageProvider>
           <AuthProvider>
             <AudioProvider>
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-              <MobileBottomNav />
-              <GlobalAudioPlayer />
-              <FloatingDharmaAI />
-              <AuthModal />
+              <MindfulnessProvider>
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+                <MobileBottomNav />
+                <GlobalAudioPlayer />
+                <FloatingDharmaAI />
+                <AuthModal />
+                <MindfulnessModal />
+              </MindfulnessProvider>
             </AudioProvider>
           </AuthProvider>
         </LanguageProvider>

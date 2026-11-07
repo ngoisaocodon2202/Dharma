@@ -1,0 +1,23 @@
+{
+  "name": "Phật Pháp — Bồ Đề Tâm",
+  "short_name": "Phật Pháp",
+  "description": "Nền tảng Tu học, Đi Chùa Online, Thư viện Kinh Sách, Tra cứu Ngày Tốt & Chánh Niệm Hằng Ngày",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#180C06",
+  "theme_color": "#24130A",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
