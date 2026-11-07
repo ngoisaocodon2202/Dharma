@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { X, Sparkles, Volume2, Flame, RefreshCw, Heart, Check, Bell } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { playBellSound, playWoodenFishSound } from '@/lib/buddhistSounds';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 import { cn } from '@/lib/utils';
 
 // ==========================================
@@ -57,6 +58,7 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
   const handleLightIncense = () => {
     setIsLit(true);
     playBellSound(0.5);
+    incrementDailyPractice('lay-phat', 3);
     const newCount = totalOffered + 1;
     setTotalOffered(newCount);
     if (typeof window !== 'undefined') {
@@ -298,6 +300,7 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
 
   const handleNextBead = () => {
     playWoodenFishSound(0.6);
+    incrementDailyPractice('niem-phat', 1);
     const nextIdx = (beadIndex + 1) % 108;
     setBeadIndex(nextIdx);
 

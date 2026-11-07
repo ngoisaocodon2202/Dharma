@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Sparkles, Play, Pause, Volume2, Shield, Heart, Check } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { playBellSound, playWoodenFishSound } from '@/lib/buddhistSounds';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 import { cn } from '@/lib/utils';
 
 interface MantraItem {
@@ -78,6 +79,7 @@ export function OmManiMantrasSection() {
 
   const handleChantMantra = (id: string) => {
     playWoodenFishSound(0.5);
+    incrementDailyPractice('tri-chu', 1);
     setChantCounters((prev) => ({
       ...prev,
       [id]: (prev[id] || 0) + 1,

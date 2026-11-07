@@ -5,6 +5,7 @@ import { Play, Pause, RotateCcw, Bell, Wind, Trees, CloudRain, Timer, History, V
 import { useAuth } from '@/components/auth/AuthContext';
 import { formatDate } from '@/lib/utils';
 import { useMeditationAudio } from '@/hooks/useMeditationAudio';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 
 type SoundType = 'BELL' | 'RAIN' | 'FOREST' | 'SILENCE';
 
@@ -83,6 +84,7 @@ export function FullMeditationRoom() {
             // Stop ambient, strike bell for completion
             stopSound();
             setTimeout(() => strikeBell(), 300);
+            incrementDailyPractice('toa-thien', durationMinutes);
             const elapsed = sessionStartTime ? Math.round((Date.now() - sessionStartTime) / 1000) : durationMinutes * 60;
             saveSession(elapsed);
             return 0;

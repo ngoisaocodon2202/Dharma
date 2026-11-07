@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, RotateCcw, Volume2, VolumeX, CheckCircle, Award } from 'lucide-react';
 import { playWoodenFishSound, playBellSound } from '@/lib/buddhistSounds';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 import { cn } from '@/lib/utils';
 
 interface DigitalMalaProps {
@@ -54,6 +55,8 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
     if (soundEnabled) {
       playWoodenFishSound(0.35);
     }
+
+    incrementDailyPractice(selectedMantra === 'ommani' ? 'tri-chu' : 'niem-phat', 1);
 
     setCurrentBead((prev) => {
       const next = prev + 1;

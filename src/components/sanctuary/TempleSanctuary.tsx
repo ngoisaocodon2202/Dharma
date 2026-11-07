@@ -19,6 +19,7 @@ import {
   Scroll,
 } from 'lucide-react';
 import { playBellSound, playWoodenFishSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 import { cn } from '@/lib/utils';
 
 // =============================================================================
@@ -312,6 +313,7 @@ export function TempleSanctuary() {
     setIsIncenseLit(true);
     setIsBowing(true);
     setIsOfferingsDrawerOpen(false);
+    incrementDailyPractice('lay-phat', 3);
 
     if (soundEnabled) {
       playBellSound(0.4);
@@ -332,6 +334,7 @@ export function TempleSanctuary() {
     setIsOfferingLotus(true);
     setIsBowing(true);
     setIsOfferingsDrawerOpen(false);
+    incrementDailyPractice('lay-phat', 3);
 
     if (soundEnabled) {
       playBellSound(0.45);
@@ -418,6 +421,7 @@ export function TempleSanctuary() {
   // 7. ACTION: ĐỌC KINH
   const handleOpenScripture = () => {
     setIsScriptureModalOpen(true);
+    incrementDailyPractice('doc-kinh', 1);
     if (soundEnabled) {
       playWoodenFishSound(0.4);
     }

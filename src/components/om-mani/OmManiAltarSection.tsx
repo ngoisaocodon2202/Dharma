@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Flame, Bell, Heart, Volume2, Sparkles, Share2, Check } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { playBellSound, playWoodenFishSound } from '@/lib/buddhistSounds';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 
 interface OmManiAltarSectionProps {
   onOpenIncense?: () => void;
@@ -27,6 +28,7 @@ export function OmManiAltarSection({ onOpenIncense, onOpenMala }: OmManiAltarSec
     const nextCount = chantCount + 1;
     setChantCount(nextCount);
     setHasChantedToday(true);
+    incrementDailyPractice('niem-phat', 1);
     if (typeof window !== 'undefined') {
       localStorage.setItem('phatphap_personal_chant_count', String(nextCount));
     }

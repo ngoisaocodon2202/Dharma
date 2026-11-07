@@ -20,6 +20,7 @@ import {
 import { BookItem, BookPage } from './types';
 import { DharmaBookIcon } from '@/components/icons/DharmaBookIcon';
 import { playPageTurnSound } from '@/lib/buddhistSounds';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 import { cn } from '@/lib/utils';
 
 interface BookReaderModalProps {
@@ -100,6 +101,7 @@ export function BookReaderModal({ book, isOpen, onClose, initialPage = 1 }: Book
       setShowBookInfo(false);
       setShowToc(false);
       setShowSettings(false);
+      incrementDailyPractice('doc-kinh', 1);
     }
   }, [isOpen, initialPage, totalPages]);
 

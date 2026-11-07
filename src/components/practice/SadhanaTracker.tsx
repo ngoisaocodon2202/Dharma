@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Calendar, Sparkles, CheckCircle2, Award, Heart, Plus } from 'lucide-react';
+import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 import { cn } from '@/lib/utils';
 
 interface DayLog {
@@ -53,6 +54,9 @@ export function SadhanaTracker() {
     setLogs(updatedLogs);
     try {
       localStorage.setItem('phatphap_sadhana_logs', JSON.stringify(updatedLogs));
+      if (Number(todayMeditation) > 0) incrementDailyPractice('toa-thien', Number(todayMeditation));
+      if (Number(todayBeads) > 0) incrementDailyPractice('niem-phat', Number(todayBeads));
+      if (Number(todayPages) > 0) incrementDailyPractice('doc-kinh', 1);
     } catch {}
 
     setToast('Đã lưu nhật ký tinh tấn hôm nay vào Vườn Sen Tâm Linh!');
