@@ -171,24 +171,26 @@ export function OmManiMandalaHub() {
           <h4 className="font-heading font-bold text-base sm:text-lg text-charcoal-900 dark:text-charcoal-50 whitespace-nowrap">
             Tâm Bồ Đề Kiên Cố
           </h4>
-          <p className="text-xs text-charcoal-600 dark:text-charcoal-400 max-w-sm mt-0.5">
-            Mỗi thời khóa là một bước chân đưa thân tâm trở về với phút giây tỉnh thức hiện tại.
+          <p className="text-[11px] sm:text-xs text-charcoal-600 dark:text-charcoal-400 mt-0.5 whitespace-nowrap">
+            Mỗi thời khóa đưa thân tâm trở về tỉnh thức hiện tại.
           </p>
         </div>
 
         {/* Incomplete Task Guidance Notice */}
         {incompleteNotice && (
-          <div className="relative z-20 mb-4 p-3.5 rounded-2xl bg-amber-100/95 dark:bg-amber-950/90 border border-amber-400 text-amber-950 dark:text-amber-100 shadow-sm animate-fade-in">
+          <div className="relative z-20 mb-4 p-3 rounded-2xl bg-amber-100/95 dark:bg-amber-950/90 border border-amber-400 text-amber-950 dark:text-amber-100 shadow-sm animate-fade-in">
             <div className="flex items-start justify-between gap-2">
-              <div className="flex items-start gap-2 min-w-0">
+              <div className="flex items-start gap-2 min-w-0 overflow-hidden">
                 <AlertCircle className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
-                <div className="text-xs leading-relaxed">
-                  <span className="font-bold">
+                <div className="min-w-0 space-y-0.5">
+                  <div className="font-bold text-[11px] sm:text-xs whitespace-nowrap truncate">
                     Chưa hoàn thành &ldquo;{incompleteNotice.name}&rdquo; (
                     {Math.min(progress[incompleteNotice.id] || 0, incompleteNotice.requiredCount)}/
-                    {incompleteNotice.requiredCount} {incompleteNotice.unit}).
-                  </span>{' '}
-                  Bạn cần thực hành đủ chỉ tiêu hôm nay thì hệ thống mới tự động tích xanh hoàn thành.
+                    {incompleteNotice.requiredCount} {incompleteNotice.unit})
+                  </div>
+                  <div className="text-[10.5px] sm:text-xs text-amber-900/90 dark:text-amber-200/90 whitespace-nowrap truncate">
+                    Thực hành đủ chỉ tiêu hôm nay để tự động tích xanh.
+                  </div>
                 </div>
               </div>
               <button
@@ -200,14 +202,14 @@ export function OmManiMandalaHub() {
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="mt-2.5 flex justify-end">
+            <div className="mt-2 flex justify-end">
               <button
                 type="button"
                 onClick={() => handleGoToPractice(incompleteNotice)}
-                className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs inline-flex items-center gap-1 whitespace-nowrap shadow-2xs transition-colors cursor-pointer"
+                className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-[11px] sm:text-xs inline-flex items-center gap-1 whitespace-nowrap shadow-2xs transition-colors cursor-pointer"
               >
                 <span>Thực hành {incompleteNotice.name} ngay</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 shrink-0" />
               </button>
             </div>
           </div>
