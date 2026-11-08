@@ -652,14 +652,14 @@ export default function AccountProfilePage() {
       <div className="hidden lg:block">
         <OmManiDesktopProfile
           dharmaName={dharmaName}
-          fullName={fullName}
+          fullName={realName}
           userMotto={userMotto}
           refugeDate={refugeDate}
-          refugeTemple={refugeTemple}
-          masterName={masterName}
+          refugeTemple="Chùa Giác Ngộ (TP. HCM)"
+          masterName="HT. Thích Nhật Từ"
           onOpenEditProfile={() => setIsEditProfileOpen(true)}
           onOpenSettings={() => setIsSettingsOpen(true)}
-          onOpenMemorial={() => setIsMemorialOpen(true)}
+          onOpenMemorial={() => setIsMemorialBookOpen(true)}
           onOpenPersonalEvents={() => setIsPersonalEventsOpen(true)}
           onOpenMeditationSchedule={() => setIsMeditationScheduleOpen(true)}
           onOpenSupport={() => setIsSupportOmManiOpen(true)}

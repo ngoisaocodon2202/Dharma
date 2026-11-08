@@ -1506,18 +1506,18 @@ export function OmManiAppStoreHome() {
           onOpenSearch={() => setIsSearchOpen(true)}
           onSelectArticle={(a) => setSelectedArticle(a)}
           onSelectBuddha={(b) => setSelectedBuddha(b)}
-          onSelectWallpaper={(w) => setSelectedWallpaper(w)}
-          onSelectSutra={(s) => setIsSutraTextOpen(s)}
+          onSelectWallpaper={(w) => setPreviewImage({ src: w.image, title: w.title })}
+          onSelectSutra={(s) => setSelectedPrayerText(s)}
           onOpenAbout={() => setIsAboutOmManiOpen(true)}
-          isPlayingMusic={isPlayingMusic}
+          isPlayingMusic={isMusicPlaying}
           onToggleMusic={handleToggleMusic}
-          isDroneActive={isDroneActive}
-          onToggleDrone={handleToggleDrone}
+          isDroneActive={isMusicPlaying}
+          onToggleDrone={handleToggleMusic}
           weekDays={WEEK_DAYS}
           featuredArticles={FEATURED_ARTICLES}
-          buddhas={BUDDHAS}
-          temples={TEMPLES}
-          wallpapers={WALLPAPERS}
+          buddhas={BUDDHAS_LIST}
+          temples={TEMPLES_LIST}
+          wallpapers={[]}
         />
       </div>
 
