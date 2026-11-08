@@ -317,6 +317,11 @@ export function Header() {
     setActiveDropdown((prev) => (prev === id ? null : id));
   };
 
+  // On Om Mani AppStore Homepage, the entire page has its own integrated mobile header
+  if (pathname === '/') {
+    return null;
+  }
+
   return (
     <>
       {/* Mobile Native App Header (< lg) */}
