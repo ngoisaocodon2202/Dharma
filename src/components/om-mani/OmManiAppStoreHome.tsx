@@ -18,10 +18,21 @@ import {
   Share2,
   Download,
   Calendar as CalendarIcon,
+  Play,
+  Pause,
+  ExternalLink,
+  Globe,
+  Music,
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { useAuth } from '@/components/auth/AuthContext';
-import { playBellSound, playWoodenFishSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import {
+  playBellSound,
+  playWoodenFishSound,
+  playGrandTempleBellSound,
+  startMeditativeDrone,
+  stopMeditativeDrone,
+} from '@/lib/buddhistSounds';
 import { IncenseOfferingModal, MalaBeadsModal } from './OmManiInteractiveTools';
 import { SearchModal } from '@/components/layout/SearchModal';
 import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
@@ -178,6 +189,188 @@ const PRAYER_TEXTS: PrayerTextItem[] = [
   },
 ];
 
+// =============================================================================
+// DATA: FEATURED ARTICLES (MATCHING SCREENSHOTS 7 & 8)
+// =============================================================================
+interface ArticleItem {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  image: string;
+  authorOrSource?: string;
+  category?: string;
+  readTime?: string;
+}
+
+const FEATURED_ARTICLES: ArticleItem[] = [
+  {
+    id: '7-loi-khan-nguyen',
+    title: '7 lời khấn nguyện vào mỗi sớm mai Phật tử nên đọc',
+    excerpt:
+      'Đọc 7 lời khấn nguyện vào mỗi sớm mai khi thức dậy sẽ giúp bạn mở rộng tâm từ và tiêu trừ nghiệp xấu ác...',
+    image: '/images/golden_buddha.jpg',
+    authorOrSource: 'Ban Biên Tập Phật Pháp',
+    category: 'Tu học',
+    readTime: '3 phút',
+    content: `Mỗi sớm mai thức dậy là một ngày mới bắt đầu, một cơ hội quý báu để ta nuôi dưỡng tâm từ bi, gieo trồng phước đức và thanh lọc thân tâm trước khi bước vào những lo toan của cuộc sống.
+
+1. Lời nguyện chánh niệm:
+"Nguyện cho con giữ được chánh niệm trong từng hơi thở và từng bước chân suốt cả ngày hôm nay, không để tâm tán loạn theo duyên trần."
+
+2. Lời nguyện từ bi:
+"Nguyện cho tâm con luôn tràn đầy tình thương yêu, bao dung và sẻ chia với muôn loài, không khởi tâm hẹp hòi phân biệt."
+
+3. Lời nguyện kham nhẫn:
+"Nguyện cho con đủ sức kham nhẫn trước những lời nghịch ý, không khởi tâm sân hận oán thù, chuyển hóa nghịch cảnh thành bài học tu tập."
+
+4. Lời nguyện ái ngữ:
+"Nguyện cho miệng con chỉ thốt ra những lời chân thật, hòa ái, đem lại niềm tin và an vui cho mọi người xung quanh."
+
+5. Lời nguyện trí tuệ:
+"Nguyện cho con luôn sáng suốt nhận diện điều thiện để làm, dứt trừ các việc bất thiện dù là nhỏ nhất."
+
+6. Lời nguyện hồi hướng:
+"Nguyện mọi công đức con làm được trong ngày hôm nay đều hồi hướng cầu cho cha mẹ hiện tiền an lạc, cửu huyền thất tổ siêu sinh, và pháp giới chúng sinh trọn thành Phật đạo."
+
+7. Lời nguyện quy y:
+"Nguyện trọn đời nương tựa Tam Bảo: Phật - Pháp - Tăng như ngọn hải đăng soi sáng con đường giải thoát."`,
+  },
+  {
+    id: 'mot-loi-ac-y',
+    title: 'Truyện cổ Phật giáo: Một lời ác ý, trăm năm chịu khổ',
+    excerpt:
+      'Người xưa có câu: "Ác giả ác báo, thiện giả thiện lai", chỉ một lời nói không hay cũng có thể khiến con người ta đọa vào khổ cảnh...',
+    image: '/images/ancient_pagoda.jpg',
+    authorOrSource: 'Truyện Cổ Phật Giáo',
+    category: 'Nhân Quả',
+    readTime: '4 phút',
+    content: `Người xưa có câu: "Ác giả ác báo, thiện giả thiện lai". Trong kinh điển Phật giáo thường răn dạy về khẩu nghiệp: Một lời nói thêu dệt, độc ác hay nhạo báng có thể làm tổn thương người khác sâu sắc và tạo thành nghiệp báo nặng nề đeo bám nhiều kiếp.
+
+Vào thời Đức Phật Thích Ca Mâu Ni còn tại thế, trong tăng đoàn có một vị tỳ kheo trẻ tuổi, vì thấy một vị sư già đi đứng lọng cọng như con khỉ nhảy nhót qua mương nước bèn buông lời cười cợt: "Trông sư huynh đi hệt như loài khỉ!".
+
+Dù vị sư già ấy là một bậc A La Hán đã đoạn tận phiền não, ngài không hề oán trách mà chỉ thương xót khuyên: "Này hiền giả, hãy mau sám hối vì ta đã chứng quả vô lậu". Vị tỳ kheo trẻ hoảng sợ cúi đầu sám hối, nhưng vì quả báo của lời ác khẩu nhạo báng bậc thánh, sau khi xả báo thân vẫn phải chịu 500 kiếp liên tục tái sinh làm thân khỉ trong rừng sâu.
+
+Khẩu nghiệp là một trong những nghiệp nặng nhất mà con người dễ phạm phải nhất mỗi ngày. Lời nói một khi buông ra như tên bắn, không thể lấy lại. Hãy học cách nói lời ái ngữ, giữ gìn từng lời nói như ngọc ngà thanh tịnh.`,
+  },
+  {
+    id: 'ac-gia-ac-bao',
+    title: 'Ác giả ác báo theo quan điểm của nhà Phật',
+    excerpt:
+      'Đức Phật khai thị một dạng thức chung nhất: Ác giả, ác báo. Nó không thiên vị một ai, không ngoại trừ một ai cả.',
+    image: '/images/monk_robes.jpg',
+    authorOrSource: 'Lời Phật Dạy',
+    category: 'Giáo Lý',
+    readTime: '5 phút',
+    content: `Đức Phật khai thị một quy luật vận hành tối thượng trong vũ trụ: Ác giả ác báo, thiện giả thiện lai. Định luật Nhân Quả vận hành bình đẳng tuyệt đối, không thiên vị một ai và không ngoại trừ một ai cả, dù là vua chúa hay thường dân.
+
+Nhiều người nhìn thấy kẻ làm ác ngoài đời vẫn sống xa hoa nhung lụa bèn sinh tâm hoài nghi về nhân quả. Đức Phật giải thích:
+"Tội ác chưa thọ báo là vì phước đức từ đời trước của người đó chưa cạn; khi phước đời trước đã cạn thì quả ác trổ ra dồn dập như sấm sét. Cũng như vậy, người hiền lành mà gặp nhiều trắc trở là do đang tiêu trừ nghiệp cũ; khi nghiệp cũ đã sạch thì phước lành vô lượng sẽ tự hiển lộ."
+
+Hiểu rõ định luật Nhân Quả giúp người Phật tử không oán trời trách đất, không than thân trách phận, mà dũng cảm đối diện, chuyển hóa khổ đau bằng tâm từ bi và lối sống chân chính mỗi ngày.`,
+  },
+  {
+    id: 'tho-tro-cot-tai-nha',
+    title:
+      'Có nên thờ tro cốt tại nhà? Người mất đã tái sinh thì việc cúng dỗ hồi hướng có giá trị thế nào?',
+    excerpt:
+      'Vì giải tỏa nghĩa địa nên gia đình tôi đem hài cốt bố mẹ và thân nhân lên hỏa thiêu, đưa về thờ tại nhà thì có ảnh hưởng gì không?...',
+    image: '/images/lotus_pond.jpg',
+    authorOrSource: 'Giải Đáp Phật Pháp',
+    category: 'Hỏi Đáp',
+    readTime: '6 phút',
+    content: `Hỏi: Gia đình tôi đem tro cốt cha mẹ về thờ tại nhà thì có ảnh hưởng gì không? Và khi người mất đã tái sinh thì việc cúng giỗ, hồi hướng công đức còn có giá trị không?
+
+Trả lời:
+1. Về việc lưu giữ tro cốt tại nhà:
+Theo quan điểm Phật giáo, sau khi thân tứ đại tan rã, thân xác chỉ là tro bụi vô thường, thần thức đã theo nghiệp mà tái sinh. Tuy nhiên, nhà Phật khuyên nên gửi tro cốt vào chùa để linh thức thường xuyên được nghe kinh kệ, nương nhờ đại chúng thanh tịnh. Nếu thờ tại nhà, cần đặt nơi trang nghiêm, sạch sẽ, không nên quá bi lụy khiến thần thức khó buông xả chấp niệm.
+
+2. Giá trị của việc cúng giỗ hồi hướng:
+Dù người đã khuất đã tái sinh vào cảnh giới nào (trừ cảnh giới súc sinh hay ngạ quỷ còn nhiều đọa lạc), năng lượng của tâm chí thành, sự tưởng nhớ tri ân và các việc phước thiện (bố thí, ấn tống kinh, cúng dường Tam Bảo, ăn chay phóng sinh) mà con cháu hồi hướng cho họ đều tạo nên cảm ứng tâm linh thiện lành.
+
+Nhờ công đức đó, người ở cõi lành được tăng thêm phước báo và niềm hoan hỷ; người ở cõi khổ được nhẹ bớt nghiệp chướng, sớm ngày siêu thoát.`,
+  },
+  {
+    id: 'nguoi-mat-49-ngay',
+    title: 'Người mất trong 49 ngày rất trông mong người thân làm phước',
+    excerpt:
+      'Trích: Địa Tạng Bồ Tát Bổn Nguyện Kinh Giảng Ký. Trong 49 ngày, thần thức còn bỡ ngỡ trông mong người thân làm phước cứu vớt...',
+    image: '/images/monk_incense.jpg',
+    authorOrSource: 'HT. Tịnh Không Giảng Ký',
+    category: 'Kinh Điển',
+    readTime: '5 phút',
+    content: `Trong Kinh Địa Tạng Bồ Tát Bổn Nguyện, phẩm Lợi Ích Kẻ Còn Người Mất, Đức Phật chỉ dạy rất tường tận:
+Trong vòng 49 ngày sau khi trút hơi thở cuối cùng, đa phần thần thức người mất ở trạng thái Trung Ấm Thân, ngơ ngác, hoang mang và vô cùng trông ngóng người thân làm phước để tiếp sức.
+
+Hòa thượng Tịnh Không giảng:
+"Trong 49 ngày này, mỗi một tuần thất trôi qua, thần thức lại trải qua một lần phán xét nghiệp lực. Nếu gia đình con cháu trên dưới hòa thuận, ăn chay niệm Phật, phóng sinh cứu vật, cúng dường trai tăng, in ấn kinh sách rồi đem trọn vẹn công đức ấy hồi hướng cho vong linh, thì người mất được hưởng một phần bảy công đức, người sống làm phước được hưởng sáu phần.
+
+Đặc biệt lưu ý: Tuyệt đối không được sát sinh gà vịt bò heo để làm tiệc đãi khách cúng giỗ, vì nghiệp sát đó sẽ đè nặng lên vai người quá cố, khiến họ khó bề vãng sinh tịnh độ."`,
+  },
+  {
+    id: 'phien-nao-den-tu-dau',
+    title: 'Phiền não đến từ đâu?',
+    excerpt:
+      'Trên đời, căn nguyên của những muộn phiền đều bắt nguồn từ việc buông không đành, hiểu không thông, nhìn không thấu, rồi làm những việc vô nghĩa khi nhàn rỗi.',
+    image: '/images/buddha_meditation.jpg',
+    authorOrSource: 'Thiền Luận',
+    category: 'Chánh Niệm',
+    readTime: '4 phút',
+    content: `Trên cõi đời này, căn nguyên của hầu hết mọi muộn phiền, lo âu và đau khổ đều bắt nguồn từ bốn chữ:
+"Buông không đành - Hiểu không thông - Nhìn không thấu - Lo quẩn quanh".
+
+1. Buông không đành:
+Bám chặt vào những chuyện của ngày hôm qua, ôm giữ những lời xúc phạm của người khác, tiếc nuối danh lợi và những mối quan hệ đã đổi thay theo năm tháng.
+
+2. Hiểu không thông:
+Quên mất rằng bản chất của cuộc đời là "Vô thường". Hợp tan, được mất, thành bại là lẽ tự nhiên của nhân duyên. Khi chưa thấu rõ duyên sinh, ta cứ đòi hỏi mọi sự phải theo ý mình.
+
+3. Nhìn không thấu:
+Thấy thân xác này là thật, danh vọng này là vĩnh viễn, rồi lao tâm khổ tứ tranh giành, để rồi chuốc lấy bất an và cô độc.
+
+Khi lòng buông xả, tâm ta mở rộng như hư không; gió bão có thổi qua rồi cũng tan, để lại vầng trăng trí tuệ thanh lương tĩnh tại.`,
+  },
+  {
+    id: 'tieu-diet-phien-nao',
+    title: 'Có cách nào để tiêu diệt phiền não không?',
+    excerpt:
+      'Hỏi: Thưa Hòa thượng, có cách nào hay để tiêu diệt lòng phiền não không? Đáp: Hãy quán chiếu thân tâm, buông bỏ chấp niệm.',
+    image: '/images/mindfulness_peace.jpg',
+    authorOrSource: 'Vấn Đạo Thiền Sư',
+    category: 'Tâm Pháp',
+    readTime: '4 phút',
+    content: `Hỏi: Thưa Hòa thượng, có cách nào hay để tiêu diệt tận gốc lòng phiền não không?
+
+Hòa thượng mỉm cười, chỉ tay vào tách trà nóng bốc khói rồi nói:
+"Con không thể tiêu diệt phiền não bằng cách dùng một cơn giận khác hay sự ức chế gượng gạo. Càng cố tiêu diệt, phiền não lại càng bám rễ sâu hơn.
+
+Phiền não cũng giống như lớp băng lạnh, còn chánh niệm tỉnh thức chính là hơi ấm mặt trời. Khi con nhận diện được phiền não đang khởi lên trong tâm, đừng theo nó và cũng đừng xua đuổi nó.
+
+Hãy dừng lại, thở vào một hơi thật sâu, thở ra mỉm cười và tự nhủ: 'Ta biết giận hờn, lo âu này đang có mặt'. Khi được soi rọi bởi ánh sáng chánh niệm không phán xét, phiền não sẽ tự tan biến thành hư không, trả lại sự trong trẻo vốn có của tự tâm."`,
+  },
+  {
+    id: 'nghiep-sat-nang',
+    title: 'Nghiệp sát nặng dẫn đến nhiều bệnh tật',
+    excerpt:
+      'Hòa thượng Tịnh Không giảng: Người trên thế gian có rất nhiều bệnh tật, từ đâu mà đến? Nghiệp sát quá nặng. Lúc trước, khi tôi đọc kinh...',
+    image: '/images/tripitaka_koreana.jpg',
+    authorOrSource: 'HT. Tịnh Không Khai Thị',
+    category: 'Nhân Quả & Sức Khỏe',
+    readTime: '5 phút',
+    content: `Hòa thượng Tịnh Không giảng giải về nguồn gốc của tật bệnh và tuổi thọ:
+"Người trên thế gian ngày nay mắc rất nhiều căn bệnh nan y lạ lùng, thuốc thang chữa mãi không khỏi, từ đâu mà đến? Căn nguyên sâu xa nhất chính là do nghiệp sát quá nặng.
+
+Lúc trước, khi đọc trong các bộ kinh Phật, tôi thấy Đức Phật dạy rất rõ: Nhân của đoản mạng và nhiều bệnh tật chính là sát sinh; nhân của trường thọ và thân thể tráng kiện chính là phóng sinh, cứu mạng và ăn chay.
+
+Loài vật cũng có tri giác, cũng biết ham sống sợ chết hệt như con người. Khi bị bắt giết, mổ xẻ, nỗi sợ hãi tột cùng và lòng oán thù ngùn ngụt ngấm vào từng thớ thịt. Con người ăn vào, chất độc ấy dần tích tụ trong cơ thể sinh ra ung thư, tai biến và đủ thứ bệnh tật hiểm nghèo.
+
+Muốn thân thể khỏe mạnh, nghiệp chướng tiêu trừ, phương thuốc mầu nhiệm nhất là:
+1. Giảm thiểu và tiến tới ăn chay thanh tịnh.
+2. Tích cực phóng sinh cứu mạng loài vật.
+3. Luôn khởi tâm từ bi, không làm tổn hại sinh linh."`,
+  },
+];
+
 export function OmManiAppStoreHome() {
   const router = useRouter();
   const { user } = useAuth();
@@ -192,11 +385,35 @@ export function OmManiAppStoreHome() {
   const [selectedBuddha, setSelectedBuddha] = useState<BuddhaCard | null>(null);
   const [selectedPrayerText, setSelectedPrayerText] = useState<PrayerTextItem | null>(null);
   const [previewImage, setPreviewImage] = useState<{ src: string; title: string } | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<ArticleItem | null>(null);
+  const [isAboutOmManiOpen, setIsAboutOmManiOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Audio state for Imee Ooi Heart Sutra
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      stopMeditativeDrone();
+    };
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleToggleMusic = () => {
+    if (isMusicPlaying) {
+      stopMeditativeDrone();
+      setIsMusicPlaying(false);
+      showToast('Đã tạm dừng âm nhạc');
+    } else {
+      playBellSound(0.4);
+      startMeditativeDrone(0.25);
+      setIsMusicPlaying(true);
+      showToast('Đang phát: Bát Nhã Tâm Kinh (Phạn ngữ) • Imee Ooi');
+    }
   };
 
   // Quick Action Sound / Chimes
@@ -259,6 +476,71 @@ export function OmManiAppStoreHome() {
             </button>
           </div>
         </header>
+
+        {/* Quick Action Navigation Chips (Matching Screenshot 7) */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-xs">
+          <button
+            type="button"
+            onClick={() => router.push('/phong-thien')}
+            className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#241710]/90 border border-white/10 hover:border-amber-400/50 text-stone-200 flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
+          >
+            <span>🧘</span>
+            <span className="font-medium">Tu tập</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              playWoodenFishSound();
+              showToast('Gõ mõ tịnh tâm');
+            }}
+            className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#241710]/90 border border-white/10 hover:border-amber-400/50 text-stone-200 flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
+          >
+            <span>🔔</span>
+            <span className="font-medium">Chuông mõ</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedPrayerText(PRAYER_TEXTS[0]);
+            }}
+            className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#241710]/90 border border-white/10 hover:border-amber-400/50 text-stone-200 flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
+          >
+            <span>✨</span>
+            <span className="font-medium">Chú Đại Bi</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('music-section');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#241710]/90 border border-white/10 hover:border-amber-400/50 text-stone-200 flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
+          >
+            <span>🎵</span>
+            <span className="font-medium">Âm nhạc</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsMalaOpen(true)}
+            className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#241710]/90 border border-white/10 hover:border-amber-400/50 text-stone-200 flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
+          >
+            <span>📿</span>
+            <span className="font-medium">Tràng hạt</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => router.push('/thu-vien')}
+            className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#241710]/90 border border-white/10 hover:border-amber-400/50 text-stone-200 flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
+          >
+            <span>📖</span>
+            <span className="font-medium">Kinh sách</span>
+          </button>
+        </div>
 
         {/* ========================================================================= */}
         {/* 2. WEEKLY CALENDAR STRIP (MATCHING SCREENSHOT 1)                          */}
@@ -1011,6 +1293,199 @@ export function OmManiAppStoreHome() {
           </div>
         </section>
 
+        {/* ========================================================================= */}
+        {/* 14. FEATURED MUSIC BANNER (OM MANI × IMEE OOI - MATCHING SCREENSHOT 7)    */}
+        {/* ========================================================================= */}
+        <section id="music-section" aria-label="Âm nhạc Phật giáo đặc biệt">
+          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#4A1710] via-[#2A0D08] to-[#140503] border border-[#7D2E20]/50 p-5 sm:p-6 shadow-2xl">
+            {/* Background Watermark Art: Zen Enso Circle & Sanskrit Calligraphy */}
+            <div className="absolute top-1 right-1 w-44 sm:w-52 h-44 sm:h-52 pointer-events-none opacity-20 flex items-center justify-center">
+              <svg
+                viewBox="0 0 200 200"
+                className="w-full h-full text-amber-500 fill-none stroke-current"
+                strokeWidth="5"
+                strokeLinecap="round"
+              >
+                <circle cx="100" cy="100" r="70" strokeDasharray="360 45" />
+                <circle cx="100" cy="100" r="50" strokeWidth="2.5" strokeDasharray="240 50" opacity="0.5" />
+              </svg>
+              <div
+                className="absolute right-5 top-7 text-amber-200/50 text-[10px] font-serif leading-tight select-none font-bold"
+                style={{ writingMode: 'vertical-rl' }}
+              >
+                般若波羅蜜多心經 • 梵音
+              </div>
+            </div>
+
+            {/* Top Badge: OM MANI × IMEE OOI */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5D2016]/80 border border-[#9E3928]/50 shadow-sm">
+              <span className="text-[10px] font-bold tracking-wider text-[#FFD5CC] uppercase">
+                OM MANI × IMEE OOI
+              </span>
+            </div>
+
+            {/* Subtitle: HỢP TÁC ĐẶC BIỆT */}
+            <div className="text-[#E5936B] text-[11px] sm:text-xs font-bold tracking-widest uppercase mt-3.5">
+              HỢP TÁC ĐẶC BIỆT
+            </div>
+
+            {/* Main Title: Bát Nhã Tâm Kinh, tiếng Phạn */}
+            <h3 className="font-heading font-serif text-xl sm:text-2xl font-bold text-white mt-1 leading-snug">
+              Bát Nhã Tâm Kinh, tiếng Phạn
+            </h3>
+
+            {/* Description */}
+            <p className="text-xs sm:text-sm text-stone-300 mt-1">
+              Bản thu của Imee Ooi, nay có trong Om Mani
+            </p>
+
+            {/* Embedded Audio Player Mini Card */}
+            <div className="mt-5 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10 p-3 sm:p-3.5 flex items-center justify-between shadow-lg">
+              <div className="flex items-center gap-3 min-w-0 pr-2">
+                {/* Album Artwork */}
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 border border-amber-500/30 bg-[#2C150C] flex items-center justify-center shadow-md">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-700/40 via-red-950/70 to-black" />
+                  <div className="relative text-amber-300 text-center select-none font-serif">
+                    <span className="text-base block leading-none font-bold">🕉️</span>
+                    <span className="text-[8px] block font-mono text-amber-200/90 mt-0.5 tracking-tighter">
+                      Sanskrit
+                    </span>
+                  </div>
+                </div>
+
+                {/* Track Details */}
+                <div className="min-w-0">
+                  <h4 className="text-white font-bold text-sm leading-tight truncate">
+                    Mantras of the Sanskrit
+                  </h4>
+                  <p className="text-stone-400 text-xs mt-0.5 truncate">
+                    Imee Ooi
+                  </p>
+                  {isMusicPlaying && (
+                    <div className="flex items-center gap-1.5 mt-1 text-[10px] text-amber-300 font-mono">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>Đang phát thanh tịnh...</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Play / Pause Golden Button */}
+              <button
+                type="button"
+                onClick={handleToggleMusic}
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#E5B869] hover:bg-[#F3C875] text-[#1A1208] flex items-center justify-center shadow-lg transition-transform active:scale-90 shrink-0 ml-2 cursor-pointer"
+                aria-label={isMusicPlaying ? 'Tạm dừng' : 'Phát nhạc'}
+              >
+                {isMusicPlaying ? (
+                  <Pause className="w-5 h-5 fill-current" />
+                ) : (
+                  <Play className="w-5 h-5 fill-current translate-x-0.5" />
+                )}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 15. BÀI VIẾT ĐƯỢC QUAN TÂM › (MATCHING SCREENSHOT 7 & 8)                  */}
+        {/* ========================================================================= */}
+        <section aria-label="Bài viết được quan tâm" className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Link
+              href="/bai-viet"
+              className="font-heading font-bold text-base sm:text-lg text-white hover:text-amber-300 flex items-center gap-1.5 group transition-colors"
+            >
+              <span>Bài viết được quan tâm</span>
+              <ChevronRight className="w-4 h-4 text-stone-400 group-hover:text-amber-300 group-hover:translate-x-0.5 transition-all" />
+            </Link>
+          </div>
+
+          <div className="space-y-4">
+            {FEATURED_ARTICLES.map((article) => (
+              <article
+                key={article.id}
+                onClick={() => setSelectedArticle(article)}
+                className="flex gap-3.5 items-start p-2.5 -mx-2.5 rounded-2xl hover:bg-stone-900/50 cursor-pointer transition-colors group active:scale-[0.99]"
+              >
+                {/* Left Thumbnail Image */}
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 border border-white/5 bg-stone-900 shadow-md">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Right Content */}
+                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                  <h4 className="font-heading font-medium text-white text-sm sm:text-[15px] leading-snug line-clamp-2 group-hover:text-amber-200 transition-colors">
+                    {article.title}
+                  </h4>
+                  <p className="text-stone-400 text-xs mt-1.5 line-clamp-2 leading-relaxed">
+                    {article.excerpt}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 16. GLOBAL PRACTICE COMMUNITY COUNTER (MATCHING SCREENSHOT 8)             */}
+        {/* ========================================================================= */}
+        <section aria-label="Cộng đồng tu tập toàn cầu" className="pt-6 pb-2 text-center select-none space-y-2">
+          {/* Giant 174 Golden Counter */}
+          <div className="font-serif font-black text-6xl sm:text-7xl text-[#E5B869] tracking-tight drop-shadow-md">
+            174
+          </div>
+
+          {/* Label: Quốc gia */}
+          <div className="text-sm sm:text-base font-semibold text-[#D1B48C]">
+            Quốc gia
+          </div>
+
+          {/* Subtext with link arrow: đang tu tập trên Om Mani ↗ */}
+          <div>
+            <button
+              type="button"
+              onClick={() => setIsAboutOmManiOpen(true)}
+              className="inline-flex items-center justify-center gap-1 text-xs text-stone-400 hover:text-amber-200 transition-colors cursor-pointer group"
+            >
+              <span>đang tu tập trên Om Mani</span>
+              <ExternalLink className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </button>
+          </div>
+
+          {/* Flags Strip */}
+          <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-xl sm:text-2xl pt-3 pb-1 flex-wrap">
+            <span title="Việt Nam">🇻🇳</span>
+            <span title="Ấn Độ">🇮🇳</span>
+            <span title="Nhật Bản">🇯🇵</span>
+            <span title="Hàn Quốc">🇰🇷</span>
+            <span title="Thái Lan">🇹🇭</span>
+            <span title="Myanmar">🇲🇲</span>
+            <span title="Pháp">🇫🇷</span>
+            <span title="Hoa Kỳ">🇺🇸</span>
+            <span title="Vương Quốc Anh">🇬🇧</span>
+            <span title="Đức">🇩🇪</span>
+          </div>
+
+          {/* Pill Button: [ 🪷 Về Om Mani ] */}
+          <div className="pt-3">
+            <button
+              type="button"
+              onClick={() => setIsAboutOmManiOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#1C140E] border border-[#8C6239]/50 hover:border-amber-400/80 text-amber-200 text-xs sm:text-sm font-semibold shadow-lg hover:bg-[#2A1D14] transition-all active:scale-95 cursor-pointer"
+            >
+              <span className="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-600 to-amber-300 flex items-center justify-center text-charcoal-950 text-xs">
+                🪷
+              </span>
+              <span>Về Om Mani</span>
+            </button>
+          </div>
+        </section>
+
       </div>
 
       {/* ========================================================================= */}
@@ -1153,7 +1628,168 @@ export function OmManiAppStoreHome() {
         </div>
       )}
 
-      {/* 7. Floating Blessing Toast */}
+      {/* 7. Selected Article Reader Modal */}
+      {selectedArticle && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelectedArticle(null);
+          }}
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+        >
+          <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in">
+            {/* Top Bar */}
+            <div className="flex items-center justify-between pb-3 border-b border-stone-800 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
+                  {selectedArticle.category || 'Phật Pháp'}
+                </span>
+                <span className="text-stone-400 text-xs">
+                  • {selectedArticle.readTime || '3 phút đọc'}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedArticle(null)}
+                className="text-stone-400 hover:text-white p-1 rounded-full hover:bg-stone-800 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Scrollable Article Body */}
+            <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-4">
+              {/* Header Image */}
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-md">
+                <img
+                  src={selectedArticle.image}
+                  alt={selectedArticle.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Title */}
+              <h2 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFE082] leading-snug">
+                {selectedArticle.title}
+              </h2>
+
+              {/* Author / Source */}
+              {selectedArticle.authorOrSource && (
+                <div className="text-xs text-amber-200/80 font-medium italic">
+                  Nguồn: {selectedArticle.authorOrSource}
+                </div>
+              )}
+
+              {/* Excerpt callout */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border-l-2 border-amber-400 text-xs sm:text-sm text-stone-300 italic leading-relaxed">
+                {selectedArticle.excerpt}
+              </div>
+
+              {/* Full Text Content */}
+              <div className="text-xs sm:text-sm text-stone-200 font-serif leading-relaxed space-y-3 whitespace-pre-line">
+                {selectedArticle.content}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="pt-3 border-t border-stone-800 flex items-center justify-between shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  if (typeof navigator !== 'undefined' && navigator.share) {
+                    navigator
+                      .share({
+                        title: selectedArticle.title,
+                        text: selectedArticle.excerpt,
+                        url: window.location.href,
+                      })
+                      .catch(() => {});
+                  } else {
+                    showToast('Đã sao chép liên kết bài viết');
+                  }
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-medium transition-colors"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>Chia sẻ</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setSelectedArticle(null)}
+                className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs shadow-md transition-all active:scale-95"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 8. About Om Mani Modal */}
+      {isAboutOmManiOpen && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsAboutOmManiOpen(false);
+          }}
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+        >
+          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in space-y-4 text-center">
+            <button
+              type="button"
+              onClick={() => setIsAboutOmManiOpen(false)}
+              className="absolute top-4 right-4 text-stone-400 hover:text-white p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Lotus Medallion */}
+            <div className="w-16 h-16 mx-auto rounded-full p-[2px] bg-gradient-to-tr from-[#E5B548] via-[#FFE082] to-[#B38328] shadow-[0_0_20px_rgba(212,175,55,0.4)] flex items-center justify-center">
+              <div className="w-full h-full rounded-full bg-[#241710] flex items-center justify-center">
+                <BuddhaBodhiIcon className="w-8 h-8 text-[#FFE082]" />
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-serif font-bold text-lg text-[#FFE082]">
+                Om Mani — Không Gian Tỉnh Thức
+              </h3>
+              <p className="text-xs text-amber-200/80 mt-1">
+                Kết nối hơn 174 quốc gia cùng tu tập mỗi ngày
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 text-xs text-stone-300 leading-relaxed text-left space-y-2">
+              <p>
+                <strong className="text-amber-200">Sứ mệnh:</strong> Lan tỏa ánh sáng Chánh pháp, đưa sự an lạc và tỉnh thức đến với mỗi phút giây trong đời sống thường nhật.
+              </p>
+              <p>
+                <strong className="text-amber-200">Phương tiện tu học:</strong>
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-stone-400 pl-1">
+                <li>108 Hạt Chuỗi Niệm Phật 3D chân thực</li>
+                <li>Chuông Mõ thanh tịnh, âm vang chuẩn xác</li>
+                <li>Kho tàng kinh điển, bài khấn &amp; câu chuyện Phật giáo</li>
+                <li>Phòng cầu an, cầu siêu &amp; chánh điện trực tuyến</li>
+              </ul>
+            </div>
+
+            <div className="flex gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsAboutOmManiOpen(false);
+                  router.push('/gioi-thieu');
+                }}
+                className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs shadow-md transition-all active:scale-95"
+              >
+                Tìm hiểu thêm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 9. Floating Blessing Toast */}
       {toastMessage && (
         <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
           <div className="px-4 py-2.5 rounded-2xl bg-[#24130A]/95 border border-[#D4AF37] text-center shadow-xl backdrop-blur-md">

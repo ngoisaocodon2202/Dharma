@@ -232,3 +232,88 @@ export function playPageTurnSound(volume = 0.25) {
     // Ignore audio context restrictions quietly
   }
 }
+
+let activeDroneController: { stop: () => void } | null = null;
+
+/**
+ * Start a soothing meditative Sanskrit OM frequency (136.1 Hz) continuous drone
+ * with harmonic Tibetan singing bowl partials for deep relaxation
+ */
+export function startMeditativeDrone(volume = 0.22) {
+  try {
+    // Stop any existing drone first
+    stopMeditativeDrone();
+
+    const ctx = getAudioContext();
+    if (!ctx) return null;
+
+    const now = ctx.currentTime;
+    const master = ctx.createGain();
+    master.gain.setValueAtTime(0.0001, now);
+    master.gain.linearRampToValueAtTime(volume, now + 1.2);
+    master.connect(ctx.destination);
+
+    // Sacred OM frequency 136.1Hz & meditative harmonic overtones
+    const dronePartials = [
+      { freq: 136.1, gain: 0.5, detune: 0 },
+      { freq: 272.2, gain: 0.3, detune: 4 },
+      { freq: 408.3, gain: 0.15, detune: -3 },
+      { freq: 544.4, gain: 0.08, detune: 6 },
+    ];
+
+    const oscs: OscillatorNode[] = [];
+
+    dronePartials.forEach(({ freq, gain, detune }) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.detune.setValueAtTime(detune, now);
+
+      g.gain.setValueAtTime(gain, now);
+
+      osc.connect(g);
+      g.connect(master);
+      osc.start(now);
+      oscs.push(osc);
+    });
+
+    const controller = {
+      stop: () => {
+        try {
+          const stopNow = ctx.currentTime;
+          master.gain.setValueAtTime(master.gain.value, stopNow);
+          master.gain.exponentialRampToValueAtTime(0.0001, stopNow + 1.0);
+          setTimeout(() => {
+            oscs.forEach((osc) => {
+              try {
+                osc.stop();
+                osc.disconnect();
+              } catch {}
+            });
+          }, 1100);
+        } catch {}
+      },
+    };
+
+    activeDroneController = controller;
+    return controller;
+  } catch (err) {
+    console.error('Meditative drone error:', err);
+    return null;
+  }
+}
+
+/**
+ * Stop the active meditative drone gracefully
+ */
+export function stopMeditativeDrone() {
+  if (activeDroneController) {
+    try {
+      activeDroneController.stop();
+    } catch {}
+    activeDroneController = null;
+  }
+}
+
