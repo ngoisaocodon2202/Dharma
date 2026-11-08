@@ -18,7 +18,8 @@ export function Footer() {
     pathname === '/cau-nguyen' ||
     pathname === '/di-chua-online' ||
     pathname === '/' ||
-    pathname === '/lich-phat-giao'
+    pathname === '/lich-phat-giao' ||
+    pathname === '/thuc-hanh'
   ) {
     return null;
   }

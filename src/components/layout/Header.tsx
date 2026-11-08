@@ -317,8 +317,8 @@ export function Header() {
     setActiveDropdown((prev) => (prev === id ? null : id));
   };
 
-  // On Om Mani AppStore Homepage & Calendar tab, hide portal header
-  if (pathname === '/' || pathname === '/lich-phat-giao') {
+  // On Om Mani AppStore pages (Home, Calendar, Practice), hide portal header
+  if (pathname === '/' || pathname === '/lich-phat-giao' || pathname === '/thuc-hanh') {
     return null;
   }
 
