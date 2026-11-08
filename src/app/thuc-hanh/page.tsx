@@ -30,6 +30,7 @@ import {
   startMeditativeDrone,
   stopMeditativeDrone,
 } from '@/lib/buddhistSounds';
+import { OmManiDesktopPractice } from '@/components/om-mani/desktop/OmManiDesktopPractice';
 import { cn } from '@/lib/utils';
 
 // =============================================================================
@@ -221,8 +222,12 @@ export default function PracticePage() {
 
   return (
     <div className="min-h-screen bg-[#110D0A] text-[#FDFBF7] selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Container matching mobile aspect ratio */}
-      <div className="max-w-md sm:max-w-lg lg:max-w-xl mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-6">
+      {/* ========================================================================= */}
+      {/* MOBILE VIEW (< lg) - 100% Locked Apple iOS Om Mani Layout                 */}
+      {/* ========================================================================= */}
+      <div className="block lg:hidden">
+        {/* Container matching mobile aspect ratio */}
+        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-6">
 
         {/* ========================================================================= */}
         {/* 1. TOP TITLE HEADER (MATCHING SCREENSHOT 1)                               */}
@@ -532,6 +537,26 @@ export default function PracticePage() {
           </div>
         </section>
 
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* DESKTOP VIEW (>= lg) - Luxury Dark Gold Buddhist Sanctuary Layout         */}
+      {/* ========================================================================= */}
+      <div className="hidden lg:block">
+        <OmManiDesktopPractice
+          onOpenMala={() => setIsMalaOpen(true)}
+          onOpenBellFish={() => setIsBellFishOpen(true)}
+          onOpenChantMachine={() => setIsChantMachineOpen(true)}
+          onOpenPrayPeace={() => setIsPrayPeaceOpen(true)}
+          onOpenPrayRebirth={() => setIsPrayRebirthOpen(true)}
+          onOpenOnlineTemple={() => setIsOnlineTempleOpen(true)}
+          onOpenBuddhas={() => setIsBuddhaLibraryOpen(true)}
+          onOpenMemorial={() => setIsMemorialOpen(true)}
+          isMusicPlaying={isMusicPlaying}
+          onToggleMusic={handleToggleMusic}
+          showToast={showToast}
+        />
       </div>
 
       {/* ========================================================================= */}

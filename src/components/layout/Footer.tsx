@@ -8,20 +8,27 @@ import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { BuddhaMeditationIcon } from '@/components/icons/BuddhaMeditationIcon';
 import { TemplePagodaIcon } from '@/components/icons/TemplePagodaIcon';
 import { DharmaBookIcon } from '@/components/icons/DharmaBookIcon';
+import { OmManiDesktopFooter } from '@/components/om-mani/desktop/OmManiDesktopFooter';
 
 export function Footer() {
   const pathname = usePathname();
 
-  // Hide on group chat pages, dedicated 100vh sanctuary pages, or Om Mani AppStore pages
+  // On Om Mani AppStore pages, render dedicated dark gold Desktop Footer (hidden on mobile)
   if (
-    /^\/cong-dong\/.+/.test(pathname) ||
-    pathname === '/cau-nguyen' ||
-    pathname === '/di-chua-online' ||
     pathname === '/' ||
     pathname === '/lich-phat-giao' ||
     pathname === '/thuc-hanh' ||
     pathname === '/thu-vien' ||
     pathname === '/ho-so'
+  ) {
+    return <OmManiDesktopFooter />;
+  }
+
+  // Hide on group chat pages or dedicated 100vh sanctuary pages
+  if (
+    /^\/cong-dong\/.+/.test(pathname) ||
+    pathname === '/cau-nguyen' ||
+    pathname === '/di-chua-online'
   ) {
     return null;
   }

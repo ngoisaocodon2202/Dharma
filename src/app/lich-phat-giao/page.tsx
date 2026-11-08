@@ -19,6 +19,7 @@ import {
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { getLunarDate, LunarDateInfo, BUDDHIST_LUNAR_EVENTS } from '@/lib/lunar-calendar';
 import { playBellSound, playWoodenFishSound, playPageTurnSound } from '@/lib/buddhistSounds';
+import { OmManiDesktopCalendar } from '@/components/om-mani/desktop/OmManiDesktopCalendar';
 import { cn } from '@/lib/utils';
 
 // =============================================================================
@@ -462,10 +463,18 @@ export default function BuddhistCalendarPage() {
     return events;
   }, [viewYear, viewMonth]);
 
+  const selectedDateLunarInfo = useMemo(() => {
+    return getLunarDate(viewYear, viewMonth, selectedDay);
+  }, [viewYear, viewMonth, selectedDay]);
+
   return (
     <div className="min-h-screen bg-[#110D0A] text-[#FDFBF7] selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Container centered with mobile app aspect ratio */}
-      <div className="max-w-md sm:max-w-lg lg:max-w-xl mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-6">
+      {/* ========================================================================= */}
+      {/* MOBILE VIEW (< lg) - 100% Locked Apple iOS Om Mani Layout                 */}
+      {/* ========================================================================= */}
+      <div className="block lg:hidden">
+        {/* Container centered with mobile app aspect ratio */}
+        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-6">
 
         {/* ========================================================================= */}
         {/* 1. TOP HEADER BAR WITH RIGHT ACTION BUTTONS (MATCHING SCREENSHOT 1)       */}
@@ -786,6 +795,47 @@ export default function BuddhistCalendarPage() {
           </section>
         )}
 
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* DESKTOP VIEW (>= lg) - Luxury Dark Gold Buddhist Sanctuary Layout         */}
+      {/* ========================================================================= */}
+      <div className="hidden lg:block">
+        <OmManiDesktopCalendar
+          viewYear={viewYear}
+          viewMonth={viewMonth}
+          onPrevMonth={handlePrevMonth}
+          onNextMonth={handleNextMonth}
+          onJumpToday={handleGoToday}
+          calendarCells={calendarCells}
+          selectedDay={selectedDay}
+          onSelectDay={(c) => {
+            if (c.isCurrentMonth) {
+              setSelectedDay(c.solarDay);
+              playWoodenFishSound(0.3);
+            }
+          }}
+          selectedDateLunarInfo={selectedDateLunarInfo}
+          currentMonthEvents={currentMonthEvents}
+          reminders={reminders}
+          onOpenAddReminder={() => setIsAddReminderOpen(true)}
+          onOpenYearEvents={() => setIsYearEventsOpen(true)}
+          onSelectEvent={(ev) => {
+            setSelectedEvent(ev);
+            playWoodenFishSound(0.3);
+          }}
+          onDeleteReminder={(id) => {
+            const next = reminders.filter((r) => r.id !== id);
+            setReminders(next);
+            try {
+              localStorage.setItem(REMINDER_STORAGE_KEY, JSON.stringify(next));
+            } catch {}
+            showToast('Đã xóa lời nhắc');
+          }}
+          isReminderEnabled={isNotificationOn}
+          onToggleReminder={handleToggleNotification}
+        />
       </div>
 
       {/* ========================================================================= */}

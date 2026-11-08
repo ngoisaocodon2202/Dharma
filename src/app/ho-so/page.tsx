@@ -29,6 +29,7 @@ import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { useAuth } from '@/components/auth/AuthContext';
 import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 import { playBellSound, playWoodenFishSound, playPageTurnSound } from '@/lib/buddhistSounds';
+import { OmManiDesktopProfile } from '@/components/om-mani/desktop/OmManiDesktopProfile';
 import { cn } from '@/lib/utils';
 
 // Meditating Figure Icon for stats
@@ -126,8 +127,12 @@ export default function AccountProfilePage() {
 
   return (
     <div className="min-h-screen bg-[#110D0A] text-[#FDFBF7] selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Container matching mobile aspect ratio */}
-      <div className="max-w-md sm:max-w-lg lg:max-w-xl mx-auto px-4 sm:px-5 pt-2 pb-32 space-y-5">
+      {/* ========================================================================= */}
+      {/* MOBILE VIEW (< lg) - 100% Locked Apple iOS Om Mani Layout                 */}
+      {/* ========================================================================= */}
+      <div className="block lg:hidden">
+        {/* Container matching mobile aspect ratio */}
+        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-2 pb-32 space-y-5">
 
         {/* ========================================================================= */}
         {/* 1. TOP HEADER BANNER & AVATAR (MATCHING SCREENSHOT 1)                     */}
@@ -638,6 +643,32 @@ export default function AccountProfilePage() {
           </div>
         </section>
 
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* DESKTOP VIEW (>= lg) - Luxury Dark Gold Buddhist Sanctuary Layout         */}
+      {/* ========================================================================= */}
+      <div className="hidden lg:block">
+        <OmManiDesktopProfile
+          dharmaName={dharmaName}
+          fullName={fullName}
+          userMotto={userMotto}
+          refugeDate={refugeDate}
+          refugeTemple={refugeTemple}
+          masterName={masterName}
+          onOpenEditProfile={() => setIsEditProfileOpen(true)}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenMemorial={() => setIsMemorialOpen(true)}
+          onOpenPersonalEvents={() => setIsPersonalEventsOpen(true)}
+          onOpenMeditationSchedule={() => setIsMeditationScheduleOpen(true)}
+          onOpenSupport={() => setIsSupportOmManiOpen(true)}
+          onLogout={() => {
+            logout();
+            showToast('Đã đăng xuất tài khoản');
+          }}
+          showToast={showToast}
+        />
       </div>
 
       {/* ========================================================================= */}

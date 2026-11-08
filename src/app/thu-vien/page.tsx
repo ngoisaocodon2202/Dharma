@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { playBellSound, playWoodenFishSound, playPageTurnSound } from '@/lib/buddhistSounds';
+import { OmManiDesktopSutras } from '@/components/om-mani/desktop/OmManiDesktopSutras';
 import { cn } from '@/lib/utils';
 
 // =============================================================================
@@ -276,8 +277,12 @@ export default function SutrasLibraryPage() {
 
   return (
     <div className="min-h-screen bg-[#110D0A] text-[#FDFBF7] selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Container matching phone aspect ratio */}
-      <div className="max-w-md sm:max-w-lg lg:max-w-xl mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-4">
+      {/* ========================================================================= */}
+      {/* MOBILE VIEW (< lg) - 100% Locked Apple iOS Om Mani Layout                 */}
+      {/* ========================================================================= */}
+      <div className="block lg:hidden">
+        {/* Container matching phone aspect ratio */}
+        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-4">
 
         {/* ========================================================================= */}
         {/* 1. TOP BAR: [Tất cả] | Kinh sách | [📖] (MATCHING SCREENSHOT)             */}
@@ -472,6 +477,26 @@ export default function SutrasLibraryPage() {
           </div>
         </section>
 
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* DESKTOP VIEW (>= lg) - Luxury Dark Gold Buddhist Sanctuary Layout         */}
+      {/* ========================================================================= */}
+      <div className="hidden lg:block">
+        <OmManiDesktopSutras
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          filteredSutras={filteredSutras}
+          onOpenSutra={(s) => setReadingSutra(s)}
+          onOpenPrayerModal={() => {
+            playBellSound(0.4);
+            setIsPrayerModalOpen(true);
+          }}
+          showToast={showToast}
+        />
       </div>
 
       {/* ========================================================================= */}

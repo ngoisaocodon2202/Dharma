@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { OmManiMobileHeader } from '@/components/om-mani/OmManiMobileHeader';
+import { OmManiDesktopNav } from '@/components/om-mani/desktop/OmManiDesktopNav';
 import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 
 export interface SubNavItem {
@@ -317,7 +318,7 @@ export function Header() {
     setActiveDropdown((prev) => (prev === id ? null : id));
   };
 
-  // On Om Mani AppStore pages (Home, Calendar, Practice, Sutras, Profile), hide portal header
+  // On Om Mani AppStore pages (Home, Calendar, Practice, Sutras, Profile), render dedicated dark gold Desktop Nav (hidden on mobile)
   if (
     pathname === '/' ||
     pathname === '/lich-phat-giao' ||
@@ -325,7 +326,7 @@ export function Header() {
     pathname === '/thu-vien' ||
     pathname === '/ho-so'
   ) {
-    return null;
+    return <OmManiDesktopNav />;
   }
 
   return (

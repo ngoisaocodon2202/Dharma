@@ -36,6 +36,7 @@ import {
 import { IncenseOfferingModal, MalaBeadsModal } from './OmManiInteractiveTools';
 import { SearchModal } from '@/components/layout/SearchModal';
 import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
+import { OmManiDesktopHome } from './desktop/OmManiDesktopHome';
 import { cn } from '@/lib/utils';
 
 // =============================================================================
@@ -434,8 +435,12 @@ export function OmManiAppStoreHome() {
 
   return (
     <div className="min-h-screen bg-[#110D0A] text-[#FDFBF7] selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Container matching phone aspect ratio centered on larger screens */}
-      <div className="max-w-md sm:max-w-lg lg:max-w-xl mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-6">
+      {/* ========================================================================= */}
+      {/* MOBILE VIEW (< lg) - 100% Locked Apple iOS Om Mani Layout                 */}
+      {/* ========================================================================= */}
+      <div className="block lg:hidden">
+        {/* Container matching phone aspect ratio centered on larger screens */}
+        <div className="max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-6">
 
         {/* ========================================================================= */}
         {/* 1. TOP APP BAR & GREETING (MATCHING SCREENSHOT 1)                         */}
@@ -1486,6 +1491,34 @@ export function OmManiAppStoreHome() {
           </div>
         </section>
 
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* DESKTOP VIEW (>= lg) - Luxury Dark Gold Buddhist Sanctuary Layout         */}
+      {/* ========================================================================= */}
+      <div className="hidden lg:block">
+        <OmManiDesktopHome
+          user={user}
+          showToast={showToast}
+          onOpenMala={() => setIsMalaOpen(true)}
+          onOpenIncense={() => setIsIncenseOpen(true)}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onSelectArticle={(a) => setSelectedArticle(a)}
+          onSelectBuddha={(b) => setSelectedBuddha(b)}
+          onSelectWallpaper={(w) => setSelectedWallpaper(w)}
+          onSelectSutra={(s) => setIsSutraTextOpen(s)}
+          onOpenAbout={() => setIsAboutOmManiOpen(true)}
+          isPlayingMusic={isPlayingMusic}
+          onToggleMusic={handleToggleMusic}
+          isDroneActive={isDroneActive}
+          onToggleDrone={handleToggleDrone}
+          weekDays={WEEK_DAYS}
+          featuredArticles={FEATURED_ARTICLES}
+          buddhas={BUDDHAS}
+          temples={TEMPLES}
+          wallpapers={WALLPAPERS}
+        />
       </div>
 
       {/* ========================================================================= */}
