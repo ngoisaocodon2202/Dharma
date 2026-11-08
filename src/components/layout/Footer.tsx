@@ -19,7 +19,8 @@ export function Footer() {
     pathname === '/di-chua-online' ||
     pathname === '/' ||
     pathname === '/lich-phat-giao' ||
-    pathname === '/thuc-hanh'
+    pathname === '/thuc-hanh' ||
+    pathname === '/thu-vien'
   ) {
     return null;
   }
