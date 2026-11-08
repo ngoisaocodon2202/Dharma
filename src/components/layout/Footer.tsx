@@ -20,7 +20,8 @@ export function Footer() {
     pathname === '/' ||
     pathname === '/lich-phat-giao' ||
     pathname === '/thuc-hanh' ||
-    pathname === '/thu-vien'
+    pathname === '/thu-vien' ||
+    pathname === '/ho-so'
   ) {
     return null;
   }

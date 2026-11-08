@@ -317,12 +317,13 @@ export function Header() {
     setActiveDropdown((prev) => (prev === id ? null : id));
   };
 
-  // On Om Mani AppStore pages (Home, Calendar, Practice, Sutras), hide portal header
+  // On Om Mani AppStore pages (Home, Calendar, Practice, Sutras, Profile), hide portal header
   if (
     pathname === '/' ||
     pathname === '/lich-phat-giao' ||
     pathname === '/thuc-hanh' ||
-    pathname === '/thu-vien'
+    pathname === '/thu-vien' ||
+    pathname === '/ho-so'
   ) {
     return null;
   }
