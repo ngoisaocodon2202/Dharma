@@ -321,7 +321,9 @@ export function Header() {
     <>
       {/* Mobile Native App Header (< lg) */}
       <div className="block lg:hidden">
-        <OmManiMobileHeader onOpenMenu={() => setIsMobileMenuOpen(true)} />
+        {pathname !== '/' && (
+          <OmManiMobileHeader onOpenMenu={() => setIsMobileMenuOpen(true)} />
+        )}
       </div>
 
       {/* Desktop Portal Header (>= lg) */}
