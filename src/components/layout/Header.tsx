@@ -317,8 +317,8 @@ export function Header() {
     setActiveDropdown((prev) => (prev === id ? null : id));
   };
 
-  // On Om Mani AppStore Homepage, the entire page has its own integrated mobile header
-  if (pathname === '/') {
+  // On Om Mani AppStore Homepage & Calendar tab, hide portal header
+  if (pathname === '/' || pathname === '/lich-phat-giao') {
     return null;
   }
 

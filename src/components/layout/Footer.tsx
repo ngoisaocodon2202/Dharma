@@ -12,12 +12,13 @@ import { DharmaBookIcon } from '@/components/icons/DharmaBookIcon';
 export function Footer() {
   const pathname = usePathname();
 
-  // Hide on group chat pages, dedicated 100vh sanctuary pages, or Om Mani AppStore Homepage
+  // Hide on group chat pages, dedicated 100vh sanctuary pages, or Om Mani AppStore pages
   if (
     /^\/cong-dong\/.+/.test(pathname) ||
     pathname === '/cau-nguyen' ||
     pathname === '/di-chua-online' ||
-    pathname === '/'
+    pathname === '/' ||
+    pathname === '/lich-phat-giao'
   ) {
     return null;
   }
