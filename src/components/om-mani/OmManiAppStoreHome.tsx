@@ -223,6 +223,8 @@ interface TempleItem {
   location: string;
   image: string;
   href: string;
+  tradition?: string;
+  history?: string;
 }
 
 const TEMPLES_LIST: TempleItem[] = [
@@ -230,25 +232,37 @@ const TEMPLES_LIST: TempleItem[] = [
     name: 'Chùa Một Cột (Diên Hựu Tự)',
     location: 'Ba Đình, Hà Nội',
     image: '/images/ancient_pagoda.jpg',
-    href: '/chua-dia-danh/chua-mot-cot-ha-noi',
+    href: '/di-chua-online',
+    tradition: 'Bắc Tông • Di sản Quốc gia Đặc biệt',
+    history:
+      'Được vua Lý Thái Tông khởi dựng năm 1049 theo giấc mộng thấy Đức Bồ Tát Quán Thế Âm ngự trên tòa sen vàng. Ngôi chùa mang kiến trúc Liên Hoa Đài độc đáo vươn lên từ mặt hồ Linh Chiểu, biểu trưng cho trí tuệ và lòng từ bi thanh khiết.',
   },
   {
     name: 'Chùa Bái Đính',
     location: 'Gia Viễn, Ninh Bình',
     image: '/images/chua_bai_dinh.jpg',
-    href: '/chua-dia-danh/quan-su-co-tu-ha-noi',
+    href: '/di-chua-online',
+    tradition: 'Bắc Tông • Quần thể Danh lam Tràng An',
+    history:
+      'Quần thể tâm linh có lịch sử hơn 1.000 năm gắn liền với Quốc sư Nguyễn Minh Không thời nhà Lý. Nơi đây lưu giữ hành lang 500 vị La Hán bằng đá xanh và Đại Hồng Chung nặng 36 tấn vang vọng giữa non nước cố đô Hoa Lư.',
   },
   {
     name: 'Thiền Viện Trúc Lâm Yên Tử',
     location: 'Uông Bí, Quảng Ninh',
     image: '/images/tran_nhan_tong_yentu.jpg',
-    href: '/chua-dia-danh/thien-vien-truc-lam-yen-tu-quang-ninh',
+    href: '/di-chua-online',
+    tradition: 'Thiền Phái Trúc Lâm Việt Nam',
+    history:
+      'Tổ đình của Thiền phái Trúc Lâm Yên Tử do Điều Ngự Giác Hoàng Trần Nhân Tông sáng lập vào thế kỷ XIII, nơi hội tụ tinh thần Phật giáo nhập thế, hòa quyện giữa đạo và đời trên đỉnh non thiêng Yên Tử.',
   },
   {
-    name: 'Chùa Thiên Mụ',
+    name: 'Chùa Thiên Mụ (Linh Mụ Tự)',
     location: 'Cố đô Huế',
     image: '/images/temple_sanctuary_bg.jpg',
-    href: '/chua-dia-danh/chua-thien-mu-thua-thien-hue',
+    href: '/di-chua-online',
+    tradition: 'Bắc Tông • Đệ Nhất Cổ Tự Xứ Huế',
+    history:
+      'Khởi lập năm 1601 bên dòng sông Hương thơ mộng trên đồi Hà Khê. Tháp Phước Duyên 7 tầng cao 21m là biểu tượng tâm linh trang nghiêm của đất thần kinh suốt hơn bốn thế kỷ.',
   },
 ];
 
@@ -425,6 +439,7 @@ export function OmManiAppStoreHome() {
   const [isIncenseOpen, setIsIncenseOpen] = useState(false);
   const [isMalaOpen, setIsMalaOpen] = useState(false);
   const [selectedBuddha, setSelectedBuddha] = useState<BuddhaCard | null>(null);
+  const [selectedTemple, setSelectedTemple] = useState<TempleItem | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<ArticleItem | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -584,10 +599,10 @@ export function OmManiAppStoreHome() {
                   <span>Lịch Cát Tường Hôm Nay</span>
                 </div>
                 <h2 className="font-heading font-serif text-[15px] sm:text-lg font-bold text-[#FFFDF7] pt-0.5 whitespace-nowrap">
-                  30 tháng 09 Âm lịch • Bính Ngọ
+                  {selectedDay.lunarDate} tháng 09 Âm lịch • Bính Ngọ
                 </h2>
                 <p className="text-[11px] sm:text-xs text-[#F3E3B2] whitespace-nowrap truncate">
-                  Chủ Nhật, 08/11/2026 • Tiết Lập Đông
+                  {selectedDay.name === 'CN' ? 'Chủ Nhật' : `Thứ ${selectedDay.name}`}, {selectedDay.solarDate}/11/2026 • Tiết Lập Đông
                 </p>
               </div>
 
@@ -989,10 +1004,10 @@ export function OmManiAppStoreHome() {
                 </h3>
               </div>
               <Link
-                href="/chua-dia-danh"
+                href="/di-chua-online"
                 className="text-xs font-semibold text-[#FFD966] flex items-center gap-0.5"
               >
-                <span>Tất cả</span>
+                <span>Chánh điện</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -1001,7 +1016,10 @@ export function OmManiAppStoreHome() {
               {TEMPLES_LIST.map((temple) => (
                 <div
                   key={temple.name}
-                  onClick={() => router.push(temple.href)}
+                  onClick={() => {
+                    playBellSound(0.35);
+                    setSelectedTemple(temple);
+                  }}
                   className="snap-start w-52 shrink-0 rounded-2xl overflow-hidden border border-[#F5C542]/30 bg-[#241B0B] group cursor-pointer active:scale-95 transition-all shadow-lg"
                 >
                   <div className="aspect-[16/10] overflow-hidden bg-[#181207]">
@@ -1156,24 +1174,23 @@ export function OmManiAppStoreHome() {
       <IncenseOfferingModal isOpen={isIncenseOpen} onClose={() => setIsIncenseOpen(false)} />
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
-      {/* Buddha Detail Bottom-Sheet Modal */}
+      {/* Buddha Detail Modal */}
       {selectedBuddha && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedBuddha(null);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md rounded-t-[30px] sm:rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl animate-scale-in space-y-4">
-            <div className="w-10 h-1 rounded-full bg-[#F5C542]/35 mx-auto sm:hidden" />
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border border-[#F5C542]/45 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl animate-scale-in space-y-4">
             <button
               onClick={() => setSelectedBuddha(null)}
-              className="absolute top-5 right-5 text-[#C7B68B] hover:text-[#FFD966] p-1"
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
-            <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-[#FFD966] shadow-[0_0_25px_rgba(245,197,66,0.35)]">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full overflow-hidden border-2 border-[#FFD966] shadow-[0_0_25px_rgba(245,197,66,0.35)]">
               <img
                 src={selectedBuddha.image}
                 alt={selectedBuddha.name}
@@ -1182,7 +1199,7 @@ export function OmManiAppStoreHome() {
             </div>
 
             <div className="text-center space-y-1">
-              <h3 className="font-heading font-serif font-bold text-lg text-[#FFD966]">
+              <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFD966]">
                 {selectedBuddha.title}
               </h3>
               <p className="text-xs text-[#F3E3B2] font-serif italic">
@@ -1190,7 +1207,7 @@ export function OmManiAppStoreHome() {
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#140F05]/80 border border-[#F5C542]/25 text-xs text-[#D6C394] leading-relaxed">
+            <div className="p-3.5 rounded-2xl bg-[#140F05]/80 border border-[#F5C542]/25 text-xs text-[#D6C394] leading-relaxed">
               <p className="font-bold text-[#FFD966] mb-1">Đại Nguyện &amp; Công Đức:</p>
               <p>{selectedBuddha.vow}</p>
             </div>
@@ -1203,35 +1220,102 @@ export function OmManiAppStoreHome() {
                   setSelectedBuddha(null);
                   setIsMalaOpen(true);
                 }}
-                className="py-3 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs shadow-md active:scale-95 cursor-pointer"
+                className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs shadow-md active:scale-95 cursor-pointer"
               >
-                Lần Chuỗi Niệm Danh Hiệu
+                Lần Chuỗi Niệm Phật
               </button>
               <button
                 onClick={() => {
                   setSelectedBuddha(null);
                   setIsIncenseOpen(true);
                 }}
-                className="py-3 rounded-xl bg-[#241B0B] border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs active:scale-95 cursor-pointer"
+                className="py-2.5 px-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs active:scale-95 cursor-pointer"
               >
-                Dâng Hương Cúng Dường
+                Dâng Hương Lễ Phật
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Article Reader Bottom-Sheet Modal */}
+      {/* Temple Detail Modal */}
+      {selectedTemple && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelectedTemple(null);
+          }}
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+        >
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border border-[#F5C542]/45 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl animate-scale-in space-y-4">
+            <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#F5C542]/20">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                  {selectedTemple.tradition || 'Danh Lam Cổ Tự Việt Nam'}
+                </span>
+                <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFFDF7] mt-0.5">
+                  {selectedTemple.name}
+                </h3>
+              </div>
+              <button
+                onClick={() => setSelectedTemple(null)}
+                className="text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25 shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden aspect-[16/9] border border-[#F5C542]/30 bg-[#181207]">
+              <img
+                src={selectedTemple.image}
+                alt={selectedTemple.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <p className="text-xs text-[#FFD966] flex items-center gap-1.5 font-medium">
+              <MapPin className="w-3.5 h-3.5 shrink-0" />
+              <span>Địa điểm: {selectedTemple.location}</span>
+            </p>
+
+            <div className="p-3.5 rounded-2xl bg-[#140F05]/80 border border-[#F5C542]/25 text-xs text-[#F3E3B2] leading-relaxed">
+              {selectedTemple.history}
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedTemple(null);
+                  setIsIncenseOpen(true);
+                }}
+                className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs shadow-md active:scale-95 cursor-pointer"
+              >
+                Dâng Hương Lễ Phật
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedTemple(null);
+                  router.push('/di-chua-online');
+                }}
+                className="py-2.5 px-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs active:scale-95 cursor-pointer"
+              >
+                Vào Chánh Điện Online
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Article Reader Modal */}
       {selectedArticle && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-lg max-h-[90vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-gradient-to-b from-[#2A1F0B] to-[#181207] border-t sm:border border-[#F5C542]/45 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl animate-scale-in">
-            <div className="w-10 h-1 rounded-full bg-[#F5C542]/35 mx-auto mb-3 sm:hidden shrink-0" />
-
+          <div className="relative w-full max-w-lg max-h-[86vh] flex flex-col rounded-3xl bg-gradient-to-b from-[#2A1F0B] to-[#181207] border border-[#F5C542]/45 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl animate-scale-in">
             <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
               <div className="flex items-center gap-2 text-xs text-[#FFD966] font-bold">
                 <SutraScrollIcon className="w-4 h-4" />
@@ -1239,13 +1323,13 @@ export function OmManiAppStoreHome() {
               </div>
               <button
                 onClick={() => setSelectedArticle(null)}
-                className="text-[#C7B68B] hover:text-[#FFD966] p-1"
+                className="text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="overflow-y-auto py-4 space-y-4 pr-1">
+            <div className="overflow-y-auto no-scrollbar py-4 space-y-4 pr-1">
               <div className="rounded-2xl overflow-hidden aspect-[16/9] border border-[#F5C542]/30">
                 <img
                   src={selectedArticle.image}
@@ -1254,7 +1338,7 @@ export function OmManiAppStoreHome() {
                 />
               </div>
 
-              <h3 className="font-heading font-serif font-bold text-lg sm:text-xl text-[#FFD966] leading-snug">
+              <h3 className="font-heading font-serif font-bold text-base sm:text-xl text-[#FFD966] leading-snug">
                 {selectedArticle.title}
               </h3>
 
@@ -1263,7 +1347,7 @@ export function OmManiAppStoreHome() {
                 {selectedArticle.readTime}
               </div>
 
-              <div className="text-sm text-[#FFFDF7]/90 leading-relaxed whitespace-pre-line space-y-3 font-serif">
+              <div className="text-xs sm:text-sm text-[#FFFDF7]/90 leading-relaxed whitespace-pre-line space-y-3 font-serif">
                 {selectedArticle.content}
               </div>
             </div>
@@ -1274,6 +1358,7 @@ export function OmManiAppStoreHome() {
                 onClick={() => {
                   playBellSound(0.4);
                   showToast('Hoan hỷ ghi nhận công đức pháp học!');
+                  setSelectedArticle(null);
                 }}
                 className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
               >
@@ -1304,14 +1389,14 @@ export function OmManiAppStoreHome() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsAboutOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md rounded-t-[30px] sm:rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl animate-scale-in text-center space-y-4">
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl animate-scale-in text-center space-y-4">
             <button
               onClick={() => setIsAboutOpen(false)}
-              className="absolute top-5 right-5 text-[#C7B68B] hover:text-[#FFD966] p-1"
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
             <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden border border-[#F5C542]/50 shadow-lg bg-[#181207]">
@@ -1323,7 +1408,7 @@ export function OmManiAppStoreHome() {
             </div>
 
             <div>
-              <h3 className="font-heading font-serif font-bold text-lg text-[#FFD966]">
+              <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFD966]">
                 DHARMA — Không Gian Chánh Niệm &amp; Pháp Bảo
               </h3>
               <p className="text-xs text-[#D6C394] mt-1">

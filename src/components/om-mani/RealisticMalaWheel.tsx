@@ -185,10 +185,10 @@ export function RealisticMalaWheel({
                   className={cn(
                     'relative rounded-full transition-all duration-250 flex items-center justify-center',
                     isTopActive
-                      ? 'w-9 h-9 sm:w-10 sm:h-10 scale-115 z-20 shadow-[0_0_22px_#fbbf24,inset_0_2px_6px_rgba(255,255,255,0.6)] ring-2 ring-amber-300'
+                      ? 'w-9 h-9 sm:w-10 sm:h-10 scale-110 z-20 shadow-[0_0_22px_#fbbf24,inset_0_2px_6px_rgba(255,255,255,0.6)] ring-2 ring-amber-300'
                       : isGuruBead
                         ? 'w-8 h-8 z-10 shadow-[0_4px_10px_rgba(0,0,0,0.75)] ring-1 ring-amber-400/80'
-                        : 'w-7 h-7 sm:w-7.5 sm:h-7.5 shadow-[0_4px_8px_rgba(0,0,0,0.7)]'
+                        : 'w-7 h-7 sm:w-8 sm:h-8 shadow-[0_4px_8px_rgba(0,0,0,0.7)]'
                   )}
                   style={{
                     background: isTopActive
@@ -224,7 +224,7 @@ export function RealisticMalaWheel({
         {/* ================= CENTER COUNTER MEDALLION ================= */}
         <div
           className={cn(
-            'relative z-10 w-32 h-32 sm:w-34 sm:h-34 rounded-full bg-gradient-to-b from-[#3B1909] via-[#220D04] to-[#120601] border-2 flex flex-col items-center justify-center p-2 shadow-[inset_0_2px_15px_rgba(245,158,11,0.28),0_8px_24px_rgba(0,0,0,0.8)] transition-all duration-200',
+            'relative z-10 w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-gradient-to-b from-[#3B1909] via-[#220D04] to-[#120601] border-2 flex flex-col items-center justify-center p-2 shadow-[inset_0_2px_15px_rgba(245,158,11,0.28),0_8px_24px_rgba(0,0,0,0.8)] transition-all duration-200',
             isPulling
               ? 'border-amber-300 scale-95 shadow-[0_0_25px_rgba(251,191,36,0.45)]'
               : 'border-amber-500/60 group-hover:border-amber-400'
@@ -236,7 +236,7 @@ export function RealisticMalaWheel({
           <span
             className={cn(
               'font-mono text-3xl sm:text-4xl font-extrabold text-[#FFE082] my-0.5 leading-none transition-transform duration-150',
-              isPulling && 'scale-115 text-white'
+              isPulling && 'scale-110 text-white'
             )}
           >
             {displayBeadNumber}

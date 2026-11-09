@@ -270,7 +270,7 @@ export default function PracticePage() {
       subtitle: 'Pháp thoại & lời Phật dạy',
       image: '/images/buddha_meditation.jpg',
       Icon: SutraScrollIcon,
-      onClick: () => router.push('/phap-thoai'),
+      onClick: () => setIsChantMachineOpen(true),
     },
     {
       id: 'cau-an',
@@ -540,10 +540,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMeditationModalOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
             <button
               type="button"
               onClick={() => {
@@ -658,10 +657,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsChantMachineOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => {
@@ -753,10 +751,9 @@ export default function PracticePage() {
               setIsBellsModalOpen(false);
             }
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
             <button
               type="button"
               onClick={() => {
@@ -887,10 +884,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerPeaceOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => setIsPrayerPeaceOpen(false)}
@@ -968,10 +964,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerRebirthOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => setIsPrayerRebirthOpen(false)}
@@ -1049,10 +1044,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsBuddhasModalOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-2 sm:hidden" />
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
               <div>
                 <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
@@ -1103,10 +1097,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMemorialBookOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => setIsMemorialBookOpen(false)}
@@ -1212,10 +1205,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMeritLedgerOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-2 sm:hidden" />
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20">
               <div className="flex items-center gap-2">
                 <BodhiLeafIcon className="w-5 h-5 text-[#FFD966]" />

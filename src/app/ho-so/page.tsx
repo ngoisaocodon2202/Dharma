@@ -615,9 +615,9 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsEditProfileOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
             <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
               <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
@@ -714,9 +714,9 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsAboutDharmaOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-4">
             <div className="w-16 h-16 mx-auto rounded-2xl border border-[#F5C542]/60 overflow-hidden shadow-lg bg-[#181207]">
               <img
                 src="/dharma-logo.png"
@@ -757,9 +757,9 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsSupportDharmaOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-4">
             <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966]">
               <LotusMinimalIcon className="w-6 h-6" />
             </div>
@@ -801,9 +801,9 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMemorialBookOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
               <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
                 Sổ Hiếu Hạnh Gia Tiên
@@ -883,9 +883,9 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMeditationScheduleOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
               <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
                 Chuông Nhắc Thời Khóa Hằng Ngày
@@ -939,9 +939,9 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsSettingsOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
               <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
                 Cài Đặt Hệ Thống Dharma

@@ -162,11 +162,11 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative w-full max-w-md max-h-[92vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-[#2A1F0B] via-[#1F1708] to-[#161005] text-[#FFFDF7] rounded-t-[30px] sm:rounded-3xl border-t sm:border border-[#F5C542]/40 shadow-[0_-12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
+      <div className="relative w-full max-w-md max-h-[88vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-[#2A1F0B] via-[#1F1708] to-[#161005] text-[#FFFDF7] rounded-3xl border border-[#F5C542]/45 shadow-[0_12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
         {/* React Native Drag Handle */}
         <div className="pt-2.5 pb-1 flex justify-center sm:hidden">
           <div className="w-10 h-1 rounded-full bg-[#F5C542]/35" />
@@ -414,11 +414,11 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative w-full max-w-md max-h-[92vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-[#2A1F0B] via-[#1F1708] to-[#161005] text-[#FFFDF7] rounded-t-[30px] sm:rounded-3xl border-t sm:border border-[#F5C542]/40 shadow-[0_-12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
+      <div className="relative w-full max-w-md max-h-[88vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-[#2A1F0B] via-[#1F1708] to-[#161005] text-[#FFFDF7] rounded-3xl border border-[#F5C542]/45 shadow-[0_12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
         {/* React Native Drag Handle */}
         <div className="pt-2.5 pb-1 flex justify-center sm:hidden">
           <div className="w-10 h-1 rounded-full bg-[#F5C542]/35" />

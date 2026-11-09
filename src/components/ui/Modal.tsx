@@ -66,7 +66,7 @@ export function Modal({
       <div
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          'relative w-full max-h-[90vh] overflow-y-auto no-scrollbar bg-white dark:bg-charcoal-800 rounded-2xl shadow-2xl border border-ivory-200 dark:border-charcoal-700 p-4 sm:p-6 z-10 animate-scale-in overscroll-contain',
+          'relative w-full max-h-[88vh] overflow-y-auto no-scrollbar bg-[#241B0B] text-[#FFFDF7] rounded-3xl shadow-2xl border border-[#F5C542]/45 p-4 sm:p-6 z-10 animate-scale-in overscroll-contain',
           maxWidths[maxWidth]
         )}
         role="dialog"
@@ -74,7 +74,7 @@ export function Modal({
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 text-charcoal-400 hover:text-charcoal-700 dark:hover:text-charcoal-200 rounded-lg hover:bg-ivory-100 dark:hover:bg-charcoal-700 transition-colors"
+          className="absolute top-4 right-4 p-1.5 text-[#C7B68B] hover:text-[#FFD966] rounded-xl bg-[#181207] border border-[#F5C542]/25 transition-colors cursor-pointer"
           aria-label="Đóng"
         >
           <X className="w-5 h-5" />
@@ -82,11 +82,11 @@ export function Modal({
 
         {title && (
           <div className="mb-4 pr-8">
-            <h3 className="font-heading text-xl font-semibold text-charcoal-900 dark:text-charcoal-100">
+            <h3 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFD966]">
               {title}
             </h3>
             {description && (
-              <p className="text-xs text-charcoal-500 dark:text-charcoal-400 mt-1">
+              <p className="text-xs text-[#C7B68B] mt-1">
                 {description}
               </p>
             )}

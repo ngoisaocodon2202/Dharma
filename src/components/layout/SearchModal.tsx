@@ -1,9 +1,76 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Modal } from '@/components/ui/Modal';
-import { Search, BookOpen, MapPin, Music, Compass, Loader2 } from 'lucide-react';
+import { Search, BookOpen, MapPin, Compass, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+
+interface QuickDharmaItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  href: string;
+}
+
+const DHARMA_QUICK_INDEX: QuickDharmaItem[] = [
+  {
+    id: 'q-1',
+    title: 'Bát Nhã Ba La Mật Đa Tâm Kinh',
+    subtitle: 'Quán chiếu Ngũ Uẩn giai không, vượt thoát khổ ách',
+    category: 'Tam Tạng Kinh Điển',
+    href: '/thu-vien',
+  },
+  {
+    id: 'q-2',
+    title: 'Kinh Từ Bi (Karaniya Metta Sutta)',
+    subtitle: 'Trải tâm từ bi vô lượng đến khắp mười phương chúng sinh',
+    category: 'Kinh Nguyên Thủy Nikāya',
+    href: '/thu-vien',
+  },
+  {
+    id: 'q-3',
+    title: 'Kinh Dược Sư Lưu Ly Quang Như Lai Bổn Nguyện',
+    subtitle: 'Mười hai đại nguyện tiêu trừ tật bệnh, gia tăng phúc thọ',
+    category: 'Kinh Đại Thừa',
+    href: '/thu-vien',
+  },
+  {
+    id: 'q-4',
+    title: 'Thiền Hơi Thở Chánh Niệm Anapanasati (4-4-6)',
+    subtitle: 'Phòng thiền định tâm 4s hít vào - 4s giữ - 6s thở ra',
+    category: 'Phương Tiện Hành Trì',
+    href: '/thuc-hanh',
+  },
+  {
+    id: 'q-5',
+    title: 'Tràng Hạt Bồ Đề 108 Hạt & Chuông Mõ Nhịp BPM',
+    subtitle: 'Lần chuỗi niệm Phật và gõ mõ tự động 50/68/88 BPM',
+    category: 'Pháp Khí Tu Tập',
+    href: '/thuc-hanh',
+  },
+  {
+    id: 'q-6',
+    title: 'Lịch Vạn Niên Phật Giáo & Ngày Trai Giới',
+    subtitle: 'Tra cứu ngày Sóc Vọng, Thập Trai và thực đơn chay dưỡng sinh',
+    category: 'Lịch Vạn Niên',
+    href: '/lich-phat-giao',
+  },
+  {
+    id: 'q-7',
+    title: 'Thẻ Cư Sĩ Hoàng Kim & Tự Kiểm Ngũ Giới',
+    subtitle: 'Theo dõi Cây Bồ Đề Công Đức và giữ gìn 5 giới tại gia',
+    category: 'Hồ Sơ Cư Sĩ',
+    href: '/ho-so',
+  },
+  {
+    id: 'q-8',
+    title: 'Chánh Điện Lễ Phật & Dâng Hương Trực Tuyến',
+    subtitle: 'Không gian lễ Phật, dâng hương và thỉnh Đại Hồng Chung',
+    category: 'Đạo Tràng Online',
+    href: '/di-chua-online',
+  },
+];
 
 export function SearchModal({
   isOpen,
@@ -14,29 +81,22 @@ export function SearchModal({
 }) {
   const [queryText, setQueryText] = useState('');
   const [suggestionIdx, setSuggestionIdx] = useState(0);
-  const [results, setResults] = useState<{
-    articles: any[];
-    temples: any[];
-    audio: any[];
-    learningPaths: any[];
-  } | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   const POPULAR_TAGS = [
-    'Tứ Diệu Đế',
-    'Thiền buông thư',
-    'Chùa Quán Sứ',
-    'Kinh Pháp Cú',
-    'Bát Chánh Đạo',
-    'Thích Nhất Hạnh',
+    'Bát Nhã Tâm Kinh',
+    'Thiền hơi thở',
+    'Kinh Dược Sư',
+    '108 Hạt',
+    'Lịch ăn chay',
+    'Ngũ Giới',
   ];
 
   const PLACEHOLDERS = [
-    'Tìm kiếm "Tứ Diệu Đế & Bát Chánh Đạo"...',
-    'Tìm kiếm pháp thoại "Thiền buông thư"...',
-    'Tìm kiếm chùa "Quán Sứ", "Hoằng Pháp"...',
-    'Tìm kiếm kinh "Pháp Cú", "Bát Nhã"...',
-    'Tìm kiếm lộ trình "Nhập môn Phật giáo"...',
+    'Tìm kiếm "Bát Nhã Tâm Kinh"...',
+    'Tìm kiếm "Thiền hơi thở Anapanasati"...',
+    'Tìm kiếm "Kinh Dược Sư", "Kinh Từ Bi"...',
+    'Tìm kiếm "Lịch ăn chay & Thập Trai"...',
+    'Tìm kiếm "108 Chuỗi Bồ Đề", "Ngũ Giới"...',
   ];
 
   useEffect(() => {
@@ -47,214 +107,85 @@ export function SearchModal({
     return () => clearInterval(interval);
   }, [isOpen]);
 
-  useEffect(() => {
-    if (!queryText || queryText.trim().length < 2) {
-      setResults(null);
-      setIsLoading(false);
-      return;
-    }
-
-    const timer = setTimeout(async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(queryText.trim())}`);
-        if (res.ok) {
-          const data = await res.json();
-          setResults(data);
-        }
-      } catch (err) {
-        console.error('Lỗi tìm kiếm:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    }, 250);
-
-    return () => clearTimeout(timer);
+  const filteredItems = useMemo(() => {
+    const q = queryText.trim().toLowerCase();
+    if (!q) return DHARMA_QUICK_INDEX;
+    return DHARMA_QUICK_INDEX.filter(
+      (item) =>
+        item.title.toLowerCase().includes(q) ||
+        item.subtitle.toLowerCase().includes(q) ||
+        item.category.toLowerCase().includes(q)
+    );
   }, [queryText]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} maxWidth="xl">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Tra Cứu Pháp Bảo Dharma"
+      description="Tìm nhanh Kinh điển, Pháp khí hành trì, Lịch Trai Giới & Cẩm nang"
+      maxWidth="lg"
+    >
       <div className="space-y-4">
-        {/* Search Input with animated placeholder */}
+        {/* Search Input */}
         <div className="relative">
-          <Search className="absolute left-3.5 top-3 w-5 h-5 text-saffron-600 dark:text-saffron-400" />
+          <Search className="absolute left-3.5 top-3 w-4 h-4 text-[#FFD966]" />
           <input
             type="text"
-            autoFocus
             value={queryText}
             onChange={(e) => setQueryText(e.target.value)}
             placeholder={PLACEHOLDERS[suggestionIdx]}
-            className="w-full pl-11 pr-10 py-3 text-base bg-ivory-50/80 dark:bg-charcoal-700/60 border border-ivory-300 dark:border-charcoal-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-saffron-500/40 text-charcoal-900 dark:text-charcoal-100 transition-all placeholder:text-charcoal-400 placeholder:transition-opacity"
+            className="w-full pl-10 pr-4 py-2.5 text-sm bg-[#181207] border border-[#F5C542]/35 rounded-xl focus:outline-none focus:border-[#FFD966] text-[#FFFDF7] placeholder:text-[#C7B68B]/60"
           />
-          {isLoading && (
-            <Loader2 className="absolute right-3.5 top-3.5 w-5 h-5 text-saffron-500 animate-spin" />
-          )}
         </div>
 
-        {/* Dynamic Animated Suggestion Text Banner & Quick Tags */}
-        {!queryText && (
-          <div className="space-y-3 pt-1">
-            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-saffron-50/80 dark:bg-saffron-950/40 border border-saffron-200/60 dark:border-saffron-800/50 text-xs overflow-hidden">
-              <span className="w-2 h-2 rounded-full bg-saffron-500 animate-pulse flex-shrink-0" />
-              <span className="font-semibold text-saffron-800 dark:text-saffron-300 whitespace-nowrap flex-shrink-0">
-                Gợi ý tìm kiếm:
-              </span>
-              <div className="relative h-4 overflow-hidden flex-1 flex items-center">
-                <span
-                  key={suggestionIdx}
-                  className="font-medium text-charcoal-700 dark:text-charcoal-200 truncate inline-block animate-fade-in-up"
-                >
-                  {PLACEHOLDERS[suggestionIdx].replace('Tìm kiếm ', '')}
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <span className="text-[11px] font-semibold text-charcoal-400 uppercase tracking-wider block mb-2">
-                Từ khóa phổ biến
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {POPULAR_TAGS.map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => setQueryText(tag)}
-                    className="px-2.5 py-1 rounded-lg text-xs bg-ivory-100/80 dark:bg-charcoal-700/70 hover:bg-saffron-100 dark:hover:bg-saffron-900/40 text-charcoal-700 dark:text-charcoal-300 hover:text-saffron-800 dark:hover:text-saffron-200 transition-all cursor-pointer border border-ivory-200 dark:border-charcoal-600 hover:border-saffron-300 whitespace-nowrap active:scale-95"
-                  >
-                    #{tag}
-                  </button>
-                ))}
-              </div>
-            </div>
+        {/* Popular Tags */}
+        <div>
+          <span className="text-[10px] font-bold text-[#FFD966] uppercase tracking-wider block mb-2">
+            Từ khóa gợi ý nhanh
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {POPULAR_TAGS.map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => setQueryText(tag)}
+                className="px-2.5 py-1 rounded-xl text-xs bg-[#181207] hover:bg-[#F5C542]/20 text-[#F3E3B2] hover:text-[#FFD966] transition-all cursor-pointer border border-[#F5C542]/25 whitespace-nowrap active:scale-95"
+              >
+                #{tag}
+              </button>
+            ))}
           </div>
-        )}
+        </div>
 
         {/* Results Area */}
-        <div className="max-h-[55vh] overflow-y-auto space-y-4 pr-1">
-          {queryText.trim().length < 2 && (
-            <div className="py-8 text-center text-xs text-charcoal-400">
-              Nhập từ khóa tìm kiếm (tối thiểu 2 ký tự) để tra cứu bài giảng, địa danh chùa, lộ trình học...
+        <div className="max-h-[48vh] overflow-y-auto no-scrollbar space-y-2 pr-0.5">
+          {filteredItems.map((item) => (
+            <Link
+              key={item.id}
+              href={item.href}
+              onClick={onClose}
+              className="block p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] transition-all"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  {item.category}
+                </span>
+              </div>
+              <div className="text-xs sm:text-sm font-heading font-serif font-bold text-[#FFFDF7] mt-0.5">
+                {item.title}
+              </div>
+              <div className="text-[11px] text-[#C7B68B] line-clamp-1 mt-0.5">
+                {item.subtitle}
+              </div>
+            </Link>
+          ))}
+
+          {filteredItems.length === 0 && (
+            <div className="py-6 text-center text-xs text-[#C7B68B]">
+              Không tìm thấy nội dung phù hợp với từ khóa &ldquo;{queryText}&rdquo;.
             </div>
-          )}
-
-          {results && (
-            <>
-              {/* Articles */}
-              {results.articles?.length > 0 && (
-                <div>
-                  <h4 className="text-xs font-semibold text-charcoal-500 dark:text-charcoal-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5 text-saffron-500" /> Bài viết Phật pháp
-                  </h4>
-                  <div className="space-y-1.5">
-                    {results.articles.map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/bai-viet/${item.slug}`}
-                        onClick={onClose}
-                        className="block p-2.5 rounded-lg hover:bg-ivory-100 dark:hover:bg-charcoal-700/70 transition-colors"
-                      >
-                        <div className="text-sm font-medium text-charcoal-900 dark:text-charcoal-100">
-                          {item.title}
-                        </div>
-                        <div className="text-xs text-charcoal-500 dark:text-charcoal-400 line-clamp-1 mt-0.5">
-                          {item.excerpt}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Temples */}
-              {results.temples?.length > 0 && (
-                <div>
-                  <h4 className="text-xs font-semibold text-charcoal-500 dark:text-charcoal-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-jade-500" /> Chùa & Địa danh
-                  </h4>
-                  <div className="space-y-1.5">
-                    {results.temples.map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/chua-dia-danh/${item.slug}`}
-                        onClick={onClose}
-                        className="block p-2.5 rounded-lg hover:bg-ivory-100 dark:hover:bg-charcoal-700/70 transition-colors"
-                      >
-                        <div className="text-sm font-medium text-charcoal-900 dark:text-charcoal-100 flex items-center gap-2">
-                          {item.name}
-                          {item.is_verified && (
-                            <span className="text-[10px] px-1.5 py-0.2 bg-jade-100 dark:bg-jade-900/40 text-jade-700 dark:text-jade-300 rounded font-normal">
-                              Xác minh
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-xs text-charcoal-500 dark:text-charcoal-400 mt-0.5">
-                          {item.address}, {item.province}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Audio */}
-              {results.audio?.length > 0 && (
-                <div>
-                  <h4 className="text-xs font-semibold text-charcoal-500 dark:text-charcoal-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <Music className="w-3.5 h-3.5 text-lotus-500" /> Pháp thoại & Audio
-                  </h4>
-                  <div className="space-y-1.5">
-                    {results.audio.map((item) => (
-                      <div
-                        key={item.id}
-                        className="p-2.5 rounded-lg hover:bg-ivory-100 dark:hover:bg-charcoal-700/70 transition-colors cursor-pointer"
-                        onClick={onClose}
-                      >
-                        <div className="text-sm font-medium text-charcoal-900 dark:text-charcoal-100">
-                          {item.title}
-                        </div>
-                        <div className="text-xs text-charcoal-500 dark:text-charcoal-400 mt-0.5">
-                          Giảng sư: {item.speaker}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Learning Paths */}
-              {results.learningPaths?.length > 0 && (
-                <div>
-                  <h4 className="text-xs font-semibold text-charcoal-500 dark:text-charcoal-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <Compass className="w-3.5 h-3.5 text-saffron-500" /> Lộ trình học Phật
-                  </h4>
-                  <div className="space-y-1.5">
-                    {results.learningPaths.map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/lo-trinh-hoc/${item.slug}`}
-                        onClick={onClose}
-                        className="block p-2.5 rounded-lg hover:bg-ivory-100 dark:hover:bg-charcoal-700/70 transition-colors"
-                      >
-                        <div className="text-sm font-medium text-charcoal-900 dark:text-charcoal-100">
-                          {item.title}
-                        </div>
-                        <div className="text-xs text-charcoal-500 dark:text-charcoal-400 line-clamp-1 mt-0.5">
-                          {item.description}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {results.articles?.length === 0 &&
-                results.temples?.length === 0 &&
-                results.audio?.length === 0 &&
-                results.learningPaths?.length === 0 && (
-                  <div className="py-8 text-center text-sm text-charcoal-500">
-                    Không tìm thấy nội dung phù hợp với từ khóa &ldquo;{queryText}&rdquo;. Quý đạo hữu hãy thử từ khóa khác.
-                  </div>
-                )}
-            </>
           )}
         </div>
       </div>

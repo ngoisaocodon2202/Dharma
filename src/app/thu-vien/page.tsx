@@ -561,16 +561,14 @@ export default function SutrasLibraryPage() {
               setReadingSutra(null);
             }
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-2xl max-h-[92vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/50 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-2 sm:hidden" />
-
+          <div className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/50 p-4 sm:p-6 text-[#FFFDF7] shadow-2xl">
             {/* Top Bar inside Reader */}
             <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
-              <div className="min-w-0 pr-2">
-                <span className="text-[10px] text-[#FFD966] font-bold uppercase tracking-wider block">
-                  {readingSutra.categoryLabel} • Đã trì tụng: {sutraChantCounts[readingSutra.id] || 0} biến
+              <div className="min-w-0 pr-2 flex-1">
+                <span className="text-[10px] text-[#FFD966] font-bold uppercase tracking-wider block whitespace-nowrap truncate">
+                  {readingSutra.categoryLabel} • Đã tụng: {sutraChantCounts[readingSutra.id] || 0} biến
                 </span>
                 <h2 className="font-heading font-serif text-base sm:text-xl font-bold text-[#FFFDF7] truncate mt-0.5">
                   {readingSutra.title}
@@ -710,10 +708,10 @@ export default function SutrasLibraryPage() {
               <button
                 type="button"
                 onClick={() => handleCompleteSutraRecitation(readingSutra)}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
               >
-                <Check className="w-4 h-4 stroke-[2.5]" />
-                <span>Hoàn Mãn 1 Biến &amp; Hồi Hướng (+30 Công Đức)</span>
+                <Check className="w-4 h-4 stroke-[2.5] shrink-0" />
+                <span>Hoàn Mãn 1 Biến (+30 Công Đức)</span>
               </button>
             </div>
           </div>
@@ -728,10 +726,9 @@ export default function SutrasLibraryPage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerModalOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-2 sm:hidden" />
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
               <div>
                 <span className="text-[10px] uppercase font-bold text-[#FFD966] tracking-wider">

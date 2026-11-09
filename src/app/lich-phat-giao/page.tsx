@@ -898,20 +898,19 @@ export default function BuddhistCalendarPage() {
       </div>
 
       {/* ========================================================================= */}
-      {/* MODAL: NIÊN BIỂU PHẬT SỰ TRONG NĂM (REACT NATIVE BOTTOM-SHEET)            */}
+      {/* MODAL: NIÊN BIỂU PHẬT SỰ TRONG NĂM                                        */}
       {/* ========================================================================= */}
       {isYearEventsOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsYearEventsOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-3 sm:hidden" />
+          <div className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
               <div>
-                <h3 className="font-heading font-serif font-bold text-lg text-[#FFD966]">
+                <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFD966]">
                   Niên Biểu Phật Sự 12 Tháng Âm Lịch
                 </h3>
                 <p className="text-xs text-[#C7B68B] mt-0.5">
@@ -957,17 +956,16 @@ export default function BuddhistCalendarPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* MODAL: CHI TIẾT SỰ KIỆN PHẬT GIÁO (REACT NATIVE BOTTOM-SHEET)             */}
+      {/* MODAL: CHI TIẾT SỰ KIỆN PHẬT GIÁO                                         */}
       {/* ========================================================================= */}
       {selectedEvent && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedEvent(null);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[88vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-3 sm:hidden" />
+          <div className="relative w-full max-w-md max-h-[86vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
             <button
               type="button"
               onClick={() => setSelectedEvent(null)}
@@ -989,7 +987,7 @@ export default function BuddhistCalendarPage() {
               </div>
 
               <div>
-                <h3 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFD966] leading-snug">
+                <h3 className="font-heading font-serif text-base sm:text-xl font-bold text-[#FFD966] leading-snug">
                   {selectedEvent.fullTitle}
                 </h3>
                 <div className="flex items-center gap-2 mt-1.5 text-xs text-[#F3E3B2]">
@@ -1052,10 +1050,9 @@ export default function BuddhistCalendarPage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsAddReminderOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
               <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
                 Tạo Lịch Nhắc Hành Trì &amp; Trai Giới
