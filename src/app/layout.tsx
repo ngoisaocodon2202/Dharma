@@ -89,7 +89,7 @@ export default function RootLayout({
             <AudioProvider>
               <MindfulnessProvider>
                 <Header />
-                <main className="flex-1">{children}</main>
+                <main className="flex-1 w-full min-w-0">{children}</main>
                 <Footer />
                 <MobileBottomNav />
                 <GlobalAudioPlayer />

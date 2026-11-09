@@ -77,7 +77,7 @@ const FIVE_PRECEPTS_LIST: PreceptItem[] = [
     id: 'precept-5',
     number: 'Giới thứ 5',
     title: 'Tỉnh Thức Sáng Suốt & Không Say Nghiện',
-    pali: 'Surāmerayamajjapamādaṭṭhānā veramaṇī',
+    pali: 'Surāmeraya veramaṇī',
     desc: 'Nguyện giữ tâm trí trong sáng, tiêu thụ chánh niệm cả thực phẩm lẫn thông tin hằng ngày.',
   },
 ];
@@ -93,7 +93,7 @@ export default function AccountProfilePage() {
   const [realName, setRealName] = useState(user?.full_name || 'Nguyễn Minh Tâm');
   const [refugeDate, setRefugeDate] = useState('2024-01-15');
   const [refugeTemple, setRefugeTemple] = useState('Chùa Giác Ngộ');
-  const [masterName, setMasterName] = useState('Chư Tôn Đức Tam Bảo');
+  const [masterName, setMasterName] = useState('Chư Tôn Đức');
   const [userMotto, setUserMotto] = useState(
     'Tâm bình thế giới bình, mỗi bước chân là một đóa sen nở.'
   );
@@ -276,28 +276,28 @@ export default function AccountProfilePage() {
                   <h2 className="font-heading font-serif font-bold text-xl text-[#FFFDF7]">
                     {dharmaName}
                   </h2>
-                  <p className="text-xs text-[#F3E3B2] italic font-serif mt-1 max-w-xs mx-auto">
+                  <p className="text-[11px] text-[#F3E3B2] italic font-serif mt-1 max-w-xs mx-auto leading-relaxed">
                     “{userMotto}”
                   </p>
                 </div>
 
-                {/* Refuge Details Mini Box */}
-                <div className="grid grid-cols-3 gap-2 pt-1 text-left">
-                  <div className="p-2.5 rounded-2xl bg-[#181207]/90 border border-[#F5C542]/20">
+                {/* Refuge Details Mini Box — Full Text Without Clipping */}
+                <div className="grid grid-cols-3 gap-1.5 pt-1 text-left">
+                  <div className="p-2 rounded-xl bg-[#181207]/90 border border-[#F5C542]/20 min-w-0">
                     <span className="text-[9px] uppercase text-[#C7B68B] block">Ngày Quy Y</span>
-                    <span className="text-xs font-mono font-bold text-[#FFFDF7] truncate block">
+                    <span className="text-[10.5px] font-mono font-bold text-[#FFFDF7] whitespace-nowrap truncate block mt-0.5">
                       {refugeDate}
                     </span>
                   </div>
-                  <div className="p-2.5 rounded-2xl bg-[#181207]/90 border border-[#F5C542]/20">
+                  <div className="p-2 rounded-xl bg-[#181207]/90 border border-[#F5C542]/20 min-w-0">
                     <span className="text-[9px] uppercase text-[#C7B68B] block">Đạo Tràng</span>
-                    <span className="text-xs font-bold text-[#FFFDF7] truncate block">
+                    <span className="text-[10.5px] font-bold text-[#FFFDF7] whitespace-nowrap truncate block mt-0.5">
                       {refugeTemple}
                     </span>
                   </div>
-                  <div className="p-2.5 rounded-2xl bg-[#181207]/90 border border-[#F5C542]/20">
+                  <div className="p-2 rounded-xl bg-[#181207]/90 border border-[#F5C542]/20 min-w-0">
                     <span className="text-[9px] uppercase text-[#C7B68B] block">Truyền Giới</span>
-                    <span className="text-xs font-bold text-[#FFD966] truncate block">
+                    <span className="text-[10.5px] font-bold text-[#FFD966] whitespace-nowrap truncate block mt-0.5">
                       {masterName}
                     </span>
                   </div>
@@ -404,10 +404,10 @@ export default function AccountProfilePage() {
                       <Check className="w-3.5 h-3.5 stroke-[3]" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <span className="text-[10px] font-bold uppercase text-[#FFD966] block">
+                      <span className="text-[10px] font-bold uppercase text-[#FFD966] block truncate whitespace-nowrap">
                         {p.number} • {p.pali}
                       </span>
-                      <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] mt-0.5">
+                      <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] mt-0.5 truncate whitespace-nowrap">
                         {p.title}
                       </h4>
                       <p className="text-[11px] text-[#D6C394] mt-0.5 leading-relaxed">

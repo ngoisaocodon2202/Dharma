@@ -235,7 +235,7 @@ export default function PracticePage() {
     {
       id: 'trang-hat',
       category: 'tri_niem',
-      stepBadge: 'Bước 2 • Trì Niệm',
+      stepBadge: 'Trì Niệm',
       title: '108 Chuỗi Bồ Đề',
       subtitle: 'Lần hạt trì niệm danh hiệu',
       image: '/images/monk_incense.jpg',
@@ -245,7 +245,7 @@ export default function PracticePage() {
     {
       id: 'chuong-mo',
       category: 'tri_niem',
-      stepBadge: 'Bước 2 • Giữ Nhịp',
+      stepBadge: 'Giữ Nhịp',
       title: 'Chuông Mõ Nhịp BPM',
       subtitle: 'Mõ tự động 50/68/88 BPM',
       image: '/images/ancient_pagoda.jpg',
@@ -255,7 +255,7 @@ export default function PracticePage() {
     {
       id: 'may-niem-phat',
       category: 'tri_niem',
-      stepBadge: 'Bước 2 • Chuyên Nhất',
+      stepBadge: 'Chuyên Nhất',
       title: 'Pháp Âm Niệm Phật',
       subtitle: 'Niệm hồng danh & thần chú',
       image: '/images/golden_buddha.jpg',
@@ -265,7 +265,7 @@ export default function PracticePage() {
     {
       id: 'nghe-kinh',
       category: 'dinh_tam',
-      stepBadge: 'Bước 1 • Văn Tư Tu',
+      stepBadge: 'Văn Tư Tu',
       title: 'Thính Pháp Âm',
       subtitle: 'Pháp thoại & lời Phật dạy',
       image: '/images/buddha_meditation.jpg',
@@ -275,7 +275,7 @@ export default function PracticePage() {
     {
       id: 'cau-an',
       category: 'hoi_huong',
-      stepBadge: 'Bước 3 • Hồi Hướng',
+      stepBadge: 'Hồi Hướng',
       title: 'Hoa Đăng Cầu An',
       subtitle: 'Thắp đèn sen cầu bình an',
       image: '/images/quan_am_bodhisattva.jpg',
@@ -285,7 +285,7 @@ export default function PracticePage() {
     {
       id: 'cau-sieu',
       category: 'hoi_huong',
-      stepBadge: 'Bước 3 • Hồi Hướng',
+      stepBadge: 'Hồi Hướng',
       title: 'Hoa Đăng Kỳ Siêu',
       subtitle: 'Hồi hướng cửu huyền thất tổ',
       image: '/images/tran_nhan_tong_yentu.jpg',
@@ -295,7 +295,7 @@ export default function PracticePage() {
     {
       id: 'di-chua',
       category: 'dinh_tam',
-      stepBadge: 'Bước 1 • Lễ Bái',
+      stepBadge: 'Lễ Bái',
       title: 'Chánh Điện Lễ Phật',
       subtitle: 'Dâng hương lễ bái Tam Bảo',
       image: '/images/temple_sanctuary_bg.jpg',
@@ -305,7 +305,7 @@ export default function PracticePage() {
     {
       id: 'thu-vien-bon-ton',
       category: 'dinh_tam',
-      stepBadge: 'Bước 1 • Quán Tưởng',
+      stepBadge: 'Quán Tưởng',
       title: 'Tôn Tượng Chư Phật',
       subtitle: 'Chiêm bái hồng danh & nguyện',
       image: '/images/golden_buddha_altar.jpg',
@@ -315,7 +315,7 @@ export default function PracticePage() {
     {
       id: 'nhac-tu-tap',
       category: 'dinh_tam',
-      stepBadge: 'Bước 1 • Tịnh Tâm',
+      stepBadge: 'Tịnh Tâm',
       title: 'Tần Số Thiền 432Hz',
       subtitle: isMusicPlaying ? 'Đang phát thanh tịnh...' : 'Thanh âm chuông xoay tịnh tâm',
       image: '/images/lotus_blooming.jpg',
@@ -326,7 +326,7 @@ export default function PracticePage() {
     {
       id: 'so-gio-chap',
       category: 'hoi_huong',
-      stepBadge: 'Bước 3 • Tri Ân',
+      stepBadge: 'Tri Ân',
       title: 'Sổ Hiếu Hạnh Tổ Tiên',
       subtitle: 'Ghi nhớ ngày húy kỵ gia tiên',
       image: '/images/sutra_book.jpg',
@@ -346,20 +346,20 @@ export default function PracticePage() {
       {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP PRACTICE               */}
       {/* ========================================================================= */}
       <div className="block lg:hidden">
-        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-5">
-          {/* 1. SAFE-AREA HEADER */}
-          <header className="flex items-center justify-between gap-3 pt-2">
-            <div className="flex items-center gap-3">
+        <div className="max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-4">
+          {/* 1. SAFE-AREA HEADER — Single-Line Guaranteed */}
+          <header className="flex items-center justify-between gap-2 pt-2">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
                 <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
                   <MeditatingMonkOutlineIcon className="w-5 h-5 text-[#FFD966]" />
                 </div>
               </div>
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+              <div className="min-w-0 flex-1">
+                <span className="text-[9.5px] font-bold uppercase tracking-normal text-[#FFD966] block whitespace-nowrap">
                   DHARMA • TAM ĐẲNG HÀNH TRÌ
                 </span>
-                <h1 className="font-heading font-serif text-xl sm:text-2xl font-bold text-[#FFFDF7] leading-tight">
+                <h1 className="font-heading font-serif text-base sm:text-xl font-bold text-[#FFFDF7] leading-tight whitespace-nowrap">
                   Định Tâm &amp; Hành Trì
                 </h1>
               </div>
@@ -371,9 +371,9 @@ export default function PracticePage() {
                 playWoodenFishSound(0.3);
                 setIsMeritLedgerOpen(true);
               }}
-              className="px-3 py-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-[#FFD966] text-xs font-bold flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer shadow-sm"
+              className="px-2.5 py-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-[#FFD966] text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-all cursor-pointer shadow-sm shrink-0 whitespace-nowrap"
             >
-              <BodhiLeafIcon className="w-4 h-4" />
+              <BodhiLeafIcon className="w-3.5 h-3.5 shrink-0" />
               <span>Sổ Công Đức</span>
             </button>
           </header>
@@ -381,40 +381,40 @@ export default function PracticePage() {
           {/* 2. HERO CARD: ANAPANASATI BREATHING MEDITATION */}
           <section aria-label="Phòng thiền hơi thở chánh niệm">
             <div
-              className="relative rounded-3xl overflow-hidden border border-[#F5C542]/35 shadow-2xl min-h-[215px] p-5 flex flex-col justify-between bg-cover bg-center"
+              className="relative rounded-3xl overflow-hidden border border-[#F5C542]/35 shadow-2xl p-4 flex flex-col justify-between gap-4 bg-cover bg-center"
               style={{
                 backgroundImage:
                   "linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.55) 55%, rgba(24, 18, 7, 0.25) 100%), url('/images/buddha_meditation.jpg')",
               }}
             >
               <div className="flex items-center justify-between relative z-10">
-                <div className="px-3 py-1 rounded-full bg-[#181207]/80 backdrop-blur-md text-[#FFD966] text-[10px] font-bold uppercase tracking-wider border border-[#F5C542]/40">
+                <div className="px-3 py-1 rounded-full bg-[#181207]/80 backdrop-blur-md text-[#FFD966] text-[10px] font-bold uppercase tracking-wider border border-[#F5C542]/40 whitespace-nowrap">
                   Bước 1 • Thiền Quán Hơi Thở 4-4-6
                 </div>
-                <div className="relative w-10 h-10 rounded-2xl border border-[#F5C542]/45 bg-[#181207]/75 backdrop-blur-md flex items-center justify-center text-[#FFD966] shadow-md">
-                  <MeditatingMonkOutlineIcon className="w-5 h-5" />
+                <div className="relative w-9 h-9 rounded-2xl border border-[#F5C542]/45 bg-[#181207]/75 backdrop-blur-md flex items-center justify-center text-[#FFD966] shadow-md shrink-0">
+                  <MeditatingMonkOutlineIcon className="w-4 h-4" />
                 </div>
               </div>
 
-              <div className="relative z-10 pt-4">
-                <h2 className="font-heading font-serif text-2xl font-bold text-[#FFFDF7] leading-tight">
-                  Phòng Thiền Hơi Thở Anapanasati
+              <div className="relative z-10 space-y-1">
+                <h2 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFFDF7] leading-tight whitespace-nowrap truncate">
+                  Thiền Hơi Thở Anapanasati
                 </h2>
-                <p className="text-xs text-[#F3E3B2] mt-1">
-                  Hít vào tĩnh lặng (4s) • An trú chánh niệm (4s) • Thở ra buông xả (6s)
+                <p className="text-[11px] sm:text-xs text-[#F3E3B2] whitespace-nowrap truncate">
+                  Hít vào 4s • An trú chánh niệm 4s • Thở ra buông xả 6s
                 </p>
 
-                <div className="mt-4 flex items-center gap-2.5">
+                <div className="pt-3 grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => {
                       playBellSound(0.4);
                       setIsMeditationModalOpen(true);
                     }}
-                    className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs inline-flex items-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
+                    className="py-2.5 px-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                   >
-                    <Play className="w-3.5 h-3.5 fill-current" />
-                    <span>Vào Phòng Thiền Hơi Thở</span>
+                    <Play className="w-3.5 h-3.5 fill-current shrink-0" />
+                    <span>Bắt Đầu Thiền</span>
                   </button>
 
                   <button
@@ -423,9 +423,9 @@ export default function PracticePage() {
                       playGrandTempleBellSound(0.5);
                       showToast('Tiếng Đại Hồng Chung ngân vang • Tâm bình an');
                     }}
-                    className="px-3.5 py-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs inline-flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+                    className="py-2.5 px-3 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                   >
-                    <TempleBellIcon className="w-3.5 h-3.5" />
+                    <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
                     <span>Thỉnh Chuông</span>
                   </button>
                 </div>
@@ -436,7 +436,7 @@ export default function PracticePage() {
           {/* 3. REACT NATIVE 4-PILL SEGMENTED STEP FILTER */}
           <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25">
             {[
-              { id: 'all', label: 'Tất Cả (10)' },
+              { id: 'all', label: 'Tất Cả' },
               { id: 'dinh_tam', label: '1. Định Tâm' },
               { id: 'tri_niem', label: '2. Trì Niệm' },
               { id: 'hoi_huong', label: '3. Hồi Hướng' },
@@ -451,7 +451,7 @@ export default function PracticePage() {
                     setStepFilter(tab.id as PracticeStepFilter);
                   }}
                   className={cn(
-                    'py-2 px-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer truncate',
+                    'py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap',
                     active
                       ? 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] shadow-sm'
                       : 'text-[#D6C394] hover:text-[#FFFDF7]'
@@ -473,29 +473,29 @@ export default function PracticePage() {
                     key={item.id}
                     onClick={item.onClick}
                     className={cn(
-                      'relative rounded-3xl overflow-hidden aspect-[4/3.5] p-3.5 flex flex-col justify-between border cursor-pointer group active:scale-95 transition-all shadow-lg bg-cover bg-center',
+                      'relative rounded-2xl overflow-hidden aspect-[4/3] p-3 flex flex-col justify-between border cursor-pointer group active:scale-95 transition-all shadow-lg bg-cover bg-center',
                       item.active
                         ? 'border-[#FFD966] ring-2 ring-[#F5C542]/60'
                         : 'border-[#F5C542]/25 hover:border-[#FFD966]'
                     )}
                     style={{
-                      backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.5) 60%, rgba(24, 18, 7, 0.2) 100%), url('${item.image}')`,
+                      backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.45) 60%, rgba(24, 18, 7, 0.2) 100%), url('${item.image}')`,
                     }}
                   >
                     <div className="flex items-center justify-between gap-1">
-                      <span className="px-2 py-0.5 rounded-full bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/35 text-[9px] font-bold text-[#FFD966] truncate">
+                      <span className="px-2 py-0.5 rounded-full bg-[#181207]/85 backdrop-blur-md border border-[#F5C542]/35 text-[9px] font-bold text-[#FFD966] whitespace-nowrap">
                         {item.stepBadge}
                       </span>
-                      <div className="w-8 h-8 rounded-xl bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] shrink-0">
-                        <Icon className="w-4 h-4" />
+                      <div className="w-7 h-7 rounded-xl bg-[#181207]/85 backdrop-blur-md border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] shrink-0">
+                        <Icon className="w-3.5 h-3.5" />
                       </div>
                     </div>
 
-                    <div>
-                      <h4 className="font-heading font-serif font-bold text-sm sm:text-base text-[#FFFDF7] group-hover:text-[#FFD966] transition-colors leading-tight">
+                    <div className="min-w-0">
+                      <h4 className="font-heading font-serif font-bold text-[13px] sm:text-sm text-[#FFFDF7] group-hover:text-[#FFD966] transition-colors leading-tight truncate whitespace-nowrap">
                         {item.title}
                       </h4>
-                      <p className="text-[11px] text-[#F3E3B2]/90 mt-0.5 truncate">
+                      <p className="text-[10px] text-[#F3E3B2]/90 mt-0.5 truncate whitespace-nowrap">
                         {item.subtitle}
                       </p>
                     </div>

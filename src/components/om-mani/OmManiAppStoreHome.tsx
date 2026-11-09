@@ -66,7 +66,7 @@ const WEEK_DAYS: DayItem[] = [
     lunarDate: '30',
     hasDot: true,
     isToday: true,
-    festivalName: 'Vía Đức Phật Dược Sư Lưu Ly Quang Vương Như Lai',
+    festivalName: 'Vía Đức Phật Dược Sư Lưu Ly Quang',
   },
 ];
 
@@ -525,10 +525,10 @@ export function OmManiAppStoreHome() {
       <div className="block lg:hidden relative z-10">
         <div className="max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-5">
           {/* 1. REACT NATIVE SAFE-AREA TOP NAVIGATION BAR */}
-          <header className="sticky top-2 z-30 rounded-2xl bg-[#211808]/90 backdrop-blur-xl border border-[#F5C542]/30 px-3.5 py-2.5 flex items-center justify-between gap-2 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+          <header className="sticky top-2 z-30 rounded-2xl bg-[#211808]/95 backdrop-blur-xl border border-[#F5C542]/30 px-3.5 py-2.5 flex items-center justify-between gap-2 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
             <Link
               href="/ho-so"
-              className="flex items-center gap-2.5 min-w-0 active:scale-95 transition-transform"
+              className="flex items-center gap-2.5 min-w-0 flex-1 active:scale-95 transition-transform"
             >
               <div className="w-10 h-10 rounded-xl overflow-hidden border border-[#F5C542]/50 shadow-[0_2px_12px_rgba(245,197,66,0.35)] bg-[#181207] shrink-0">
                 <img
@@ -537,23 +537,22 @@ export function OmManiAppStoreHome() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-heading font-serif font-black text-sm tracking-wider text-[#FFFDF7]">
+                  <span className="font-heading font-serif font-black text-sm tracking-wider text-[#FFFDF7] whitespace-nowrap">
                     DHARMA
                   </span>
-                  <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-md bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/35">
+                  <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-md bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/35 whitespace-nowrap shrink-0">
                     {completedPeriods.length}/4 Thời
                   </span>
                 </div>
-                <p className="text-[11px] text-[#D6C394] truncate">
+                <p className="text-[11px] text-[#D6C394] truncate whitespace-nowrap">
                   Chào {user?.dharma_name || user?.full_name || 'Cư sĩ'} • Tâm an vạn sự an
                 </p>
               </div>
             </Link>
 
             <div className="flex items-center gap-1.5 shrink-0">
-              <LanguageSwitcher compact variant="sanctuary" />
               <button
                 type="button"
                 onClick={() => {
@@ -577,24 +576,24 @@ export function OmManiAppStoreHome() {
           </header>
 
           {/* 2. BENTO HERO CARD: LUNAR-SOLAR & QUICK SANCTUARY ACTIONS */}
-          <section className="rounded-3xl bg-gradient-to-br from-[#33250C] via-[#251B09] to-[#1A1305] border border-[#F5C542]/40 p-4 shadow-[0_12px_36px_rgba(0,0,0,0.55)] space-y-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="space-y-1">
-                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FFD966] bg-[#F5C542]/15 px-2.5 py-0.5 rounded-full border border-[#F5C542]/35">
-                  <LotusMinimalIcon className="w-3 h-3" />
+          <section className="rounded-3xl bg-gradient-to-br from-[#33250C] via-[#251B09] to-[#1A1305] border border-[#F5C542]/40 p-4 shadow-[0_12px_36px_rgba(0,0,0,0.55)] space-y-3.5">
+            <div className="flex items-start justify-between gap-2">
+              <div className="space-y-1 min-w-0 flex-1">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FFD966] bg-[#F5C542]/15 px-2.5 py-0.5 rounded-full border border-[#F5C542]/35 whitespace-nowrap">
+                  <LotusMinimalIcon className="w-3 h-3 shrink-0" />
                   <span>Lịch Cát Tường Hôm Nay</span>
                 </div>
-                <h2 className="font-heading font-serif text-lg font-bold text-[#FFFDF7] pt-0.5">
+                <h2 className="font-heading font-serif text-[15px] sm:text-lg font-bold text-[#FFFDF7] pt-0.5 whitespace-nowrap">
                   30 tháng 09 Âm lịch • Bính Ngọ
                 </h2>
-                <p className="text-xs text-[#F3E3B2]">
-                  Dương lịch: Chủ Nhật, 08/11/2026 • Tiết Lập Đông
+                <p className="text-[11px] sm:text-xs text-[#F3E3B2] whitespace-nowrap truncate">
+                  Chủ Nhật, 08/11/2026 • Tiết Lập Đông
                 </p>
               </div>
 
               <Link
                 href="/lich-phat-giao"
-                className="px-3 py-1.5 rounded-xl bg-[#181207]/80 border border-[#F5C542]/30 text-[11px] font-bold text-[#FFD966] flex items-center gap-1 shrink-0 active:scale-95"
+                className="px-2.5 py-1.5 rounded-xl bg-[#181207]/80 border border-[#F5C542]/30 text-[11px] font-bold text-[#FFD966] flex items-center gap-0.5 shrink-0 whitespace-nowrap active:scale-95"
               >
                 <span>Chi tiết</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -603,18 +602,18 @@ export function OmManiAppStoreHome() {
 
             {/* Highlighted Holy Day Banner */}
             {selectedDay.festivalName && (
-              <div className="p-3 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/35 flex items-center gap-2.5">
+              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/35 flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-[#F5C542]/20 flex items-center justify-center text-[#FFD966] shrink-0">
                   <DharmaWheelIcon className="w-4 h-4" />
                 </div>
-                <p className="text-xs font-semibold text-[#FFD966] leading-snug">
+                <p className="text-xs font-semibold text-[#FFD966] truncate whitespace-nowrap">
                   {selectedDay.festivalName}
                 </p>
               </div>
             )}
 
-            {/* 7-Day Interactive Strip */}
-            <div className="grid grid-cols-7 gap-1.5">
+            {/* 7-Day Interactive Strip — Crisp Square Proportions */}
+            <div className="grid grid-cols-7 gap-1">
               {WEEK_DAYS.map((day) => {
                 const isSelected = selectedDay.solarDate === day.solarDate;
                 return (
@@ -626,17 +625,17 @@ export function OmManiAppStoreHome() {
                       setSelectedDay(day);
                     }}
                     className={cn(
-                      'py-2 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer border',
+                      'aspect-square rounded-xl p-0.5 flex flex-col items-center justify-center transition-all cursor-pointer border',
                       isSelected
-                        ? 'bg-gradient-to-b from-[#FFE07D] via-[#F5C542] to-[#E5A91C] text-[#1A1305] font-bold border-[#FFF0A8] shadow-md scale-[1.03]'
+                        ? 'bg-gradient-to-b from-[#FFE07D] via-[#F5C542] to-[#E5A91C] text-[#1A1305] font-bold border-[#FFF0A8] shadow-md'
                         : 'bg-[#181207]/70 text-[#D6C394] border-[#F5C542]/20 hover:border-[#F5C542]/50'
                     )}
                   >
-                    <span className="text-[10px] opacity-85">{day.name}</span>
-                    <span className="text-xs font-bold mt-0.5">{day.solarDate}</span>
+                    <span className="text-[9px] leading-none opacity-85">{day.name}</span>
+                    <span className="text-xs font-bold leading-none mt-1">{day.solarDate}</span>
                     <span
                       className={cn(
-                        'text-[9px]',
+                        'text-[8px] leading-none mt-0.5',
                         isSelected ? 'text-[#1A1305]/85 font-bold' : 'text-[#F5C542]'
                       )}
                     >
@@ -647,33 +646,33 @@ export function OmManiAppStoreHome() {
               })}
             </div>
 
-            {/* 3 Quick Action Buttons inside Hero */}
-            <div className="grid grid-cols-3 gap-2 pt-1">
+            {/* 3 Quick Action Buttons inside Hero — Full Text Without Truncation */}
+            <div className="grid grid-cols-3 gap-2 pt-0.5">
               <button
                 type="button"
                 onClick={() => setIsIncenseOpen(true)}
-                className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 cursor-pointer"
+                className="py-2.5 px-1.5 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 shadow-md active:scale-95 cursor-pointer whitespace-nowrap"
               >
-                <IncenseAltarIcon className="w-4 h-4 shrink-0" />
-                <span className="truncate">Dâng Hương</span>
+                <IncenseAltarIcon className="w-3.5 h-3.5 shrink-0" />
+                <span>Dâng Hương</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setIsMalaOpen(true)}
-                className="py-2.5 px-2 rounded-xl bg-[#181207] border border-[#F5C542]/35 text-[#FFD966] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
+                className="py-2.5 px-1.5 rounded-xl bg-[#181207] border border-[#F5C542]/35 text-[#FFD966] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 active:scale-95 cursor-pointer whitespace-nowrap"
               >
-                <MalaBeadsMinimalIcon className="w-4 h-4 shrink-0" />
-                <span className="truncate">108 Hạt</span>
+                <MalaBeadsMinimalIcon className="w-3.5 h-3.5 shrink-0" />
+                <span>108 Hạt</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => router.push('/thu-vien')}
-                className="py-2.5 px-2 rounded-xl bg-[#181207] border border-[#F5C542]/35 text-[#FFD966] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
+                className="py-2.5 px-1.5 rounded-xl bg-[#181207] border border-[#F5C542]/35 text-[#FFD966] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 active:scale-95 cursor-pointer whitespace-nowrap"
               >
-                <SutraScrollIcon className="w-4 h-4 shrink-0" />
-                <span className="truncate">Tụng Kinh</span>
+                <SutraScrollIcon className="w-3.5 h-3.5 shrink-0" />
+                <span>Tụng Kinh</span>
               </button>
             </div>
           </section>
@@ -957,9 +956,9 @@ export function OmManiAppStoreHome() {
                     playBellSound(0.35);
                     setSelectedBuddha(b);
                   }}
-                  className="snap-start w-40 shrink-0 rounded-2xl bg-[#241B0B] border border-[#F5C542]/30 overflow-hidden shadow-lg active:scale-95 transition-all cursor-pointer group"
+                  className="snap-start w-48 shrink-0 rounded-2xl bg-[#241B0B] border border-[#F5C542]/30 overflow-hidden shadow-lg active:scale-95 transition-all cursor-pointer group"
                 >
-                  <div className="aspect-[4/4.2] relative overflow-hidden bg-[#181207]">
+                  <div className="aspect-square relative overflow-hidden bg-[#181207]">
                     <img
                       src={b.image}
                       alt={b.name}
@@ -968,7 +967,7 @@ export function OmManiAppStoreHome() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#241B0B] via-transparent to-transparent" />
                   </div>
                   <div className="p-3 space-y-0.5">
-                    <h4 className="font-heading font-serif font-bold text-xs text-[#FFD966] truncate">
+                    <h4 className="font-heading font-serif font-bold text-xs text-[#FFD966] truncate whitespace-nowrap">
                       {b.name}
                     </h4>
                     <p className="text-[10px] text-[#C7B68B] line-clamp-2 leading-snug">
@@ -1066,9 +1065,9 @@ export function OmManiAppStoreHome() {
                     playWoodenFishSound(0.25);
                     setSelectedArticle(article);
                   }}
-                  className="p-3 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] flex items-start gap-3.5 cursor-pointer active:scale-[0.99] transition-all shadow-md group"
+                  className="p-3 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] flex items-center gap-3.5 cursor-pointer active:scale-[0.99] transition-all shadow-md group"
                 >
-                  <div className="w-22 h-22 rounded-xl overflow-hidden shrink-0 bg-[#181207] border border-[#F5C542]/30">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 bg-[#181207] border border-[#F5C542]/30">
                     <img
                       src={article.image}
                       alt={article.title}
@@ -1078,15 +1077,15 @@ export function OmManiAppStoreHome() {
 
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-bold text-[#FFD966] bg-[#F5C542]/15 px-2 py-0.5 rounded-md border border-[#F5C542]/30">
+                      <span className="text-[10px] font-bold text-[#FFD966] bg-[#F5C542]/15 px-2 py-0.5 rounded-md border border-[#F5C542]/30 whitespace-nowrap">
                         {article.category}
                       </span>
-                      <span className="text-[10px] text-[#A89874]">{article.readTime}</span>
+                      <span className="text-[10px] text-[#A89874] whitespace-nowrap">{article.readTime}</span>
                     </div>
                     <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] group-hover:text-[#FFD966] line-clamp-2 leading-snug">
                       {article.title}
                     </h4>
-                    <p className="text-[11px] text-[#C7B68B] line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-[#C7B68B] line-clamp-1 leading-relaxed">
                       {article.excerpt}
                     </p>
                   </div>

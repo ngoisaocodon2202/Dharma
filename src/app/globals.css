@@ -582,11 +582,8 @@ html, body {
   max-width: 100vw;
 }
 
-/* Headings anti-orphan balance */
+/* Headings typography safeguard without overriding Tailwind truncate/nowrap */
 h1, h2, h3, h4, h5, h6, .font-heading {
-  text-wrap: balance;
-  word-break: keep-all;
-  overflow-wrap: break-word;
   hyphens: none;
 }
 

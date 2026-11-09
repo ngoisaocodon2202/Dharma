@@ -500,21 +500,21 @@ export default function BuddhistCalendarPage() {
       {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP CALENDAR               */}
       {/* ========================================================================= */}
       <div className="block lg:hidden">
-        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-5">
-          {/* 1. SAFE-AREA HEADER */}
-          <header className="flex items-center justify-between gap-3 pt-2">
-            <div className="flex items-center gap-3">
+        <div className="max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-4">
+          {/* 1. SAFE-AREA HEADER — Single-Line Guaranteed */}
+          <header className="flex items-center justify-between gap-2 pt-2">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
                 <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
                   <DharmaWheelIcon className="w-5 h-5 text-[#FFD966]" />
                 </div>
               </div>
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
-                  DHARMA • LỊCH PHÁP BẢO
+              <div className="min-w-0 flex-1">
+                <span className="text-[9.5px] font-bold uppercase tracking-normal text-[#FFD966] block whitespace-nowrap">
+                  DHARMA • LỊCH VẠN NIÊN
                 </span>
-                <h1 className="font-heading font-serif text-xl sm:text-2xl font-bold text-[#FFFDF7] leading-tight">
-                  Lịch Vạn Niên &amp; Trai Giới
+                <h1 className="font-heading font-serif text-base sm:text-xl font-bold text-[#FFFDF7] leading-tight whitespace-nowrap">
+                  Lịch &amp; Trai Giới
                 </h1>
               </div>
             </div>
@@ -523,7 +523,7 @@ export default function BuddhistCalendarPage() {
               <button
                 type="button"
                 onClick={handleGoToday}
-                className="px-3 py-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/30 text-[#FFD966] text-xs font-bold active:scale-95 transition-all cursor-pointer"
+                className="px-2.5 py-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/30 text-[#FFD966] text-[11px] font-bold active:scale-95 transition-all cursor-pointer whitespace-nowrap"
               >
                 Hôm nay
               </button>
@@ -531,7 +531,7 @@ export default function BuddhistCalendarPage() {
                 type="button"
                 onClick={handleToggleNotification}
                 className={cn(
-                  'w-9 h-9 rounded-xl border flex items-center justify-center active:scale-95 transition-all cursor-pointer',
+                  'w-8 h-8 rounded-xl border flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0',
                   isNotificationOn
                     ? 'bg-[#F5C542]/20 border-[#F5C542]/50 text-[#FFD966]'
                     : 'bg-[#241B0B] border-white/10 text-[#C7B68B]'
@@ -543,7 +543,7 @@ export default function BuddhistCalendarPage() {
               <button
                 type="button"
                 onClick={() => setIsAddReminderOpen(true)}
-                className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#F5C542] to-[#FFD966] text-[#181207] flex items-center justify-center shadow-md active:scale-95 transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#F5C542] to-[#FFD966] text-[#181207] flex items-center justify-center shadow-md active:scale-95 transition-all cursor-pointer shrink-0"
                 aria-label="Thêm lịch nhắc"
               >
                 <Plus className="w-4 h-4 stroke-[2.5]" />
@@ -552,16 +552,16 @@ export default function BuddhistCalendarPage() {
           </header>
 
           {/* 2. TODAY TRAI GIỚI VOW BANNER */}
-          <section className="p-3.5 rounded-2xl bg-gradient-to-r from-[#241B0B] via-[#2E220E] to-[#241B0B] border border-[#F5C542]/35 flex items-center justify-between gap-3 shadow-md">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966] shrink-0">
-                <AlmsBowlIcon className="w-5 h-5" />
+          <section className="p-3 rounded-2xl bg-gradient-to-r from-[#241B0B] via-[#2E220E] to-[#241B0B] border border-[#F5C542]/35 flex items-center justify-between gap-2 shadow-md">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+              <div className="w-8 h-8 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966] shrink-0">
+                <AlmsBowlIcon className="w-4 h-4" />
               </div>
-              <div className="min-w-0">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
-                  Hôm nay: 30/09 Âm Lịch • Ngày Thập Trai
+              <div className="min-w-0 flex-1">
+                <span className="text-[9.5px] font-bold uppercase tracking-normal text-[#FFD966] block whitespace-nowrap">
+                  30/09 Âm Lịch • Ngày Thập Trai
                 </span>
-                <p className="text-xs font-medium text-[#FFFDF7] truncate mt-0.5">
+                <p className="text-[11px] font-medium text-[#FFFDF7] whitespace-nowrap mt-0.5">
                   Vía Đức Phật Dược Sư Lưu Ly Quang
                 </p>
               </div>
@@ -570,7 +570,7 @@ export default function BuddhistCalendarPage() {
               type="button"
               onClick={handleRecordTraiDayVow}
               className={cn(
-                'px-3 py-2 rounded-xl text-[11px] font-bold shrink-0 flex items-center gap-1 transition-all cursor-pointer',
+                'px-2.5 py-2 rounded-xl text-[11px] font-bold shrink-0 flex items-center gap-1 transition-all cursor-pointer whitespace-nowrap',
                 hasRecordedVowToday
                   ? 'bg-emerald-500/20 border border-emerald-400/50 text-emerald-300'
                   : 'bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] shadow-sm'
@@ -598,7 +598,7 @@ export default function BuddhistCalendarPage() {
                     setFilterMode(tab.id as CalendarFilterMode);
                   }}
                   className={cn(
-                    'py-2 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer',
+                    'py-2 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap',
                     active
                       ? 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] shadow-sm'
                       : 'text-[#D6C394] hover:text-[#FFFDF7]'
@@ -610,8 +610,8 @@ export default function BuddhistCalendarPage() {
             })}
           </div>
 
-          {/* 4. CALENDAR CARD */}
-          <section className="p-4 rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 shadow-xl space-y-3 select-none">
+          {/* 4. CALENDAR CARD — CRISP 1:1 SQUARE CELLS */}
+          <section className="p-3.5 rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 shadow-xl space-y-2.5 select-none">
             {/* Month Navigator */}
             <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/15">
               <button
@@ -622,7 +622,7 @@ export default function BuddhistCalendarPage() {
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <h2 className="font-heading font-serif font-bold text-base text-[#FFD966] tracking-wide">
+              <h2 className="font-heading font-serif font-bold text-base text-[#FFD966] tracking-wide whitespace-nowrap">
                 Tháng {viewMonth} • {viewYear}
               </h2>
               <button
@@ -636,12 +636,12 @@ export default function BuddhistCalendarPage() {
             </div>
 
             {/* Weekdays */}
-            <div className="grid grid-cols-7 text-center">
+            <div className="grid grid-cols-7 gap-1 text-center">
               {WEEKDAYS.map((w) => (
                 <div
                   key={w.label}
                   className={cn(
-                    'text-[11px] font-bold uppercase py-1',
+                    'text-[10px] font-bold uppercase py-0.5',
                     w.isSunday ? 'text-[#FFD966]' : 'text-[#C7B68B]'
                   )}
                 >
@@ -650,8 +650,8 @@ export default function BuddhistCalendarPage() {
               ))}
             </div>
 
-            {/* Grid 7x6 */}
-            <div className="grid grid-cols-7 gap-1.5 text-center">
+            {/* Grid 7x6 — Strictly Square aspect-square Cells */}
+            <div className="grid grid-cols-7 gap-1 text-center">
               {calendarCells.map((cell, idx) => {
                 const isDimmed =
                   cell.isCurrentMonth &&
@@ -673,9 +673,9 @@ export default function BuddhistCalendarPage() {
                       }
                     }}
                     className={cn(
-                      'flex flex-col items-center justify-center py-2 px-0.5 rounded-2xl transition-all duration-150 cursor-pointer relative min-h-[56px] border',
+                      'aspect-square w-full flex flex-col items-center justify-center rounded-xl transition-all duration-150 cursor-pointer relative border p-0.5',
                       cell.isSelected
-                        ? 'bg-gradient-to-b from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] border-[#FFF3B0] shadow-[0_4px_15px_rgba(245,197,66,0.35)]'
+                        ? 'bg-gradient-to-b from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] border-[#FFF3B0] shadow-[0_3px_12px_rgba(245,197,66,0.35)]'
                         : cell.isCurrentMonth
                         ? isDimmed
                           ? 'bg-[#181207]/40 border-transparent opacity-35'
@@ -683,24 +683,13 @@ export default function BuddhistCalendarPage() {
                         : 'bg-transparent border-transparent opacity-35'
                     )}
                   >
-                    <div className="flex items-center justify-center gap-0.5 leading-none">
-                      <span
-                        className={cn(
-                          'text-sm font-bold font-mono leading-none',
-                          cell.isSelected
-                            ? 'text-[#181207] font-black'
-                            : cell.isSunday
-                            ? 'text-[#FFD966]'
-                            : 'text-[#FFFDF7]'
-                        )}
-                      >
-                        {String(cell.solarDay).padStart(2, '0')}
-                      </span>
-                      <div className="flex items-center gap-0.5">
+                    {/* Top-right indicator dots */}
+                    {(cell.hasGreenDot || cell.hasAmberDot) && (
+                      <div className="absolute top-1 right-1 flex items-center gap-0.5">
                         {cell.hasGreenDot && (
                           <span
                             className={cn(
-                              'w-1.5 h-1.5 rounded-full',
+                              'w-1 h-1 rounded-full',
                               cell.isSelected ? 'bg-[#181207]' : 'bg-emerald-400'
                             )}
                           />
@@ -708,16 +697,30 @@ export default function BuddhistCalendarPage() {
                         {cell.hasAmberDot && (
                           <span
                             className={cn(
-                              'w-1.5 h-1.5 rounded-full',
+                              'w-1 h-1 rounded-full',
                               cell.isSelected ? 'bg-[#181207]' : 'bg-[#FFD966]'
                             )}
                           />
                         )}
                       </div>
-                    </div>
+                    )}
+
                     <span
                       className={cn(
-                        'text-[10px] font-mono leading-none mt-1.5',
+                        'text-xs font-bold font-mono leading-none',
+                        cell.isSelected
+                          ? 'text-[#181207] font-black'
+                          : cell.isSunday
+                          ? 'text-[#FFD966]'
+                          : 'text-[#FFFDF7]'
+                      )}
+                    >
+                      {String(cell.solarDay).padStart(2, '0')}
+                    </span>
+
+                    <span
+                      className={cn(
+                        'text-[8.5px] font-mono leading-none mt-1',
                         cell.isSelected
                           ? 'text-[#181207] font-bold'
                           : 'text-[#D6C394]'
@@ -733,19 +736,19 @@ export default function BuddhistCalendarPage() {
             {/* Legend & Full Year Button */}
             <div className="pt-2 border-t border-[#F5C542]/15 flex items-center justify-between text-[11px] text-[#D6C394]">
               <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                <span className="flex items-center gap-1 whitespace-nowrap">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
                   Ngày Trai
                 </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#FFD966]" />
+                <span className="flex items-center gap-1 whitespace-nowrap">
+                  <span className="w-2 h-2 rounded-full bg-[#FFD966] shrink-0" />
                   Vía Phật
                 </span>
               </div>
               <button
                 type="button"
                 onClick={() => setIsYearEventsOpen(true)}
-                className="text-[#FFD966] font-bold flex items-center gap-0.5 cursor-pointer"
+                className="text-[#FFD966] font-bold flex items-center gap-0.5 cursor-pointer whitespace-nowrap"
               >
                 <span>Niên biểu cả năm</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -754,36 +757,40 @@ export default function BuddhistCalendarPage() {
           </section>
 
           {/* 5. SELECTED DATE INSPECTOR & VEGETARIAN MEAL PLAN (MOBILE BENTO CARD) */}
-          <section className="p-4 rounded-3xl bg-gradient-to-br from-[#241B0B] via-[#2E220E] to-[#181207] border border-[#F5C542]/35 shadow-lg space-y-3.5">
-            <div className="flex items-center justify-between pb-2.5 border-b border-[#F5C542]/20">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+          <section className="p-4 rounded-3xl bg-gradient-to-br from-[#241B0B] via-[#2E220E] to-[#181207] border border-[#F5C542]/35 shadow-lg space-y-3">
+            <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#F5C542]/20">
+              <div className="min-w-0 flex-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block whitespace-nowrap">
                   Chi Tiết Ngày Đã Chọn
                 </span>
-                <h3 className="font-heading font-serif font-bold text-base text-[#FFFDF7]">
-                  Dương lịch {String(selectedDay).padStart(2, '0')}/{String(viewMonth).padStart(2, '0')} • Âm lịch {selectedDateLunarInfo.lunarDay}/{selectedDateLunarInfo.lunarMonth}
+                <h3 className="font-heading font-serif font-bold text-[13.5px] sm:text-base text-[#FFFDF7] whitespace-nowrap mt-0.5">
+                  Dương {String(selectedDay).padStart(2, '0')}/{String(viewMonth).padStart(2, '0')} • Âm lịch {selectedDateLunarInfo.lunarDay}/{selectedDateLunarInfo.lunarMonth}
                 </h3>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-[#F5C542]/15 border border-[#F5C542]/35 text-[10px] font-bold text-[#FFD966]">
-                {selectedDateLunarInfo.dayCanChi}
+              <span className="px-2.5 py-1 rounded-full bg-[#F5C542]/15 border border-[#F5C542]/35 text-[10px] font-bold text-[#FFD966] whitespace-nowrap shrink-0">
+                Ngày {selectedDateLunarInfo.dayCanChi}
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/15">
-                <span className="text-[10px] text-[#C7B68B] block">Tiết Khí</span>
-                <span className="font-bold text-[#FFFDF7]">{selectedDateLunarInfo.tietKhi}</span>
+              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/15 min-w-0">
+                <span className="text-[10px] text-[#C7B68B] block">Cát Tinh Hộ Trì</span>
+                <span className="font-bold text-[#FFFDF7] whitespace-nowrap block mt-0.5">
+                  {selectedDateLunarInfo.hoangDaoStar}
+                </span>
               </div>
-              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/15">
-                <span className="text-[10px] text-[#C7B68B] block">Giờ Cát Tường</span>
-                <span className="font-bold text-[#FFD966] truncate block">{selectedDateLunarInfo.gioHoangDao}</span>
+              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/15 min-w-0">
+                <span className="text-[10px] text-[#C7B68B] block">Giờ Hoàng Đạo</span>
+                <span className="font-bold text-[#FFD966] whitespace-nowrap block mt-0.5">
+                  {selectedDateLunarInfo.goodHours[0]} • {selectedDateLunarInfo.goodHours[1]?.split(' ')[0]}
+                </span>
               </div>
             </div>
 
             {/* Vegetarian Meal Plan Box */}
             <div className="p-3.5 rounded-2xl bg-[#181207]/90 border border-[#F5C542]/25 space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold text-[#FFD966]">
-                <AlmsBowlIcon className="w-4 h-4" />
+                <AlmsBowlIcon className="w-4 h-4 shrink-0" />
                 <span>Thực Đơn Chay Dưỡng Sinh Gợi Ý:</span>
               </div>
               <div className="space-y-1 text-xs text-[#F3E3B2]">
@@ -798,10 +805,10 @@ export default function BuddhistCalendarPage() {
           <section className="space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="font-heading font-serif font-bold text-base text-[#FFD966] flex items-center gap-2">
-                <PagodaMinimalIcon className="w-4 h-4" />
+                <PagodaMinimalIcon className="w-4 h-4 shrink-0" />
                 <span>Sự Kiện Phật Sự Tháng {viewMonth}</span>
               </h3>
-              <span className="text-xs text-[#C7B68B]">{currentMonthEvents.length} ngày lễ</span>
+              <span className="text-xs text-[#C7B68B] whitespace-nowrap">{currentMonthEvents.length} ngày lễ</span>
             </div>
 
             <div className="space-y-2.5">
@@ -814,7 +821,7 @@ export default function BuddhistCalendarPage() {
                   }}
                   className="flex items-center justify-between p-3 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] cursor-pointer active:scale-[0.99] transition-all group shadow-md"
                 >
-                  <div className="flex items-center gap-3 min-w-0 pr-2">
+                  <div className="flex items-center gap-3 min-w-0 flex-1 pr-2">
                     <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-[#F5C542]/30 bg-[#181207]">
                       <img
                         src={ev.image}
@@ -823,13 +830,13 @@ export default function BuddhistCalendarPage() {
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block truncate">
                         {ev.category}
                       </span>
-                      <h4 className="font-heading font-serif font-bold text-sm text-[#FFFDF7] truncate group-hover:text-[#FFD966]">
+                      <h4 className="font-heading font-serif font-bold text-sm text-[#FFFDF7] truncate whitespace-nowrap group-hover:text-[#FFD966]">
                         {ev.title}
                       </h4>
-                      <p className="text-[#C7B68B] text-xs mt-0.5 truncate">
+                      <p className="text-[#C7B68B] text-xs mt-0.5 truncate whitespace-nowrap">
                         {ev.dayOfWeek}, {ev.solarDate} • Âm lịch {ev.lunarDate}
                       </p>
                     </div>

@@ -369,26 +369,26 @@ export default function SutrasLibraryPage() {
       {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP SUTRAS                 */}
       {/* ========================================================================= */}
       <div className="block lg:hidden">
-        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-4">
-          {/* 1. SAFE-AREA HEADER */}
-          <header className="flex items-center justify-between gap-3 pt-2">
-            <div className="flex items-center gap-3">
+        <div className="max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-4">
+          {/* 1. SAFE-AREA HEADER — Single-Line Guaranteed */}
+          <header className="flex items-center justify-between gap-2 pt-2">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
                 <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
                   <SutraScrollIcon className="w-5 h-5 text-[#FFD966]" />
                 </div>
               </div>
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+              <div className="min-w-0 flex-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block whitespace-nowrap truncate">
                   DHARMA • TAM TẠNG PHÁP BẢO
                 </span>
-                <h1 className="font-heading font-serif text-xl sm:text-2xl font-bold text-[#FFFDF7] leading-tight">
+                <h1 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFFDF7] leading-tight whitespace-nowrap truncate">
                   Kinh Tạng &amp; Trì Tụng
                 </h1>
               </div>
             </div>
 
-            <div className="px-3 py-1.5 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-right shrink-0">
+            <div className="px-3 py-1.5 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-right shrink-0 whitespace-nowrap">
               <span className="text-[9px] uppercase tracking-wider text-[#C7B68B] block">
                 Đã trì tụng
               </span>
@@ -407,7 +407,7 @@ export default function SutrasLibraryPage() {
                 placeholder="Tìm bài kinh, Bát Nhã, Từ Bi, Dược Sư..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent w-full text-xs sm:text-sm text-[#FFFDF7] placeholder-[#C7B68B]/60 focus:outline-hidden"
+                className="bg-transparent w-full text-xs sm:text-sm text-[#FFFDF7] placeholder-[#C7B68B]/60 focus:outline-none"
               />
               {searchQuery && (
                 <button
@@ -439,7 +439,7 @@ export default function SutrasLibraryPage() {
                     setSelectedCategory(cat.id);
                   }}
                   className={cn(
-                    'py-2 px-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer truncate',
+                    'py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap',
                     active
                       ? 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] shadow-sm'
                       : 'text-[#D6C394] hover:text-[#FFFDF7]'
@@ -458,17 +458,17 @@ export default function SutrasLibraryPage() {
                 playBellSound(0.4);
                 setIsPrayerModalOpen(true);
               }}
-              className="rounded-2xl p-3.5 bg-gradient-to-r from-[#241B0B] via-[#2E220E] to-[#241B0B] border border-[#F5C542]/40 flex items-center justify-between cursor-pointer active:scale-98 transition-all shadow-md group"
+              className="rounded-2xl p-3 bg-gradient-to-r from-[#241B0B] via-[#2E220E] to-[#241B0B] border border-[#F5C542]/40 flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all shadow-md group"
             >
-              <div className="flex items-center gap-3 min-w-0 pr-2">
-                <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966] shrink-0">
-                  <LotusMinimalIcon className="w-5 h-5" />
+              <div className="flex items-center gap-3 min-w-0 flex-1 pr-2">
+                <div className="w-9 h-9 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966] shrink-0">
+                  <LotusMinimalIcon className="w-4 h-4" />
                 </div>
-                <div className="min-w-0">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                <div className="min-w-0 flex-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block whitespace-nowrap truncate">
                     Nghi Thức Khuyến Tu Hôm Nay
                   </span>
-                  <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] truncate">
+                  <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] truncate whitespace-nowrap mt-0.5">
                     Văn Khấn &amp; Quán Đảnh Chơn Ngôn Phật Dược Sư
                   </h4>
                 </div>
@@ -488,9 +488,9 @@ export default function SutrasLibraryPage() {
                     playPageTurnSound(0.3);
                     setReadingSutra(sutra);
                   }}
-                  className="p-3.5 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] flex items-center justify-between gap-3 cursor-pointer active:scale-[0.99] transition-all group shadow-md"
+                  className="p-3 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] flex items-center justify-between gap-3 cursor-pointer active:scale-[0.99] transition-all group shadow-md"
                 >
-                  <div className="flex items-center gap-3.5 min-w-0 flex-1">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
                     <div className="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0 border border-[#F5C542]/35 bg-[#181207]">
                       <img
                         src={sutra.image}
@@ -501,19 +501,19 @@ export default function SutrasLibraryPage() {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-[#FFD966] font-bold uppercase tracking-wider">
+                        <span className="text-[10px] text-[#FFD966] font-bold uppercase tracking-wider truncate whitespace-nowrap">
                           {sutra.categoryLabel}
                         </span>
                         {count > 0 && (
-                          <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 whitespace-nowrap shrink-0">
                             {count} biến
                           </span>
                         )}
                       </div>
-                      <h3 className="font-heading font-serif font-bold text-sm sm:text-[15px] text-[#FFFDF7] leading-snug truncate mt-0.5 group-hover:text-[#FFD966]">
+                      <h3 className="font-heading font-serif font-bold text-sm text-[#FFFDF7] leading-snug truncate whitespace-nowrap mt-0.5 group-hover:text-[#FFD966]">
                         {sutra.title}
                       </h3>
-                      <p className="text-[11px] text-[#C7B68B] truncate mt-0.5">
+                      <p className="text-[11px] text-[#C7B68B] truncate whitespace-nowrap mt-0.5">
                         {sutra.excerpt}
                       </p>
                     </div>
