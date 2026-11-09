@@ -253,13 +253,12 @@ export default function AccountProfilePage() {
               {/* Overlapping Dharma Wheel Seal Medallion */}
               <div className="px-5 pb-5 -mt-12 relative z-10 space-y-3">
                 <div className="relative inline-block">
-                  <div className="w-24 h-24 rounded-3xl border-4 border-[#181207] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-2xl p-1 flex items-center justify-center mx-auto">
-                    <div className="w-full h-full rounded-[18px] bg-[#181207] flex flex-col items-center justify-center text-center">
-                      <DharmaWheelIcon className="w-9 h-9 text-[#FFD966]" />
-                      <span className="text-[8px] font-black text-[#FFD966] tracking-widest mt-1">
-                        DHARMA
-                      </span>
-                    </div>
+                  <div className="w-24 h-24 rounded-3xl border-4 border-[#181207] bg-[#181207] shadow-2xl overflow-hidden flex items-center justify-center mx-auto ring-2 ring-[#F5C542]/60">
+                    <img
+                      src="/dharma-logo.png"
+                      alt="Dharma Logo"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <button
                     type="button"
@@ -718,10 +717,12 @@ export default function AccountProfilePage() {
           className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
           <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-4">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] p-0.5 flex items-center justify-center shadow-lg">
-              <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
-                <DharmaWheelIcon className="w-7 h-7 text-[#FFD966]" />
-              </div>
+            <div className="w-16 h-16 mx-auto rounded-2xl border border-[#F5C542]/60 overflow-hidden shadow-lg bg-[#181207]">
+              <img
+                src="/dharma-logo.png"
+                alt="Dharma Logo"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div>

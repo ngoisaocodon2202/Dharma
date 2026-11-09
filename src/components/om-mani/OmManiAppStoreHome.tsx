@@ -530,10 +530,12 @@ export function OmManiAppStoreHome() {
               href="/ho-so"
               className="flex items-center gap-2.5 min-w-0 active:scale-95 transition-transform"
             >
-              <div className="w-10 h-10 rounded-xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#FFF0A8] shadow-[0_2px_12px_rgba(245,197,66,0.35)] flex items-center justify-center shrink-0">
-                <div className="w-full h-full rounded-[10px] bg-[#1A1305] flex items-center justify-center">
-                  <DharmaWheelIcon className="w-5 h-5 text-[#FFD966]" />
-                </div>
+              <div className="w-10 h-10 rounded-xl overflow-hidden border border-[#F5C542]/50 shadow-[0_2px_12px_rgba(245,197,66,0.35)] bg-[#181207] shrink-0">
+                <img
+                  src="/dharma-logo.png"
+                  alt="Dharma Logo"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
@@ -1313,8 +1315,12 @@ export function OmManiAppStoreHome() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-[#E5A91C] to-[#FFE07D] flex items-center justify-center text-[#1A1305] shadow-lg">
-              <DharmaWheelIcon className="w-9 h-9" />
+            <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden border border-[#F5C542]/50 shadow-lg bg-[#181207]">
+              <img
+                src="/dharma-logo.png"
+                alt="Dharma Logo"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div>

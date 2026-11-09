@@ -1,23 +1,22 @@
 {
-  "name": "Phật Pháp — Bồ Đề Tâm",
-  "short_name": "Phật Pháp",
-  "description": "Nền tảng Tu học, Đi Chùa Online, Thư viện Kinh Sách, Tra cứu Ngày Tốt & Chánh Niệm Hằng Ngày",
+  "name": "DHARMA — Không Gian Chánh Niệm & Tam Tạng Pháp Bảo",
+  "short_name": "DHARMA",
+  "description": "Nền tảng tu học Phật pháp thanh tịnh: Thời khóa chánh niệm 4 thời, Lịch Vạn Niên & Trai Giới, Tam Tạng Kinh Điển và Không Gian Hành Trì",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#180C06",
-  "theme_color": "#24130A",
+  "background_color": "#181207",
+  "theme_color": "#181207",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "/dharma-logo.png?v=2",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/logo.png",
+      "src": "/dharma-logo.png?v=2",
       "sizes": "512x512",
       "type": "image/png"
     }
   ]
 }
-

@@ -45,15 +45,17 @@ export function OmManiDesktopNav() {
     <>
       <header className="hidden lg:block sticky top-0 z-50 w-full bg-[#181207]/95 backdrop-blur-xl border-b border-[#F5C542]/25 text-[#FFFDF7] shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all">
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4 xl:gap-6">
-          {/* Left Brand: Dharma Wheel Golden Emblem & Title */}
+          {/* Left Brand: Dharma Golden Logo Image & Title */}
           <Link
             href="/"
             className="flex items-center gap-3.5 group active:scale-95 transition-transform shrink-0"
           >
-            <div className="w-11 h-11 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#FFF0A8] shadow-[0_0_20px_rgba(245,197,66,0.35)] flex items-center justify-center shrink-0">
-              <div className="w-full h-full rounded-[14px] bg-[#211808] flex items-center justify-center">
-                <DharmaWheelIcon className="w-6 h-6 text-[#FFD966] group-hover:rotate-45 transition-transform duration-500" />
-              </div>
+            <div className="w-11 h-11 rounded-2xl overflow-hidden border border-[#F5C542]/50 shadow-[0_0_20px_rgba(245,197,66,0.35)] bg-[#181207] shrink-0">
+              <img
+                src="/dharma-logo.png"
+                alt="Dharma Logo"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
 
             <div className="shrink-0">

@@ -193,13 +193,12 @@ export function OmManiDesktopProfile({
             {/* Overlapping Dharma Wheel Seal Avatar */}
             <div className="px-6 pb-6 text-center -mt-14 relative z-10 space-y-4">
               <div className="relative inline-block">
-                <div className="w-24 h-24 rounded-3xl border-4 border-[#181207] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-2xl p-1 flex items-center justify-center mx-auto">
-                  <div className="w-full h-full rounded-[18px] bg-[#181207] flex flex-col items-center justify-center text-center">
-                    <DharmaWheelIcon className="w-9 h-9 text-[#FFD966]" />
-                    <span className="text-[8px] font-black text-[#FFD966] tracking-widest mt-1">
-                      DHARMA
-                    </span>
-                  </div>
+                <div className="w-24 h-24 rounded-3xl border-4 border-[#181207] bg-[#181207] shadow-2xl overflow-hidden flex items-center justify-center mx-auto ring-2 ring-[#F5C542]/60">
+                  <img
+                    src="/dharma-logo.png"
+                    alt="Dharma Logo"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <button
                   type="button"

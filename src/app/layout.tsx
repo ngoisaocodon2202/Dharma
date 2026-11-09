@@ -44,15 +44,16 @@ export const metadata: Metadata = {
     locale: 'vi_VN',
     url: 'http://localhost:3000',
     siteName: 'DHARMA',
-    images: [{ url: '/logo.png', width: 800, height: 800, alt: 'Dharma Logo' }],
+    images: [{ url: '/dharma-logo.png?v=2', width: 800, height: 800, alt: 'Dharma Logo' }],
   },
   icons: {
     icon: [
-      { url: '/favicon.png', type: 'image/png' },
-      { url: '/favicon.ico' },
+      { url: '/dharma-logo.png?v=2', type: 'image/png' },
+      { url: '/favicon.png?v=2', type: 'image/png' },
+      { url: '/favicon.ico?v=2' },
     ],
-    shortcut: '/favicon.png',
-    apple: '/logo.png',
+    shortcut: '/dharma-logo.png?v=2',
+    apple: '/dharma-logo.png?v=2',
   },
 };
 
@@ -69,8 +70,8 @@ export default function RootLayout({
             __html: `try { document.documentElement.classList.remove('dark'); localStorage.removeItem('theme'); } catch(e) {}`,
           }}
         />
-        <link rel="icon" href="/favicon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
+        <link rel="icon" href="/dharma-logo.png?v=2" type="image/png" />
+        <link rel="apple-touch-icon" href="/dharma-logo.png?v=2" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

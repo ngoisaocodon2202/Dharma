@@ -126,10 +126,12 @@ export function OmManiDesktopHome({
             {/* Header Row */}
             <div className="relative z-10 flex items-center justify-between gap-4 pb-4 border-b border-[#F5C542]/20">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#FFF0A8] shadow-[0_0_20px_rgba(245,197,66,0.35)] flex items-center justify-center shrink-0">
-                  <div className="w-full h-full rounded-[14px] bg-[#211808] flex items-center justify-center">
-                    <DharmaWheelIcon className="w-6 h-6 text-[#FFD966]" />
-                  </div>
+                <div className="w-12 h-12 rounded-2xl overflow-hidden border border-[#F5C542]/50 shadow-[0_0_20px_rgba(245,197,66,0.35)] bg-[#181207] shrink-0">
+                  <img
+                    src="/dharma-logo.png"
+                    alt="Dharma Logo"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
                   <h1 className="font-heading font-serif text-xl font-bold text-[#FFFDF7] flex items-center gap-2">

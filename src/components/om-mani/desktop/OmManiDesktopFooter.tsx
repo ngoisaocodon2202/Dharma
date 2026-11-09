@@ -26,10 +26,12 @@ export function OmManiDesktopFooter() {
         {/* Top bar: Brand + Pāli Dhammapada Verse + Quick Bell */}
         <div className="flex items-center justify-between pb-10 border-b border-[#F5C542]/20">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#FFF0A8] shadow-[0_0_24px_rgba(245,197,66,0.35)] flex items-center justify-center">
-              <div className="w-full h-full rounded-[14px] bg-[#211808] flex items-center justify-center">
-                <DharmaWheelIcon className="w-6 h-6 text-[#FFD966]" />
-              </div>
+            <div className="w-13 h-13 rounded-2xl overflow-hidden border border-[#F5C542]/50 shadow-[0_0_24px_rgba(245,197,66,0.35)] bg-[#181207] shrink-0">
+              <img
+                src="/dharma-logo.png"
+                alt="Dharma Logo"
+                className="w-12 h-12 object-cover"
+              />
             </div>
             <div>
               <div className="font-heading font-serif font-black text-xl tracking-wider text-[#FFFDF7] flex items-center gap-2.5">
