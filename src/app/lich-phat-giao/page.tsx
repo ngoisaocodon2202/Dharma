@@ -1,35 +1,47 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link';
 import {
   ChevronLeft,
   ChevronRight,
   Plus,
-  Bell,
   Calendar as CalendarIcon,
   X,
-  Share2,
   Check,
   Clock,
-  Sparkles,
-  Heart,
-  ExternalLink,
 } from 'lucide-react';
-import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
-import { getLunarDate, LunarDateInfo, BUDDHIST_LUNAR_EVENTS } from '@/lib/lunar-calendar';
+import {
+  DharmaWheelIcon,
+  AlmsBowlIcon,
+  LotusMinimalIcon,
+  TempleBellIcon,
+  PagodaMinimalIcon,
+  BodhiLeafIcon,
+} from '@/components/icons/DharmaMinimalIcons';
+import { getLunarDate, BUDDHIST_LUNAR_EVENTS } from '@/lib/lunar-calendar';
 import { playBellSound, playWoodenFishSound, playPageTurnSound } from '@/lib/buddhistSounds';
 import { OmManiDesktopCalendar } from '@/components/om-mani/desktop/OmManiDesktopCalendar';
+import { recordDharmaMerit } from '@/components/om-mani/OmManiInteractiveTools';
 import { cn } from '@/lib/utils';
 
 // =============================================================================
 // INTERFACES & TYPES
 // =============================================================================
+export type CalendarFilterMode = 'all' | 'trai_gioi' | 'via_phat';
+
+export interface VegetarianMealPlan {
+  traiMeaning: string;
+  breakfast: string;
+  lunch: string;
+  dinner: string;
+  tea: string;
+}
+
 export interface BuddhistEventItem {
   id: string;
-  solarDate: string; // '08-11', '09-11', etc.
-  dayOfWeek: string; // 'Chủ nhật', 'Thứ 2', 'Thứ 6', etc.
-  lunarDate: string; // '30-09', '01-10', etc.
+  solarDate: string;
+  dayOfWeek: string;
+  lunarDate: string;
   title: string;
   fullTitle: string;
   image: string;
@@ -42,15 +54,15 @@ export interface PersonalReminder {
   id: string;
   title: string;
   note: string;
-  solarDate: string; // YYYY-MM-DD
+  solarDate: string;
   lunarDateStr?: string;
   type: 'gio' | 'quan_trong' | 'trai_gioi' | 'cau_an';
   createdAt: string;
 }
 
 const REMINDER_STORAGE_KEY = 'phatphap_personal_reminders_v2';
+const TRAI_VOW_STORAGE_KEY = 'phatphap_dharma_trai_vow_2026_11_08';
 
-// Days of week header matching Om Mani AppStore UI (Sunday in red)
 const WEEKDAYS = [
   { label: 'Hai', isSunday: false },
   { label: 'Ba', isSunday: false },
@@ -61,128 +73,138 @@ const WEEKDAYS = [
   { label: 'CN', isSunday: true },
 ];
 
-// Events in November 2026 (Matching Screenshots 1 & 2)
+// Curated Vegetarian Meal Plans & Trai Meanings by Lunar Day
+const VEGETARIAN_MEAL_PLANS: VegetarianMealPlan[] = [
+  {
+    traiMeaning:
+      'Ngày Thập Trai thanh tịnh: Giữ thân khẩu ý trong sạch, dùng thực phẩm thuần thực vật giúp nuôi dưỡng tâm từ bi bình đẳng với muôn loài chúng sinh.',
+    breakfast: 'Bún riêu chay thanh đạm & sữa hạt sen',
+    lunch: 'Cơm gạo lứt, đậu hũ kho nấm đông cô & canh rong biển',
+    dinner: 'Cháo yến mạch hạt óc chó & rau củ hấp',
+    tea: 'Trà tâm sen & kỷ tử ấm tỳ vị',
+  },
+  {
+    traiMeaning:
+      'Ngày Sóc / Vọng (Mùng 1 & Rằm): Năng lượng đất trời giao hòa. Thọ trì trai giới giúp làm nhẹ nghiệp lực, tăng trưởng phước báu và trí tuệ sáng suốt.',
+    breakfast: 'Phở nấm hương rau củ & trà gừng ấm',
+    lunch: 'Cơm trắng, nấm đùi gà kho tiêu xanh & canh bí đỏ đậu phộng',
+    dinner: 'Súp bí đỏ hạt điều & salad rau mầm',
+    tea: 'Trà hoa cúc vàng & táo đỏ',
+  },
+  {
+    traiMeaning:
+      'Ngày Chánh Niệm Thường Nhật: Thực hành Ngũ Quán Tưởng trước mỗi bữa ăn — trân quý công sức người gieo trồng và ăn trong chánh niệm biết đủ.',
+    breakfast: 'Bánh cuốn chay nhân nấm mộc nhĩ & sữa đậu nành',
+    lunch: 'Cơm độn hạt sen, mít non kho tộ & canh rau ngót chay',
+    dinner: 'Miến trộn rau củ thập cẩm thanh nhẹ',
+    tea: 'Trà ô long quế hoa thanh tâm',
+  },
+];
+
+// Authentic Buddhist events in November 2026
 const NOVEMBER_2026_EVENTS: BuddhistEventItem[] = [
   {
     id: 'via-duoc-su',
     solarDate: '08-11',
     dayOfWeek: 'Chủ nhật',
     lunarDate: '30-09',
-    title: 'Vía Dược Sư Lưu Ly Quang Vương Như...',
+    title: 'Vía Đức Phật Dược Sư Lưu Ly Quang',
     fullTitle: 'Vía Đức Phật Dược Sư Lưu Ly Quang Vương Như Lai Thành Đạo',
-    image: '/images/buddha_temple.jpg',
+    image: '/images/golden_buddha_altar.jpg',
     category: 'Vía Phật & Đại Nguyện',
     meaning:
-      'Đức Phật Dược Sư là giáo chủ cõi Tịnh Lưu Ly ở phương Đông. Ngài phát 12 đại nguyện cứu độ chúng sinh khỏi khổ đau vì bệnh tật, nghèo túng và tà kiến, ban phát ánh sáng thanh tịnh lưu ly cho thân tâm an lạc.',
+      'Đức Phật Dược Sư là giáo chủ cõi Tịnh Lưu Ly ở phương Đông. Ngài phát 12 đại nguyện cứu độ chúng sinh khỏi khổ đau bệnh tật, vô minh, ban phát ánh sáng thanh tịnh lưu ly cho thân tâm an lạc.',
     practiceAdvice:
-      'Vào ngày này, Phật tử nên ăn chay thanh tịnh, thắp đèn Dược Sư, trì tụng Kinh Dược Sư Bổn Nguyện Công Đức và niệm danh hiệu: “Nam Mô Dược Sư Lưu Ly Quang Vương Phật” để cầu bình an cho gia đạo.',
+      'Phật tử nên phát tâm ăn chay thanh tịnh, thắp đèn Dược Sư, trì tụng Kinh Dược Sư Bổn Nguyện Công Đức và niệm danh hiệu “Nam Mô Dược Sư Lưu Ly Quang Vương Phật” hồi hướng bình an cho gia đạo.',
   },
   {
     id: 'mung-1-thang-10',
     solarDate: '09-11',
     dayOfWeek: 'Thứ 2',
     lunarDate: '01-10',
-    title: 'Ngày mùng 1 tháng 10 Âm lịch',
-    fullTitle: 'Ngày Sóc — Mùng 1 Tháng 10 Âm Lịch (Ngày Trai Giới)',
+    title: 'Ngày Sóc • Mùng 1 Tháng 10 Âm Lịch',
+    fullTitle: 'Ngày Sóc — Mùng 1 Tháng 10 Âm Lịch (Ngày Trai Giới Đầu Tháng)',
     image: '/images/buddha_meditation.jpg',
     category: 'Ngày Sóc • Trai Giới',
     meaning:
-      'Ngày đầu tháng âm lịch (ngày Sóc), theo truyền thống thiền môn là ngày hội tụ linh khí thanh tịnh, thích hợp để sám hối, phát khởi thiện tâm và hướng về Tam Bảo.',
+      'Ngày đầu tháng âm lịch (ngày Sóc), theo truyền thống thiền môn là ngày hội tụ linh khí thanh tịnh, thích hợp để sám hối ba nghiệp, phát khởi thiện tâm và hướng về Tam Bảo.',
     practiceAdvice:
-      'Ăn chay thanh tịnh, thắp hương lễ Phật, đọc tụng kinh sám hối, phóng sinh cứu vật và bao dung tha thứ lỗi lầm cho mọi người xung quanh.',
+      'Ăn chay thanh tịnh, dâng hương lễ Phật, đọc tụng kinh sám hối, phóng sinh hộ vật và thực tập ái ngữ hòa ái với mọi người.',
   },
   {
     id: 'via-dat-ma',
     solarDate: '13-11',
     dayOfWeek: 'Thứ 6',
     lunarDate: '05-10',
-    title: 'Vía Bồ Đề Đạt Ma',
+    title: 'Khánh Tuế Tổ Sư Bồ Đề Đạt Ma',
     fullTitle: 'Vía Sơ Tổ Thiền Tông Bồ Đề Đạt Ma',
     image: '/images/tran_nhan_tong_yentu.jpg',
     category: 'Lễ Tổ Thiền Tông',
     meaning:
-      'Tổ sư Bồ Đề Đạt Ma là vị Tổ thứ 28 của Thiền tông Ấn Độ và là Sơ tổ của Thiền tông Trung Hoa. Ngài đã truyền pháp môn “Trực chỉ nhân tâm, kiến tính thành Phật”, đặt nền móng vĩ đại cho dòng thiền Đông Độ.',
+      'Tổ sư Bồ Đề Đạt Ma là vị Tổ thứ 28 của Thiền tông Ấn Độ và là Sơ tổ của Thiền tông Đông Độ. Ngài truyền trao pháp môn “Trực chỉ nhân tâm, kiến tính thành Phật”.',
     practiceAdvice:
-      'Thực hành tọa thiền quán chiếu hơi thở, giữ tâm rỗng rang không vướng mắc trần cảnh, chiêm nghiệm tinh thần “Bất lập văn tự, giáo ngoại biệt truyền”.',
+      'Dành ít nhất 15 phút tọa thiền quán chiếu hơi thở, giữ tâm rỗng rang lặng lẽ trước mọi biến động của ngoại cảnh.',
   },
   {
     id: 'tet-thuong-tan',
     solarDate: '18-11',
     dayOfWeek: 'Thứ 4',
     lunarDate: '10-10',
-    title: 'Tết Thường Tân',
-    fullTitle: 'Tết Thường Tân (Tết Cơm Mới Tháng Mười)',
-    image: '/images/lotus_pond.jpg',
-    category: 'Lễ Truyền Thống Dân Tộc & Phật Giáo',
+    title: 'Lễ Thường Tân • Dâng Cơm Mới Tam Bảo',
+    fullTitle: 'Tết Thường Tân (Lễ Cúng Cơm Mới Tháng Mười)',
+    image: '/images/lotus_blooming.jpg',
+    category: 'Truyền Thống Tri Ân',
     meaning:
-      'Tết Thường Tân (mùng 10 tháng 10 âm lịch) là ngày lễ mừng mùa lúa mới thu hoạch. Người Việt và Phật tử dâng hạt gạo mới, hoa quả thanh khiết cúng dâng Tam Bảo và gia tiên để tạ ơn đất trời gia hộ mùa màng tốt tươi.',
+      'Ngày mùng 10 tháng 10 âm lịch là dịp người con Phật dâng phẩm vật hạt gạo mới, hoa trái thanh khiết cúng dường Tam Bảo và cửu huyền thất tổ để tri ân đất trời mưa thuận gió hòa.',
     practiceAdvice:
-      'Nấu cơm mới dâng cúng Tam Bảo, hồi hướng công đức cho tổ tiên và chia sẻ bữa ăn từ thiện ấm áp cho những người còn khó khăn nghèo khó.',
+      'Dâng cơm chay thanh tịnh cúng Phật và gia tiên, đồng thời san sẻ thực phẩm thiện nguyện cho người cơ nhỡ.',
   },
   {
     id: 'le-ha-nguyen',
     solarDate: '23-11',
     dayOfWeek: 'Thứ 2',
     lunarDate: '15-10',
-    title: 'Lễ Hạ Nguyên',
-    fullTitle: 'Đại Lễ Hạ Nguyên (Tết Cơm Mới & Lễ Cầu Siêu)',
+    title: 'Đại Lễ Hạ Nguyên • Rằm Tháng Mười',
+    fullTitle: 'Đại Lễ Hạ Nguyên (Rằm Tháng Mười Âm Lịch & Ngày Vọng Trai Giới)',
     image: '/images/chua_bai_dinh.jpg',
     category: 'Tam Nguyên Cát Khánh',
     meaning:
-      'Lễ Hạ Nguyên (Rằm tháng 10) là một trong ba tiết lễ lớn nhất trong năm (Thượng Nguyên rằm tháng Giêng, Trung Nguyên rằm tháng Bảy, Hạ Nguyên rằm tháng Mười). Đây là dịp tạ ơn Tam Bảo, tạ ơn trời đất và cầu siêu cho cửu huyền thất tổ.',
+      'Lễ Hạ Nguyên (Rằm tháng 10) là một trong Tam Nguyên lớn nhất trong năm (Thượng Nguyên, Trung Nguyên, Hạ Nguyên). Đây là ngày chư thiên giám sát thiện ác và là dịp tạ ơn Tam Bảo, cầu siêu độ tổ tiên.',
     practiceAdvice:
-      'Đi chùa lễ bái, cúng dường đèn sen thanh tịnh, phóng sinh chim cá và phát tâm ăn chay trọn ngày.',
-  },
-  {
-    id: 'ram-thang-10',
-    solarDate: '23-11',
-    dayOfWeek: 'Thứ 2',
-    lunarDate: '15-10',
-    title: 'Ngày Rằm tháng 10 Âm lịch',
-    fullTitle: 'Ngày Vọng — Rằm Tháng 10 Âm Lịch (Ngày Trai Giới)',
-    image: '/images/golden_buddha.jpg',
-    category: 'Ngày Vọng • Trai Giới Toàn Giới',
-    meaning:
-      'Ngày trăng tròn tháng 10 âm lịch. Năng lượng vũ trụ hài hòa, lòng người thanh tịnh, là thời khắc màu nhiệm để gieo trồng ruộng phước vô lượng cho bản thân và gia đạo.',
-    practiceAdvice:
-      'Giữ trọn vẹn thập thiện nghiệp: Không sát sinh, không trộm cắp, không tà dâm, không nói dối; giữ tâm thanh tịnh tụng kinh niệm Phật.',
+      'Giữ trọn vẹn Ngũ Giới và ăn chay thanh tịnh, thắp đèn hoa đăng cầu nguyện quốc thái dân an, gia đạo cát tường.',
   },
 ];
 
 // Year-round major Buddhist festivals across 12 lunar months
 const YEAR_ROUND_FESTIVALS = [
-  { month: 'Tháng 1 (Giêng)', day: 'Mùng 1', title: 'Tết Nguyên Đán & Vía Phật Di Lặc', desc: 'Đón xuân an lạc, hoan hỷ đón nhận niềm vui từ bi' },
-  { month: 'Tháng 1 (Giêng)', day: 'Mùng 8', title: 'Lễ Cầu An Dược Sư', desc: 'Tiêu trừ tai ách, cầu thọ mạng và sức khỏe cho gia đình' },
-  { month: 'Tháng 1 (Giêng)', day: 'Rằm (15)', title: 'Đại Lễ Thượng Nguyên', desc: 'Rằm tháng Giêng, ánh sáng giác ngộ soi tỏ muôn nơi' },
-  { month: 'Tháng 2', day: 'Mùng 8', title: 'Vía Phật Thích Ca Xuất Gia', desc: 'Kỷ niệm Thái tử Tất Đạt Đa từ bỏ hoàng cung đi tìm đạo cứu khổ' },
-  { month: 'Tháng 2', day: 'Rằm (15)', title: 'Vía Phật Thích Ca Nhập Niết Bàn', desc: 'Tưởng nhớ bậc Đạo Sư nhập vô dư Niết Bàn dưới cây Sala' },
-  { month: 'Tháng 2', day: '19', title: 'Vía Quán Thế Âm Đản Sinh', desc: 'Đảnh lễ mẹ hiền Quán Thế Âm Bồ Tát tầm thanh cứu khổ' },
-  { month: 'Tháng 2', day: '21', title: 'Vía Bồ Tát Phổ Hiền', desc: 'Mười đại nguyện vĩ đại của Bồ Tát Đại Hạnh' },
-  { month: 'Tháng 3', day: '16', title: 'Vía Phật Mẫu Chuẩn Đề', desc: 'Trì tụng thần chú Chuẩn Đề tiêu trừ nghiệp chướng' },
-  { month: 'Tháng 4', day: 'Mùng 4', title: 'Vía Bồ Tát Văn Thù Sư Lợi', desc: 'Đảnh lễ Bồ Tát Đại Trí tuệ chém đứt lưới vô minh' },
-  { month: 'Tháng 4', day: 'Mùng 8', title: 'Khánh Đản Đức Phật (Bắc Tông)', desc: 'Lễ Tắm Phật truyền thống thiêng liêng' },
-  { month: 'Tháng 4', day: 'Rằm (15)', title: 'Đại Lễ Phật Đản Vesak Tam Hợp', desc: 'Kỷ niệm Đản Sinh, Thành Đạo & Nhập Niết Bàn của Đức Phật' },
-  { month: 'Tháng 6', day: 'Mùng 3', title: 'Vía Hộ Pháp Vi Đà Tôn Thiên', desc: 'Bảo hộ chánh pháp trường tồn, ủng hộ hành giả tu học' },
-  { month: 'Tháng 6', day: '19', title: 'Vía Quán Thế Âm Thành Đạo', desc: 'Kỷ niệm Bồ Tát chứng đạo đại từ đại bi cứu vớt muôn loài' },
-  { month: 'Tháng 7', day: '13', title: 'Vía Bồ Tát Đại Thế Chí', desc: 'Ánh sáng trí tuệ soi chiếu muôn cõi lìa xa ba đường ác' },
-  { month: 'Tháng 7', day: 'Rằm (15)', title: 'Đại Lễ Vu Lan Báo Hiếu', desc: 'Mùa báo hiếu tứ trọng ân, cầu siêu độ cửu huyền thất tổ' },
-  { month: 'Tháng 7', day: '30', title: 'Vía Bồ Tát Địa Tạng Vương', desc: 'Đại nguyện cứu vớt chúng sinh cõi u minh địa ngục' },
-  { month: 'Tháng 8', day: 'Rằm (15)', title: 'Tết Trung Thu • Nguyện Đoàn Viên', desc: 'Đêm trăng thanh tịnh, thắp sáng tâm Bồ Đề ấm áp' },
-  { month: 'Tháng 9', day: '19', title: 'Vía Quán Thế Âm Xuất Gia', desc: 'Công đức từ bỏ vinh hoa để hiến trọn đời cứu độ chúng sinh' },
-  { month: 'Tháng 9', day: '30', title: 'Vía Phật Dược Sư Lưu Ly Quang', desc: 'Diệt trừ tật bệnh thân tâm, ban phát ánh sáng an lạc' },
-  { month: 'Tháng 10', day: 'Mùng 5', title: 'Vía Bồ Đề Đạt Ma Tổ Sư', desc: 'Kỷ niệm Sơ Tổ Thiền Tông truyền tâm ấn sang phương Đông' },
-  { month: 'Tháng 10', day: 'Mùng 10', title: 'Tết Thường Tân (Cơm Mới)', desc: 'Tạ ơn Tam Bảo gia hộ mùa màng tốt tươi ấm no' },
-  { month: 'Tháng 10', day: 'Rằm (15)', title: 'Lễ Hạ Nguyên (Rằm Tháng Mười)', desc: 'Tam Nguyên cát khánh, cầu an gia đạo và siêu tiến tiên linh' },
-  { month: 'Tháng 11', day: 'Mùng 1', title: 'Tưởng Niệm Phật Hoàng Trần Nhân Tông', desc: 'Đệ nhất Tổ Thiền phái Trúc Lâm Yên Tử nhập diệt' },
-  { month: 'Tháng 11', day: '17', title: 'Vía Đức Phật A Di Đà', desc: 'Tiếp dẫn đạo sư cõi Tây Phương Cực Lạc 48 đại nguyện' },
-  { month: 'Tháng 12 (Chạp)', day: 'Mùng 8', title: 'Đại Lễ Phật Thành Đạo', desc: 'Sao mai mọc, Đức Phật chứng đắc Vô Thượng Chánh Đẳng Giác' },
+  { month: 'Tháng Giêng', day: 'Mùng 1', title: 'Vía Đức Phật Di Lặc & Xuân Di Lặc', desc: 'Đón xuân chánh niệm, thực hành hỷ xả và nụ cười từ bi' },
+  { month: 'Tháng Giêng', day: 'Mùng 8', title: 'Đàn Tràng Dược Sư Thất Châu Cầu An', desc: 'Khai kinh Dược Sư đầu năm cầu quốc thái dân an' },
+  { month: 'Tháng Giêng', day: 'Rằm (15)', title: 'Đại Lễ Thượng Nguyên (Rằm Tháng Giêng)', desc: 'Lễ Phật quanh năm không bằng Rằm tháng Giêng' },
+  { month: 'Tháng 2', day: 'Mùng 8', title: 'Kỷ Niệm Thái Tử Tất Đạt Đa Xuất Gia', desc: 'Bước chân vượt thành tầm đạo giải thoát cho muôn loài' },
+  { month: 'Tháng 2', day: 'Rằm (15)', title: 'Đại Lễ Phật Thích Ca Nhập Niết Bàn', desc: 'Tưởng niệm lời di huấn tối hậu: Hãy tự mình thắp đuốc lên mà đi' },
+  { month: 'Tháng 2', day: '19', title: 'Vía Bồ Tát Quán Thế Âm Đản Sinh', desc: 'Đảnh lễ hạnh nguyện lắng nghe sâu để xoa dịu khổ đau' },
+  { month: 'Tháng 2', day: '21', title: 'Vía Bồ Tát Phổ Hiền Đại Hạnh', desc: 'Thực hành Mười Đại Nguyện Vương của Bồ Tát Phổ Hiền' },
+  { month: 'Tháng 4', day: 'Mùng 4', title: 'Vía Bồ Tát Văn Thù Sư Lợi Đại Trí', desc: 'Thắp sáng gươm báu trí tuệ Bát Nhã đoạn trừ vô minh' },
+  { month: 'Tháng 4', day: 'Rằm (15)', title: 'Đại Lễ Phật Đản Vesak Tam Hợp', desc: 'Kỷ niệm Đản Sinh, Thành Đạo và Nhập Niết Bàn của Đức Thế Tôn' },
+  { month: 'Tháng 6', day: '19', title: 'Vía Bồ Tát Quán Thế Âm Thành Đạo', desc: 'Hạnh nguyện đại từ đại bi cứu khổ cứu nạn viên mãn' },
+  { month: 'Tháng 7', day: '13', title: 'Vía Bồ Tát Đại Thế Chí', desc: 'Dùng ánh sáng trí tuệ nhiếp niệm thanh tịnh sáu căn' },
+  { month: 'Tháng 7', day: 'Rằm (15)', title: 'Đại Lễ Vu Lan Báo Hiếu & Tự Tứ Tăng', desc: 'Mùa hiếu hạnh tri ân Tứ Trọng Ân và cứu độ cửu huyền thất tổ' },
+  { month: 'Tháng 7', day: '30', title: 'Vía Bồ Tát Địa Tạng Vương', desc: 'Địa ngục vị không, thệ bất thành Phật; chúng sinh độ tận, phương chứng Bồ Đề' },
+  { month: 'Tháng 9', day: '19', title: 'Vía Bồ Tát Quán Thế Âm Xuất Gia', desc: 'Phát tâm Bồ Đề rộng lớn vì lợi ích an lạc của chúng sinh' },
+  { month: 'Tháng 9', day: '30', title: 'Vía Đức Phật Dược Sư Lưu Ly Quang', desc: 'Mười hai đại nguyện trị lành tâm bệnh và thân bệnh' },
+  { month: 'Tháng 10', day: 'Mùng 5', title: 'Vía Sơ Tổ Bồ Đề Đạt Ma', desc: 'Khơi nguồn dòng thiền Trực chỉ nhân tâm, kiến tính thành Phật' },
+  { month: 'Tháng 10', day: 'Rằm (15)', title: 'Đại Lễ Hạ Nguyên (Rằm Tháng Mười)', desc: 'Tam Nguyên cát khánh, tạ ơn Tam Bảo và hồi hướng công đức' },
+  { month: 'Tháng 11', day: 'Mùng 1', title: 'Đại Lễ Tưởng Niệm Phật Hoàng Trần Nhân Tông', desc: 'Sơ tổ Thiền phái Trúc Lâm Yên Tử nhập Niết Bàn tại am Ngọa Vân' },
+  { month: 'Tháng 11', day: '17', title: 'Khánh Đản Đức Phật A Di Đà', desc: 'Giáo chủ cõi Tây Phương Cực Lạc với 48 đại nguyện tiếp dẫn' },
+  { month: 'Tháng Chạp', day: 'Mùng 8', title: 'Đại Lễ Đức Phật Thích Ca Thành Đạo', desc: 'Dưới cội Bồ Đề khi sao Mai vừa mọc, Đức Phật chứng quả Chánh Đẳng Giác' },
 ];
 
 export default function BuddhistCalendarPage() {
-  // Calendar state initialized to November 2026 (matching screenshot)
   const [viewYear, setViewYear] = useState<number>(2026);
   const [viewMonth, setViewMonth] = useState<number>(11);
-  const [selectedDay, setSelectedDay] = useState<number>(8); // 08/11/2026 active
+  const [selectedDay, setSelectedDay] = useState<number>(8);
+  const [filterMode, setFilterMode] = useState<CalendarFilterMode>('all');
+  const [hasRecordedVowToday, setHasRecordedVowToday] = useState<boolean>(false);
 
   // Modals state
   const [isYearEventsOpen, setIsYearEventsOpen] = useState(false);
@@ -195,10 +217,9 @@ export default function BuddhistCalendarPage() {
   const [reminders, setReminders] = useState<PersonalReminder[]>([]);
   const [reminderTitle, setReminderTitle] = useState('');
   const [reminderNote, setReminderNote] = useState('');
-  const [reminderType, setReminderType] = useState<'gio' | 'quan_trong' | 'trai_gioi' | 'cau_an'>('gio');
+  const [reminderType, setReminderType] = useState<'gio' | 'quan_trong' | 'trai_gioi' | 'cau_an'>('trai_gioi');
   const [reminderDate, setReminderDate] = useState('2026-11-08');
 
-  // Load saved reminders
   useEffect(() => {
     try {
       const saved = localStorage.getItem(REMINDER_STORAGE_KEY);
@@ -206,19 +227,42 @@ export default function BuddhistCalendarPage() {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) setReminders(parsed);
       }
+      const vowSaved = localStorage.getItem(TRAI_VOW_STORAGE_KEY);
+      if (vowSaved === 'true') {
+        setHasRecordedVowToday(true);
+      }
     } catch {}
   }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    setTimeout(() => setToastMessage(null), 3200);
+  };
+
+  const handleRecordTraiDayVow = () => {
+    playBellSound(0.5);
+    setHasRecordedVowToday(true);
+    try {
+      localStorage.setItem(TRAI_VOW_STORAGE_KEY, 'true');
+    } catch {}
+    recordDharmaMerit({
+      type: 'precept',
+      title: 'Phát Nguyện Thọ Trì Trai Giới (Ăn Chay Thanh Tịnh)',
+      detail: 'Giữ tâm từ bi, ăn chay thanh tịnh ngày 30/09 Âm lịch (Vía Đức Phật Dược Sư)',
+      meritPoints: 25,
+    });
+    showToast('Đã ghi nhận công đức Thọ Trai Hôm Nay vào Sổ Công Đức Dharma!');
   };
 
   const handleToggleNotification = () => {
     playBellSound(0.4);
     setIsNotificationOn((prev) => {
       const next = !prev;
-      showToast(next ? 'Đã bật chuông thông báo ngày rằm, mùng 1 & ngày lễ' : 'Đã tắt thông báo ngày lễ');
+      showToast(
+        next
+          ? 'Đã bật Chuông Báo Trai (nhắc lịch ăn chay & ngày Vía Phật)'
+          : 'Đã tạm tắt Chuông Báo Trai'
+      );
       return next;
     });
   };
@@ -228,7 +272,7 @@ export default function BuddhistCalendarPage() {
     setViewYear(2026);
     setViewMonth(11);
     setSelectedDay(8);
-    showToast('Đã về ngày hôm nay: Chủ nhật, 08/11/2026');
+    showToast('Đã trở về hôm nay: Chủ Nhật, 08/11/2026 (30/09 Âm lịch)');
   };
 
   const handlePrevMonth = () => {
@@ -277,21 +321,16 @@ export default function BuddhistCalendarPage() {
     } catch {}
 
     playWoodenFishSound(0.5);
-    showToast(`Đã lưu lời nhắc: ${newItem.title}`);
+    showToast(`Đã lưu lịch nhắc: ${newItem.title}`);
     setReminderTitle('');
     setReminderNote('');
     setIsAddReminderOpen(false);
   };
 
-  // Build Perpetual Calendar Cells for the current month
-  // Supporting full 6-row or 5-row view with trailing days of neighboring months
   const calendarCells = useMemo(() => {
-    // Determine start day of week for 1st of month: Monday = 0 ... Sunday = 6
     const firstDayDate = new Date(viewYear, viewMonth - 1, 1);
     const totalDaysInMonth = new Date(viewYear, viewMonth, 0).getDate();
     const prevMonthTotalDays = new Date(viewYear, viewMonth - 1, 0).getDate();
-
-    // In Vietnam: Monday is first day of week (index 0), Sunday is last (index 6)
     const startWeekdayOffset = (firstDayDate.getDay() + 6) % 7;
 
     const cells: {
@@ -309,17 +348,12 @@ export default function BuddhistCalendarPage() {
       isSelected: boolean;
     }[] = [];
 
-    // 1. Previous month trailing days
     for (let i = startWeekdayOffset - 1; i >= 0; i--) {
       const prevSolarDay = prevMonthTotalDays - i;
       const prevMonth = viewMonth === 1 ? 12 : viewMonth - 1;
       const prevYear = viewMonth === 1 ? viewYear - 1 : viewYear;
       const lunar = getLunarDate(prevYear, prevMonth, prevSolarDay);
-      const isSun = (cells.length % 7) === 6;
-
-      // Special dot markers matching screenshot (e.g. 26/10 has green, 28/10 has green & amber)
-      const hasGreen = prevSolarDay === 26 || prevSolarDay === 28;
-      const hasAmber = prevSolarDay === 28;
+      const isSun = cells.length % 7 === 6;
 
       cells.push({
         solarDay: prevSolarDay,
@@ -330,44 +364,33 @@ export default function BuddhistCalendarPage() {
         lunarDay: lunar.lunarDay,
         lunarMonth: lunar.lunarMonth,
         lunarDisplay: `${lunar.lunarDay}`,
-        hasGreenDot: hasGreen,
-        hasAmberDot: hasAmber,
+        hasGreenDot: prevSolarDay === 26 || prevSolarDay === 28,
+        hasAmberDot: prevSolarDay === 28,
         isToday: false,
         isSelected: false,
       });
     }
 
-    // 2. Current month days
     for (let d = 1; d <= totalDaysInMonth; d++) {
       const lunar = getLunarDate(viewYear, viewMonth, d);
-      const isSun = (cells.length % 7) === 6;
-      const isSelected = viewYear === 2026 && viewMonth === 11 && selectedDay === d;
+      const isSun = cells.length % 7 === 6;
+      const isSelected = selectedDay === d;
 
-      // Indicator dots calculation matching Screenshot 1 exactly for November 2026
       let hasGreen = false;
       let hasAmber = false;
 
-      // Green dot (Trai days: ăn chay, niệm Phật)
       if (
-        [2, 3, 7, 9, 11, 16, 21, 23, 28, 29].includes(d) ||
+        [2, 3, 7, 8, 9, 11, 16, 21, 22, 23, 28, 29].includes(d) ||
         lunar.isTraiDay ||
-        [1, 8, 14, 15, 23, 29, 30].includes(lunar.lunarDay)
+        [1, 8, 14, 15, 18, 23, 24, 28, 29, 30].includes(lunar.lunarDay)
       ) {
         hasGreen = true;
       }
 
-      // Amber dot (Buddhist Festivals & Vía days)
-      if (
-        d === 8 || // Vía Dược Sư
-        d === 9 || // Mùng 1 tháng 10
-        d === 13 || // Vía Đạt Ma
-        d === 18 || // Tết Thường Tân
-        d === 23 // Lễ Hạ Nguyên & Rằm
-      ) {
+      if ([8, 9, 13, 18, 23].includes(d)) {
         hasAmber = true;
       }
 
-      // Lunar label format: if 1st day of lunar month, display "1/10" or "1/11"
       let lunarDisplay = `${lunar.lunarDay}`;
       if (lunar.lunarDay === 1) {
         lunarDisplay = `1/${lunar.lunarMonth}`;
@@ -389,16 +412,12 @@ export default function BuddhistCalendarPage() {
       });
     }
 
-    // 3. Next month leading days to complete full 6 rows (42 cells)
     const remaining = 42 - cells.length;
     for (let nextDay = 1; nextDay <= remaining; nextDay++) {
       const nextMonth = viewMonth === 12 ? 1 : viewMonth + 1;
       const nextYear = viewMonth === 12 ? viewYear + 1 : viewYear;
       const lunar = getLunarDate(nextYear, nextMonth, nextDay);
-      const isSun = (cells.length % 7) === 6;
-
-      const hasGreen = nextDay === 3;
-      const hasAmber = false;
+      const isSun = cells.length % 7 === 6;
 
       cells.push({
         solarDay: nextDay,
@@ -409,8 +428,8 @@ export default function BuddhistCalendarPage() {
         lunarDay: lunar.lunarDay,
         lunarMonth: lunar.lunarMonth,
         lunarDisplay: `${lunar.lunarDay}`,
-        hasGreenDot: hasGreen,
-        hasAmberDot: hasAmber,
+        hasGreenDot: nextDay === 3,
+        hasAmberDot: false,
         isToday: false,
         isSelected: false,
       });
@@ -419,13 +438,11 @@ export default function BuddhistCalendarPage() {
     return cells;
   }, [viewYear, viewMonth, selectedDay]);
 
-  // Current month's event list
   const currentMonthEvents = useMemo(() => {
     if (viewYear === 2026 && viewMonth === 11) {
       return NOVEMBER_2026_EVENTS;
     }
 
-    // Generate dynamic events for other months
     const events: BuddhistEventItem[] = [];
     const totalDays = new Date(viewYear, viewMonth, 0).getDate();
 
@@ -442,15 +459,15 @@ export default function BuddhistCalendarPage() {
         const evTitle =
           title ||
           (lunar.lunarDay === 1
-            ? `Ngày mùng 1 tháng ${lunar.lunarMonth} Âm lịch`
-            : `Ngày Rằm tháng ${lunar.lunarMonth} Âm lịch`);
+            ? `Ngày Sóc • Mùng 1 tháng ${lunar.lunarMonth} Âm lịch`
+            : `Ngày Vọng • Rằm tháng ${lunar.lunarMonth} Âm lịch`);
 
         events.push({
           id: `dyn-${viewYear}-${viewMonth}-${d}`,
           solarDate: `${String(d).padStart(2, '0')}-${String(viewMonth).padStart(2, '0')}`,
           dayOfWeek,
           lunarDate: `${String(lunar.lunarDay).padStart(2, '0')}-${String(lunar.lunarMonth).padStart(2, '0')}`,
-          title: evTitle.length > 32 ? evTitle.slice(0, 32) + '...' : evTitle,
+          title: evTitle,
           fullTitle: evTitle,
           image: lunar.lunarDay === 15 ? '/images/golden_buddha.jpg' : '/images/buddha_temple.jpg',
           category: lunar.isMainTraiDay ? 'Ngày Trai Giới' : 'Lễ Phật Giáo',
@@ -467,339 +484,366 @@ export default function BuddhistCalendarPage() {
     return getLunarDate(viewYear, viewMonth, selectedDay);
   }, [viewYear, viewMonth, selectedDay]);
 
+  const selectedMealPlan = useMemo(() => {
+    if (selectedDateLunarInfo.lunarDay === 1 || selectedDateLunarInfo.lunarDay === 15) {
+      return VEGETARIAN_MEAL_PLANS[1];
+    }
+    if (selectedDay % 2 === 0) {
+      return VEGETARIAN_MEAL_PLANS[0];
+    }
+    return VEGETARIAN_MEAL_PLANS[2];
+  }, [selectedDay, selectedDateLunarInfo]);
+
   return (
-    <div className="min-h-screen bg-[#110D0A] text-[#FDFBF7] selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#181207] text-[#FFFDF7] selection:bg-[#F5C542]/30 selection:text-[#FFD966]">
       {/* ========================================================================= */}
-      {/* MOBILE VIEW (< lg) - 100% Locked Apple iOS Om Mani Layout                 */}
+      {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP CALENDAR               */}
       {/* ========================================================================= */}
       <div className="block lg:hidden">
-        {/* Container centered with mobile app aspect ratio */}
-        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-6">
+        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-5">
+          {/* 1. SAFE-AREA HEADER */}
+          <header className="flex items-center justify-between gap-3 pt-2">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
+                <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
+                  <DharmaWheelIcon className="w-5 h-5 text-[#FFD966]" />
+                </div>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+                  DHARMA • LỊCH PHÁP BẢO
+                </span>
+                <h1 className="font-heading font-serif text-xl sm:text-2xl font-bold text-[#FFFDF7] leading-tight">
+                  Lịch Vạn Niên &amp; Trai Giới
+                </h1>
+              </div>
+            </div>
 
-        {/* ========================================================================= */}
-        {/* 1. TOP HEADER BAR WITH RIGHT ACTION BUTTONS (MATCHING SCREENSHOT 1)       */}
-        {/* ========================================================================= */}
-        <header className="flex items-start justify-between gap-3 pt-2">
-          {/* Left Heading */}
-          <div>
-            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight">
-              Lịch và Sự kiện
-            </h1>
-            <p className="text-xs sm:text-sm text-stone-400 mt-1">
-              Lịch âm dương và ngày lễ Phật giáo
-            </p>
-          </div>
-
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-2 shrink-0 pt-0.5">
-            {/* Round (+) Button for Adding Reminder */}
-            <button
-              type="button"
-              onClick={() => setIsAddReminderOpen(true)}
-              className="w-10 h-10 rounded-full bg-[#1E1610] border border-white/10 hover:border-amber-400/40 text-stone-200 hover:text-white flex items-center justify-center transition-all active:scale-95 shadow-md cursor-pointer"
-              title="Thêm nhắc nhở / Sự kiện cá nhân"
-              aria-label="Thêm nhắc nhở"
-            >
-              <Plus className="w-5 h-5 text-stone-200" />
-            </button>
-
-            {/* Pill Container: [CalendarClock | Bell] */}
-            <div className="flex items-center rounded-full bg-[#1E1610] border border-white/10 p-0.5 shadow-md">
-              {/* Go to Today Button */}
+            <div className="flex items-center gap-1.5 shrink-0">
               <button
                 type="button"
                 onClick={handleGoToday}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-stone-300 hover:text-amber-200 hover:bg-stone-800/60 active:scale-95 transition-all cursor-pointer"
-                title="Về ngày hôm nay"
-                aria-label="Về ngày hôm nay"
+                className="px-3 py-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/30 text-[#FFD966] text-xs font-bold active:scale-95 transition-all cursor-pointer"
               >
-                <div className="relative">
-                  <CalendarIcon className="w-4 h-4" />
-                  <Clock className="w-2.5 h-2.5 absolute -bottom-1 -right-1 text-amber-400" />
-                </div>
+                Hôm nay
               </button>
-
-              {/* Notification Bell Button */}
               <button
                 type="button"
                 onClick={handleToggleNotification}
                 className={cn(
-                  'w-9 h-9 rounded-full flex items-center justify-center active:scale-95 transition-all cursor-pointer',
+                  'w-9 h-9 rounded-xl border flex items-center justify-center active:scale-95 transition-all cursor-pointer',
                   isNotificationOn
-                    ? 'text-amber-300 hover:text-amber-200'
-                    : 'text-stone-500 hover:text-stone-300'
+                    ? 'bg-[#F5C542]/20 border-[#F5C542]/50 text-[#FFD966]'
+                    : 'bg-[#241B0B] border-white/10 text-[#C7B68B]'
                 )}
-                title={isNotificationOn ? 'Đang bật thông báo ngày lễ' : 'Đã tắt thông báo'}
-                aria-label="Bật tắt thông báo ngày lễ"
+                aria-label="Chuông báo trai"
               >
-                <Bell className="w-4 h-4 fill-current opacity-85" />
+                <TempleBellIcon className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsAddReminderOpen(true)}
+                className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#F5C542] to-[#FFD966] text-[#181207] flex items-center justify-center shadow-md active:scale-95 transition-all cursor-pointer"
+                aria-label="Thêm lịch nhắc"
+              >
+                <Plus className="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* ========================================================================= */}
-        {/* 2. MONTH SELECTOR & NAVIGATOR (MATCHING SCREENSHOT 1)                     */}
-        {/* ========================================================================= */}
-        <section aria-label="Điều hướng tháng" className="pt-2">
-          <div className="flex items-center justify-between px-1">
-            {/* Prev Month Button */}
-            <button
-              type="button"
-              onClick={handlePrevMonth}
-              className="p-2 text-stone-400 hover:text-white active:scale-90 transition-transform cursor-pointer"
-              aria-label="Tháng trước"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Month & Year Title */}
-            <h2 className="font-heading font-bold text-base sm:text-lg text-white tracking-wide select-none">
-              Tháng {viewMonth} - {viewYear}
-            </h2>
-
-            {/* Next Month Button */}
-            <button
-              type="button"
-              onClick={handleNextMonth}
-              className="p-2 text-stone-400 hover:text-white active:scale-90 transition-transform cursor-pointer"
-              aria-label="Tháng sau"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* 3. PERPETUAL CALENDAR GRID (MATCHING SCREENSHOT 1)                        */}
-        {/* ========================================================================= */}
-        <section aria-label="Bảng lịch vạn niên" className="space-y-2 select-none">
-          {/* Weekday Row: Hai Ba Tư Năm Sáu Bảy CN (CN in Red) */}
-          <div className="grid grid-cols-7 text-center">
-            {WEEKDAYS.map((w) => (
-              <div
-                key={w.label}
-                className={cn(
-                  'text-xs font-medium py-1.5',
-                  w.isSunday ? 'text-rose-500 font-bold' : 'text-stone-400'
-                )}
-              >
-                {w.label}
+          {/* 2. TODAY TRAI GIỚI VOW BANNER */}
+          <section className="p-3.5 rounded-2xl bg-gradient-to-r from-[#241B0B] via-[#2E220E] to-[#241B0B] border border-[#F5C542]/35 flex items-center justify-between gap-3 shadow-md">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966] shrink-0">
+                <AlmsBowlIcon className="w-5 h-5" />
               </div>
-            ))}
-          </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                  Hôm nay: 30/09 Âm Lịch • Ngày Thập Trai
+                </span>
+                <p className="text-xs font-medium text-[#FFFDF7] truncate mt-0.5">
+                  Vía Đức Phật Dược Sư Lưu Ly Quang
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleRecordTraiDayVow}
+              className={cn(
+                'px-3 py-2 rounded-xl text-[11px] font-bold shrink-0 flex items-center gap-1 transition-all cursor-pointer',
+                hasRecordedVowToday
+                  ? 'bg-emerald-500/20 border border-emerald-400/50 text-emerald-300'
+                  : 'bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] shadow-sm'
+              )}
+            >
+              <Check className="w-3.5 h-3.5" />
+              <span>{hasRecordedVowToday ? 'Đã Thọ Trai' : 'Thọ Trai'}</span>
+            </button>
+          </section>
 
-          {/* Days Grid (7 columns x 6 rows) */}
-          <div className="grid grid-cols-7 gap-y-2 gap-x-1 sm:gap-x-1.5 text-center">
-            {calendarCells.map((cell, idx) => {
-              const key = `cell-${idx}-${cell.solarDay}-${cell.solarMonth}`;
-
+          {/* 3. REACT NATIVE 3-MODE SEGMENTED CONTROL */}
+          <div className="grid grid-cols-3 gap-1 p-1 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25">
+            {[
+              { id: 'all', label: 'Tất Cả' },
+              { id: 'trai_gioi', label: 'Lịch Ăn Chay' },
+              { id: 'via_phat', label: 'Vía Phật' },
+            ].map((tab) => {
+              const active = filterMode === tab.id;
               return (
                 <button
-                  key={key}
+                  key={tab.id}
                   type="button"
                   onClick={() => {
-                    playWoodenFishSound(0.25);
-                    if (cell.isCurrentMonth) {
-                      setSelectedDay(cell.solarDay);
-                    } else {
-                      setViewMonth(cell.solarMonth);
-                      setViewYear(cell.solarYear);
-                      setSelectedDay(cell.solarDay);
-                    }
+                    playWoodenFishSound(0.2);
+                    setFilterMode(tab.id as CalendarFilterMode);
                   }}
                   className={cn(
-                    'flex flex-col items-center justify-center py-2 px-0.5 rounded-2xl transition-all duration-150 cursor-pointer relative group active:scale-95 min-h-[58px]',
-                    cell.isSelected
-                      ? 'bg-gradient-to-b from-[#C4681E] to-[#99470B] text-white shadow-xl ring-1 ring-amber-300/40'
-                      : 'hover:bg-stone-900/60'
+                    'py-2 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer',
+                    active
+                      ? 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] shadow-sm'
+                      : 'text-[#D6C394] hover:text-[#FFFDF7]'
                   )}
                 >
-                  {/* Top: Solar Date + Indicator Dots */}
-                  <div className="flex items-center justify-center gap-1 leading-none">
-                    <span
-                      className={cn(
-                        'text-sm sm:text-base font-bold font-mono leading-none',
-                        cell.isSelected
-                          ? 'text-white'
-                          : cell.isCurrentMonth
-                          ? cell.isSunday
-                            ? 'text-rose-500 font-bold'
-                            : 'text-stone-100'
-                          : cell.isSunday
-                          ? 'text-rose-900/60'
-                          : 'text-stone-600'
-                      )}
-                    >
-                      {String(cell.solarDay).padStart(2, '0')}
-                    </span>
-
-                    {/* Indicator Dots Container */}
-                    <div className="flex items-center gap-0.5">
-                      {/* Green dot (Trai day / Ăn chay) */}
-                      {cell.hasGreenDot && (
-                        <span
-                          className={cn(
-                            'w-1.5 h-1.5 rounded-full shrink-0',
-                            cell.isSelected ? 'bg-amber-100' : 'bg-emerald-400'
-                          )}
-                          title="Ngày trai giới • Ăn chay"
-                        />
-                      )}
-                      {/* Amber dot (Buddhist Festival) */}
-                      {cell.hasAmberDot && (
-                        <span
-                          className={cn(
-                            'w-1.5 h-1.5 rounded-full shrink-0',
-                            cell.isSelected ? 'bg-amber-200' : 'bg-amber-400'
-                          )}
-                          title="Ngày lễ • Vía Phật"
-                        />
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Bottom: Lunar Date */}
-                  <span
-                    className={cn(
-                      'text-[10px] font-mono leading-none mt-1.5',
-                      cell.isSelected
-                        ? 'text-amber-100 font-medium'
-                        : cell.isCurrentMonth
-                        ? 'text-stone-400'
-                        : 'text-stone-600'
-                    )}
-                  >
-                    {cell.lunarDisplay}
-                  </span>
+                  {tab.label}
                 </button>
               );
             })}
           </div>
 
-          {/* Button: [ Toàn bộ sự kiện trong năm › ] */}
-          <div className="pt-3 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                playPageTurnSound(0.3);
-                setIsYearEventsOpen(true);
-              }}
-              className="inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-full bg-[#1C140E] hover:bg-[#2A1D14] border border-white/10 hover:border-amber-400/40 text-stone-200 hover:text-white text-xs sm:text-sm font-medium transition-all active:scale-95 shadow-md cursor-pointer"
-            >
-              <span>Toàn bộ sự kiện trong năm</span>
-              <ChevronRight className="w-4 h-4 text-stone-400" />
-            </button>
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* 4. CÁC SỰ KIỆN TRONG THÁNG (MATCHING SCREENSHOT 1 & 2)                    */}
-        {/* ========================================================================= */}
-        <section aria-label="Các sự kiện trong tháng" className="space-y-3.5 pt-2">
-          {/* Section Heading */}
-          <h3 className="font-heading font-bold text-base sm:text-lg text-[#E5B869] tracking-wide">
-            Các sự kiện trong tháng {viewMonth}
-          </h3>
-
-          {/* Events List */}
-          <div className="space-y-3">
-            {currentMonthEvents.map((ev) => (
-              <div
-                key={ev.id}
-                onClick={() => {
-                  playWoodenFishSound(0.3);
-                  setSelectedEvent(ev);
-                }}
-                className="flex items-center justify-between p-3 sm:p-3.5 rounded-2xl bg-[#1C140E] border border-stone-800/80 hover:border-amber-500/40 cursor-pointer active:scale-[0.99] transition-all group shadow-md"
-              >
-                {/* Left Thumbnail & Info */}
-                <div className="flex items-center gap-3.5 min-w-0 pr-2">
-                  {/* Thumbnail Image */}
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden shrink-0 border border-white/5 bg-[#251A12] shadow-sm">
-                    <img
-                      src={ev.image}
-                      alt={ev.fullTitle}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-
-                  {/* Text Details */}
-                  <div className="min-w-0 flex-1">
-                    <h4 className="font-heading font-bold text-sm sm:text-[15px] text-white leading-snug truncate group-hover:text-amber-200 transition-colors">
-                      {ev.title}
-                    </h4>
-                    <p className="text-stone-400 text-xs mt-1 truncate">
-                      {ev.dayOfWeek}, {ev.solarDate} • Âm lịch {ev.lunarDate}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right Chevron Arrow */}
-                <div className="shrink-0 text-stone-500 group-hover:text-amber-300 group-hover:translate-x-0.5 transition-all">
-                  <ChevronRight className="w-4 h-4" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* 5. PERSONAL REMINDERS LIST (IF ANY SAVED)                                 */}
-        {/* ========================================================================= */}
-        {reminders.length > 0 && (
-          <section aria-label="Lời nhắc cá nhân" className="space-y-3 pt-4 border-t border-stone-800">
-            <div className="flex items-center justify-between">
-              <h4 className="font-heading font-bold text-sm text-stone-300">
-                Lời nhắc cá nhân ({reminders.length})
-              </h4>
+          {/* 4. CALENDAR CARD */}
+          <section className="p-4 rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 shadow-xl space-y-3 select-none">
+            {/* Month Navigator */}
+            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/15">
               <button
                 type="button"
-                onClick={() => setIsAddReminderOpen(true)}
-                className="text-xs text-amber-300 hover:text-amber-200 flex items-center gap-1"
+                onClick={handlePrevMonth}
+                className="p-1.5 rounded-xl bg-[#181207] border border-[#F5C542]/20 text-[#FFD966] active:scale-90 transition-transform cursor-pointer"
+                aria-label="Tháng trước"
               >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Thêm</span>
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <h2 className="font-heading font-serif font-bold text-base text-[#FFD966] tracking-wide">
+                Tháng {viewMonth} • {viewYear}
+              </h2>
+              <button
+                type="button"
+                onClick={handleNextMonth}
+                className="p-1.5 rounded-xl bg-[#181207] border border-[#F5C542]/20 text-[#FFD966] active:scale-90 transition-transform cursor-pointer"
+                aria-label="Tháng sau"
+              >
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="space-y-2">
-              {reminders.map((rem) => (
+            {/* Weekdays */}
+            <div className="grid grid-cols-7 text-center">
+              {WEEKDAYS.map((w) => (
                 <div
-                  key={rem.id}
-                  className="p-3 rounded-2xl bg-[#1C140E]/80 border border-stone-800 flex items-center justify-between text-xs"
+                  key={w.label}
+                  className={cn(
+                    'text-[11px] font-bold uppercase py-1',
+                    w.isSunday ? 'text-[#FFD966]' : 'text-[#C7B68B]'
+                  )}
                 >
-                  <div>
-                    <span className="font-bold text-white block">{rem.title}</span>
-                    <span className="text-stone-400 mt-0.5 block">
-                      {rem.solarDate} {rem.lunarDateStr && `(Âm: ${rem.lunarDateStr})`}
-                    </span>
-                    {rem.note && <span className="text-stone-500 italic mt-0.5 block">{rem.note}</span>}
-                  </div>
+                  {w.label}
+                </div>
+              ))}
+            </div>
+
+            {/* Grid 7x6 */}
+            <div className="grid grid-cols-7 gap-1.5 text-center">
+              {calendarCells.map((cell, idx) => {
+                const isDimmed =
+                  cell.isCurrentMonth &&
+                  ((filterMode === 'trai_gioi' && !cell.hasGreenDot) ||
+                    (filterMode === 'via_phat' && !cell.hasAmberDot));
+
+                return (
                   <button
+                    key={`mcell-${idx}-${cell.solarDay}`}
                     type="button"
                     onClick={() => {
-                      const next = reminders.filter((r) => r.id !== rem.id);
-                      setReminders(next);
-                      localStorage.setItem(REMINDER_STORAGE_KEY, JSON.stringify(next));
-                      showToast('Đã xóa lời nhắc');
+                      playWoodenFishSound(0.25);
+                      if (cell.isCurrentMonth) {
+                        setSelectedDay(cell.solarDay);
+                      } else {
+                        setViewMonth(cell.solarMonth);
+                        setViewYear(cell.solarYear);
+                        setSelectedDay(cell.solarDay);
+                      }
                     }}
-                    className="text-stone-500 hover:text-red-400 p-1"
-                    title="Xóa lời nhắc"
+                    className={cn(
+                      'flex flex-col items-center justify-center py-2 px-0.5 rounded-2xl transition-all duration-150 cursor-pointer relative min-h-[56px] border',
+                      cell.isSelected
+                        ? 'bg-gradient-to-b from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] border-[#FFF3B0] shadow-[0_4px_15px_rgba(245,197,66,0.35)]'
+                        : cell.isCurrentMonth
+                        ? isDimmed
+                          ? 'bg-[#181207]/40 border-transparent opacity-35'
+                          : 'bg-[#181207]/85 border-[#F5C542]/15 hover:border-[#F5C542]/40'
+                        : 'bg-transparent border-transparent opacity-35'
+                    )}
                   >
-                    <X className="w-4 h-4" />
+                    <div className="flex items-center justify-center gap-0.5 leading-none">
+                      <span
+                        className={cn(
+                          'text-sm font-bold font-mono leading-none',
+                          cell.isSelected
+                            ? 'text-[#181207] font-black'
+                            : cell.isSunday
+                            ? 'text-[#FFD966]'
+                            : 'text-[#FFFDF7]'
+                        )}
+                      >
+                        {String(cell.solarDay).padStart(2, '0')}
+                      </span>
+                      <div className="flex items-center gap-0.5">
+                        {cell.hasGreenDot && (
+                          <span
+                            className={cn(
+                              'w-1.5 h-1.5 rounded-full',
+                              cell.isSelected ? 'bg-[#181207]' : 'bg-emerald-400'
+                            )}
+                          />
+                        )}
+                        {cell.hasAmberDot && (
+                          <span
+                            className={cn(
+                              'w-1.5 h-1.5 rounded-full',
+                              cell.isSelected ? 'bg-[#181207]' : 'bg-[#FFD966]'
+                            )}
+                          />
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      className={cn(
+                        'text-[10px] font-mono leading-none mt-1.5',
+                        cell.isSelected
+                          ? 'text-[#181207] font-bold'
+                          : 'text-[#D6C394]'
+                      )}
+                    >
+                      {cell.lunarDisplay}
+                    </span>
                   </button>
+                );
+              })}
+            </div>
+
+            {/* Legend & Full Year Button */}
+            <div className="pt-2 border-t border-[#F5C542]/15 flex items-center justify-between text-[11px] text-[#D6C394]">
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  Ngày Trai
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-[#FFD966]" />
+                  Vía Phật
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsYearEventsOpen(true)}
+                className="text-[#FFD966] font-bold flex items-center gap-0.5 cursor-pointer"
+              >
+                <span>Niên biểu cả năm</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </section>
+
+          {/* 5. SELECTED DATE INSPECTOR & VEGETARIAN MEAL PLAN (MOBILE BENTO CARD) */}
+          <section className="p-4 rounded-3xl bg-gradient-to-br from-[#241B0B] via-[#2E220E] to-[#181207] border border-[#F5C542]/35 shadow-lg space-y-3.5">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#F5C542]/20">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                  Chi Tiết Ngày Đã Chọn
+                </span>
+                <h3 className="font-heading font-serif font-bold text-base text-[#FFFDF7]">
+                  Dương lịch {String(selectedDay).padStart(2, '0')}/{String(viewMonth).padStart(2, '0')} • Âm lịch {selectedDateLunarInfo.lunarDay}/{selectedDateLunarInfo.lunarMonth}
+                </h3>
+              </div>
+              <span className="px-2.5 py-1 rounded-full bg-[#F5C542]/15 border border-[#F5C542]/35 text-[10px] font-bold text-[#FFD966]">
+                {selectedDateLunarInfo.dayCanChi}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/15">
+                <span className="text-[10px] text-[#C7B68B] block">Tiết Khí</span>
+                <span className="font-bold text-[#FFFDF7]">{selectedDateLunarInfo.tietKhi}</span>
+              </div>
+              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/15">
+                <span className="text-[10px] text-[#C7B68B] block">Giờ Cát Tường</span>
+                <span className="font-bold text-[#FFD966] truncate block">{selectedDateLunarInfo.gioHoangDao}</span>
+              </div>
+            </div>
+
+            {/* Vegetarian Meal Plan Box */}
+            <div className="p-3.5 rounded-2xl bg-[#181207]/90 border border-[#F5C542]/25 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#FFD966]">
+                <AlmsBowlIcon className="w-4 h-4" />
+                <span>Thực Đơn Chay Dưỡng Sinh Gợi Ý:</span>
+              </div>
+              <div className="space-y-1 text-xs text-[#F3E3B2]">
+                <p>• <strong className="text-[#FFFDF7]">Sáng:</strong> {selectedMealPlan.breakfast}</p>
+                <p>• <strong className="text-[#FFFDF7]">Ngọ Trai:</strong> {selectedMealPlan.lunch}</p>
+                <p>• <strong className="text-[#FFFDF7]">Chiều:</strong> {selectedMealPlan.dinner}</p>
+              </div>
+            </div>
+          </section>
+
+          {/* 6. MONTHLY EVENTS LIST */}
+          <section className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="font-heading font-serif font-bold text-base text-[#FFD966] flex items-center gap-2">
+                <PagodaMinimalIcon className="w-4 h-4" />
+                <span>Sự Kiện Phật Sự Tháng {viewMonth}</span>
+              </h3>
+              <span className="text-xs text-[#C7B68B]">{currentMonthEvents.length} ngày lễ</span>
+            </div>
+
+            <div className="space-y-2.5">
+              {currentMonthEvents.map((ev) => (
+                <div
+                  key={ev.id}
+                  onClick={() => {
+                    playWoodenFishSound(0.3);
+                    setSelectedEvent(ev);
+                  }}
+                  className="flex items-center justify-between p-3 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] cursor-pointer active:scale-[0.99] transition-all group shadow-md"
+                >
+                  <div className="flex items-center gap-3 min-w-0 pr-2">
+                    <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-[#F5C542]/30 bg-[#181207]">
+                      <img
+                        src={ev.image}
+                        alt={ev.fullTitle}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                        {ev.category}
+                      </span>
+                      <h4 className="font-heading font-serif font-bold text-sm text-[#FFFDF7] truncate group-hover:text-[#FFD966]">
+                        {ev.title}
+                      </h4>
+                      <p className="text-[#C7B68B] text-xs mt-0.5 truncate">
+                        {ev.dayOfWeek}, {ev.solarDate} • Âm lịch {ev.lunarDate}
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-[#FFD966] shrink-0" />
                 </div>
               ))}
             </div>
           </section>
-        )}
-
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* DESKTOP VIEW (>= lg) - Luxury Dark Gold Buddhist Sanctuary Layout         */}
+      {/* DESKTOP VIEW (>= lg) - DHARMA RADIANT GOLD CALENDAR                       */}
       {/* ========================================================================= */}
       <div className="hidden lg:block">
         <OmManiDesktopCalendar
@@ -831,128 +875,118 @@ export default function BuddhistCalendarPage() {
             try {
               localStorage.setItem(REMINDER_STORAGE_KEY, JSON.stringify(next));
             } catch {}
-            showToast('Đã xóa lời nhắc');
+            showToast('Đã xóa lịch nhắc');
           }}
           isReminderEnabled={isNotificationOn}
           onToggleReminder={handleToggleNotification}
+          filterMode={filterMode}
+          onChangeFilterMode={(m) => {
+            playWoodenFishSound(0.25);
+            setFilterMode(m);
+          }}
+          selectedMealPlan={selectedMealPlan}
+          hasRecordedVowToday={hasRecordedVowToday}
+          onRecordTraiDayVow={handleRecordTraiDayVow}
         />
       </div>
 
       {/* ========================================================================= */}
-      {/* MODAL: TOÀN BỘ SỰ KIỆN TRONG NĂM                                          */}
+      {/* MODAL: NIÊN BIỂU PHẬT SỰ TRONG NĂM (REACT NATIVE BOTTOM-SHEET)            */}
       {/* ========================================================================= */}
       {isYearEventsOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsYearEventsOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-stone-800 shrink-0">
+          <div className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-3 sm:hidden" />
+            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
               <div>
-                <h3 className="font-heading font-serif font-bold text-lg text-[#FFE082]">
-                  Toàn Bộ Sự Kiện Phật Giáo Trong Năm
+                <h3 className="font-heading font-serif font-bold text-lg text-[#FFD966]">
+                  Niên Biểu Phật Sự 12 Tháng Âm Lịch
                 </h3>
-                <p className="text-xs text-stone-400 mt-0.5">
-                  12 tháng âm lịch và các ngày vía chư Phật, Bồ Tát
+                <p className="text-xs text-[#C7B68B] mt-0.5">
+                  Các ngày Vía Chư Phật, Bồ Tát &amp; Đại Lễ Truyền Thống
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsYearEventsOpen(false)}
-                className="text-stone-400 hover:text-white p-1 rounded-full hover:bg-stone-800 transition-colors"
+                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Scrollable List */}
             <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-2.5">
               {YEAR_ROUND_FESTIVALS.map((item, index) => (
                 <div
                   key={`year-ev-${index}`}
-                  className="p-3 rounded-2xl bg-black/40 border border-white/5 hover:border-amber-400/30 transition-all flex items-start gap-3"
+                  className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 flex items-start gap-3"
                 >
-                  {/* Month & Day Badge */}
-                  <div className="px-2.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-center shrink-0 min-w-[70px]">
-                    <span className="text-[10px] text-amber-300 font-bold block uppercase leading-none">
+                  <div className="px-2.5 py-1.5 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 text-center shrink-0 min-w-[78px]">
+                    <span className="text-[10px] text-[#FFD966] font-bold block uppercase leading-none">
                       {item.month}
                     </span>
-                    <span className="text-xs font-mono font-bold text-white block mt-1 leading-none">
+                    <span className="text-xs font-mono font-bold text-[#FFFDF7] block mt-1 leading-none">
                       {item.day}
                     </span>
                   </div>
-
-                  {/* Title & Description */}
                   <div className="min-w-0 flex-1">
-                    <h5 className="font-heading font-bold text-sm text-stone-100 leading-snug">
+                    <h5 className="font-heading font-serif font-bold text-sm text-[#FFFDF7] leading-snug">
                       {item.title}
                     </h5>
-                    <p className="text-xs text-stone-400 mt-1 leading-relaxed">
+                    <p className="text-xs text-[#D6C394] mt-1 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* Modal Footer */}
-            <div className="pt-3 border-t border-stone-800 flex items-center justify-end shrink-0">
-              <button
-                type="button"
-                onClick={() => setIsYearEventsOpen(false)}
-                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
-              >
-                Đóng
-              </button>
-            </div>
           </div>
         </div>
       )}
 
       {/* ========================================================================= */}
-      {/* MODAL: CHI TIẾT SỰ KIỆN PHẬT GIÁO                                         */}
+      {/* MODAL: CHI TIẾT SỰ KIỆN PHẬT GIÁO (REACT NATIVE BOTTOM-SHEET)             */}
       {/* ========================================================================= */}
       {selectedEvent && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedEvent(null);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[88vh] flex flex-col rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in">
-            {/* Top Close Button */}
+          <div className="relative w-full max-w-md max-h-[88vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-3 sm:hidden" />
             <button
               type="button"
               onClick={() => setSelectedEvent(null)}
-              className="absolute top-4 right-4 z-10 text-stone-400 hover:text-white p-1 rounded-full bg-black/50"
+              className="absolute top-4 right-4 z-10 text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]/80 border border-[#F5C542]/30"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
-            {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto no-scrollbar space-y-4">
-              {/* Banner Image */}
-              <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-md">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-[#F5C542]/30 shadow-md">
                 <img
                   src={selectedEvent.image}
                   alt={selectedEvent.fullTitle}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute top-2 left-2 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-400/30">
+                <div className="absolute top-2.5 left-2.5 px-3 py-1 rounded-full bg-[#181207]/85 backdrop-blur-md text-[#FFD966] text-[10px] font-bold uppercase tracking-wider border border-[#F5C542]/40">
                   {selectedEvent.category}
                 </div>
               </div>
 
-              {/* Title & Date */}
               <div>
-                <h3 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFE082] leading-snug">
+                <h3 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFD966] leading-snug">
                   {selectedEvent.fullTitle}
                 </h3>
-                <div className="flex items-center gap-2 mt-1.5 text-xs text-stone-300">
-                  <span className="font-medium text-amber-300">
+                <div className="flex items-center gap-2 mt-1.5 text-xs text-[#F3E3B2]">
+                  <span className="font-bold text-[#FFD966]">
                     {selectedEvent.dayOfWeek}, {selectedEvent.solarDate}/2026
                   </span>
                   <span>•</span>
@@ -960,46 +994,43 @@ export default function BuddhistCalendarPage() {
                 </div>
               </div>
 
-              {/* Meaning & Significance */}
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5 text-xs sm:text-sm text-stone-200 leading-relaxed">
-                <p className="font-bold text-amber-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Ý Nghĩa &amp; Nguồn Gốc:</span>
+              <div className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 space-y-1.5 text-xs sm:text-sm leading-relaxed">
+                <p className="font-bold text-[#FFD966] flex items-center gap-1.5">
+                  <LotusMinimalIcon className="w-4 h-4" />
+                  <span>Ý Nghĩa Phật Học:</span>
                 </p>
-                <p className="text-stone-300">{selectedEvent.meaning}</p>
+                <p className="text-[#F3E3B2]">{selectedEvent.meaning}</p>
               </div>
 
-              {/* Practice Guidance */}
-              <div className="p-3.5 rounded-2xl bg-amber-950/30 border border-amber-500/20 space-y-1.5 text-xs sm:text-sm text-amber-100 leading-relaxed">
-                <p className="font-bold text-amber-300 flex items-center gap-1.5">
-                  <Heart className="w-3.5 h-3.5" />
-                  <span>Lời Khuyên Tu Tập:</span>
+              <div className="p-3.5 rounded-2xl bg-[#2E220E] border border-[#F5C542]/35 space-y-1.5 text-xs sm:text-sm leading-relaxed">
+                <p className="font-bold text-[#FFD966] flex items-center gap-1.5">
+                  <BodhiLeafIcon className="w-4 h-4" />
+                  <span>Hướng Dẫn Hành Trì:</span>
                 </p>
-                <p>{selectedEvent.practiceAdvice}</p>
+                <p className="text-[#FFFDF7]">{selectedEvent.practiceAdvice}</p>
               </div>
             </div>
 
-            {/* Footer Buttons */}
-            <div className="pt-3 border-t border-stone-800 flex items-center justify-between shrink-0">
+            <div className="pt-3 border-t border-[#F5C542]/20 flex items-center justify-between shrink-0 mt-3">
               <button
                 type="button"
                 onClick={() => {
                   playBellSound(0.4);
-                  showToast(`Đã đặt nhắc nhở cho "${selectedEvent.title}"`);
+                  showToast(`Đã đặt Chuông Báo Trai cho "${selectedEvent.title}"`);
                   setSelectedEvent(null);
                 }}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-semibold transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/40 text-[#FFD966] text-xs font-bold cursor-pointer"
               >
-                <Bell className="w-3.5 h-3.5 text-amber-300" />
-                <span>Đặt Nhắc Nhở</span>
+                <TempleBellIcon className="w-4 h-4" />
+                <span>Đặt Nhắc Lễ</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setSelectedEvent(null)}
-                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md transition-all active:scale-95"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold text-xs shadow-md cursor-pointer"
               >
-                Đóng
+                Hoàn Tất
               </button>
             </div>
           </div>
@@ -1007,25 +1038,25 @@ export default function BuddhistCalendarPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* MODAL: THÊM NHẮC NHỞ CÁ NHÂN / NGÀY GIỖ (NÚT +)                           */}
+      {/* MODAL: TẠO LỊCH NHẮC TU TẬP                                               */}
       {/* ========================================================================= */}
       {isAddReminderOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsAddReminderOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in space-y-4">
-            {/* Header */}
-            <div className="flex items-center justify-between pb-2 border-b border-stone-800">
-              <h3 className="font-heading font-bold text-base text-[#FFE082]">
-                Thêm Nhắc Nhở Cá Nhân
+          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
+            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
+              <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+                Tạo Lịch Nhắc Hành Trì &amp; Trai Giới
               </h3>
               <button
                 type="button"
                 onClick={() => setIsAddReminderOpen(false)}
-                className="text-stone-400 hover:text-white p-1"
+                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1033,45 +1064,45 @@ export default function BuddhistCalendarPage() {
 
             <form onSubmit={handleSaveReminder} className="space-y-3 text-xs">
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Tiêu đề nhắc nhở *</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Nội dung lời nhắc *</label>
                 <input
                   type="text"
                   required
-                  placeholder="Ví dụ: Ngày giỗ Mẹ, Ngày phóng sinh, Lễ chùa..."
+                  placeholder="Ví dụ: Thọ bát quan trai giới, Tụng kinh Dược Sư..."
                   value={reminderTitle}
                   onChange={(e) => setReminderTitle(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-stone-700 text-white placeholder-stone-500 focus:outline-hidden focus:border-amber-400"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] placeholder-[#C7B68B]/50 focus:outline-hidden focus:border-[#FFD966]"
                 />
               </div>
 
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Ngày Dương lịch</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Ngày Dương lịch</label>
                 <input
                   type="date"
                   value={reminderDate}
                   onChange={(e) => setReminderDate(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-stone-700 text-white focus:outline-hidden focus:border-amber-400"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
                 />
               </div>
 
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Phân loại</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Chuyên mục</label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { id: 'gio', label: 'Ngày Giỗ' },
-                    { id: 'trai_gioi', label: 'Ăn Chay' },
-                    { id: 'cau_an', label: 'Cầu An' },
-                    { id: 'quan_trong', label: 'Quan Trọng' },
+                    { id: 'trai_gioi', label: 'Trai Giới (Ăn Chay)' },
+                    { id: 'cau_an', label: 'Kỳ Siêu / Cầu An' },
+                    { id: 'gio', label: 'Tưởng Niệm Tiên Tổ' },
+                    { id: 'quan_trong', label: 'Phật Sự Quan Trọng' },
                   ].map((t) => (
                     <button
                       key={t.id}
                       type="button"
                       onClick={() => setReminderType(t.id as any)}
                       className={cn(
-                        'py-1.5 px-2 rounded-xl border text-center transition-all',
+                        'py-2 px-2 rounded-xl border text-center transition-all cursor-pointer',
                         reminderType === t.id
-                          ? 'bg-amber-600/30 border-amber-400 text-amber-200 font-bold'
-                          : 'bg-black/30 border-stone-800 text-stone-400'
+                          ? 'bg-[#F5C542]/25 border-[#FFD966] text-[#FFD966] font-bold'
+                          : 'bg-[#181207] border-[#F5C542]/15 text-[#C7B68B]'
                       )}
                     >
                       {t.label}
@@ -1081,13 +1112,13 @@ export default function BuddhistCalendarPage() {
               </div>
 
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Ghi chú thêm</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Ghi chú hành trì</label>
                 <textarea
                   rows={2}
-                  placeholder="Chuẩn bị hoa quả, tụng kinh Dược Sư..."
+                  placeholder="Chuẩn bị hương hoa, tụng 1 biến kinh..."
                   value={reminderNote}
                   onChange={(e) => setReminderNote(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-stone-700 text-white placeholder-stone-500 focus:outline-hidden focus:border-amber-400"
+                  className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] placeholder-[#C7B68B]/50 focus:outline-hidden focus:border-[#FFD966]"
                 />
               </div>
 
@@ -1095,15 +1126,15 @@ export default function BuddhistCalendarPage() {
                 <button
                   type="button"
                   onClick={() => setIsAddReminderOpen(false)}
-                  className="flex-1 py-2 rounded-xl bg-stone-800 text-stone-300 font-bold"
+                  className="flex-1 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/25 text-[#D6C394] font-bold cursor-pointer"
                 >
-                  Hủy
+                  Đóng
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold shadow-md transition-all active:scale-95"
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold shadow-md cursor-pointer"
                 >
-                  Lưu Nhắc Nhở
+                  Lưu Lịch Nhắc
                 </button>
               </div>
             </form>
@@ -1111,13 +1142,11 @@ export default function BuddhistCalendarPage() {
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* FLOATING TOAST                                                            */}
-      {/* ========================================================================= */}
+      {/* FLOATING TOAST */}
       {toastMessage && (
-        <div className="fixed top-14 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2 rounded-2xl bg-[#24130A]/95 border border-[#D4AF37] text-center shadow-xl backdrop-blur-md">
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFE082]">
+        <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
+          <div className="px-4 py-2.5 rounded-2xl bg-[#241B0B]/95 border border-[#F5C542] text-center shadow-xl backdrop-blur-md">
+            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFD966]">
               {toastMessage}
             </p>
           </div>

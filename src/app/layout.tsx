@@ -23,28 +23,28 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL || 'https://giacngo.vercel.app'),
-  title: 'Phật Pháp — Cổng Thông Tin, Thư Viện, Chùa & Không Gian Thiền Định',
+  title: 'DHARMA — Không Gian Chánh Niệm & Tam Tạng Pháp Bảo',
   description:
-    'Một không gian thanh tịnh để học hỏi, chia sẻ và kết nối Phật pháp. Nơi những giá trị tỉnh thức, từ bi và trí tuệ được lan tỏa.',
+    'Nền tảng tu học Phật pháp thanh tịnh: Thời khóa chánh niệm 4 thời, Lịch Vạn Niên & Trai Giới, Tam Tạng Kinh Điển và Không Gian Hành Trì.',
   keywords: [
+    'Dharma',
     'Phật pháp',
     'Chánh niệm',
     'Thiền định',
     'Kinh Pháp Cú',
-    'Chùa Việt Nam',
-    'Pháp thoại',
-    'Tu học Phật giáo',
+    'Lịch Vạn Niên Phật Giáo',
+    'Tam Tạng Kinh Điển',
   ],
-  authors: [{ name: 'Ban Biên Tập Phật Pháp' }],
+  authors: [{ name: 'Ban Biên Tập Dharma' }],
   openGraph: {
-    title: 'Phật Pháp — Nền Tảng Tu Học & Cộng Đồng Phật Giáo',
+    title: 'DHARMA — Không Gian Chánh Niệm & Tam Tạng Pháp Bảo',
     description:
-      'Một không gian thanh tịnh để học hỏi, chia sẻ và kết nối Phật pháp. Lộ trình học Phật, bản đồ chùa chiền và phòng thiền trực tuyến.',
+      'Không gian thanh tịnh để thực hành chánh niệm, thọ trì kinh điển, tra cứu lịch trai giới và tích lũy công đức mỗi ngày.',
     type: 'website',
     locale: 'vi_VN',
     url: 'http://localhost:3000',
-    siteName: 'Phật Pháp',
-    images: [{ url: '/logo.png', width: 800, height: 800, alt: 'Phật Pháp Logo' }],
+    siteName: 'DHARMA',
+    images: [{ url: '/logo.png', width: 800, height: 800, alt: 'Dharma Logo' }],
   },
   icons: {
     icon: [

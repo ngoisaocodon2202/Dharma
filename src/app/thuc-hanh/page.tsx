@@ -1,28 +1,34 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   Play,
   Pause,
   RotateCcw,
-  Volume2,
   X,
-  Plus,
-  Heart,
-  Sparkles,
-  Radio,
-  Headphones,
-  Music,
-  BookOpen,
-  Bell,
-  Check,
   ChevronRight,
-  Flame,
+  Check,
 } from 'lucide-react';
-import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
-import { MalaBeadsModal } from '@/components/om-mani/OmManiInteractiveTools';
+import {
+  DharmaWheelIcon,
+  MeditatingMonkOutlineIcon,
+  MalaBeadsMinimalIcon,
+  WoodenFishMinimalIcon,
+  TempleBellIcon,
+  LotusLanternIcon,
+  IncenseAltarIcon,
+  PagodaMinimalIcon,
+  LotusMinimalIcon,
+  SutraScrollIcon,
+  BodhiLeafIcon,
+} from '@/components/icons/DharmaMinimalIcons';
+import {
+  MalaBeadsModal,
+  recordDharmaMerit,
+  getDharmaMeritLedger,
+  DharmaMeritEntry,
+} from '@/components/om-mani/OmManiInteractiveTools';
 import {
   playBellSound,
   playWoodenFishSound,
@@ -34,57 +40,7 @@ import { OmManiDesktopPractice } from '@/components/om-mani/desktop/OmManiDeskto
 import { cn } from '@/lib/utils';
 
 // =============================================================================
-// ICONS FOR PRACTICE VEHICLES
-// =============================================================================
-const MeditatingFigureIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <circle cx="12" cy="5" r="2.2" />
-    <circle cx="12" cy="2.5" r="0.8" />
-    <path d="M12 8c-2.4 0-4.2 1.6-4.5 3.8l-.5 3.2c-.1.6.4 1.1 1 1.1h8c.6 0 1.1-.5 1-1.1l-.5-3.2C16.2 9.6 14.4 8 12 8z" opacity="0.9" />
-    <path d="M5.5 17.5c1.2-1.5 3.5-1.5 6.5-1.5s5.3 0 6.5 1.5c.8 1-1 2.5-3 2.5h-7c-2 0-3.8-1.5-3-2.5z" />
-  </svg>
-);
-
-const MalaIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}>
-    <circle cx="12" cy="11" r="7" strokeDasharray="2 3" />
-    <circle cx="12" cy="4" r="1.5" fill="currentColor" />
-    <path d="M12 18v4M10 22h4" strokeLinecap="round" />
-  </svg>
-);
-
-const WoodenFishIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M12 4C7.58 4 4 7.58 4 12c0 2.5 1.15 4.73 2.95 6.2-.28-.7-.45-1.46-.45-2.2 0-3.31 2.69-6 6-6s6 2.69 6 6c0 .74-.17 1.5-.45 2.2C19.85 16.73 21 14.5 21 12c0-4.42-3.58-8-9-8z" />
-    <circle cx="12" cy="16" r="2.5" opacity="0.6" />
-    <path d="M8 12h8" stroke="#110D0A" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
-const PagodaIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M12 2L9 6h6l-3-4zM6 8l-2 3h16l-2-3H6zm-1 5l-2 3h18l-2-3H5zm2 5v4h10v-4H7z" />
-  </svg>
-);
-
-const LotusIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M12 3c-1.5 3-4 6-4 9 0 2.21 1.79 4 4 4s4-1.79 4-4c0-3-2.5-6-4-9z" opacity="0.9" />
-    <path d="M6 14c-2-1.5-3-4-3-6 2.5.5 5 2.5 6 5-1.2.3-2.2.7-3 1z" />
-    <path d="M18 14c2-1.5 3-4 3-6-2.5.5-5 2.5-6 5 1.2.3 2.2.7 3 1z" />
-    <path d="M4 17c3-1 6-1 8 0 2-1 5-1 8 0-2 2-5 3-8 3s-6-1-8-3z" />
-  </svg>
-);
-
-const MemorialBookIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 4h2v5l-1-.75L9 9V4zm9 16H6V4h1v7l3-2 3 2V4h5v16z" />
-    <circle cx="12" cy="15" r="1.5" />
-  </svg>
-);
-
-// =============================================================================
-// DATA: THƯ VIỆN BỔN TÔN
+// DATA: TÔN TƯỢNG CHƯ PHẬT & ĐẠI NGUYỆN
 // =============================================================================
 interface BuddhaCard {
   id: string;
@@ -96,6 +52,14 @@ interface BuddhaCard {
 }
 
 const BUDDHAS_DATA: BuddhaCard[] = [
+  {
+    id: 'thich-ca',
+    name: 'Đức Phật Thích Ca Mâu Ni',
+    title: 'Từ Phụ Bổn Sư Thích Ca Mâu Ni Phật',
+    image: '/images/golden_buddha_altar.jpg',
+    mantra: 'Nam Mô Bổn Sư Thích Ca Mâu Ni Phật',
+    vow: 'Bậc Đạo Sư giác ngộ hoàn toàn tại cõi Ta Bà, chỉ bày con đường Tứ Diệu Đế và Bát Chánh Đạo đưa chúng sinh thoát khỏi luân hồi sinh tử.',
+  },
   {
     id: 'duoc-su',
     name: 'Đức Phật Dược Sư',
@@ -122,7 +86,7 @@ const BUDDHAS_DATA: BuddhaCard[] = [
   },
   {
     id: 'dia-tang',
-    name: 'Bồ Tát Địa Tạng',
+    name: 'Bồ Tát Địa Tạng Vương',
     title: 'Đại Nguyện Địa Tạng Vương Bồ Tát',
     image: '/images/tran_nhan_tong_yentu.jpg',
     mantra: 'Nam Mô Đại Nguyện Địa Tạng Vương Bồ Tát',
@@ -130,11 +94,13 @@ const BUDDHAS_DATA: BuddhaCard[] = [
   },
 ];
 
-// =============================================================================
-// MAIN COMPONENT: PRACTICE / TU TẬP PAGE (OM MANI APPSTORE UI)
-// =============================================================================
+type PracticeStepFilter = 'all' | 'dinh_tam' | 'tri_niem' | 'hoi_huong';
+
 export default function PracticePage() {
   const router = useRouter();
+
+  // Filter for mobile 3-step view
+  const [stepFilter, setStepFilter] = useState<PracticeStepFilter>('all');
 
   // Modals state
   const [isMalaOpen, setIsMalaOpen] = useState(false);
@@ -145,49 +111,74 @@ export default function PracticePage() {
   const [isPrayerRebirthOpen, setIsPrayerRebirthOpen] = useState(false);
   const [isBuddhasModalOpen, setIsBuddhasModalOpen] = useState(false);
   const [isMemorialBookOpen, setIsMemorialBookOpen] = useState(false);
-  const [isAudioPlayerOpen, setIsAudioPlayerOpen] = useState(false);
+  const [isMeritLedgerOpen, setIsMeritLedgerOpen] = useState(false);
   const [selectedBuddha, setSelectedBuddha] = useState<BuddhaCard | null>(null);
 
   // Sound & music state
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Meditation timer state inside modal
+  // Anapanasati 4-4-6 Meditation timer state inside modal
   const [meditationMinutes, setMeditationMinutes] = useState(15);
   const [meditationSecondsLeft, setMeditationSecondsLeft] = useState(15 * 60);
   const [isMeditationActive, setIsMeditationActive] = useState(false);
+  const [breathTick, setBreathTick] = useState(0);
+
+  // Auto-Rhythm Wooden Fish BPM inside Chuông Mõ Modal
+  const [isAutoFishPlaying, setIsAutoFishPlaying] = useState(false);
+  const [fishBpm, setFishBpm] = useState<50 | 68 | 88>(68);
+  const [fishBeatCount, setFishBeatCount] = useState(0);
 
   // Chanting Machine state
   const [activeChantTrack, setActiveChantTrack] = useState('nam-mo-a-di-da-phat');
   const [isChantingPlaying, setIsChantingPlaying] = useState(false);
 
+  // Prayer inputs
+  const [peaceName, setPeaceName] = useState('');
+  const [peaceWish, setPeaceWish] = useState('');
+  const [rebirthName, setRebirthName] = useState('');
+  const [rebirthWish, setRebirthWish] = useState('');
+
+  // Merit Ledger entries
+  const [meritEntries, setMeritEntries] = useState<DharmaMeritEntry[]>([]);
+
   // Sổ Giỗ Chạp storage
   const [memorials, setMemorials] = useState<
     { id: string; name: string; relation: string; lunarDate: string; solarDate: string }[]
   >([
-    { id: '1', name: 'Ông Nội', relation: 'Ông', lunarDate: '15 Tháng 07', solarDate: 'Rằm Vu Lan' },
-    { id: '2', name: 'Bà Ngoại', relation: 'Bà', lunarDate: '10 Tháng 10', solarDate: 'Tết Thường Tân' },
+    { id: '1', name: 'Ông Nội Nguyễn Văn Phúc', relation: 'Tổ phụ', lunarDate: '15 Tháng 07', solarDate: 'Rằm Vu Lan' },
+    { id: '2', name: 'Bà Ngoại Lê Thị Hiền', relation: 'Tổ mẫu', lunarDate: '10 Tháng 10', solarDate: 'Lễ Thường Tân' },
   ]);
   const [newMemName, setNewMemName] = useState('');
   const [newMemRelation, setNewMemRelation] = useState('');
   const [newMemDate, setNewMemDate] = useState('');
 
-  // Toast feedback
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    setTimeout(() => setToastMessage(null), 3200);
   };
 
-  // Meditation timer countdown
+  useEffect(() => {
+    setMeritEntries(getDharmaMeritLedger());
+  }, [isMeritLedgerOpen, isPrayerPeaceOpen, isPrayerRebirthOpen, isMeditationModalOpen]);
+
+  // Meditation timer countdown + 14s Anapanasati breathing cycle
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
     if (isMeditationActive && meditationSecondsLeft > 0) {
       timer = setInterval(() => {
+        setBreathTick((t) => (t + 1) % 14);
         setMeditationSecondsLeft((prev) => {
           if (prev <= 1) {
             setIsMeditationActive(false);
-            playGrandTempleBellSound(0.5);
-            showToast('Chúc mừng bạn đã hoàn thành thời thiền thanh tịnh!');
+            playGrandTempleBellSound(0.6);
+            recordDharmaMerit({
+              type: 'meditation',
+              title: `Hoàn Mãn Tọa Thiền Anapanasati (${meditationMinutes} phút)`,
+              detail: 'Thực hành quán niệm hơi thở 4-4-6 định tĩnh thân tâm',
+              meritPoints: meditationMinutes * 3,
+            });
+            showToast('Thời khóa tọa thiền viên mãn! Đã ghi nhận vào Sổ Công Đức.');
             return 0;
           }
           return prev - 1;
@@ -197,362 +188,339 @@ export default function PracticePage() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [isMeditationActive, meditationSecondsLeft]);
+  }, [isMeditationActive, meditationSecondsLeft, meditationMinutes]);
 
-  // Clean up ambient music on unmount
+  // Auto-Rhythm Wooden Fish Interval (50 / 68 / 88 BPM)
+  useEffect(() => {
+    let fishTimer: NodeJS.Timeout | null = null;
+    if (isAutoFishPlaying && isBellsModalOpen) {
+      const intervalMs = Math.round((60 / fishBpm) * 1000);
+      fishTimer = setInterval(() => {
+        playWoodenFishSound(0.55);
+        setFishBeatCount((c) => c + 1);
+      }, intervalMs);
+    }
+    return () => {
+      if (fishTimer) clearInterval(fishTimer);
+    };
+  }, [isAutoFishPlaying, fishBpm, isBellsModalOpen]);
+
   useEffect(() => {
     return () => {
       stopMeditativeDrone();
     };
   }, []);
 
-  // Toggle ambient music (Nhạc tu tập)
   const handleToggleMusic = () => {
     if (isMusicPlaying) {
       stopMeditativeDrone();
       setIsMusicPlaying(false);
-      showToast('Đã dừng nhạc thiền');
+      showToast('Đã tạm dừng Tần Số Thiền 432Hz');
     } else {
       playBellSound(0.4);
       startMeditativeDrone(0.24);
       setIsMusicPlaying(true);
-      showToast('Đang phát: Âm thanh thư giãn thiền môn (OM 136.1Hz)');
+      showToast('Đang phát: Tần Số Thiền 432Hz Tịnh Hóa Thân Tâm');
     }
   };
 
+  const getBreathingPhaseText = () => {
+    if (!isMeditationActive) return 'Nhịp Thở Chánh Niệm 4s - 4s - 6s';
+    if (breathTick < 4) return `Hít Vào Biết Hơi Thở Vào (${4 - breathTick}s)`;
+    if (breathTick < 8) return `An Trú Tĩnh Lặng (${8 - breathTick}s)`;
+    return `Thở Ra Buông Xả Phiền Não (${14 - breathTick}s)`;
+  };
+
+  const MOBILE_VEHICLES = [
+    {
+      id: 'trang-hat',
+      category: 'tri_niem',
+      stepBadge: 'Bước 2 • Trì Niệm',
+      title: '108 Chuỗi Bồ Đề',
+      subtitle: 'Lần hạt trì niệm danh hiệu',
+      image: '/images/monk_incense.jpg',
+      Icon: MalaBeadsMinimalIcon,
+      onClick: () => setIsMalaOpen(true),
+    },
+    {
+      id: 'chuong-mo',
+      category: 'tri_niem',
+      stepBadge: 'Bước 2 • Giữ Nhịp',
+      title: 'Chuông Mõ Nhịp BPM',
+      subtitle: 'Mõ tự động 50/68/88 BPM',
+      image: '/images/ancient_pagoda.jpg',
+      Icon: WoodenFishMinimalIcon,
+      onClick: () => setIsBellsModalOpen(true),
+    },
+    {
+      id: 'may-niem-phat',
+      category: 'tri_niem',
+      stepBadge: 'Bước 2 • Chuyên Nhất',
+      title: 'Pháp Âm Niệm Phật',
+      subtitle: 'Niệm hồng danh & thần chú',
+      image: '/images/golden_buddha.jpg',
+      Icon: TempleBellIcon,
+      onClick: () => setIsChantMachineOpen(true),
+    },
+    {
+      id: 'nghe-kinh',
+      category: 'dinh_tam',
+      stepBadge: 'Bước 1 • Văn Tư Tu',
+      title: 'Thính Pháp Âm',
+      subtitle: 'Pháp thoại & lời Phật dạy',
+      image: '/images/buddha_meditation.jpg',
+      Icon: SutraScrollIcon,
+      onClick: () => router.push('/phap-thoai'),
+    },
+    {
+      id: 'cau-an',
+      category: 'hoi_huong',
+      stepBadge: 'Bước 3 • Hồi Hướng',
+      title: 'Hoa Đăng Cầu An',
+      subtitle: 'Thắp đèn sen cầu bình an',
+      image: '/images/quan_am_bodhisattva.jpg',
+      Icon: LotusLanternIcon,
+      onClick: () => setIsPrayerPeaceOpen(true),
+    },
+    {
+      id: 'cau-sieu',
+      category: 'hoi_huong',
+      stepBadge: 'Bước 3 • Hồi Hướng',
+      title: 'Hoa Đăng Kỳ Siêu',
+      subtitle: 'Hồi hướng cửu huyền thất tổ',
+      image: '/images/tran_nhan_tong_yentu.jpg',
+      Icon: IncenseAltarIcon,
+      onClick: () => setIsPrayerRebirthOpen(true),
+    },
+    {
+      id: 'di-chua',
+      category: 'dinh_tam',
+      stepBadge: 'Bước 1 • Lễ Bái',
+      title: 'Chánh Điện Lễ Phật',
+      subtitle: 'Dâng hương lễ bái Tam Bảo',
+      image: '/images/temple_sanctuary_bg.jpg',
+      Icon: PagodaMinimalIcon,
+      onClick: () => router.push('/di-chua-online'),
+    },
+    {
+      id: 'thu-vien-bon-ton',
+      category: 'dinh_tam',
+      stepBadge: 'Bước 1 • Quán Tưởng',
+      title: 'Tôn Tượng Chư Phật',
+      subtitle: 'Chiêm bái hồng danh & nguyện',
+      image: '/images/golden_buddha_altar.jpg',
+      Icon: LotusMinimalIcon,
+      onClick: () => setIsBuddhasModalOpen(true),
+    },
+    {
+      id: 'nhac-tu-tap',
+      category: 'dinh_tam',
+      stepBadge: 'Bước 1 • Tịnh Tâm',
+      title: 'Tần Số Thiền 432Hz',
+      subtitle: isMusicPlaying ? 'Đang phát thanh tịnh...' : 'Thanh âm chuông xoay tịnh tâm',
+      image: '/images/lotus_blooming.jpg',
+      Icon: DharmaWheelIcon,
+      onClick: handleToggleMusic,
+      active: isMusicPlaying,
+    },
+    {
+      id: 'so-gio-chap',
+      category: 'hoi_huong',
+      stepBadge: 'Bước 3 • Tri Ân',
+      title: 'Sổ Hiếu Hạnh Tổ Tiên',
+      subtitle: 'Ghi nhớ ngày húy kỵ gia tiên',
+      image: '/images/sutra_book.jpg',
+      Icon: BodhiLeafIcon,
+      onClick: () => setIsMemorialBookOpen(true),
+    },
+  ];
+
+  const filteredMobileVehicles =
+    stepFilter === 'all'
+      ? MOBILE_VEHICLES
+      : MOBILE_VEHICLES.filter((v) => v.category === stepFilter);
+
   return (
-    <div className="min-h-screen bg-[#110D0A] text-[#FDFBF7] selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-[#181207] text-[#FFFDF7] selection:bg-[#F5C542]/30 selection:text-[#FFD966]">
       {/* ========================================================================= */}
-      {/* MOBILE VIEW (< lg) - 100% Locked Apple iOS Om Mani Layout                 */}
+      {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP PRACTICE               */}
       {/* ========================================================================= */}
       <div className="block lg:hidden">
-        {/* Container matching mobile aspect ratio */}
-        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-6">
-
-        {/* ========================================================================= */}
-        {/* 1. TOP TITLE HEADER (MATCHING SCREENSHOT 1)                               */}
-        {/* ========================================================================= */}
-        <header className="pt-2">
-          <h1 className="font-heading text-3xl font-bold text-white tracking-tight leading-tight">
-            Tu tập
-          </h1>
-        </header>
-
-        {/* ========================================================================= */}
-        {/* 2. HERO FEATURED CARD: THIỀN ĐỊNH (MATCHING SCREENSHOT 1)                 */}
-        {/* ========================================================================= */}
-        <section aria-label="Thiền định nổi bật">
-          <div
-            className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl min-h-[220px] sm:min-h-[250px] p-5 sm:p-6 flex flex-col justify-between group active:scale-[0.99] transition-all bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 50%, rgba(17, 13, 10, 0.2) 100%), url('/images/mindfulness_peace.jpg')",
-            }}
-          >
-            {/* Top Bar inside Card */}
-            <div className="flex items-center justify-between relative z-10">
-              {/* Badge: Nổi bật */}
-              <div className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] font-semibold border border-white/25 shadow-sm">
-                Nổi bật
+        <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-3 pb-32 space-y-5">
+          {/* 1. SAFE-AREA HEADER */}
+          <header className="flex items-center justify-between gap-3 pt-2">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
+                <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
+                  <MeditatingMonkOutlineIcon className="w-5 h-5 text-[#FFD966]" />
+                </div>
               </div>
-
-              {/* Meditating Lotus Concentric Glow Icon */}
-              <div className="relative w-10 h-10 rounded-full border border-white/25 bg-white/15 backdrop-blur-md flex items-center justify-center text-white shadow-md">
-                <div className="absolute inset-0 rounded-full border border-white/20 animate-ping opacity-30" />
-                <MeditatingFigureIcon className="w-5 h-5 text-white" />
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+                  DHARMA • TAM ĐẲNG HÀNH TRÌ
+                </span>
+                <h1 className="font-heading font-serif text-xl sm:text-2xl font-bold text-[#FFFDF7] leading-tight">
+                  Định Tâm &amp; Hành Trì
+                </h1>
               </div>
             </div>
 
-            {/* Bottom Content */}
-            <div className="relative z-10 pt-4">
-              <h2 className="font-heading font-serif text-2xl sm:text-3xl font-bold text-white leading-tight">
-                Thiền định
-              </h2>
-              <p className="text-xs sm:text-sm font-medium text-stone-200 mt-1">
-                Dành vài phút trở về với hơi thở
-              </p>
-              <p className="text-[11px] sm:text-xs text-stone-300/90 mt-0.5">
-                Hôm nay bạn đã sẵn sàng tĩnh tâm?
-              </p>
+            <button
+              type="button"
+              onClick={() => {
+                playWoodenFishSound(0.3);
+                setIsMeritLedgerOpen(true);
+              }}
+              className="px-3 py-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-[#FFD966] text-xs font-bold flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer shadow-sm"
+            >
+              <BodhiLeafIcon className="w-4 h-4" />
+              <span>Sổ Công Đức</span>
+            </button>
+          </header>
 
-              {/* Big Golden Pill Button: [ ▶ Bắt đầu thiền ] */}
-              <div className="mt-4">
+          {/* 2. HERO CARD: ANAPANASATI BREATHING MEDITATION */}
+          <section aria-label="Phòng thiền hơi thở chánh niệm">
+            <div
+              className="relative rounded-3xl overflow-hidden border border-[#F5C542]/35 shadow-2xl min-h-[215px] p-5 flex flex-col justify-between bg-cover bg-center"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.55) 55%, rgba(24, 18, 7, 0.25) 100%), url('/images/buddha_meditation.jpg')",
+              }}
+            >
+              <div className="flex items-center justify-between relative z-10">
+                <div className="px-3 py-1 rounded-full bg-[#181207]/80 backdrop-blur-md text-[#FFD966] text-[10px] font-bold uppercase tracking-wider border border-[#F5C542]/40">
+                  Bước 1 • Thiền Quán Hơi Thở 4-4-6
+                </div>
+                <div className="relative w-10 h-10 rounded-2xl border border-[#F5C542]/45 bg-[#181207]/75 backdrop-blur-md flex items-center justify-center text-[#FFD966] shadow-md">
+                  <MeditatingMonkOutlineIcon className="w-5 h-5" />
+                </div>
+              </div>
+
+              <div className="relative z-10 pt-4">
+                <h2 className="font-heading font-serif text-2xl font-bold text-[#FFFDF7] leading-tight">
+                  Phòng Thiền Hơi Thở Anapanasati
+                </h2>
+                <p className="text-xs text-[#F3E3B2] mt-1">
+                  Hít vào tĩnh lặng (4s) • An trú chánh niệm (4s) • Thở ra buông xả (6s)
+                </p>
+
+                <div className="mt-4 flex items-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playBellSound(0.4);
+                      setIsMeditationModalOpen(true);
+                    }}
+                    className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs inline-flex items-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
+                  >
+                    <Play className="w-3.5 h-3.5 fill-current" />
+                    <span>Vào Phòng Thiền Hơi Thở</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playGrandTempleBellSound(0.5);
+                      showToast('Tiếng Đại Hồng Chung ngân vang • Tâm bình an');
+                    }}
+                    className="px-3.5 py-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs inline-flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <TempleBellIcon className="w-3.5 h-3.5" />
+                    <span>Thỉnh Chuông</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 3. REACT NATIVE 4-PILL SEGMENTED STEP FILTER */}
+          <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25">
+            {[
+              { id: 'all', label: 'Tất Cả (10)' },
+              { id: 'dinh_tam', label: '1. Định Tâm' },
+              { id: 'tri_niem', label: '2. Trì Niệm' },
+              { id: 'hoi_huong', label: '3. Hồi Hướng' },
+            ].map((tab) => {
+              const active = stepFilter === tab.id;
+              return (
                 <button
+                  key={tab.id}
                   type="button"
                   onClick={() => {
-                    playBellSound(0.4);
-                    setIsMeditationModalOpen(true);
+                    playWoodenFishSound(0.2);
+                    setStepFilter(tab.id as PracticeStepFilter);
                   }}
-                  className="px-6 py-2.5 rounded-full bg-[#F5D79E] hover:bg-[#FFE3AC] text-[#1E150F] font-bold text-xs sm:text-sm inline-flex items-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
+                  className={cn(
+                    'py-2 px-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer truncate',
+                    active
+                      ? 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] shadow-sm'
+                      : 'text-[#D6C394] hover:text-[#FFFDF7]'
+                  )}
                 >
-                  <Play className="w-4 h-4 fill-current translate-x-0.5" />
-                  <span>Bắt đầu thiền</span>
+                  {tab.label}
                 </button>
-              </div>
-            </div>
+              );
+            })}
           </div>
-        </section>
 
-        {/* ========================================================================= */}
-        {/* 3. SECTION: PHƯƠNG TIỆN TU TẬP (10 CARDS - MATCHING SCREENSHOT 1 & 2)      */}
-        {/* ========================================================================= */}
-        <section aria-label="Phương tiện tu tập" className="space-y-3.5 pt-1">
-          {/* Section Title */}
-          <h3 className="font-heading font-bold text-base sm:text-lg text-white tracking-wide">
-            Phương tiện tu tập
-          </h3>
+          {/* 4. BENTO GRID OF DHARMA PRACTICE VEHICLES */}
+          <section aria-label="Pháp khí hành trì" className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              {filteredMobileVehicles.map((item) => {
+                const Icon = item.Icon;
+                return (
+                  <div
+                    key={item.id}
+                    onClick={item.onClick}
+                    className={cn(
+                      'relative rounded-3xl overflow-hidden aspect-[4/3.5] p-3.5 flex flex-col justify-between border cursor-pointer group active:scale-95 transition-all shadow-lg bg-cover bg-center',
+                      item.active
+                        ? 'border-[#FFD966] ring-2 ring-[#F5C542]/60'
+                        : 'border-[#F5C542]/25 hover:border-[#FFD966]'
+                    )}
+                    style={{
+                      backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.5) 60%, rgba(24, 18, 7, 0.2) 100%), url('${item.image}')`,
+                    }}
+                  >
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="px-2 py-0.5 rounded-full bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/35 text-[9px] font-bold text-[#FFD966] truncate">
+                        {item.stepBadge}
+                      </span>
+                      <div className="w-8 h-8 rounded-xl bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] shrink-0">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                    </div>
 
-          {/* 2-Column Responsive Grid */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-3.5">
-
-            {/* CARD 1: Tràng hạt */}
-            <div
-              onClick={() => setIsMalaOpen(true)}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/monk_incense.jpg')",
-              }}
-            >
-              {/* Top-Right Icon Badge */}
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <MalaIcon className="w-4 h-4" />
-              </div>
-              {/* Bottom Info */}
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Tràng hạt
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Lần hạt, trì niệm
-                </p>
-              </div>
+                    <div>
+                      <h4 className="font-heading font-serif font-bold text-sm sm:text-base text-[#FFFDF7] group-hover:text-[#FFD966] transition-colors leading-tight">
+                        {item.title}
+                      </h4>
+                      <p className="text-[11px] text-[#F3E3B2]/90 mt-0.5 truncate">
+                        {item.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-
-            {/* CARD 2: Chuông mõ */}
-            <div
-              onClick={() => setIsBellsModalOpen(true)}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/ancient_pagoda.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <WoodenFishIcon className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Chuông mõ
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Thỉnh chuông, gõ mõ tịnh tâm
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 3: Nghe kinh */}
-            <div
-              onClick={() => router.push('/phap-thoai')}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/buddha_meditation.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <Headphones className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Nghe kinh
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Tải về, nghe không cần mạng
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 4: Máy niệm Phật */}
-            <div
-              onClick={() => setIsChantMachineOpen(true)}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/golden_buddha.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <Radio className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Máy niệm Phật
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Niệm danh hiệu, trì chú
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 5: Cầu an */}
-            <div
-              onClick={() => setIsPrayerPeaceOpen(true)}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/quan_am_bodhisattva.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <span className="text-xs">🙏</span>
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Cầu an
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Nguyện cầu bình an
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 6: Cầu siêu */}
-            <div
-              onClick={() => setIsPrayerRebirthOpen(true)}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/tran_nhan_tong_yentu.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <span className="text-xs">🙇</span>
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Cầu siêu
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Thành tâm tưởng niệm
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 7: Đi chùa */}
-            <div
-              onClick={() => router.push('/di-chua-online')}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/temple_sanctuary_bg.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <PagodaIcon className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Đi chùa
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Lễ Phật cùng mọi người nơi chánh điện
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 8: Thư viện Bổn Tôn */}
-            <div
-              onClick={() => setIsBuddhasModalOpen(true)}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/buddha_temple.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <LotusIcon className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Thư viện Bổn Tôn
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Chiêm bái chư Phật
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 9: Nhạc tu tập */}
-            <div
-              onClick={handleToggleMusic}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/lotus_pond.jpg')",
-              }}
-            >
-              <div
-                className={cn(
-                  'self-end w-8 h-8 rounded-full backdrop-blur-md border flex items-center justify-center transition-all',
-                  isMusicPlaying
-                    ? 'bg-amber-500 text-charcoal-950 border-amber-300 animate-pulse'
-                    : 'bg-black/45 border-white/20 text-white'
-                )}
-              >
-                <Music className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Nhạc tu tập
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  {isMusicPlaying ? 'Đang phát thanh tịnh...' : 'Âm thanh thư giãn'}
-                </p>
-              </div>
-            </div>
-
-            {/* CARD 10: Sổ Giỗ Chạp */}
-            <div
-              onClick={() => setIsMemorialBookOpen(true)}
-              className="relative rounded-3xl overflow-hidden aspect-[4/3.2] p-3.5 sm:p-4 flex flex-col justify-between border border-white/10 hover:border-amber-400/50 cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.45) 60%, rgba(17, 13, 10, 0.2) 100%), url('/images/incense_smoke.jpg')",
-              }}
-            >
-              <div className="self-end w-8 h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-                <MemorialBookIcon className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  Sổ Giỗ Chạp
-                </h4>
-                <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 truncate">
-                  Ghi nhớ ngày giỗ người thân
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
+          </section>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* DESKTOP VIEW (>= lg) - Luxury Dark Gold Buddhist Sanctuary Layout         */}
+      {/* DESKTOP VIEW (>= lg) - DHARMA RADIANT GOLD PRACTICE SANCTUARY             */}
       {/* ========================================================================= */}
       <div className="hidden lg:block">
         <OmManiDesktopPractice
           onOpenMala={() => setIsMalaOpen(true)}
-          onOpenBellFish={() => setIsBellFishOpen(true)}
+          onOpenBellFish={() => setIsBellsModalOpen(true)}
           onOpenChantMachine={() => setIsChantMachineOpen(true)}
-          onOpenPrayPeace={() => setIsPrayPeaceOpen(true)}
-          onOpenPrayRebirth={() => setIsPrayRebirthOpen(true)}
-          onOpenOnlineTemple={() => setIsOnlineTempleOpen(true)}
-          onOpenBuddhas={() => setIsBuddhaLibraryOpen(true)}
-          onOpenMemorial={() => setIsMemorialOpen(true)}
+          onOpenPrayPeace={() => setIsPrayerPeaceOpen(true)}
+          onOpenPrayRebirth={() => setIsPrayerRebirthOpen(true)}
+          onOpenOnlineTemple={() => router.push('/di-chua-online')}
+          onOpenBuddhas={() => setIsBuddhasModalOpen(true)}
+          onOpenMemorial={() => setIsMemorialBookOpen(true)}
+          onOpenMeritLedger={() => setIsMeritLedgerOpen(true)}
           isMusicPlaying={isMusicPlaying}
           onToggleMusic={handleToggleMusic}
           showToast={showToast}
@@ -565,63 +533,64 @@ export default function PracticePage() {
       <MalaBeadsModal isOpen={isMalaOpen} onClose={() => setIsMalaOpen(false)} />
 
       {/* ========================================================================= */}
-      {/* 2. MODAL: THIỀN ĐỊNH QUICK SESSION                                        */}
+      {/* 2. MODAL: PHÒNG THIỀN HƠI THỞ ANAPANASATI 4-4-6                           */}
       {/* ========================================================================= */}
       {isMeditationModalOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMeditationModalOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-6 text-white shadow-2xl animate-scale-in text-center space-y-5">
+          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
             <button
               type="button"
               onClick={() => {
                 setIsMeditationActive(false);
                 setIsMeditationModalOpen(false);
               }}
-              className="absolute top-4 right-4 text-stone-400 hover:text-white p-1"
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
             <div>
-              <h3 className="font-heading font-serif text-xl font-bold text-[#FFE082]">
-                Thời Khóa Thiền Định
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+                THIỀN QUÁN HƠI THỞ ANAPANASATI
+              </span>
+              <h3 className="font-heading font-serif text-xl font-bold text-[#FFFDF7] mt-1">
+                Phòng Thiền Hơi Thở 4-4-6
               </h3>
-              <p className="text-xs text-stone-300 mt-1">
-                Theo dõi hơi thở vào, hơi thở ra trong chánh niệm
+              <p className="text-xs text-[#D6C394] mt-1">
+                {getBreathingPhaseText()}
               </p>
             </div>
 
-            {/* Breathing Circle Indicator */}
-            <div className="relative w-44 h-44 mx-auto flex items-center justify-center my-4">
+            <div className="relative w-44 h-44 mx-auto flex items-center justify-center my-3">
               <div
                 className={cn(
-                  'absolute inset-0 rounded-full border-2 border-amber-400/30 transition-all duration-1000',
-                  isMeditationActive ? 'scale-110 border-amber-400 animate-pulse' : 'scale-100'
+                  'absolute inset-0 rounded-full border-2 border-[#F5C542]/35 transition-all duration-1000',
+                  isMeditationActive && breathTick < 4
+                    ? 'scale-115 border-[#FFD966]'
+                    : isMeditationActive && breathTick >= 8
+                    ? 'scale-95 border-[#F5C542]/20'
+                    : 'scale-105'
                 )}
               />
-              <div
-                className={cn(
-                  'w-32 h-32 rounded-full bg-gradient-to-tr from-amber-600/30 to-amber-400/10 border border-amber-400/40 flex flex-col items-center justify-center shadow-[0_0_25px_rgba(245,158,11,0.2)] transition-transform duration-700',
-                  isMeditationActive ? 'scale-105' : 'scale-100'
-                )}
-              >
-                <span className="font-mono text-3xl font-black text-white">
+              <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-[#F5C542]/25 to-[#FFD966]/10 border border-[#F5C542]/45 flex flex-col items-center justify-center shadow-[0_0_25px_rgba(245,197,66,0.25)]">
+                <span className="font-mono text-3xl font-black text-[#FFD966]">
                   {Math.floor(meditationSecondsLeft / 60)
                     .toString()
                     .padStart(2, '0')}
                   :{(meditationSecondsLeft % 60).toString().padStart(2, '0')}
                 </span>
-                <span className="text-[10px] text-amber-300 uppercase tracking-wider font-semibold mt-0.5">
-                  {isMeditationActive ? 'Thở đều & Tĩnh tâm' : 'Sẵn sàng'}
+                <span className="text-[10px] text-[#FFFDF7] uppercase tracking-wider font-bold mt-1">
+                  {isMeditationActive ? 'Đang Thiền Định' : 'Sẵn Sàng'}
                 </span>
               </div>
             </div>
 
-            {/* Time Presets */}
             {!isMeditationActive && (
               <div className="flex justify-center gap-2">
                 {[5, 10, 15, 30].map((mins) => (
@@ -633,19 +602,18 @@ export default function PracticePage() {
                       setMeditationSecondsLeft(mins * 60);
                     }}
                     className={cn(
-                      'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all',
+                      'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer',
                       meditationMinutes === mins
-                        ? 'bg-amber-600 text-white border border-amber-400'
-                        : 'bg-black/40 text-stone-400 border border-white/5 hover:text-white'
+                        ? 'bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207]'
+                        : 'bg-[#181207] text-[#C7B68B] border border-[#F5C542]/20'
                     )}
                   >
-                    {mins}p
+                    {mins} phút
                   </button>
                 ))}
               </div>
             )}
 
-            {/* Action Buttons */}
             <div className="flex gap-2">
               <button
                 type="button"
@@ -654,12 +622,12 @@ export default function PracticePage() {
                     setIsMeditationActive(false);
                     showToast('Đã tạm dừng thời thiền');
                   } else {
-                    playBellSound(0.5);
+                    playGrandTempleBellSound(0.5);
                     setIsMeditationActive(true);
-                    showToast('Bắt đầu thời thiền. Nguyện thân tâm an lạc.');
+                    showToast('Bắt đầu thiền hơi thở • Nguyện thân tâm an lạc');
                   }
                 }}
-                className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-charcoal-950 font-bold text-sm shadow-md transition-all active:scale-95"
+                className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-sm shadow-md cursor-pointer"
               >
                 {isMeditationActive ? 'Tạm Dừng' : 'Bắt Đầu Tọa Thiền'}
               </button>
@@ -669,9 +637,10 @@ export default function PracticePage() {
                 onClick={() => {
                   setIsMeditationActive(false);
                   setMeditationSecondsLeft(meditationMinutes * 60);
+                  setBreathTick(0);
                   playWoodenFishSound(0.4);
                 }}
-                className="p-3 rounded-2xl bg-stone-800 hover:bg-stone-700 text-stone-300"
+                className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/30 text-[#FFD966] cursor-pointer"
                 title="Đặt lại"
               >
                 <RotateCcw className="w-5 h-5" />
@@ -682,16 +651,17 @@ export default function PracticePage() {
       )}
 
       {/* ========================================================================= */}
-      {/* 3. MODAL: MÁY NIỆM PHẬT                                                   */}
+      {/* 3. MODAL: PHÁP ÂM NIỆM PHẬT & THẦN CHÚ                                    */}
       {/* ========================================================================= */}
       {isChantMachineOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsChantMachineOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in space-y-4">
+          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
             <button
               type="button"
               onClick={() => {
@@ -699,31 +669,29 @@ export default function PracticePage() {
                 setIsChantingPlaying(false);
                 setIsChantMachineOpen(false);
               }}
-              className="absolute top-4 right-4 text-stone-400 hover:text-white p-1"
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
-            {/* Header */}
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 mb-2">
-                <Radio className="w-6 h-6 animate-pulse" />
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] mb-2">
+                <TempleBellIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFE082]">
-                Máy Niệm Phật Trực Tuyến
+              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                Pháp Âm Niệm Phật &amp; Trì Chú
               </h3>
-              <p className="text-xs text-stone-300">
-                Phát thanh âm niệm danh hiệu Phật &amp; trì chú liên tục
+              <p className="text-xs text-[#D6C394]">
+                Thanh âm niệm hồng danh chư Phật &amp; thần chú tịnh hóa
               </p>
             </div>
 
-            {/* Chanting Tracks */}
             <div className="space-y-2">
               {[
-                { id: 'nam-mo-a-di-da-phat', title: 'Nam Mô A Di Đà Phật', sub: 'Niệm Phật 4 chữ trang nghiêm' },
-                { id: 'om-mani-padme-hum', title: 'Om Mani Padme Hum', sub: 'Lục Tự Đại Minh Chú tiếng Phạn' },
-                { id: 'nam-mo-quan-the-am-bo-tat', title: 'Nam Mô Quán Thế Âm Bồ Tát', sub: 'Tầm thanh cứu khổ' },
-                { id: 'duoc-su-quan-danh-chan-ngon', title: 'Dược Sư Quán Đảnh Chơn Ngôn', sub: 'Tiêu trừ tật bệnh, an lành' },
+                { id: 'nam-mo-a-di-da-phat', title: 'Nam Mô A Di Đà Phật', sub: 'Niệm Phật Tịnh Độ tông trang nghiêm' },
+                { id: 'nam-mo-bon-su', title: 'Nam Mô Bổn Sư Thích Ca Mâu Ni Phật', sub: 'Tưởng niệm ân đức Đạo Sư Giác Ngộ' },
+                { id: 'nam-mo-quan-the-am', title: 'Nam Mô Đại Bi Quán Thế Âm Bồ Tát', sub: 'Nuôi dưỡng tâm đại bi cứu khổ' },
+                { id: 'duoc-su-chan-ngon', title: 'Nam Mô Dược Sư Lưu Ly Quang Vương Phật', sub: 'Tiêu trừ tật bệnh, thân tâm an lạc' },
               ].map((track) => (
                 <div
                   key={track.id}
@@ -734,22 +702,21 @@ export default function PracticePage() {
                   className={cn(
                     'p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between',
                     activeChantTrack === track.id
-                      ? 'bg-amber-600/25 border-amber-400 text-white'
-                      : 'bg-black/30 border-white/5 text-stone-400 hover:text-white'
+                      ? 'bg-[#F5C542]/20 border-[#FFD966] text-[#FFFDF7]'
+                      : 'bg-[#181207] border-[#F5C542]/15 text-[#C7B68B]'
                   )}
                 >
                   <div>
-                    <h5 className="font-bold text-xs sm:text-sm text-stone-100">{track.title}</h5>
-                    <p className="text-[11px] text-stone-400 mt-0.5">{track.sub}</p>
+                    <h5 className="font-bold text-xs sm:text-sm text-[#FFFDF7]">{track.title}</h5>
+                    <p className="text-[11px] text-[#D6C394] mt-0.5">{track.sub}</p>
                   </div>
                   {activeChantTrack === track.id && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#FFD966]" />
                   )}
                 </div>
               ))}
             </div>
 
-            {/* Play Button */}
             <div className="pt-2">
               <button
                 type="button"
@@ -757,18 +724,18 @@ export default function PracticePage() {
                   if (isChantingPlaying) {
                     stopMeditativeDrone();
                     setIsChantingPlaying(false);
-                    showToast('Đã dừng máy niệm Phật');
+                    showToast('Đã tạm dừng Pháp Âm Niệm Phật');
                   } else {
                     playBellSound(0.5);
                     startMeditativeDrone(0.25);
                     setIsChantingPlaying(true);
-                    showToast('Đang phát máy niệm Phật thanh tịnh');
+                    showToast('Đang phát Pháp Âm Niệm Phật thanh tịnh');
                   }
                 }}
-                className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-charcoal-950 font-bold text-sm shadow-md transition-all active:scale-95 flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isChantingPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
-                <span>{isChantingPlaying ? 'Tạm Dừng Máy Niệm' : 'Bật Máy Niệm Phật'}</span>
+                <span>{isChantingPlaying ? 'Tạm Dừng Pháp Âm' : 'Phát Pháp Âm Niệm Phật'}</span>
               </button>
             </div>
           </div>
@@ -776,120 +743,194 @@ export default function PracticePage() {
       )}
 
       {/* ========================================================================= */}
-      {/* 4. MODAL: CHUÔNG MÕ TỊNH TÂM                                              */}
+      {/* 4. MODAL: CHUÔNG & MÕ GIỮ NHỊP BPM TỰ ĐỘNG (ORIGINAL DHARMA FEATURE)      */}
       {/* ========================================================================= */}
       {isBellsModalOpen && (
         <div
           onClick={(e) => {
-            if (e.target === e.currentTarget) setIsBellsModalOpen(false);
+            if (e.target === e.currentTarget) {
+              setIsAutoFishPlaying(false);
+              setIsBellsModalOpen(false);
+            }
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-6 text-white shadow-2xl animate-scale-in text-center space-y-5">
+          <div className="relative w-full max-w-md rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
             <button
               type="button"
-              onClick={() => setIsBellsModalOpen(false)}
-              className="absolute top-4 right-4 text-stone-400 hover:text-white p-1"
+              onClick={() => {
+                setIsAutoFishPlaying(false);
+                setIsBellsModalOpen(false);
+              }}
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
             <div>
-              <h3 className="font-heading font-serif text-xl font-bold text-[#FFE082]">
-                Chuông &amp; Mõ Tịnh Tâm
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+                PHÁP KHÍ THIỀN MÔN
+              </span>
+              <h3 className="font-heading font-serif text-xl font-bold text-[#FFFDF7] mt-1">
+                Đại Hồng Chung &amp; Mõ Nhịp BPM
               </h3>
-              <p className="text-xs text-stone-300 mt-1">
-                Chạm vào chuông đồng hoặc mõ gỗ để thỉnh âm thanh thanh tịnh
+              <p className="text-xs text-[#D6C394] mt-1">
+                Thỉnh chuông thủ công hoặc bật Mõ Tự Động giữ nhịp tụng kinh
               </p>
             </div>
 
-            {/* 2 Big Strike Pads */}
-            <div className="grid grid-cols-2 gap-4 my-2">
-              {/* Bell Strike Pad */}
+            {/* 2 Minimalist SVG Strike Pads */}
+            <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
                 onClick={() => {
-                  playGrandTempleBellSound(0.5);
-                  showToast('Tiếng chuông ngân vang, phiền não đoạn tận');
+                  playGrandTempleBellSound(0.55);
+                  showToast('Tiếng chuông ngân vang • Phiền não nhẹ tan');
                 }}
-                className="p-5 rounded-2xl bg-gradient-to-b from-[#332217] to-[#1E130B] border border-amber-500/30 hover:border-amber-400 active:scale-90 transition-all shadow-xl flex flex-col items-center justify-center group"
+                className="p-5 rounded-3xl bg-[#181207] border border-[#F5C542]/35 hover:border-[#FFD966] active:scale-95 transition-all shadow-xl flex flex-col items-center justify-center group cursor-pointer"
               >
-                <div className="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-2xl group-hover:scale-110 transition-transform mb-2">
-                  🔔
+                <div className="w-14 h-14 rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] group-hover:scale-110 transition-transform mb-2.5">
+                  <TempleBellIcon className="w-7 h-7" />
                 </div>
-                <span className="font-bold text-sm text-stone-100">Thỉnh Chuông</span>
-                <span className="text-[10px] text-stone-400 mt-0.5">Đại Hồng Chung</span>
+                <span className="font-heading font-serif font-bold text-sm text-[#FFFDF7]">
+                  Thỉnh Chuông
+                </span>
+                <span className="text-[10px] text-[#C7B68B] mt-0.5">Đại Hồng Chung</span>
               </button>
 
-              {/* Wooden Fish Strike Pad */}
               <button
                 type="button"
                 onClick={() => {
                   playWoodenFishSound(0.7);
-                  showToast('Cốc! Tâm an tịnh từng phút giây');
+                  setFishBeatCount((c) => c + 1);
                 }}
-                className="p-5 rounded-2xl bg-gradient-to-b from-[#332217] to-[#1E130B] border border-amber-500/30 hover:border-amber-400 active:scale-90 transition-all shadow-xl flex flex-col items-center justify-center group"
+                className="p-5 rounded-3xl bg-[#181207] border border-[#F5C542]/35 hover:border-[#FFD966] active:scale-95 transition-all shadow-xl flex flex-col items-center justify-center group cursor-pointer"
               >
-                <div className="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-2xl group-hover:scale-110 transition-transform mb-2">
-                  🪵
+                <div className="w-14 h-14 rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] group-hover:scale-110 transition-transform mb-2.5">
+                  <WoodenFishMinimalIcon className="w-7 h-7" />
                 </div>
-                <span className="font-bold text-sm text-stone-100">Gõ Mõ</span>
-                <span className="text-[10px] text-stone-400 mt-0.5">Mõ Gỗ Mộc</span>
+                <span className="font-heading font-serif font-bold text-sm text-[#FFFDF7]">
+                  Gõ Mõ ({fishBeatCount})
+                </span>
+                <span className="text-[10px] text-[#C7B68B] mt-0.5">Mõ Gỗ Trầm</span>
               </button>
             </div>
 
-            <p className="text-[11px] text-stone-400 italic">
-              Âm thanh được tổng hợp chuẩn Web Audio độ trễ bằng 0
-            </p>
+            {/* Auto-Rhythm BPM Controller */}
+            <div className="p-4 rounded-2xl bg-[#181207] border border-[#F5C542]/25 space-y-3 text-left">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-[#FFD966]">
+                  Chế Độ Mõ Tự Động Trợ Duyệt Tụng Kinh
+                </span>
+                <span className="text-[11px] font-mono text-[#D6C394]">
+                  {fishBpm} nhịp/phút
+                </span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { bpm: 50, label: '50 BPM • Khoan thai' },
+                  { bpm: 68, label: '68 BPM • Chuẩn' },
+                  { bpm: 88, label: '88 BPM • Tinh tấn' },
+                ].map((opt) => (
+                  <button
+                    key={opt.bpm}
+                    type="button"
+                    onClick={() => setFishBpm(opt.bpm as 50 | 68 | 88)}
+                    className={cn(
+                      'py-2 px-2 rounded-xl text-[11px] font-bold border transition-all cursor-pointer text-center',
+                      fishBpm === opt.bpm
+                        ? 'bg-[#F5C542]/25 border-[#FFD966] text-[#FFD966]'
+                        : 'bg-[#241B0B] border-[#F5C542]/15 text-[#C7B68B]'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const next = !isAutoFishPlaying;
+                  setIsAutoFishPlaying(next);
+                  if (next) {
+                    playWoodenFishSound(0.6);
+                    showToast(`Đang bật Mõ Tự Động nhịp ${fishBpm} BPM`);
+                  } else {
+                    showToast('Đã tắt Mõ Tự Động');
+                  }
+                }}
+                className={cn(
+                  'w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer',
+                  isAutoFishPlaying
+                    ? 'bg-emerald-500/20 border border-emerald-400/50 text-emerald-300'
+                    : 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207]'
+                )}
+              >
+                {isAutoFishPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                <span>
+                  {isAutoFishPlaying ? `Đang Gõ Nhịp ${fishBpm} BPM (Nhấn Để Dừng)` : 'Bật Mõ Giữ Nhịp Tự Động'}
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       )}
 
       {/* ========================================================================= */}
-      {/* 5. MODAL: CẦU AN                                                          */}
+      {/* 5. MODAL: ĐÀN TRÀNG HOA ĐĂNG CẦU AN                                       */}
       {/* ========================================================================= */}
       {isPrayerPeaceOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerPeaceOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in space-y-4">
+          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
             <button
               type="button"
               onClick={() => setIsPrayerPeaceOpen(false)}
-              className="absolute top-4 right-4 text-stone-400 hover:text-white p-1"
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
             <div className="text-center">
-              <span className="text-2xl">🙏</span>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFE082] mt-1">
-                Phòng Cầu An — Nguyện Bình An
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] mb-2">
+                <LotusLanternIcon className="w-6 h-6" />
+              </div>
+              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                Thắp Đèn Hoa Đăng Cầu An
               </h3>
-              <p className="text-xs text-stone-300 mt-0.5">
-                Dâng lời ước nguyện thiện lành trước Tam Bảo
+              <p className="text-xs text-[#D6C394] mt-0.5">
+                Dâng ánh sáng từ bi nguyện cầu bình an cho cha mẹ &amp; gia quyến
               </p>
             </div>
 
             <div className="space-y-3 text-xs">
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Họ tên người cầu an</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Phật tử / Gia chủ phát nguyện</label>
                 <input
                   type="text"
-                  placeholder="Ví dụ: Nguyễn Văn An, Pháp danh Tâm Thiện..."
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-stone-700 text-white focus:outline-hidden focus:border-amber-400"
+                  value={peaceName}
+                  onChange={(e) => setPeaceName(e.target.value)}
+                  placeholder="Ví dụ: Phật tử Tâm An cùng gia quyến..."
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
                 />
               </div>
 
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Lời khấn nguyện</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Lời nguyện Cầu An</label>
                 <textarea
                   rows={3}
-                  placeholder="Nguyện cầu mười phương Chư Phật gia hộ cho cha mẹ và gia đình thân tâm an lạc, tai qua nạn khỏi, tật bệnh tiêu trừ..."
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-stone-700 text-white focus:outline-hidden focus:border-amber-400"
+                  value={peaceWish}
+                  onChange={(e) => setPeaceWish(e.target.value)}
+                  placeholder="Nguyện mười phương Chư Phật gia hộ cho cha mẹ và gia quyến thân tâm thường an lạc, tật bệnh tiêu trừ..."
+                  className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
                 />
               </div>
 
@@ -897,12 +938,22 @@ export default function PracticePage() {
                 type="button"
                 onClick={() => {
                   playGrandTempleBellSound(0.5);
-                  showToast('Đã dâng sớ cầu an lên Tam Bảo. Nguyện sở cầu như ý!');
+                  recordDharmaMerit({
+                    type: 'lantern',
+                    title: `Thắp Hoa Đăng Cầu An (${peaceName.trim() || 'Gia đạo bình an'})`,
+                    detail:
+                      peaceWish.trim() ||
+                      'Nguyện cầu thân tâm an lạc, tật bệnh tiêu trừ, đạo tâm kiên cố',
+                    meritPoints: 20,
+                  });
+                  setPeaceName('');
+                  setPeaceWish('');
+                  showToast('Đã thắp Hoa Đăng Cầu An & lưu vào Sổ Công Đức Dharma!');
                   setIsPrayerPeaceOpen(false);
                 }}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-700 text-charcoal-950 font-bold shadow-md active:scale-95 transition-all mt-2"
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold shadow-md cursor-pointer mt-2"
               >
-                Dâng Lời Khấn Nguyện
+                Thắp Đèn Hoa Đăng &amp; Hồi Hướng
               </button>
             </div>
           </div>
@@ -910,50 +961,57 @@ export default function PracticePage() {
       )}
 
       {/* ========================================================================= */}
-      {/* 6. MODAL: CẦU SIÊU                                                         */}
+      {/* 6. MODAL: ĐÀN TRÀNG HOA ĐĂNG KỲ SIÊU                                      */}
       {/* ========================================================================= */}
       {isPrayerRebirthOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerRebirthOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in space-y-4">
+          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
             <button
               type="button"
               onClick={() => setIsPrayerRebirthOpen(false)}
-              className="absolute top-4 right-4 text-stone-400 hover:text-white p-1"
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
             <div className="text-center">
-              <span className="text-2xl">🙇</span>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFE082] mt-1">
-                Phòng Cầu Siêu — Hồi Hướng
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] mb-2">
+                <IncenseAltarIcon className="w-6 h-6" />
+              </div>
+              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                Hoa Đăng Kỳ Siêu &amp; Tưởng Niệm
               </h3>
-              <p className="text-xs text-stone-300 mt-0.5">
-                Thành tâm hồi hướng công đức cho hương linh quá vãng
+              <p className="text-xs text-[#D6C394] mt-0.5">
+                Hồi hướng công đức cầu siêu cửu huyền thất tổ &amp; hương linh quá vãng
               </p>
             </div>
 
             <div className="space-y-3 text-xs">
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Họ tên hương linh</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Hương linh / Cửu huyền thất tổ</label>
                 <input
                   type="text"
-                  placeholder="Ví dụ: Hương linh Cụ Bà Lê Thị Hoa..."
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-stone-700 text-white focus:outline-hidden focus:border-amber-400"
+                  value={rebirthName}
+                  onChange={(e) => setRebirthName(e.target.value)}
+                  placeholder="Ví dụ: Cửu huyền thất tổ nội ngoại hai bên..."
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
                 />
               </div>
 
               <div>
-                <label className="text-stone-300 block mb-1 font-medium">Lời hồi hướng</label>
+                <label className="text-[#F3E3B2] block mb-1 font-medium">Lời nguyện Kỳ Siêu</label>
                 <textarea
                   rows={3}
-                  placeholder="Nguyện nương nhờ oai lực Địa Tạng Bồ Tát và chư Phật mười phương tiếp dẫn hương linh vãng sinh Tịnh Độ, siêu sinh an lạc quốc..."
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-stone-700 text-white focus:outline-hidden focus:border-amber-400"
+                  value={rebirthWish}
+                  onChange={(e) => setRebirthWish(e.target.value)}
+                  placeholder="Nguyện nương nhờ ánh sáng từ bi của Đức Phật A Di Đà tiếp dẫn hương linh siêu sinh Tịnh Độ..."
+                  className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
                 />
               </div>
 
@@ -961,12 +1019,22 @@ export default function PracticePage() {
                 type="button"
                 onClick={() => {
                   playGrandTempleBellSound(0.5);
-                  showToast('Đã gửi lời hồi hướng công đức. Nguyện hương linh siêu thăng Tịnh Độ!');
+                  recordDharmaMerit({
+                    type: 'lantern',
+                    title: `Kỳ Siêu Hồi Hướng (${rebirthName.trim() || 'Cửu huyền thất tổ'})`,
+                    detail:
+                      rebirthWish.trim() ||
+                      'Nguyện hương linh nương nhờ công đức siêu sinh cõi Tịnh Độ an vui',
+                    meritPoints: 20,
+                  });
+                  setRebirthName('');
+                  setRebirthWish('');
+                  showToast('Đã gửi lời Kỳ Siêu Hồi Hướng vào Sổ Công Đức Dharma!');
                   setIsPrayerRebirthOpen(false);
                 }}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-700 text-charcoal-950 font-bold shadow-md active:scale-95 transition-all mt-2"
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold shadow-md cursor-pointer mt-2"
               >
-                Gửi Lời Hồi Hướng
+                Gửi Lời Hồi Hướng Công Đức
               </button>
             </div>
           </div>
@@ -974,29 +1042,30 @@ export default function PracticePage() {
       )}
 
       {/* ========================================================================= */}
-      {/* 7. MODAL: THƯ VIỆN BỔN TÔN                                                */}
+      {/* 7. MODAL: TÔN TƯỢNG CHƯ PHẬT & ĐẠI NGUYỆN                                 */}
       {/* ========================================================================= */}
       {isBuddhasModalOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsBuddhasModalOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in">
-            <div className="flex items-center justify-between pb-3 border-b border-stone-800 shrink-0">
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-2 sm:hidden" />
+            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
               <div>
-                <h3 className="font-heading font-serif text-lg font-bold text-[#FFE082]">
-                  Thư Viện Bổn Tôn
+                <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                  Tôn Tượng Chư Phật &amp; Đại Nguyện
                 </h3>
-                <p className="text-xs text-stone-400">Chiêm bái &amp; đảnh lễ chư Phật, chư Bồ Tát</p>
+                <p className="text-xs text-[#C7B68B]">Chiêm bái tôn tượng &amp; trì niệm hồng danh</p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsBuddhasModalOpen(false)}
-                className="text-stone-400 hover:text-white p-1"
+                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
@@ -1007,75 +1076,65 @@ export default function PracticePage() {
                   onClick={() => {
                     playBellSound(0.4);
                     setSelectedBuddha(buddha);
+                    showToast(`Nam Mô ${buddha.name}`);
                   }}
-                  className="flex gap-3.5 items-center p-3 rounded-2xl bg-black/40 border border-white/5 hover:border-amber-400/40 cursor-pointer active:scale-98 transition-all"
+                  className="flex gap-3.5 items-center p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] cursor-pointer transition-all"
                 >
-                  <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-amber-500/30">
+                  <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-[#F5C542]/35">
                     <img src={buddha.image} alt={buddha.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h5 className="font-heading font-bold text-sm text-stone-100">{buddha.name}</h5>
-                    <p className="text-xs text-amber-300 font-mono italic truncate">{buddha.mantra}</p>
-                    <p className="text-[11px] text-stone-400 mt-1 line-clamp-1">{buddha.vow}</p>
+                    <h5 className="font-heading font-serif font-bold text-sm text-[#FFFDF7]">{buddha.name}</h5>
+                    <p className="text-xs text-[#FFD966] font-mono truncate mt-0.5">{buddha.mantra}</p>
+                    <p className="text-[11px] text-[#D6C394] mt-1 line-clamp-2">{buddha.vow}</p>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-stone-500 shrink-0" />
                 </div>
               ))}
-            </div>
-
-            <div className="pt-3 border-t border-stone-800 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setIsBuddhasModalOpen(false)}
-                className="px-5 py-2 rounded-xl bg-amber-600 text-white font-bold text-xs"
-              >
-                Đóng
-              </button>
             </div>
           </div>
         </div>
       )}
 
       {/* ========================================================================= */}
-      {/* 8. MODAL: SỔ GIỖ CHẠP                                                     */}
+      {/* 8. MODAL: SỔ HIẾU HẠNH GIA TIÊN                                           */}
       {/* ========================================================================= */}
       {isMemorialBookOpen && (
         <div
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMemorialBookOpen(false);
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm rounded-3xl bg-[#201712] border border-amber-500/40 p-5 text-white shadow-2xl animate-scale-in space-y-4">
+          <div className="relative w-full max-w-sm rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
             <button
               type="button"
               onClick={() => setIsMemorialBookOpen(false)}
-              className="absolute top-4 right-4 text-stone-400 hover:text-white p-1"
+              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
             <div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFE082]">
-                Sổ Giỗ Chạp Gia Tiên
+              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                Sổ Hiếu Hạnh Gia Tiên
               </h3>
-              <p className="text-xs text-stone-300">
-                Ghi nhớ ngày giỗ người thân, nhắc nhở hiếu hạnh
+              <p className="text-xs text-[#D6C394]">
+                Ghi nhớ ngày húy kỵ tổ tiên để tụng kinh &amp; hồi hướng báo hiếu
               </p>
             </div>
 
-            {/* Memorial List */}
             <div className="space-y-2 max-h-48 overflow-y-auto no-scrollbar">
               {memorials.map((m) => (
                 <div
                   key={m.id}
-                  className="p-3 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-between text-xs"
+                  className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 flex items-center justify-between text-xs"
                 >
                   <div>
-                    <h5 className="font-bold text-white">
+                    <h5 className="font-bold text-[#FFFDF7]">
                       {m.name} ({m.relation})
                     </h5>
-                    <p className="text-amber-300 font-mono mt-0.5">
+                    <p className="text-[#FFD966] font-mono mt-0.5">
                       Âm lịch: {m.lunarDate} {m.solarDate && `• ${m.solarDate}`}
                     </p>
                   </div>
@@ -1083,9 +1142,9 @@ export default function PracticePage() {
                     type="button"
                     onClick={() => {
                       setMemorials((prev) => prev.filter((item) => item.id !== m.id));
-                      showToast('Đã xóa mục giỗ chạp');
+                      showToast('Đã xóa mục ghi nhớ');
                     }}
-                    className="text-stone-500 hover:text-red-400 p-1"
+                    className="text-[#C7B68B] hover:text-red-400 p-1 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -1093,29 +1152,28 @@ export default function PracticePage() {
               ))}
             </div>
 
-            {/* Quick Add Section */}
-            <div className="space-y-2 pt-2 border-t border-stone-800 text-xs">
+            <div className="space-y-2 pt-2 border-t border-[#F5C542]/20 text-xs">
               <input
                 type="text"
-                placeholder="Tên người thân (Ví dụ: Cụ Cố Nội)"
+                placeholder="Họ tên & Pháp danh người thân"
                 value={newMemName}
                 onChange={(e) => setNewMemName(e.target.value)}
-                className="w-full px-3 py-1.5 rounded-xl bg-black/40 border border-stone-700 text-white placeholder-stone-500"
+                className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
               />
               <div className="flex gap-2">
                 <input
                   type="text"
-                  placeholder="Quan hệ (Ông/Bà/Bố/Mẹ)"
+                  placeholder="Quan hệ (Ông/Bà/Cha/Mẹ)"
                   value={newMemRelation}
                   onChange={(e) => setNewMemRelation(e.target.value)}
-                  className="flex-1 px-3 py-1.5 rounded-xl bg-black/40 border border-stone-700 text-white placeholder-stone-500"
+                  className="flex-1 px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
                 />
                 <input
                   type="text"
                   placeholder="Ngày Âm (15/07)"
                   value={newMemDate}
                   onChange={(e) => setNewMemDate(e.target.value)}
-                  className="flex-1 px-3 py-1.5 rounded-xl bg-black/40 border border-stone-700 text-white placeholder-stone-500"
+                  className="flex-1 px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
                 />
               </div>
 
@@ -1126,20 +1184,20 @@ export default function PracticePage() {
                   const item = {
                     id: Date.now().toString(),
                     name: newMemName.trim(),
-                    relation: newMemRelation.trim() || 'Người thân',
-                    lunarDate: newMemDate.trim() || 'Đang cập nhật',
-                    solarDate: 'Nhắc nhở hàng năm',
+                    relation: newMemRelation.trim() || 'Tiên linh',
+                    lunarDate: newMemDate.trim() || 'Rằm tháng 7',
+                    solarDate: 'Tưởng niệm hằng năm',
                   };
                   setMemorials((prev) => [...prev, item]);
                   setNewMemName('');
                   setNewMemRelation('');
                   setNewMemDate('');
                   playWoodenFishSound(0.5);
-                  showToast('Đã lưu ngày giỗ chạp gia tiên');
+                  showToast('Đã lưu vào Sổ Hiếu Hạnh Gia Tiên');
                 }}
-                className="w-full py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold"
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold cursor-pointer"
               >
-                + Thêm Ngày Giỗ Mới
+                + Lưu Ngày Tưởng Niệm
               </button>
             </div>
           </div>
@@ -1147,18 +1205,79 @@ export default function PracticePage() {
       )}
 
       {/* ========================================================================= */}
-      {/* FLOATING TOAST                                                            */}
+      {/* 9. MODAL: SỔ CÔNG ĐỨC HỒI HƯỚNG (MERIT LEDGER)                            */}
       {/* ========================================================================= */}
+      {isMeritLedgerOpen && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsMeritLedgerOpen(false);
+          }}
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+        >
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-t-[30px] sm:rounded-3xl bg-[#241B0B] border-t sm:border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
+            <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-2 sm:hidden" />
+            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20">
+              <div className="flex items-center gap-2">
+                <BodhiLeafIcon className="w-5 h-5 text-[#FFD966]" />
+                <div>
+                  <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                    Sổ Công Đức Hồi Hướng Dharma
+                  </h3>
+                  <p className="text-xs text-[#C7B68B]">
+                    Ghi nhận các thời khóa tọa thiền, trì niệm &amp; dâng hương
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMeritLedgerOpen(false)}
+                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-2.5">
+              {meritEntries.length === 0 ? (
+                <div className="p-6 rounded-2xl bg-[#181207] border border-[#F5C542]/15 text-center space-y-2">
+                  <LotusMinimalIcon className="w-8 h-8 text-[#FFD966] mx-auto opacity-80" />
+                  <p className="text-xs text-[#F3E3B2]">
+                    Sổ Công Đức đang chờ ghi nhận thời khóa đầu tiên của bạn hôm nay.
+                  </p>
+                </div>
+              ) : (
+                meritEntries.map((entry) => (
+                  <div
+                    key={entry.id}
+                    className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/25 space-y-1"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-heading font-serif font-bold text-xs text-[#FFD966]">
+                        {entry.title}
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F5C542]/15 text-[#FFD966]">
+                        +{entry.meritPoints} công đức
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#F3E3B2]">{entry.detail}</p>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* FLOATING TOAST */}
       {toastMessage && (
-        <div className="fixed top-14 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2 rounded-2xl bg-[#24130A]/95 border border-[#D4AF37] text-center shadow-xl backdrop-blur-md">
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFE082]">
+        <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
+          <div className="px-4 py-2.5 rounded-2xl bg-[#241B0B]/95 border border-[#F5C542] text-center shadow-xl backdrop-blur-md">
+            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFD966]">
               {toastMessage}
             </p>
           </div>
         </div>
       )}
-
     </div>
   );
 }

@@ -1,26 +1,34 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   Play,
   Pause,
   RotateCcw,
   Volume2,
-  Bell,
-  Heart,
-  Sparkles,
-  Headphones,
-  Radio,
-  BookOpen,
-  Calendar,
-  Flame,
   ChevronRight,
-  ExternalLink,
+  Check,
 } from 'lucide-react';
-import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
-import { playBellSound, playWoodenFishSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import {
+  DharmaWheelIcon,
+  MeditatingMonkOutlineIcon,
+  MalaBeadsMinimalIcon,
+  WoodenFishMinimalIcon,
+  TempleBellIcon,
+  LotusLanternIcon,
+  IncenseAltarIcon,
+  PagodaMinimalIcon,
+  LotusMinimalIcon,
+  SutraScrollIcon,
+  BodhiLeafIcon,
+} from '@/components/icons/DharmaMinimalIcons';
+import {
+  playBellSound,
+  playWoodenFishSound,
+  playGrandTempleBellSound,
+} from '@/lib/buddhistSounds';
+import { recordDharmaMerit } from '@/components/om-mani/OmManiInteractiveTools';
 import { cn } from '@/lib/utils';
 
 export interface OmManiDesktopPracticeProps {
@@ -32,6 +40,7 @@ export interface OmManiDesktopPracticeProps {
   onOpenOnlineTemple: () => void;
   onOpenBuddhas: () => void;
   onOpenMemorial: () => void;
+  onOpenMeritLedger: () => void;
   isMusicPlaying: boolean;
   onToggleMusic: () => void;
   showToast: (msg: string) => void;
@@ -46,54 +55,72 @@ export function OmManiDesktopPractice({
   onOpenOnlineTemple,
   onOpenBuddhas,
   onOpenMemorial,
+  onOpenMeritLedger,
   isMusicPlaying,
   onToggleMusic,
   showToast,
 }: OmManiDesktopPracticeProps) {
   const router = useRouter();
 
-  // Desktop In-page Zen Meditation Timer
+  // Desktop In-page Zen Meditation Timer & Anapanasati 4-4-6 Breathing Phase
   const [meditationMinutes, setMeditationMinutes] = useState(10);
   const [secondsRemaining, setSecondsRemaining] = useState(10 * 60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [breathTick, setBreathTick] = useState(0);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
     if (isTimerRunning && secondsRemaining > 0) {
       interval = setInterval(() => {
         setSecondsRemaining((s) => s - 1);
+        setBreathTick((t) => (t + 1) % 14);
       }, 1000);
     } else if (secondsRemaining === 0 && isTimerRunning) {
       setIsTimerRunning(false);
       playGrandTempleBellSound(0.6);
-      showToast('Thời khóa thiền định viên mãn. Thở vào tâm bình an.');
+      recordDharmaMerit({
+        type: 'meditation',
+        title: `Hoàn Mãn Tọa Thiền Quán Hơi Thở (${meditationMinutes} phút)`,
+        detail: 'Thực hành thiền hơi thở Anapanasati 4-4-6 định tĩnh thân tâm',
+        meritPoints: meditationMinutes * 3,
+      });
+      showToast('Thời khóa tọa thiền viên mãn! Đã ghi nhận vào Sổ Công Đức Dharma.');
     }
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isTimerRunning, secondsRemaining, showToast]);
+  }, [isTimerRunning, secondsRemaining, meditationMinutes, showToast]);
+
+  const getBreathingPhaseLabel = () => {
+    if (!isTimerRunning) return 'Chuẩn Bị An Trú Chánh Niệm (Nhịp 4-4-6)';
+    if (breathTick < 4) return `Hít Vào Biết Hơi Thở Vào (${4 - breathTick}s)`;
+    if (breathTick < 8) return `An Trú Tĩnh Lặng Giữa Hơi Thở (${8 - breathTick}s)`;
+    return `Thở Ra Buông Xả Phiền Não (${14 - breathTick}s)`;
+  };
 
   const handleSelectMinutes = (m: number) => {
     setMeditationMinutes(m);
     setSecondsRemaining(m * 60);
     setIsTimerRunning(false);
+    setBreathTick(0);
     playBellSound(0.3);
   };
 
   const handleToggleTimer = () => {
     if (isTimerRunning) {
       setIsTimerRunning(false);
-      showToast('Đã tạm dừng thiền định');
+      showToast('Đã tạm dừng thời khóa tọa thiền');
     } else {
       setIsTimerRunning(true);
       playGrandTempleBellSound(0.5);
-      showToast('Bắt đầu thời khóa thiền định. Thả lỏng thân tâm...');
+      showToast('Bắt đầu tọa thiền Anapanasati • Hít vào 4s, An trú 4s, Thở ra 6s');
     }
   };
 
   const handleResetTimer = () => {
     setIsTimerRunning(false);
     setSecondsRemaining(meditationMinutes * 60);
+    setBreathTick(0);
     playBellSound(0.3);
   };
 
@@ -106,83 +133,93 @@ export function OmManiDesktopPractice({
   const PRACTICE_CARDS = [
     {
       id: 'trang-hat',
-      title: 'Tràng Hạt',
-      subtitle: 'Lần hạt, trì niệm danh hiệu',
-      badge: '📿',
-      image: '/images/buddha_temple.jpg',
+      step: 'Bước 2 • Trì Niệm',
+      title: '108 Chuỗi Bồ Đề',
+      subtitle: 'Lần hạt trì niệm danh hiệu Phật & Bồ Tát',
+      Icon: MalaBeadsMinimalIcon,
+      image: '/images/monk_incense.jpg',
       action: onOpenMala,
     },
     {
       id: 'chuong-mo',
-      title: 'Chuông Mõ',
-      subtitle: 'Thỉnh chuông, gõ mõ tịnh tâm',
-      badge: '🔔',
+      step: 'Bước 2 • Giữ Nhịp',
+      title: 'Chuông Mõ Nhịp BPM',
+      subtitle: 'Mõ tự động 50/68/88 BPM trợ duyên tụng kinh',
+      Icon: WoodenFishMinimalIcon,
       image: '/images/ancient_pagoda.jpg',
       action: onOpenBellFish,
     },
     {
-      id: 'nghe-kinh',
-      title: 'Nghe Kinh',
-      subtitle: 'Tải về, nghe không cần mạng',
-      badge: '🎧',
-      image: '/images/buddha_meditation.jpg',
-      action: () => router.push('/phap-thoai'),
-    },
-    {
       id: 'may-niem-phat',
-      title: 'Máy Niệm Phật',
-      subtitle: 'Niệm danh hiệu, trì chú 24/7',
-      badge: '📻',
+      step: 'Bước 2 • Chuyên Nhất',
+      title: 'Pháp Âm Niệm Phật',
+      subtitle: 'Tần số niệm danh hiệu Phật & thần chú tịnh hóa',
+      Icon: TempleBellIcon,
       image: '/images/golden_buddha.jpg',
       action: onOpenChantMachine,
     },
     {
+      id: 'nghe-kinh',
+      step: 'Bước 1 • Văn Tư Tu',
+      title: 'Thính Pháp Âm',
+      subtitle: 'Lắng nghe lời Phật dạy & pháp thoại chuyển hóa',
+      Icon: SutraScrollIcon,
+      image: '/images/buddha_meditation.jpg',
+      action: () => router.push('/phap-thoai'),
+    },
+    {
       id: 'cau-an',
-      title: 'Cầu An',
-      subtitle: 'Nguyện cầu bình an cho gia quyến',
-      badge: '🙏',
-      image: '/images/buddha_teaching.jpg',
+      step: 'Bước 3 • Hồi Hướng',
+      title: 'Hoa Đăng Cầu An',
+      subtitle: 'Thắp đèn sen vàng cầu bình an cho gia quyến',
+      Icon: LotusLanternIcon,
+      image: '/images/quan_am_bodhisattva.jpg',
       action: onOpenPrayPeace,
     },
     {
       id: 'cau-sieu',
-      title: 'Cầu Siêu',
-      subtitle: 'Thành tâm tưởng niệm tiên tổ',
-      badge: '🕯️',
-      image: '/images/pagoda_sunset.jpg',
+      step: 'Bước 3 • Hồi Hướng',
+      title: 'Hoa Đăng Kỳ Siêu',
+      subtitle: 'Tưởng niệm cửu huyền thất tổ siêu sinh Tịnh Độ',
+      Icon: IncenseAltarIcon,
+      image: '/images/tran_nhan_tong_yentu.jpg',
       action: onOpenPrayRebirth,
     },
     {
       id: 'di-chua',
-      title: 'Đi Chùa Online',
-      subtitle: 'Lễ Phật nơi chánh điện trực tuyến',
-      badge: '🏛️',
-      image: '/images/lotus_pond.jpg',
+      step: 'Bước 1 • Lễ Bái',
+      title: 'Chánh Điện Lễ Phật',
+      subtitle: 'Dâng hương lễ bái Tam Bảo trực tuyến trang nghiêm',
+      Icon: PagodaMinimalIcon,
+      image: '/images/temple_sanctuary_bg.jpg',
       action: onOpenOnlineTemple,
     },
     {
       id: 'thu-vien-bon-ton',
-      title: 'Thư Viện Bổn Tôn',
-      subtitle: 'Chiêm bái chư Phật & Bồ Tát',
-      badge: '🪷',
-      image: '/images/buddha_library.jpg',
+      step: 'Bước 1 • Quán Tưởng',
+      title: 'Tôn Tượng Chư Phật',
+      subtitle: 'Chiêm bái hồng danh & đại nguyện chư Phật, Bồ Tát',
+      Icon: LotusMinimalIcon,
+      image: '/images/golden_buddha_altar.jpg',
       action: onOpenBuddhas,
     },
     {
       id: 'nhac-tu-tap',
-      title: 'Nhạc Tu Tập',
-      subtitle: isMusicPlaying ? 'Đang phát thanh âm thiền môn' : 'Âm thanh thư giãn thiền môn',
-      badge: '🎶',
-      image: '/images/mindfulness_peace.jpg',
+      step: 'Bước 1 • Tịnh Tâm',
+      title: 'Tần Số Thiền 432Hz',
+      subtitle: isMusicPlaying ? 'Đang phát tần số thiền định...' : 'Thanh âm chuông xoay tịnh hóa tâm thức',
+      Icon: DharmaWheelIcon,
+      image: '/images/lotus_blooming.jpg',
       action: onToggleMusic,
       isHighlighted: isMusicPlaying,
     },
     {
       id: 'so-gio-chap',
-      title: 'Sổ Giỗ Chạp',
-      subtitle: 'Ghi nhớ ngày giỗ người thân',
-      badge: '📜',
-      image: '/images/ancient_pagoda.jpg',
+      step: 'Bước 3 • Tri Ân',
+      title: 'Sổ Hiếu Hạnh Tổ Tiên',
+      subtitle: 'Ghi nhớ ngày húy kỵ gia tiên & lời nguyện tri ân',
+      Icon: BodhiLeafIcon,
+      image: '/images/sutra_book.jpg',
       action: onOpenMemorial,
     },
   ];
@@ -192,112 +229,128 @@ export function OmManiDesktopPractice({
       {/* ========================================================================= */}
       {/* 1. TOP HEADER TITLE                                                       */}
       {/* ========================================================================= */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-amber-500/20">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-[#F5C542]/25">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-[#E5B548] via-[#FFE082] to-[#B38328] shadow-[0_0_15px_rgba(212,175,55,0.35)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#1F140D] flex items-center justify-center">
-              <BuddhaBodhiIcon className="w-6 h-6 text-[#FFE082]" />
+          <div className="w-12 h-12 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_20px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
+            <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
+              <MeditatingMonkOutlineIcon className="w-6 h-6 text-[#FFD966]" />
             </div>
           </div>
           <div>
-            <h1 className="font-heading font-serif text-2xl font-black text-white flex items-center gap-2.5">
-              <span>Phương Tiện Tu Tập &amp; Chánh Niệm</span>
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#F5C542]/15 border border-[#F5C542]/35 text-[10px] font-bold uppercase tracking-widest text-[#FFD966]">
+                DHARMA SANCTUARY
+              </span>
+              <span className="text-xs text-[#C7B68B]">
+                Lộ Trình 3 Bước: Định Tâm → Trì Niệm → Hồi Hướng
+              </span>
+            </div>
+            <h1 className="font-heading font-serif text-2xl font-bold text-[#FFFDF7] mt-1">
+              Không Gian Hành Trì &amp; Thiền Quán Hơi Thở
             </h1>
-            <p className="text-xs text-stone-400 mt-0.5">
-              Mười pháp bảo trợ duyên giúp lắng đọng thân tâm, định tĩnh trí tuệ và nuôi dưỡng từ bi
-            </p>
           </div>
         </div>
 
-        {/* Global Sound Quick Control */}
-        <div className="flex items-center gap-3">
+        {/* Global Sound & Merit Ledger Quick Controls */}
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={onOpenMeritLedger}
+            className="px-4 py-2.5 rounded-2xl bg-[#241B0B] border border-[#F5C542]/40 hover:border-[#FFD966] text-[#FFD966] text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md"
+          >
+            <BodhiLeafIcon className="w-4 h-4" />
+            <span>Sổ Công Đức Hồi Hướng</span>
+          </button>
+
           <button
             type="button"
             onClick={onToggleMusic}
             className={cn(
-              'px-4 py-2 rounded-2xl border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md',
+              'px-4 py-2.5 rounded-2xl border text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md',
               isMusicPlaying
-                ? 'bg-amber-600/30 border-amber-400 text-amber-200'
-                : 'bg-[#1C140E] border-white/10 text-stone-300 hover:text-white'
+                ? 'bg-[#F5C542]/25 border-[#FFD966] text-[#FFD966]'
+                : 'bg-[#241B0B] border-white/10 text-[#D6C394] hover:text-[#FFFDF7]'
             )}
           >
-            <Volume2 className={cn('w-4 h-4', isMusicPlaying && 'animate-pulse text-amber-400')} />
-            <span>{isMusicPlaying ? 'Đang Phát Nhạc Thiền OM' : 'Bật Nhạc Thiền OM'}</span>
+            <Volume2 className={cn('w-4 h-4', isMusicPlaying && 'animate-pulse text-[#FFD966]')} />
+            <span>{isMusicPlaying ? 'Đang Phát Tần Số 432Hz' : 'Bật Tần Số Thiền 432Hz'}</span>
           </button>
 
           <button
             type="button"
             onClick={() => {
               playGrandTempleBellSound(0.5);
-              showToast('Thở vào tâm tĩnh lặng, thở ra miệng mỉm cười');
+              showToast('Tiếng Đại Hồng Chung ngân vang • Thở vào tâm tĩnh lặng');
             }}
-            className="px-4 py-2 rounded-2xl bg-[#1C140E] border border-amber-500/40 hover:border-amber-300 text-amber-200 text-xs font-semibold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-md"
+            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-md"
           >
-            <Bell className="w-4 h-4" />
+            <TempleBellIcon className="w-4 h-4" />
             <span>Thỉnh Đại Hồng Chung</span>
           </button>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. HERO ZEN MEDITATION STUDIO (7 COLS & 5 COLS)                           */}
+      {/* 2. HERO ANAPANASATI BREATHING MEDITATION STUDIO (7 COLS & 5 COLS)         */}
       {/* ========================================================================= */}
       <section className="grid grid-cols-12 gap-8 items-stretch">
-        {/* Left Column: Interactive Meditation Clock & Breathing Guide (7 cols) */}
-        <div className="col-span-12 xl:col-span-7 p-8 rounded-3xl bg-gradient-to-br from-[#241710] via-[#1C120C] to-[#120B07] border border-amber-500/30 shadow-2xl space-y-6 flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        {/* Left Column: Interactive Anapanasati 4-4-6 Breathing Clock (7 cols) */}
+        <div className="col-span-12 xl:col-span-7 p-8 rounded-3xl bg-gradient-to-br from-[#241B0B] via-[#2E220E] to-[#181207] border border-[#F5C542]/35 shadow-2xl space-y-6 flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#F5C542]/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 space-y-4">
+          <div className="relative z-10 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold uppercase tracking-wider">
-                Thời Khóa Thiền Định
+              <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/40 font-bold uppercase tracking-wider">
+                Bước 1 • Định Tâm Quán Niệm Hơi Thở (Anapanasati)
               </span>
-              <span className="text-xs text-amber-200/70 font-serif italic">
-                &ldquo;Dành vài phút trở về với hơi thở&rdquo;
+              <span className="text-xs text-[#F3E3B2] font-serif italic">
+                “Tâm dẫn đầu các pháp, tâm làm chủ, tâm tạo”
               </span>
             </div>
 
             <div>
-              <h2 className="font-heading font-serif text-2xl font-bold text-white">
-                Thiền Định &amp; Theo Dõi Hơi Thở
+              <h2 className="font-heading font-serif text-2xl font-bold text-[#FFFDF7]">
+                Phòng Thiền Hơi Thở Chánh Niệm 4-4-6
               </h2>
-              <p className="text-xs text-stone-300 mt-1">
-                Lắng nghe từng hơi thở vào, hơi thở ra. Đưa tâm trở về với thân, an trú trọn vẹn trong hiện tại.
+              <p className="text-xs text-[#D6C394] mt-1">
+                Hít vào sâu 4 giây • Giữ hơi an trú 4 giây • Thở ra chậm rãi buông thư 6 giây. Khi hoàn mãn tự động ghi nhận vào Sổ Công Đức.
               </p>
             </div>
           </div>
 
           {/* Interactive Breathing Visualizer & Clock */}
           <div className="relative z-10 flex flex-col items-center justify-center py-4">
-            <div className="relative w-48 h-48 flex items-center justify-center">
-              {/* Animated pulsating halo */}
+            <div className="relative w-52 h-52 flex items-center justify-center">
               <div
                 className={cn(
-                  'absolute inset-0 rounded-full border border-amber-400/30 transition-all duration-1000',
-                  isTimerRunning ? 'scale-125 border-amber-400 animate-ping opacity-30' : 'scale-100'
+                  'absolute inset-0 rounded-full border border-[#F5C542]/35 transition-all duration-1000',
+                  isTimerRunning && breathTick < 4
+                    ? 'scale-115 border-[#FFD966] bg-[#F5C542]/10'
+                    : isTimerRunning && breathTick >= 8
+                    ? 'scale-95 border-[#F5C542]/25'
+                    : 'scale-105'
                 )}
               />
               <div
                 className={cn(
-                  'absolute inset-4 rounded-full border-2 border-dashed border-amber-400/40 transition-all duration-1000',
+                  'absolute inset-4 rounded-full border-2 border-dashed border-[#F5C542]/45 transition-all duration-1000',
                   isTimerRunning ? 'animate-[spin_40s_linear_infinite]' : ''
                 )}
               />
-              <div className="absolute inset-8 rounded-full bg-gradient-to-tr from-amber-600/20 via-amber-500/10 to-transparent blur-md" />
 
               {/* Central Clock Display */}
-              <div className="relative z-10 flex flex-col items-center justify-center text-center">
-                <span className="font-mono text-3xl sm:text-4xl font-black text-[#FFE082] tracking-wider">
+              <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
+                <span className="font-mono text-3xl sm:text-4xl font-black text-[#FFD966] tracking-wider">
                   {formatTime(secondsRemaining)}
                 </span>
-                <span className="text-[11px] font-semibold text-amber-200/80 mt-1">
-                  {isTimerRunning ? 'Hít vào... Thở ra...' : 'Sẵn Sàng Tĩnh Tâm'}
+                <span className="text-[11px] font-bold text-[#FFFDF7] mt-1.5 leading-snug">
+                  {getBreathingPhaseLabel()}
                 </span>
               </div>
             </div>
 
             {/* Preset Time Buttons */}
-            <div className="flex items-center gap-2 mt-4">
+            <div className="flex items-center gap-2 mt-5">
               {[5, 10, 15, 20, 30].map((m) => (
                 <button
                   key={m}
@@ -306,8 +359,8 @@ export function OmManiDesktopPractice({
                   className={cn(
                     'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer',
                     meditationMinutes === m
-                      ? 'bg-amber-500 text-charcoal-950 shadow-md font-black'
-                      : 'bg-black/40 text-stone-300 hover:text-white hover:bg-black/60 border border-white/5'
+                      ? 'bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] shadow-md font-black'
+                      : 'bg-[#181207] text-[#D6C394] hover:text-[#FFFDF7] border border-[#F5C542]/20'
                   )}
                 >
                   {m} phút
@@ -317,21 +370,21 @@ export function OmManiDesktopPractice({
           </div>
 
           {/* Action Control Buttons */}
-          <div className="relative z-10 flex items-center gap-3 pt-4 border-t border-amber-500/15">
+          <div className="relative z-10 flex items-center gap-3 pt-4 border-t border-[#F5C542]/20">
             <button
               type="button"
               onClick={handleToggleTimer}
-              className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#D4AF37] to-[#B38328] hover:from-[#FFE082] hover:to-[#D4AF37] text-charcoal-950 font-bold text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               {isTimerRunning ? (
                 <>
                   <Pause className="w-4 h-4 fill-current" />
-                  <span>Tạm Dừng Thiền</span>
+                  <span>Tạm Dừng Tọa Thiền</span>
                 </>
               ) : (
                 <>
                   <Play className="w-4 h-4 fill-current" />
-                  <span>Bắt Đầu Thời Khóa</span>
+                  <span>Bắt Đầu Thiền Hơi Thở</span>
                 </>
               )}
             </button>
@@ -339,7 +392,7 @@ export function OmManiDesktopPractice({
             <button
               type="button"
               onClick={handleResetTimer}
-              className="p-3 rounded-2xl bg-black/40 border border-white/10 hover:border-amber-400/50 text-stone-300 hover:text-white transition-all active:scale-95 cursor-pointer"
+              className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/30 hover:border-[#FFD966] text-[#FFD966] transition-all active:scale-95 cursor-pointer"
               title="Đặt lại đồng hồ"
             >
               <RotateCcw className="w-4 h-4" />
@@ -347,139 +400,152 @@ export function OmManiDesktopPractice({
           </div>
         </div>
 
-        {/* Right Column: Practice Sanctuary Spotlight & Quick Stats (5 cols) */}
-        <div className="col-span-12 xl:col-span-5 p-8 rounded-3xl bg-[#18110B] border border-amber-500/25 shadow-xl flex flex-col justify-between space-y-6">
+        {/* Right Column: 3-Step Dharma Practice Architecture Spotlight (5 cols) */}
+        <div className="col-span-12 xl:col-span-5 p-8 rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 shadow-xl flex flex-col justify-between space-y-6">
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-amber-500/15">
+            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <h3 className="font-heading font-serif font-bold text-sm text-[#FFE082]">
-                  Tinh Tấn Mỗi Ngày
+                <DharmaWheelIcon className="w-4 h-4 text-[#FFD966]" />
+                <h3 className="font-heading font-serif font-bold text-sm text-[#FFD966]">
+                  Tam Đẳng Hành Trì Tại Gia
                 </h3>
               </div>
               <span className="text-[11px] font-mono text-emerald-400 font-semibold">
-                Đang trực tuyến
+                 Chuẩn Pháp Môn Dharma
               </span>
             </div>
 
-            <p className="text-xs text-stone-300 leading-relaxed">
-              Mỗi ngày dành ít nhất 5 đến 15 phút thực hành một trong mười phương tiện dưới đây sẽ giúp tạo lập trường năng lượng an lành, xua tan phiền não và tích lũy công đức cho tự thân cùng gia đình.
+            <p className="text-xs text-[#F3E3B2] leading-relaxed">
+              Khác với việc sử dụng các công cụ rời rạc, Dharma thiết kế hành trình tu tập mỗi ngày theo đúng 3 bước truyền thống của người con Phật: <strong className="text-[#FFD966]">Định Tâm → Trì Niệm → Hồi Hướng</strong>.
             </p>
 
             {/* Quick Actions List */}
-            <div className="space-y-2.5 pt-2">
+            <div className="space-y-2.5 pt-1">
               <button
                 type="button"
                 onClick={onOpenMala}
-                className="w-full p-3.5 rounded-2xl bg-[#20150E] border border-white/5 hover:border-amber-400/40 text-left flex items-center justify-between group transition-all cursor-pointer"
+                className="w-full p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] text-left flex items-center justify-between group transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-lg">📿</span>
+                  <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966]">
+                    <MalaBeadsMinimalIcon className="w-5 h-5" />
+                  </div>
                   <div>
-                    <h4 className="text-xs font-bold text-white group-hover:text-amber-200">
-                      108 Hạt Chuỗi Niệm Phật 3D
+                    <h4 className="text-xs font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                      Bước 1 • Lần Chuỗi Bồ Đề 108 Hạt
                     </h4>
-                    <p className="text-[11px] text-stone-400">Trì niệm danh hiệu Bổn Sư, Di Đà, Quán Âm</p>
+                    <p className="text-[11px] text-[#C7B68B]">Nhiếp tâm qua từng hạt chuỗi và danh hiệu Phật</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-stone-500 group-hover:text-amber-300" />
+                <ChevronRight className="w-4 h-4 text-[#C7B68B] group-hover:text-[#FFD966]" />
               </button>
 
               <button
                 type="button"
-                onClick={onOpenChantMachine}
-                className="w-full p-3.5 rounded-2xl bg-[#20150E] border border-white/5 hover:border-amber-400/40 text-left flex items-center justify-between group transition-all cursor-pointer"
+                onClick={onOpenBellFish}
+                className="w-full p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] text-left flex items-center justify-between group transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-lg">📻</span>
+                  <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966]">
+                    <WoodenFishMinimalIcon className="w-5 h-5" />
+                  </div>
                   <div>
-                    <h4 className="text-xs font-bold text-white group-hover:text-amber-200">
-                      Máy Niệm Phật 24/7
+                    <h4 className="text-xs font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                      Bước 2 • Mõ Nhịp Tự Động 50 / 68 / 88 BPM
                     </h4>
-                    <p className="text-[11px] text-stone-400">Tuyển tập 10 bài niệm danh hiệu trang nghiêm</p>
+                    <p className="text-[11px] text-[#C7B68B]">Giữ nhịp tụng kinh đều đặn không mỏi tay</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-stone-500 group-hover:text-amber-300" />
+                <ChevronRight className="w-4 h-4 text-[#C7B68B] group-hover:text-[#FFD966]" />
               </button>
 
               <button
                 type="button"
-                onClick={onOpenOnlineTemple}
-                className="w-full p-3.5 rounded-2xl bg-[#20150E] border border-white/5 hover:border-amber-400/40 text-left flex items-center justify-between group transition-all cursor-pointer"
+                onClick={onOpenPrayPeace}
+                className="w-full p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] text-left flex items-center justify-between group transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-lg">🏛️</span>
+                  <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966]">
+                    <LotusLanternIcon className="w-5 h-5" />
+                  </div>
                   <div>
-                    <h4 className="text-xs font-bold text-white group-hover:text-amber-200">
-                      Chánh Điện Đi Chùa Online
+                    <h4 className="text-xs font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                      Bước 3 • Thắp Đèn Hoa Đăng &amp; Hồi Hướng
                     </h4>
-                    <p className="text-[11px] text-stone-400">Dâng hoa, bái Phật cùng đạo hữu khắp năm châu</p>
+                    <p className="text-[11px] text-[#C7B68B]">Lưu giữ lời nguyện vào Sổ Công Đức cá nhân</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-stone-500 group-hover:text-amber-300" />
+                <ChevronRight className="w-4 h-4 text-[#C7B68B] group-hover:text-[#FFD966]" />
               </button>
             </div>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 text-xs text-amber-200/90 italic text-center font-serif">
-            &ldquo;Tâm là chủ của mọi hành động. Tâm an lạc thì hạnh phúc tự nhiên nối tiếp như bóng với hình.&rdquo;
+          <div className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 text-xs text-[#FFD966] italic text-center font-serif">
+            “Nguyện đem công đức này, hướng về khắp tất cả, đệ tử và chúng sinh, đều trọn thành Phật đạo.”
           </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. TEN PRACTICE VEHICLES GRID (5 COLUMNS OR 4 COLUMNS RESPONSIVE)          */}
+      {/* 3. TEN DHARMA PRACTICE VEHICLES GRID (5 COLUMNS)                          */}
       {/* ========================================================================= */}
       <section className="space-y-6">
-        <div className="flex items-center justify-between pb-3 border-b border-amber-500/20">
+        <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/25">
           <div>
-            <h2 className="font-heading font-serif text-xl font-bold text-white flex items-center gap-2">
-              <span>Mười Phương Tiện Tu Tập</span>
-              <span className="text-xs font-mono font-normal px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                10 phương tiện
+            <h2 className="font-heading font-serif text-xl font-bold text-[#FFFDF7] flex items-center gap-2.5">
+              <span>Mười Pháp Khí &amp; Phương Tiện Hành Trì</span>
+              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/35">
+                10 Pháp Khí
               </span>
             </h2>
-            <p className="text-xs text-stone-400 mt-1">
-              Chọn phương tiện phù hợp với thời gian và duyên lành của bạn hôm nay
+            <p className="text-xs text-[#C7B68B] mt-1">
+              Mọi pháp khí đều tích hợp âm thanh thiền tự chân thực và tự động lưu vào Sổ Công Đức
             </p>
           </div>
         </div>
 
         {/* 5-Column Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-          {PRACTICE_CARDS.map((card) => (
-            <div
-              key={card.id}
-              onClick={card.action}
-              className={cn(
-                'group relative rounded-3xl overflow-hidden aspect-[4/4.2] p-4 flex flex-col justify-between border cursor-pointer active:scale-95 transition-all duration-300 hover:-translate-y-1 shadow-xl bg-cover bg-center',
-                card.isHighlighted
-                  ? 'border-amber-400 ring-2 ring-amber-400/50 shadow-amber-950/50'
-                  : 'border-white/10 hover:border-amber-400/60'
-              )}
-              style={{
-                backgroundImage: `linear-gradient(to top, rgba(17, 13, 10, 0.95) 0%, rgba(17, 13, 10, 0.55) 55%, rgba(17, 13, 10, 0.25) 100%), url('${card.image}')`,
-              }}
-            >
-              {/* Top Badge Icon */}
-              <div className="self-end w-9 h-9 rounded-full bg-black/55 backdrop-blur-md border border-white/20 flex items-center justify-center text-base shadow-md group-hover:scale-110 transition-transform">
-                {card.badge}
-              </div>
+          {PRACTICE_CARDS.map((card) => {
+            const Icon = card.Icon;
+            return (
+              <div
+                key={card.id}
+                onClick={card.action}
+                className={cn(
+                  'group relative rounded-3xl overflow-hidden aspect-[4/4.3] p-4 flex flex-col justify-between border cursor-pointer active:scale-95 transition-all duration-300 hover:-translate-y-1 shadow-xl bg-cover bg-center',
+                  card.isHighlighted
+                    ? 'border-[#FFD966] ring-2 ring-[#F5C542]/60'
+                    : 'border-[#F5C542]/25 hover:border-[#FFD966]'
+                )}
+                style={{
+                  backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.55) 55%, rgba(24, 18, 7, 0.25) 100%), url('${card.image}')`,
+                }}
+              >
+                {/* Top Row: Step Tag & Minimalist SVG Icon */}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="px-2.5 py-1 rounded-full bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/35 text-[10px] font-bold text-[#FFD966]">
+                    {card.step}
+                  </span>
+                  <div className="w-9 h-9 rounded-xl bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] shadow-md group-hover:scale-110 transition-transform">
+                    <Icon className="w-4 h-4" />
+                  </div>
+                </div>
 
-              {/* Bottom Card Title & Subtitle */}
-              <div className="space-y-1">
-                <h4 className="font-heading font-serif font-bold text-sm sm:text-base text-white group-hover:text-amber-200 transition-colors leading-tight">
-                  {card.title}
-                </h4>
-                <p className="text-xs text-stone-300 line-clamp-2 leading-relaxed">
-                  {card.subtitle}
-                </p>
+                {/* Bottom Card Title & Subtitle */}
+                <div className="space-y-1">
+                  <h4 className="font-heading font-serif font-bold text-base text-[#FFFDF7] group-hover:text-[#FFD966] transition-colors leading-tight">
+                    {card.title}
+                  </h4>
+                  <p className="text-xs text-[#F3E3B2]/90 line-clamp-2 leading-relaxed">
+                    {card.subtitle}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </div>
   );
 }
-

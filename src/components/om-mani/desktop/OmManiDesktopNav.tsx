@@ -2,45 +2,31 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { Calendar, Search } from 'lucide-react';
 import {
-  Home,
-  Calendar,
-  BookOpen,
-  User,
-  Search,
-  Bell,
-  Sparkles,
-  ExternalLink,
-} from 'lucide-react';
-import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
+  DharmaWheelIcon,
+  LotusMinimalIcon,
+  SutraScrollIcon,
+  BodhiLeafIcon,
+  TempleBellIcon,
+} from '@/components/icons/DharmaMinimalIcons';
 import { useAuth } from '@/components/auth/AuthContext';
 import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 import { SearchModal } from '@/components/layout/SearchModal';
-import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import { playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { cn } from '@/lib/utils';
 
-// Meditating Figure Icon for "Tu tập"
-const MeditatingIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <circle cx="12" cy="5" r="2.2" />
-    <circle cx="12" cy="2.5" r="0.8" />
-    <path d="M12 8c-2.4 0-4.2 1.6-4.5 3.8l-.5 3.2c-.1.6.4 1.1 1 1.1h8c.6 0 1.1-.5 1-1.1l-.5-3.2C16.2 9.6 14.4 8 12 8z" opacity="0.9" />
-    <path d="M5.5 17.5c1.2-1.5 3.5-1.5 6.5-1.5s5.3 0 6.5 1.5c.8 1-1 2.5-3 2.5h-7c-2 0-3.8-1.5-3-2.5z" />
-  </svg>
-);
-
 const NAV_ITEMS = [
-  { name: 'Trang chủ', href: '/', icon: Home },
+  { name: 'Khai Tâm', href: '/', icon: LotusMinimalIcon },
   { name: 'Lịch Vạn Niên', href: '/lich-phat-giao', icon: Calendar },
-  { name: 'Tu tập', href: '/thuc-hanh', icon: MeditatingIcon },
-  { name: 'Kinh sách', href: '/thu-vien', icon: BookOpen },
-  { name: 'Cá nhân', href: '/ho-so', icon: User },
+  { name: 'Hành Trì', href: '/thuc-hanh', icon: DharmaWheelIcon },
+  { name: 'Kinh Tạng', href: '/thu-vien', icon: SutraScrollIcon },
+  { name: 'Cư Sĩ', href: '/ho-so', icon: BodhiLeafIcon },
 ];
 
 export function OmManiDesktopNav() {
   const pathname = usePathname();
-  const router = useRouter();
   const { user } = useAuth();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -57,34 +43,34 @@ export function OmManiDesktopNav() {
 
   return (
     <>
-      <header className="hidden lg:block sticky top-0 z-50 w-full bg-[#140E0A]/95 backdrop-blur-md border-b border-amber-500/20 text-[#FDFBF7] shadow-xl transition-all">
+      <header className="hidden lg:block sticky top-0 z-50 w-full bg-[#181207]/95 backdrop-blur-xl border-b border-[#F5C542]/25 text-[#FFFDF7] shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all">
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4 xl:gap-6">
-          {/* Left Brand: Golden Lotus Emblem & Title */}
+          {/* Left Brand: Dharma Wheel Golden Emblem & Title */}
           <Link
             href="/"
-            className="flex items-center gap-3 group active:scale-95 transition-transform shrink-0"
+            className="flex items-center gap-3.5 group active:scale-95 transition-transform shrink-0"
           >
-            <div className="w-10 h-10 xl:w-11 xl:h-11 rounded-full p-[2px] bg-gradient-to-tr from-[#E5B548] via-[#FFE082] to-[#B38328] shadow-[0_0_15px_rgba(212,175,55,0.35)] flex items-center justify-center shrink-0">
-              <div className="w-full h-full rounded-full bg-[#20150E] flex items-center justify-center">
-                <BuddhaBodhiIcon className="w-5 h-5 xl:w-6 xl:h-6 text-[#FFE082] group-hover:scale-110 transition-transform" />
+            <div className="w-11 h-11 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#FFF0A8] shadow-[0_0_20px_rgba(245,197,66,0.35)] flex items-center justify-center shrink-0">
+              <div className="w-full h-full rounded-[14px] bg-[#211808] flex items-center justify-center">
+                <DharmaWheelIcon className="w-6 h-6 text-[#FFD966] group-hover:rotate-45 transition-transform duration-500" />
               </div>
             </div>
 
             <div className="shrink-0">
-              <div className="font-heading font-serif font-black text-base xl:text-lg tracking-wider text-white group-hover:text-amber-200 transition-colors flex items-center gap-2">
-                <span>OM MANI</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                  Phật Pháp
+              <div className="font-heading font-serif font-black text-lg tracking-wider text-[#FFFDF7] group-hover:text-[#FFD966] transition-colors flex items-center gap-2">
+                <span>DHARMA</span>
+                <span className="text-[10px] font-sans font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[#F5C542]/18 text-[#FFD966] border border-[#F5C542]/40">
+                  Chánh Pháp
                 </span>
               </div>
-              <p className="text-[10px] xl:text-[11px] text-stone-400 font-medium whitespace-nowrap">
-                Cổng Thông Tin &amp; Không Gian Tỉnh Thức
+              <p className="text-[11px] text-[#C7B68B] font-medium whitespace-nowrap">
+                Không Gian Chánh Niệm &amp; Tam Tạng Pháp Bảo
               </p>
             </div>
           </Link>
 
-          {/* Center Navigation Links - Guaranteed Single Line with whitespace-nowrap */}
-          <nav className="flex items-center gap-1.5 xl:gap-2.5 shrink-0">
+          {/* Center Navigation Links — Single-Line Guaranteed */}
+          <nav className="flex items-center gap-1.5 xl:gap-2 shrink-0">
             {NAV_ITEMS.map((item) => {
               const isActive =
                 item.href === '/'
@@ -97,29 +83,34 @@ export function OmManiDesktopNav() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'px-3.5 py-2 rounded-2xl text-xs xl:text-sm font-semibold flex items-center gap-2 transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0',
+                    'px-4 py-2 rounded-2xl text-xs xl:text-sm font-semibold flex items-center gap-2 transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0',
                     isActive
-                      ? 'bg-gradient-to-b from-[#C4681E] to-[#99470B] text-white shadow-md shadow-amber-950/40 ring-1 ring-amber-300/40'
-                      : 'text-stone-300 hover:text-white hover:bg-stone-900/60'
+                      ? 'bg-gradient-to-r from-[#FFE07D] via-[#F5C542] to-[#E5A91C] text-[#1A1305] font-bold shadow-[0_4px_18px_rgba(245,197,66,0.35)]'
+                      : 'text-[#E5D5AB] hover:text-[#FFD966] hover:bg-[#2A200D]'
                   )}
                 >
-                  <Icon className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-100' : 'text-stone-400')} />
+                  <Icon
+                    className={cn(
+                      'w-4 h-4 shrink-0',
+                      isActive ? 'text-[#1A1305]' : 'text-[#F5C542]'
+                    )}
+                  />
                   <span className="whitespace-nowrap">{item.name}</span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right Action Icons & Profile */}
-          <div className="flex items-center gap-2 xl:gap-3 shrink-0">
+          {/* Right Action Icons & Layperson Profile */}
+          <div className="flex items-center gap-2.5 xl:gap-3 shrink-0">
             {/* Mindfulness Bell Shortcut Button */}
             <button
               type="button"
               onClick={handleRingMindfulnessBell}
-              className="px-3 py-1.5 rounded-full bg-[#201712] border border-amber-500/30 hover:border-amber-400/80 text-amber-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0"
+              className="px-3.5 py-2 rounded-xl bg-[#251C0B] border border-[#F5C542]/35 hover:border-[#FFD966] text-[#FFD966] hover:bg-[#30240E] text-xs font-semibold flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0"
               title="Thỉnh Chuông Chánh Niệm"
             >
-              <Bell className="w-3.5 h-3.5 fill-current shrink-0" />
+              <TempleBellIcon className="w-4 h-4 shrink-0 text-[#FFD966]" />
               <span className="whitespace-nowrap">Chuông Chánh Niệm</span>
             </button>
 
@@ -130,23 +121,23 @@ export function OmManiDesktopNav() {
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="w-10 h-10 rounded-full bg-[#201712] border border-white/10 hover:border-amber-400/50 text-stone-300 hover:text-white flex items-center justify-center transition-all active:scale-95 shadow-md cursor-pointer"
-              title="Tìm kiếm kinh điển & bài viết"
+              className="w-10 h-10 rounded-xl bg-[#251C0B] border border-[#F5C542]/25 hover:border-[#FFD966] text-[#F3E3B2] hover:text-[#FFD966] flex items-center justify-center transition-all active:scale-95 shadow-md cursor-pointer shrink-0"
+              title="Tìm kiếm kinh điển & pháp thoại"
               aria-label="Tìm kiếm"
             >
               <Search className="w-4 h-4" />
             </button>
 
-            {/* User Profile Avatar Link */}
+            {/* User Profile Pill */}
             <Link
               href="/ho-so"
-              className="flex items-center gap-2 pl-2 py-1 pr-3 rounded-full bg-[#201712] border border-white/10 hover:border-amber-400/50 text-stone-200 hover:text-white transition-all active:scale-95 shadow-md whitespace-nowrap shrink-0"
+              className="flex items-center gap-2 pl-2 py-1.5 pr-3.5 rounded-xl bg-[#251C0B] border border-[#F5C542]/25 hover:border-[#FFD966] text-[#FFFDF7] transition-all active:scale-95 shadow-md whitespace-nowrap shrink-0"
             >
-              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-600 to-amber-300 flex items-center justify-center text-charcoal-950 text-xs font-bold shrink-0">
-                {user?.dharma_name ? user.dharma_name.charAt(0) : '🪷'}
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#E5A91C] to-[#FFE07D] flex items-center justify-center text-[#1A1305] text-xs font-bold shrink-0">
+                <BodhiLeafIcon className="w-4 h-4" />
               </div>
-              <span className="text-xs font-medium max-w-[120px] truncate whitespace-nowrap">
-                {user?.dharma_name || user?.full_name || 'Phật tử'}
+              <span className="text-xs font-semibold max-w-[120px] truncate whitespace-nowrap text-[#FFD966]">
+                {user?.dharma_name || user?.full_name || 'Cư sĩ'}
               </span>
             </Link>
           </div>
@@ -158,10 +149,10 @@ export function OmManiDesktopNav() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="hidden lg:flex fixed top-20 right-6 z-50 pointer-events-none animate-fadeInDown">
-          <div className="px-5 py-3 rounded-2xl bg-[#20150E]/95 border border-[#D4AF37] text-white shadow-2xl backdrop-blur-md flex items-center gap-2">
-            <span className="text-amber-300 text-lg">🪷</span>
-            <p className="font-heading text-sm font-bold text-[#FFE082]">
+        <div className="hidden lg:flex fixed top-22 right-6 z-50 pointer-events-none animate-fadeInDown">
+          <div className="px-5 py-3 rounded-2xl bg-[#241B0B]/95 border border-[#F5C542] text-white shadow-2xl backdrop-blur-md flex items-center gap-2.5">
+            <LotusMinimalIcon className="w-5 h-5 text-[#FFD966] shrink-0" />
+            <p className="font-heading text-sm font-bold text-[#FFD966]">
               {toastMessage}
             </p>
           </div>
@@ -170,4 +161,3 @@ export function OmManiDesktopNav() {
     </>
   );
 }
-

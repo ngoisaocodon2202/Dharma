@@ -4,14 +4,14 @@ import { OmManiAppStoreHome } from '@/components/om-mani/OmManiAppStoreHome';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Phật Pháp — Bồ Đề Tâm | Cổng Thông Tin & Không Gian Tu Tập Online',
+  title: 'DHARMA — Ánh Sáng Chánh Pháp | Không Gian Hành Trì & Kinh Điển',
   description:
-    'Không gian tu tập thanh tịnh trực tuyến: Lịch Vạn Niên, Đi Chùa Online, Thỉnh Chuông, Niệm Phật Tràng Hạt, Thiền Định & Kinh Sách Phật Giáo.',
+    'Không gian tu học Phật pháp thanh tịnh: Thời khóa 4 thời, Kệ Pháp Cú mỗi ngày, Lịch Vạn Niên & Trai Giới, Mõ Tụng Kinh Tự Động và Tam Tạng Pháp Bảo.',
 };
 
 export default function HomePage() {
   return (
-    <main className="w-full min-h-screen bg-[#110D0A]">
+    <main className="w-full min-h-screen bg-[#181207]">
       <OmManiAppStoreHome />
     </main>
   );
