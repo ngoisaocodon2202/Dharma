@@ -137,7 +137,7 @@ export function OmManiDesktopPractice({
       title: 'Thư viện Bổn Tôn',
       subtitle: 'Chiêm bái hồng danh & đại nguyện chư Phật, Bồ Tát',
       Icon: LotusMinimalIcon,
-      image: '/images/golden_buddha.jpg',
+      image: '/images/buddhas/duc-phat-thich-ca.png',
       action: onOpenBuddhas,
     },
     {

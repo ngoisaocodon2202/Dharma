@@ -43,8 +43,6 @@ import { cn } from '@/lib/utils';
 export default function PracticePage() {
   const router = useRouter();
 
-  // Filter for mobile 3-step view
-  const [stepFilter, setStepFilter] = useState<PracticeStepFilter>('all');
 
   // Modals state
   const [isMalaOpen, setIsMalaOpen] = useState(false);
@@ -180,9 +178,9 @@ export default function PracticePage() {
       id: 'thu-vien-bon-ton',
       title: 'Thư viện Bổn Tôn',
       subtitle: 'Chiêm bái chư Phật',
-      image: '/images/golden_buddha.jpg',
+      image: '/images/buddhas/duc-phat-thich-ca.png',
       Icon: LotusMinimalIcon,
-      onClick: () => setIsBuddhasModalOpen(true),
+      onClick: () => router.push('/thu-vien-bon-ton'),
     },
     {
       id: 'di-chua',
@@ -394,7 +392,7 @@ export default function PracticePage() {
           onOpenPrayPeace={() => setIsPrayerPeaceOpen(true)}
           onOpenPrayRebirth={() => setIsPrayerRebirthOpen(true)}
           onOpenOnlineTemple={() => router.push('/di-chua-online')}
-          onOpenBuddhas={() => setIsBuddhasModalOpen(true)}
+          onOpenBuddhas={() => router.push('/thu-vien-bon-ton')}
           onOpenMemorial={() => setIsMemorialBookOpen(true)}
           onOpenMeritLedger={() => setIsMeritLedgerOpen(true)}
           isMusicPlaying={isMusicPlaying}

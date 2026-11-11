@@ -31,7 +31,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Đức Phật Dược Sư',
     title: 'Dược Sư Lưu Ly Quang Vương Như Lai',
     sanskrit: 'Bhaiṣajyaguru Vaidūryaprabharāja',
-    image: '/images/buddhas/duc-phat-duoc-su.jpg',
+    image: '/images/buddhas/duc-phat-duoc-su.png',
     realm: 'Tịnh Lưu Ly Quang Giới (Phương Đông)',
     symbol: 'Bình bát chứa linh dược cam lộ, nhành Kha-lê-lặc, sắc thân ngọc lưu ly',
     tieuSu: {
@@ -71,7 +71,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Đức Phật Thích Ca Mâu Ni',
     title: 'Bổn Sư Thích Ca Mâu Ni Phật',
     sanskrit: 'Śākyamuni Buddha (Siddhārtha Gautama)',
-    image: '/images/buddhas/duc-phat-thich-ca.jpg',
+    image: '/images/buddhas/duc-phat-thich-ca.png',
     realm: 'Cõi Ta Bà (Saha World)',
     symbol: 'Bảo tòa Kim Cương, Ấn Xúc Địa (Bhumisparsha Mudra), Cội Bồ Đề giác ngộ',
     tieuSu: {
@@ -104,7 +104,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Đức Phật A Di Đà',
     title: 'Tiếp Dẫn Đạo Sư A Di Đà Phật',
     sanskrit: 'Amitābha (Vô Lượng Quang) / Amitāyus (Vô Lượng Thọ)',
-    image: '/images/buddhas/duc-phat-a-di-da.jpg',
+    image: '/images/buddhas/duc-phat-a-di-da.png',
     realm: 'Cõi Tây Phương Cực Lạc (Sukhāvatī)',
     symbol: 'Hoa sen vàng tiếp dẫn, ấn Thiền Định / ấn Giáo Hóa, ánh quang minh chiếu khắp mười phương',
     tieuSu: {
@@ -137,7 +137,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Quán Thế Âm Nghìn Mắt Nghìn Tay',
     title: 'Thiên Thủ Thiên Nhãn Quán Thế Âm Bồ Tát',
     sanskrit: 'Sahasrabhuja Avalokiteśvara',
-    image: '/images/buddhas/quan-the-am-nghin-mat-nghin-tay.jpg',
+    image: '/images/buddhas/quan-the-am-nghin-mat-nghin-tay.png',
     realm: 'Hiện thân biến hóa tối thắng tại cõi Ta Bà',
     symbol: 'Nghìn mắt trí tuệ, nghìn tay cầm 42 pháp khí mầu nhiệm, bình cam lộ, hoa sen xanh, chày kim cang',
     tieuSu: {
@@ -170,7 +170,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Phật Di Lặc',
     title: 'Đương Lai Hạ Sinh Di Lặc Tôn Phật',
     sanskrit: 'Maitreya Bodhisattva (Từ Thị)',
-    image: '/images/buddhas/phat-di-lac.jpg',
+    image: '/images/buddhas/phat-di-lac.png',
     realm: 'Cung trời Đâu Suất (Tuṣita) & Cõi Ta Bà vị lai',
     symbol: 'Nụ cười hoan hỷ vô lượng, bụng to chứa trọn bao dung, túi vải càn khôn (Bố Đại)',
     tieuSu: {
@@ -202,7 +202,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Quán Thế Âm Bồ Tát',
     title: 'Đại Bi Quán Thế Âm Bồ Tát',
     sanskrit: 'Avalokiteśvara Bodhisattva',
-    image: '/images/buddhas/quan-the-am-bo-tat.jpg',
+    image: '/images/buddhas/quan-the-am-bo-tat.png',
     realm: 'Núi Phổ Đà Sơn (Potalaka) & Cõi Ta Bà',
     symbol: 'Bình tịnh thủy cam lộ, cành dương liễu mềm mại, đóa hoa sen hồng',
     tieuSu: {
@@ -235,7 +235,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Địa Tạng Vương Bồ Tát',
     title: 'Đại Nguyện Địa Tạng Vương Bồ Tát',
     sanskrit: 'Kṣitigarbha Bodhisattva',
-    image: '/images/buddhas/dia-tang-vuong-bo-tat.jpg',
+    image: '/images/buddhas/dia-tang-vuong-bo-tat.png',
     realm: 'Chốn U Minh Địa Ngục & Cõi Ta Bà',
     symbol: 'Tích trượng sáu vòng (phá tan cửa ngục), Như Ý Châu (ngọc sáng soi rọi chốn tối tăm), Bồ Đề Tọa',
     tieuSu: {
@@ -268,7 +268,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Văn Thù Sư Lợi Bồ Tát',
     title: 'Đại Trí Văn Thù Sư Lợi Bồ Tát',
     sanskrit: 'Mañjuśrī Bodhisattva (Diệu Cát Tường)',
-    image: '/images/buddhas/van-thu-su-loi-bo-tat.jpg',
+    image: '/images/buddhas/van-thu-su-loi-bo-tat.png',
     realm: 'Thánh địa Ngũ Đài Sơn (Sơn Tây, Trung Quốc)',
     symbol: 'Gươm báu trí tuệ (trảm vô minh), kinh Bát Nhã Ba La Mật trên hoa sen xanh, cưỡi Sư tử xanh dũng mãnh',
     tieuSu: {
@@ -300,7 +300,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Phổ Hiền Bồ Tát',
     title: 'Đại Hạnh Phổ Hiền Bồ Tát',
     sanskrit: 'Samantabhadra Bodhisattva (Biến Cát)',
-    image: '/images/buddhas/pho-hien-bo-tat.jpg',
+    image: '/images/buddhas/pho-hien-bo-tat.png',
     realm: 'Thánh địa Nga Mi Sơn (Tứ Xuyên, Trung Quốc)',
     symbol: 'Cưỡi Voi trắng sáu ngà, tay cầm cành sen ngọc / như ý châu, áo giáp nhẫn nhục',
     tieuSu: {
@@ -338,7 +338,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Đại Thế Chí Bồ Tát',
     title: 'Đại Lực Đại Thế Chí Bồ Tát',
     sanskrit: 'Mahāsthāmaprāpta Bodhisattva (Đắc Đại Thế)',
-    image: '/images/buddhas/dai-the-chi-bo-tat.jpg',
+    image: '/images/buddhas/dai-the-chi-bo-tat.png',
     realm: 'Cõi Tây Phương Cực Lạc (Tây Phương Tam Thánh)',
     symbol: 'Hoa sen xanh thanh khiết, bình báu trên đỉnh đầu tỏa ánh sáng trí tuệ, ánh kim quang rực rỡ',
     tieuSu: {
@@ -369,7 +369,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Chuẩn Đề Bồ Tát',
     title: 'Thất Câu Chi Phật Mẫu Chuẩn Đề Vương Bồ Tát',
     sanskrit: 'Cundī Avalokiteśvara (Thanh Tịnh / Năng Hành)',
-    image: '/images/buddhas/chuan-de-bo-tat.jpg',
+    image: '/images/buddhas/chuan-de-bo-tat.png',
     realm: 'Pháp giới Mật Tông Kim Cương Thừa',
     symbol: '18 Cánh tay cầm 18 pháp khí (bình nước, gương báu, hoa sen, chày kim cang...), mão miện ngũ Phật',
     tieuSu: {
@@ -400,7 +400,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Đại Nhật Như Lai',
     title: 'Pháp Thân Tối Cao Tỳ Lô Giá Na Phật',
     sanskrit: 'Mahāvairocana Tathāgata',
-    image: '/images/buddhas/dai-nhat-nhu-lai.jpg',
+    image: '/images/buddhas/dai-nhat-nhu-lai.png',
     realm: 'Mật Cương Giới & Thai Tạng Giới (Chân Ngôn Tông)',
     symbol: 'Trí Quyền Ấn (Bodhishri Mudra), vầng hào quang mặt trời chiếu khắp vũ trụ, Kim Cương Luân',
     tieuSu: {
@@ -431,7 +431,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Tôn giả Ma Ha Ca Diếp',
     title: 'Đầu Đà Đệ Nhất Ma Ha Ca Diếp Tôn Giả',
     sanskrit: 'Mahākāśyapa Thera',
-    image: '/images/buddhas/ton-gia-ma-ha-ca-diep.jpg',
+    image: '/images/buddhas/ton-gia-ma-ha-ca-diep.png',
     realm: 'Tăng đoàn thời Đức Phật & Núi Kê Túc (Ấn Độ)',
     symbol: 'Chiếc áo phấn tảo vá trăm mảnh, bình bát khất thực giản dị, đóa hoa sen Niêm Hoa Vi Tiếu',
     tieuSu: {
@@ -462,7 +462,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Tôn giả A Nan Đà',
     title: 'Đa Văn Đệ Nhất A Nan Đà Tôn Giả',
     sanskrit: 'Ānanda Thera (Hoan Hỷ)',
-    image: '/images/buddhas/ton-gia-a-nan-da.jpg',
+    image: '/images/buddhas/ton-gia-a-nan-da.png',
     realm: 'Thị giả của Đức Thế Tôn & Nhị Tổ Thiền Tông Ấn Độ',
     symbol: 'Tập kinh bối diệp (kinh chép trên lá bối), gương mặt thanh tú hoan hỷ, bút mực lưu truyền chánh pháp',
     tieuSu: {
@@ -493,7 +493,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Tổ sư Bồ Đề Đạt Ma',
     title: 'Sơ Tổ Thiền Tông Đông Độ Bồ Đề Đạt Ma',
     sanskrit: 'Bodhidharma (Đạt Ma Sư Tổ)',
-    image: '/images/buddhas/to-su-bo-de-dat-ma.jpg',
+    image: '/images/buddhas/to-su-bo-de-dat-ma.png',
     realm: 'Chùa Thiếu Lâm (Núi Tung Sơn, Trung Hoa)',
     symbol: 'Áo nâu sồng, đôi mắt quắc thước rực sáng, gậy trúc quảy một chiếc giày, chín năm diện bích',
     tieuSu: {
@@ -524,7 +524,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Vi Đà Tôn Thiên Bồ Tát',
     title: 'Hộ Pháp Vi Đà Tôn Thiên Bồ Tát',
     sanskrit: 'Skanda Bodhisattva (Vi Đà Thiên Tướng)',
-    image: '/images/buddhas/vi-da-ton-thien-bo-tat.jpg',
+    image: '/images/buddhas/vi-da-ton-thien-bo-tat.png',
     realm: 'Chốn Thiền Môn Tự Viện Mười Phương',
     symbol: 'Áo giáp vàng sáng loáng, chày Kim Cang (Vajra) trấn giữ thiền môn, tư thế uy nghiêm dũng mãnh',
     tieuSu: {
@@ -555,7 +555,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Kim Cang Thủ Bồ Tát',
     title: 'Bí Mật Chủ Kim Cang Thủ Bồ Tát',
     sanskrit: 'Vajrapāṇi Bodhisattva (Bậc Cầm Chày Kim Cương)',
-    image: '/images/buddhas/kim-cang-thu-bo-tat.jpg',
+    image: '/images/buddhas/kim-cang-thu-bo-tat.png',
     realm: 'Pháp giới Mật Giáo Kim Cương Thừa',
     symbol: 'Chày Kim Cang (Vajra) năm chấu, vòng lửa trí tuệ rực cháy thiêu rụi tà ma, sắc thân xanh lam phẫn nộ',
     tieuSu: {
@@ -586,7 +586,7 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     name: 'Đức Tara (Đa La Bồ Tát)',
     title: 'Thánh Độ Mẫu Đa La Bồ Tát',
     sanskrit: 'Ārya Tārā (Ngôi Sao Cứu Độ / Mẹ Cứu Vớt)',
-    image: '/images/buddhas/duc-tara-da-la-bo-tat.jpg',
+    image: '/images/buddhas/duc-tara-da-la-bo-tat.png',
     realm: 'Cõi Tịnh Thổ Hoa Sen Mật Tông',
     symbol: 'Bông sen xanh Utpala hé nở trên tay, một chân duỗi sẵn sàng đứng dậy cứu độ, dung mạo từ ái tuyệt mỹ',
     tieuSu: {
@@ -616,3 +616,4 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
     },
   },
 ];
+

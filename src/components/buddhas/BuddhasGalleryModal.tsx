@@ -118,13 +118,13 @@ export function BuddhasGalleryModal({
             </div>
 
             {/* Instruction banner */}
-            <div className="px-4 py-2 bg-gradient-to-r from-[#FFFDF5] to-[#FFF9E6] border-b border-[#F2E5C7] flex items-center justify-between text-xs text-[#7D6442] shrink-0">
-              <span className="flex items-center gap-1.5 font-medium">
-                <LotusMinimalIcon className="w-4 h-4 text-[#8C5500]" />
-                Nhấn vào hình để xem: <strong>Tiểu Sử • Đại Nguyện • Thần Chú</strong>
+            <div className="px-3.5 py-2 bg-gradient-to-r from-[#FFFDF5] to-[#FFF9E6] border-b border-[#F2E5C7] flex items-center justify-between text-[11px] sm:text-xs text-[#7D6442] shrink-0">
+              <span className="flex items-center gap-1.5 font-medium truncate">
+                <LotusMinimalIcon className="w-3.5 h-3.5 text-[#8C5500] shrink-0" />
+                <span>Tiểu Sử • Đại Nguyện • Thần Chú</span>
               </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FFF4D0] text-[#8C5500] font-bold">
-                18 Vị Bổn Tôn
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FFF4D0] text-[#8C5500] font-bold shrink-0">
+                18 Bổn Tôn
               </span>
             </div>
 
@@ -148,8 +148,8 @@ export function BuddhasGalleryModal({
                     </div>
 
                     {/* Bottom Solid Dark Bar with Centered Name (100% matching screenshot) */}
-                    <div className="bg-[#241B0B] py-2.5 px-2 text-center flex items-center justify-center min-h-[44px]">
-                      <h4 className="font-heading font-serif text-xs sm:text-[13px] font-bold text-white tracking-wide leading-tight line-clamp-1 group-hover:text-[#FFE79A] transition-colors">
+                    <div className="bg-[#241B0B] py-2 px-1.5 text-center flex items-center justify-center min-h-[48px]">
+                      <h4 className="font-heading font-serif text-[11px] sm:text-xs font-bold text-white tracking-wide leading-tight group-hover:text-[#FFE79A] transition-colors">
                         {buddha.name}
                       </h4>
                     </div>
@@ -418,3 +418,4 @@ export function BuddhasGalleryModal({
   );
 }
 export default BuddhasGalleryModal;
+
