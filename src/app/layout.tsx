@@ -41,7 +41,7 @@ export const metadata: Metadata = {
       'Không gian thanh tịnh để thực hành chánh niệm, thọ trì kinh điển, tra cứu lịch trai giới và tích lũy công đức mỗi ngày.',
     type: 'website',
     locale: 'vi_VN',
-    url: 'http://localhost:3000',
+    url: process.env.APP_URL || 'https://giacngo.vercel.app',
     siteName: 'DHARMA',
     images: [{ url: '/dharma-logo.png?v=2', width: 800, height: 800, alt: 'Dharma Logo' }],
   },
