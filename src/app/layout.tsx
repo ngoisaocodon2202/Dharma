@@ -8,7 +8,6 @@ import { Footer } from '@/components/layout/Footer';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { GlobalAudioPlayer } from '@/components/audio/GlobalAudioPlayer';
 import { AuthModal } from '@/components/auth/AuthModal';
-import FloatingDharmaAI from '@/components/ai/FloatingDharmaAI';
 import { MindfulnessProvider } from '@/components/mindfulness/MindfulnessContext';
 import { MindfulnessModal } from '@/components/mindfulness/MindfulnessModal';
 
@@ -93,7 +92,6 @@ export default function RootLayout({
                 <Footer />
                 <MobileBottomNav />
                 <GlobalAudioPlayer />
-                <FloatingDharmaAI />
                 <AuthModal />
                 <MindfulnessModal />
               </MindfulnessProvider>

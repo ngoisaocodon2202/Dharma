@@ -187,12 +187,6 @@ const DESKTOP_NAV_ITEMS: NavGroup[] = [
       },
     ],
   },
-  {
-    id: 'ai-phat-phap',
-    name: 'AI Phật Pháp',
-    href: '/hoi-dap-ai',
-    icon: Sparkles,
-  },
 ];
 
 // Flat list grouped for Mobile Drawer
@@ -202,7 +196,6 @@ const MOBILE_SECTIONS = [
     items: [
       { name: 'Trang chủ', href: '/', icon: BuddhaBodhiIcon, description: '' },
       { name: 'Lịch sử Phật giáo', href: '/lich-su-phat-giao', icon: Scroll, description: '', badge: '2.600 năm' },
-      { name: 'AI Hỏi Đáp Phật Pháp', href: '/hoi-dap-ai', icon: Sparkles, description: '', badge: '24/7' },
     ],
   },
   {
