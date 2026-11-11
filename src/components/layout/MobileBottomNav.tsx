@@ -39,8 +39,8 @@ export function MobileBottomNav() {
       className="fixed bottom-3 inset-x-0 z-40 lg:hidden px-3.5 pointer-events-none select-none"
     >
       <div className="w-full max-w-md mx-auto pointer-events-auto">
-        {/* React Native Super-App Floating Tab Bar in Radiant Buddhist Gold */}
-        <div className="relative rounded-[28px] bg-[#1E1609]/95 backdrop-blur-2xl border border-[#F5C542]/35 shadow-[0_14px_44px_rgba(0,0,0,0.75),0_0_20px_rgba(245,197,66,0.12)] px-2 py-1.5 flex items-center justify-between gap-1">
+        {/* React Native Super-App Floating Tab Bar in Clean White & Pale Sacred Gold */}
+        <div className="relative rounded-[28px] bg-white/95 backdrop-blur-2xl border border-[#ECD9A8] shadow-[0_12px_36px_rgba(180,140,50,0.16),0_2px_8px_rgba(0,0,0,0.04)] px-2 py-1.5 flex items-center justify-between gap-1">
           {BOTTOM_NAV_ITEMS.map((item) => {
             const isActive =
               item.href === '/'
@@ -58,10 +58,10 @@ export function MobileBottomNav() {
                 >
                   <div
                     className={cn(
-                      'w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-lg border',
+                      'w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-md border',
                       isActive
-                        ? 'bg-gradient-to-br from-[#FFE07D] via-[#F5C542] to-[#D49B16] text-[#1A1305] border-[#FFF3B0] shadow-[0_4px_20px_rgba(245,197,66,0.55)] scale-105'
-                        : 'bg-gradient-to-br from-[#3A2B0F] to-[#251B09] text-[#F5C542] border-[#F5C542]/45 hover:border-[#FFD966]'
+                        ? 'bg-gradient-to-br from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] border-[#FFF8CC] shadow-[0_4px_18px_rgba(240,180,30,0.4)] scale-105'
+                        : 'bg-gradient-to-br from-[#FFFDF7] to-[#FFF5D6] text-[#A8720B] border-[#ECD9A8] hover:border-[#E5C158]'
                     )}
                   >
                     <Icon className="w-6 h-6" />
@@ -69,7 +69,7 @@ export function MobileBottomNav() {
                   <span
                     className={cn(
                       'text-[10px] mt-1 whitespace-nowrap leading-tight tracking-tight transition-colors',
-                      isActive ? 'font-bold text-[#FFD966]' : 'font-medium text-[#D6C394]'
+                      isActive ? 'font-bold text-[#A8720B]' : 'font-medium text-[#7D6442]'
                     )}
                   >
                     {item.name}
@@ -86,26 +86,26 @@ export function MobileBottomNav() {
                 className={cn(
                   'flex-1 flex flex-col items-center justify-center py-1.5 px-1 rounded-2xl transition-all duration-200 active:scale-95',
                   isActive
-                    ? 'bg-[#F5C542]/15 text-[#FFD966]'
-                    : 'text-[#A89874] hover:text-[#F3E3B2]'
+                    ? 'bg-[#FFF4D0] text-[#A8720B]'
+                    : 'text-[#826A4A] hover:text-[#3D2505]'
                 )}
               >
                 <div className="relative">
                   <Icon
                     className={cn(
                       'w-5 h-5 transition-transform duration-200',
-                      isActive ? 'scale-105 text-[#FFD966]' : 'text-[#A89874]'
+                      isActive ? 'scale-105 text-[#A8720B]' : 'text-[#826A4A]'
                     )}
                   />
                   {isActive && (
-                    <span className="absolute -top-1 -right-1.5 w-1.5 h-1.5 rounded-full bg-[#FFD966] shadow-[0_0_6px_#FFD966]" />
+                    <span className="absolute -top-1 -right-1.5 w-1.5 h-1.5 rounded-full bg-[#E5A716] shadow-[0_0_6px_#E5A716]" />
                   )}
                 </div>
 
                 <span
                   className={cn(
                     'text-[10px] mt-1 whitespace-nowrap leading-tight tracking-tight transition-colors',
-                    isActive ? 'font-bold text-[#FFD966]' : 'font-normal text-[#A89874]'
+                    isActive ? 'font-bold text-[#A8720B]' : 'font-normal text-[#826A4A]'
                   )}
                 >
                   {item.name}

@@ -162,34 +162,34 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative w-full max-w-md max-h-[88vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-[#2A1F0B] via-[#1F1708] to-[#161005] text-[#FFFDF7] rounded-3xl border border-[#F5C542]/45 shadow-[0_12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
+      <div className="relative w-full max-w-md max-h-[88vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-white via-[#FFFDF7] to-[#FFF9EA] text-[#2E1E0F] rounded-3xl border border-[#ECD9A8] shadow-[0_12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
         {/* React Native Drag Handle */}
         <div className="pt-2.5 pb-1 flex justify-center sm:hidden">
           <div className="w-10 h-1 rounded-full bg-[#F5C542]/35" />
         </div>
 
         {/* Header */}
-        <div className="relative px-5 pt-4 pb-3.5 flex items-center justify-between gap-2 border-b border-[#F5C542]/20">
+        <div className="relative px-5 pt-4 pb-3.5 flex items-center justify-between gap-2 border-b border-[#EEDBBA]">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FFE07D] to-[#E5A91C] flex items-center justify-center text-[#1A1305] shadow-md shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FFE07D] to-[#E5A91C] flex items-center justify-center text-[#3D2505] shadow-md shrink-0">
               <IncenseAltarIcon className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-heading font-serif font-bold text-sm sm:text-base text-[#FFD966] whitespace-nowrap truncate">
+              <h3 className="font-heading font-serif font-bold text-sm sm:text-base text-[#8C5500] whitespace-nowrap truncate">
                 Dâng Hương Cúng Dường Tam Bảo
               </h3>
-              <p className="text-[11px] text-[#D6C394] whitespace-nowrap truncate">
+              <p className="text-[11px] text-[#6A5234] whitespace-nowrap truncate">
                 Ngũ phần Pháp thân hương • Nhất tâm kính lễ
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#C7B68B] hover:text-[#FFD966] hover:bg-[#F5C542]/10 transition-colors shrink-0 cursor-pointer"
+            className="p-1.5 rounded-xl text-[#7D6442] hover:text-[#8C5500] hover:bg-[#FFF9EA] transition-colors shrink-0 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -201,12 +201,12 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
           <div className="relative w-36 h-36 mb-4 flex items-center justify-center">
             <div
               className={cn(
-                'absolute inset-0 rounded-full bg-[#F5C542]/25 blur-xl transition-all duration-1000',
+                'absolute inset-0 rounded-full bg-[#FFF4D0] blur-xl transition-all duration-1000',
                 isLit ? 'scale-125 opacity-100 animate-pulse' : 'scale-100 opacity-45'
               )}
             />
 
-            <div className="relative w-28 h-28 rounded-full overflow-hidden border-2 border-[#FFD966]/60 p-1 bg-gradient-to-b from-[#F5C542]/30 to-[#241B0B] shadow-[0_0_28px_rgba(245,197,66,0.35)]">
+            <div className="relative w-28 h-28 rounded-full overflow-hidden border-2 border-[#E5C158] p-1 bg-gradient-to-b from-[#FFFDF2] to-[#FFE79A] shadow-[0_0_28px_rgba(245,197,66,0.25)]">
               <img
                 src="/images/golden_buddha.jpg"
                 alt="Đức Phật Bổn Sư"
@@ -215,10 +215,10 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
             </div>
           </div>
 
-          <div className="text-xs text-[#FFD966] font-bold tracking-wide mb-1">
+          <div className="text-xs text-[#8C5500] font-bold tracking-wide mb-1">
             Nam Mô Bổn Sư Thích Ca Mâu Ni Phật
           </div>
-          <p className="text-[11px] text-[#D6C394] max-w-xs leading-relaxed mb-5 font-serif italic">
+          <p className="text-[11px] text-[#6A5234] max-w-xs leading-relaxed mb-5 font-serif italic">
             &ldquo;Nguyện đem lòng thành kính, gửi theo đám mây hương, phảng phất khắp mười phương, cúng dường ngôi Tam Bảo.&rdquo;
           </p>
 
@@ -258,8 +258,8 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
 
             {/* Golden Bronze Incense Burner Vessel */}
             <div className="relative w-36 h-14 bg-gradient-to-r from-[#B8871D] via-[#F5C542] to-[#B8871D] rounded-b-3xl rounded-t-lg border-t-2 border-[#FFF0A8] shadow-lg flex items-center justify-center">
-              <div className="text-[10px] font-heading font-extrabold uppercase tracking-widest text-[#1A1305] flex items-center gap-1.5 whitespace-nowrap">
-                <DharmaWheelIcon className="w-3.5 h-3.5 text-[#1A1305] shrink-0" />
+              <div className="text-[10px] font-heading font-extrabold uppercase tracking-widest text-[#3D2505] flex items-center gap-1.5 whitespace-nowrap">
+                <DharmaWheelIcon className="w-3.5 h-3.5 text-[#3D2505] shrink-0" />
                 <span>Hương Vân Cái</span>
               </div>
             </div>
@@ -269,15 +269,15 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
           {!isLit ? (
             <button
               onClick={handleLightIncense}
-              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#FFE07D] via-[#F5C542] to-[#E5A91C] hover:brightness-105 text-[#1A1305] font-bold text-xs sm:text-sm tracking-wide shadow-[0_6px_24px_rgba(245,197,66,0.4)] active:scale-98 transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+              className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#FFE07D] via-[#F5C542] to-[#E5A91C] hover:brightness-105 text-[#3D2505] font-bold text-xs sm:text-sm tracking-wide shadow-[0_6px_24px_rgba(245,197,66,0.4)] active:scale-98 transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
             >
-              <IncenseAltarIcon className="w-4 h-4 text-[#1A1305] shrink-0" />
+              <IncenseAltarIcon className="w-4 h-4 text-[#3D2505] shrink-0" />
               <span className="whitespace-nowrap truncate">Dâng Nén Tâm Hương &amp; Thỉnh Chuông</span>
             </button>
           ) : (
             <div className="w-full space-y-3">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F5C542]/20 text-[#FFD966] text-xs font-semibold border border-[#F5C542]/45 whitespace-nowrap">
-                <LotusMinimalIcon className="w-3.5 h-3.5 text-[#FFD966] shrink-0" />
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#FFF4D0] text-[#8C5500] text-xs font-semibold border border-[#ECD9A8] whitespace-nowrap">
+                <LotusMinimalIcon className="w-3.5 h-3.5 text-[#8C5500] shrink-0" />
                 <span>Giới hương • Định hương • Tuệ hương</span>
               </div>
 
@@ -287,21 +287,21 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
                   onChange={(e) => setPrayerText(e.target.value)}
                   placeholder="Khởi tâm phát nguyện hoặc ghi lời hồi hướng công đức vào Sổ Công Đức..."
                   rows={2}
-                  className="w-full p-3 rounded-xl bg-[#161005]/90 border border-[#F5C542]/35 text-[#FFFDF7] placeholder-[#9E8C66] text-xs focus:outline-none focus:border-[#FFD966]"
+                  className="w-full p-3 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] placeholder-[#9E8C66] text-xs focus:outline-none focus:border-[#E5C158]"
                 />
                 <button
                   type="submit"
                   disabled={!prayerText.trim() || isSubmitted}
-                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#FFE07D] via-[#F5C542] to-[#E5A91C] disabled:opacity-40 text-[#1A1305] font-bold text-xs transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#FFE07D] via-[#F5C542] to-[#E5A91C] disabled:opacity-40 text-[#3D2505] font-bold text-xs transition-all flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
                 >
                   {isSubmitted ? (
                     <>
-                      <Check className="w-4 h-4 text-[#1A1305] shrink-0" />
+                      <Check className="w-4 h-4 text-[#3D2505] shrink-0" />
                       <span>Đã ghi nhận vào Sổ Công Đức Dharma!</span>
                     </>
                   ) : (
                     <>
-                      <LotusMinimalIcon className="w-4 h-4 text-[#1A1305] shrink-0" />
+                      <LotusMinimalIcon className="w-4 h-4 text-[#3D2505] shrink-0" />
                       <span>Phát Nguyện &amp; Lưu Sổ Công Đức</span>
                     </>
                   )}
@@ -311,9 +311,9 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
           )}
 
           {/* Counter info */}
-          <div className="mt-4 pt-3 border-t border-[#F5C542]/20 w-full flex items-center justify-between gap-2 text-[11px] text-[#C7B68B] whitespace-nowrap">
+          <div className="mt-4 pt-3 border-t border-[#EEDBBA] w-full flex items-center justify-between gap-2 text-[11px] text-[#7D6442] whitespace-nowrap">
             <span className="truncate">Tổng số lễ dâng tâm hương</span>
-            <span className="font-mono font-bold text-[#FFD966] shrink-0">
+            <span className="font-mono font-bold text-[#8C5500] shrink-0">
               {totalOffered.toLocaleString('vi-VN')} lễ
             </span>
           </div>
@@ -414,41 +414,41 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative w-full max-w-md max-h-[88vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-[#2A1F0B] via-[#1F1708] to-[#161005] text-[#FFFDF7] rounded-3xl border border-[#F5C542]/45 shadow-[0_12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
+      <div className="relative w-full max-w-md max-h-[88vh] overflow-y-auto no-scrollbar bg-gradient-to-b from-white via-[#FFFDF7] to-[#FFF9EA] text-[#2E1E0F] rounded-3xl border border-[#ECD9A8] shadow-[0_12px_50px_rgba(0,0,0,0.85)] animate-scale-in">
         {/* React Native Drag Handle */}
         <div className="pt-2.5 pb-1 flex justify-center sm:hidden">
           <div className="w-10 h-1 rounded-full bg-[#F5C542]/35" />
         </div>
 
         {/* Header */}
-        <div className="px-5 pt-4 pb-3.5 flex items-center justify-between gap-2 border-b border-[#F5C542]/20">
+        <div className="px-5 pt-4 pb-3.5 flex items-center justify-between gap-2 border-b border-[#EEDBBA]">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FFE07D] to-[#E5A91C] flex items-center justify-center text-[#1A1305] shadow-md shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FFE07D] to-[#E5A91C] flex items-center justify-center text-[#3D2505] shadow-md shrink-0">
               <MalaBeadsMinimalIcon className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-heading font-serif font-bold text-sm sm:text-base text-[#FFD966] whitespace-nowrap truncate">
+              <h3 className="font-heading font-serif font-bold text-sm sm:text-base text-[#8C5500] whitespace-nowrap truncate">
                 Tràng Hạt Bồ Đề 108 Hạt
               </h3>
-              <p className="text-[11px] text-[#D6C394] whitespace-nowrap truncate">
+              <p className="text-[11px] text-[#6A5234] whitespace-nowrap truncate">
                 Nhất tâm trì niệm • Diệt trừ 108 phiền não
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-[#C7B68B] hover:text-[#FFD966] hover:bg-[#F5C542]/10 transition-colors shrink-0 cursor-pointer"
+            className="p-1.5 rounded-xl text-[#7D6442] hover:text-[#8C5500] hover:bg-[#FFF9EA] transition-colors shrink-0 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Chant Selector Pills */}
-        <div className="px-4 py-2.5 overflow-x-auto no-scrollbar flex gap-2 bg-[#140F05]/60 border-b border-[#F5C542]/15">
+        <div className="px-4 py-2.5 overflow-x-auto no-scrollbar flex gap-2 bg-[#FFF9EA] border-b border-[#F2E5C7]">
           {CHANT_OPTIONS.map((opt) => (
             <button
               key={opt.id}
@@ -456,8 +456,8 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
               className={cn(
                 'px-3 py-1.5 rounded-xl text-[11px] whitespace-nowrap font-semibold transition-all cursor-pointer',
                 selectedChant.id === opt.id
-                  ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold shadow-sm'
-                  : 'bg-[#251C0B] text-[#D6C394] hover:text-[#FFD966] border border-[#F5C542]/20'
+                  ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold shadow-sm'
+                  : 'bg-[#FFFDF8] text-[#6A5234] hover:text-[#8C5500] border border-[#EEDBBA]'
               )}
             >
               {opt.short}
@@ -467,10 +467,10 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
 
         {/* Main Interactive Bead Area */}
         <div className="p-5 sm:p-6 flex flex-col items-center text-center select-none">
-          <div className="text-[#F5C542] text-[10px] font-bold uppercase tracking-widest mb-1">
+          <div className="text-[#8C5500] text-[10px] font-bold uppercase tracking-widest mb-1">
             Pháp Âm Trì Niệm
           </div>
-          <div className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFFDF7] min-h-[44px] flex items-center justify-center max-w-xs mb-2">
+          <div className="font-heading font-serif font-bold text-base sm:text-lg text-[#2E1E0F] min-h-[44px] flex items-center justify-center max-w-xs mb-2">
             {selectedChant.name}
           </div>
 
@@ -481,22 +481,22 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
             chantLabel={selectedChant.name}
           />
 
-          <div className="text-xs text-[#FFD966] font-medium flex items-center gap-1.5 mt-3">
-            <Volume2 className="w-3.5 h-3.5 text-[#F5C542]" />
+          <div className="text-xs text-[#8C5500] font-medium flex items-center gap-1.5 mt-3">
+            <Volume2 className="w-3.5 h-3.5 text-[#8C5500]" />
             <span>Chạm vào tràng hạt để lần từng hạt &amp; định tâm</span>
           </div>
 
           {/* Stats Bar */}
-          <div className="grid grid-cols-2 gap-3 w-full mt-5 pt-4 border-t border-[#F5C542]/20 text-xs">
-            <div className="p-3 rounded-2xl bg-[#251C0B] border border-[#F5C542]/20">
-              <div className="text-[#C7B68B] text-[10px]">Số chuỗi viên mãn hôm nay</div>
-              <div className="font-bold text-[#FFD966] text-sm mt-0.5">
+          <div className="grid grid-cols-2 gap-3 w-full mt-5 pt-4 border-t border-[#EEDBBA] text-xs">
+            <div className="p-3 rounded-2xl bg-[#FFFDF8] border border-[#EEDBBA]">
+              <div className="text-[#7D6442] text-[10px]">Số chuỗi viên mãn hôm nay</div>
+              <div className="font-bold text-[#8C5500] text-sm mt-0.5">
                 {roundCount} chuỗi (108 hạt)
               </div>
             </div>
-            <div className="p-3 rounded-2xl bg-[#251C0B] border border-[#F5C542]/20">
-              <div className="text-[#C7B68B] text-[10px]">Tổng công đức trì niệm</div>
-              <div className="font-bold text-[#FFD966] text-sm mt-0.5 font-mono">
+            <div className="p-3 rounded-2xl bg-[#FFFDF8] border border-[#EEDBBA]">
+              <div className="text-[#7D6442] text-[10px]">Tổng công đức trì niệm</div>
+              <div className="font-bold text-[#8C5500] text-sm mt-0.5 font-mono">
                 {totalCount.toLocaleString('vi-VN')} biến
               </div>
             </div>

@@ -209,7 +209,7 @@ export default function AccountProfilePage() {
       : 'Chồi Non Tỉnh Thức';
 
   return (
-    <div className="min-h-screen bg-[#181207] text-[#FFFDF7] selection:bg-[#F5C542]/30 selection:text-[#FFD966]">
+    <div className="min-h-screen bg-white text-[#2E1E0F] selection:bg-[#F5C542]/30 selection:text-[#8C5500]">
       {/* ========================================================================= */}
       {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP PROFILE                */}
       {/* ========================================================================= */}
@@ -217,7 +217,7 @@ export default function AccountProfilePage() {
         <div className="max-w-md sm:max-w-lg mx-auto px-4 sm:px-5 pt-2 pb-32 space-y-5">
           {/* 1. THẺ CƯ SĨ HOÀNG KIM (DIGITAL GOLDEN LAYPERSON ID CARD) */}
           <section aria-label="Thẻ Cư Sĩ Dharma" className="relative text-center pt-1">
-            <div className="rounded-3xl bg-gradient-to-br from-[#241B0B] via-[#2E220E] to-[#181207] border border-[#F5C542]/45 shadow-2xl overflow-hidden">
+            <div className="rounded-3xl bg-gradient-to-br from-[#FFFDF2] via-[#FFF9E6] to-[#FFF4D1] border border-[#ECD9A8] shadow-2xl overflow-hidden">
               {/* Header Banner Image */}
               <div
                 className="w-full h-36 relative bg-cover bg-center"
@@ -226,7 +226,7 @@ export default function AccountProfilePage() {
                     "linear-gradient(to bottom, rgba(24, 18, 7, 0.25) 0%, rgba(36, 27, 11, 0.95) 100%), url('/images/golden_buddha_altar.jpg')",
                 }}
               >
-                <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#181207]/85 backdrop-blur-md border border-[#F5C542]/40 text-[10px] font-bold uppercase tracking-widest text-[#FFD966]">
+                <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white backdrop-blur-md border border-[#ECD9A8] text-[10px] font-bold uppercase tracking-widest text-[#8C5500]">
                   THẺ CƯ SĨ TAM BẢO • DHARMA
                 </div>
 
@@ -234,7 +234,7 @@ export default function AccountProfilePage() {
                   <button
                     type="button"
                     onClick={() => setIsEditProfileOpen(true)}
-                    className="w-8 h-8 rounded-xl bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/40 text-[#FFD966] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+                    className="w-8 h-8 rounded-xl bg-white backdrop-blur-md border border-[#ECD9A8] text-[#8C5500] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
                     title="Chỉnh sửa Thẻ Cư Sĩ"
                   >
                     <Edit3 className="w-4 h-4" />
@@ -242,7 +242,7 @@ export default function AccountProfilePage() {
                   <button
                     type="button"
                     onClick={() => setIsSettingsOpen(true)}
-                    className="w-8 h-8 rounded-xl bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/40 text-[#FFD966] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+                    className="w-8 h-8 rounded-xl bg-white backdrop-blur-md border border-[#ECD9A8] text-[#8C5500] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
                     title="Cài đặt"
                   >
                     <Settings className="w-4 h-4" />
@@ -253,7 +253,7 @@ export default function AccountProfilePage() {
               {/* Overlapping Dharma Wheel Seal Medallion */}
               <div className="px-5 pb-5 -mt-12 relative z-10 space-y-3">
                 <div className="relative inline-block">
-                  <div className="w-24 h-24 rounded-3xl border-4 border-[#181207] bg-[#181207] shadow-2xl overflow-hidden flex items-center justify-center mx-auto ring-2 ring-[#F5C542]/60">
+                  <div className="w-24 h-24 rounded-3xl border-4 border-white bg-white shadow-2xl overflow-hidden flex items-center justify-center mx-auto ring-2 ring-[#F5C542]/60">
                     <img
                       src="/dharma-logo.png"
                       alt="Dharma Logo"
@@ -263,41 +263,41 @@ export default function AccountProfilePage() {
                   <button
                     type="button"
                     onClick={() => setIsEditProfileOpen(true)}
-                    className="absolute -bottom-1 -right-1 w-7 h-7 rounded-xl bg-[#FFD966] text-[#181207] border border-[#181207] shadow-md flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
+                    className="absolute -bottom-1 -right-1 w-7 h-7 rounded-xl bg-[#FFD966] text-[#3D2505] border border-[#ECD9A8] shadow-md flex items-center justify-center active:scale-90 transition-transform cursor-pointer"
                   >
                     <Camera className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C5500] block">
                     Pháp Danh Cư Sĩ
                   </span>
-                  <h2 className="font-heading font-serif font-bold text-xl text-[#FFFDF7]">
+                  <h2 className="font-heading font-serif font-bold text-xl text-[#2E1E0F]">
                     {dharmaName}
                   </h2>
-                  <p className="text-[11px] text-[#F3E3B2] italic font-serif mt-1 max-w-xs mx-auto leading-relaxed">
+                  <p className="text-[11px] text-[#5A4329] italic font-serif mt-1 max-w-xs mx-auto leading-relaxed">
                     “{userMotto}”
                   </p>
                 </div>
 
                 {/* Refuge Details Mini Box — Full Text Without Clipping */}
                 <div className="grid grid-cols-3 gap-1.5 pt-1 text-left">
-                  <div className="p-2 rounded-xl bg-[#181207]/90 border border-[#F5C542]/20 min-w-0">
-                    <span className="text-[9px] uppercase text-[#C7B68B] block">Ngày Quy Y</span>
-                    <span className="text-[10.5px] font-mono font-bold text-[#FFFDF7] whitespace-nowrap truncate block mt-0.5">
+                  <div className="p-2 rounded-xl bg-white border border-[#EEDBBA] min-w-0">
+                    <span className="text-[9px] uppercase text-[#7D6442] block">Ngày Quy Y</span>
+                    <span className="text-[10.5px] font-mono font-bold text-[#2E1E0F] whitespace-nowrap truncate block mt-0.5">
                       {refugeDate}
                     </span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#181207]/90 border border-[#F5C542]/20 min-w-0">
-                    <span className="text-[9px] uppercase text-[#C7B68B] block">Đạo Tràng</span>
-                    <span className="text-[10.5px] font-bold text-[#FFFDF7] whitespace-nowrap truncate block mt-0.5">
+                  <div className="p-2 rounded-xl bg-white border border-[#EEDBBA] min-w-0">
+                    <span className="text-[9px] uppercase text-[#7D6442] block">Đạo Tràng</span>
+                    <span className="text-[10.5px] font-bold text-[#2E1E0F] whitespace-nowrap truncate block mt-0.5">
                       {refugeTemple}
                     </span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#181207]/90 border border-[#F5C542]/20 min-w-0">
-                    <span className="text-[9px] uppercase text-[#C7B68B] block">Truyền Giới</span>
-                    <span className="text-[10.5px] font-bold text-[#FFD966] whitespace-nowrap truncate block mt-0.5">
+                  <div className="p-2 rounded-xl bg-white border border-[#EEDBBA] min-w-0">
+                    <span className="text-[9px] uppercase text-[#7D6442] block">Truyền Giới</span>
+                    <span className="text-[10.5px] font-bold text-[#8C5500] whitespace-nowrap truncate block mt-0.5">
                       {masterName}
                     </span>
                   </div>
@@ -309,55 +309,55 @@ export default function AccountProfilePage() {
           {/* 2. CÂY BỒ ĐỀ CÔNG ĐỨC & CHỈ SỐ HÀNH TRÌ */}
           <section
             aria-label="Cây Bồ Đề Công Đức"
-            className="rounded-3xl bg-[#241B0B] border border-[#F5C542]/35 p-4 sm:p-5 space-y-4 shadow-xl"
+            className="rounded-3xl bg-white border border-[#EEDBBA] p-4 sm:p-5 space-y-4 shadow-xl"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#181207] border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] shadow-md">
+                <div className="w-12 h-12 rounded-2xl bg-white border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] shadow-md">
                   <BodhiLeafIcon className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block">
                     {bodhiStageTitle}
                   </span>
                   <div className="flex items-baseline gap-1.5">
-                    <span className="font-mono text-2xl font-black text-[#FFFDF7]">
+                    <span className="font-mono text-2xl font-black text-[#2E1E0F]">
                       {totalMeritPoints}
                     </span>
-                    <span className="text-xs text-[#D6C394]">điểm công đức</span>
+                    <span className="text-xs text-[#6A5234]">điểm công đức</span>
                   </div>
                 </div>
               </div>
 
-              <span className="px-2.5 py-1 rounded-full bg-[#F5C542]/15 border border-[#F5C542]/35 text-[10px] font-mono font-bold text-[#FFD966]">
+              <span className="px-2.5 py-1 rounded-full bg-[#FFF4D0] border border-[#EEDBBA] text-[10px] font-mono font-bold text-[#8C5500]">
                 {meritLedger.length} thời khóa
               </span>
             </div>
 
             {/* 4 Quick Practice Links */}
-            <div className="grid grid-cols-2 gap-2.5 pt-2 border-t border-[#F5C542]/15 text-xs">
+            <div className="grid grid-cols-2 gap-2.5 pt-2 border-t border-[#F2E5C7] text-xs">
               <button
                 type="button"
                 onClick={() => router.push('/thu-vien')}
-                className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 flex items-center justify-between text-left cursor-pointer"
+                className="p-3 rounded-2xl bg-white border border-[#EEDBBA] flex items-center justify-between text-left cursor-pointer"
               >
                 <div className="flex items-center gap-2">
-                  <SutraScrollIcon className="w-4 h-4 text-[#FFD966]" />
-                  <span className="font-bold text-[#FFFDF7]">Kinh Tạng</span>
+                  <SutraScrollIcon className="w-4 h-4 text-[#8C5500]" />
+                  <span className="font-bold text-[#2E1E0F]">Kinh Tạng</span>
                 </div>
-                <ChevronRight className="w-3.5 h-3.5 text-[#FFD966]" />
+                <ChevronRight className="w-3.5 h-3.5 text-[#8C5500]" />
               </button>
 
               <button
                 type="button"
                 onClick={() => router.push('/thuc-hanh')}
-                className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 flex items-center justify-between text-left cursor-pointer"
+                className="p-3 rounded-2xl bg-white border border-[#EEDBBA] flex items-center justify-between text-left cursor-pointer"
               >
                 <div className="flex items-center gap-2">
-                  <MeditatingMonkOutlineIcon className="w-4 h-4 text-[#FFD966]" />
-                  <span className="font-bold text-[#FFFDF7]">Tọa Thiền</span>
+                  <MeditatingMonkOutlineIcon className="w-4 h-4 text-[#8C5500]" />
+                  <span className="font-bold text-[#2E1E0F]">Tọa Thiền</span>
                 </div>
-                <ChevronRight className="w-3.5 h-3.5 text-[#FFD966]" />
+                <ChevronRight className="w-3.5 h-3.5 text-[#8C5500]" />
               </button>
             </div>
           </section>
@@ -365,16 +365,16 @@ export default function AccountProfilePage() {
           {/* 3. BẢNG TỰ KIỂM NGŨ GIỚI TẠI GIA (5 PRECEPTS CHECKLIST) */}
           <section
             aria-label="Bảng tự kiểm Ngũ Giới"
-            className="rounded-3xl bg-[#241B0B] border border-[#F5C542]/35 p-4 sm:p-5 space-y-3.5 shadow-xl"
+            className="rounded-3xl bg-white border border-[#EEDBBA] p-4 sm:p-5 space-y-3.5 shadow-xl"
           >
-            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
+            <div className="flex items-center justify-between pb-2 border-b border-[#EEDBBA]">
               <div className="flex items-center gap-2">
-                <LotusMinimalIcon className="w-4 h-4 text-[#FFD966]" />
-                <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+                <LotusMinimalIcon className="w-4 h-4 text-[#8C5500]" />
+                <h3 className="font-heading font-serif font-bold text-base text-[#8C5500]">
                   Tự Kiểm Ngũ Giới Hôm Nay
                 </h3>
               </div>
-              <span className="text-xs font-mono font-bold text-[#FFFDF7]">
+              <span className="text-xs font-mono font-bold text-[#2E1E0F]">
                 {checkedPrecepts.length}/5 giới
               </span>
             </div>
@@ -389,28 +389,28 @@ export default function AccountProfilePage() {
                     className={cn(
                       'p-3 rounded-2xl border flex items-start gap-3 cursor-pointer transition-all',
                       isChecked
-                        ? 'bg-[#2E220E] border-[#FFD966]'
-                        : 'bg-[#181207] border-[#F5C542]/15'
+                        ? 'bg-[#FFF9EA] border-[#E5C158]'
+                        : 'bg-white border-[#F2E5C7]'
                     )}
                   >
                     <div
                       className={cn(
                         'w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5',
                         isChecked
-                          ? 'bg-[#F5C542] border-[#FFF3B0] text-[#181207]'
-                          : 'bg-[#241B0B] border-[#F5C542]/35 text-transparent'
+                          ? 'bg-[#F5C542] border-[#FFF3B0] text-[#3D2505]'
+                          : 'bg-white border-[#EEDBBA] text-transparent'
                       )}
                     >
                       <Check className="w-3.5 h-3.5 stroke-[3]" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <span className="text-[10px] font-bold uppercase text-[#FFD966] block truncate whitespace-nowrap">
+                      <span className="text-[10px] font-bold uppercase text-[#8C5500] block truncate whitespace-nowrap">
                         {p.number} • {p.pali}
                       </span>
-                      <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] mt-0.5 truncate whitespace-nowrap">
+                      <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#2E1E0F] mt-0.5 truncate whitespace-nowrap">
                         {p.title}
                       </h4>
-                      <p className="text-[11px] text-[#D6C394] mt-0.5 leading-relaxed">
+                      <p className="text-[11px] text-[#6A5234] mt-0.5 leading-relaxed">
                         {p.desc}
                       </p>
                     </div>
@@ -422,7 +422,7 @@ export default function AccountProfilePage() {
             <button
               type="button"
               onClick={handleConfirmPreceptsToday}
-              className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <Check className="w-4 h-4 stroke-[2.5]" />
               <span>Xác Nhận Trì Giới Hôm Nay (+25 Công Đức)</span>
@@ -432,17 +432,17 @@ export default function AccountProfilePage() {
           {/* 4. SỔ CÔNG ĐỨC HỒI HƯỚNG TRỰC TIẾP */}
           <section
             aria-label="Sổ Công Đức Hồi Hướng"
-            className="rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 p-4 sm:p-5 space-y-3 shadow-xl"
+            className="rounded-3xl bg-white border border-[#EEDBBA] p-4 sm:p-5 space-y-3 shadow-xl"
           >
-            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/15">
-              <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+            <div className="flex items-center justify-between pb-2 border-b border-[#F2E5C7]">
+              <h3 className="font-heading font-serif font-bold text-base text-[#8C5500]">
                 Nhật Ký Sổ Công Đức Dharma
               </h3>
-              <span className="text-xs text-[#C7B68B]">{meritLedger.length} mục</span>
+              <span className="text-xs text-[#7D6442]">{meritLedger.length} mục</span>
             </div>
 
             {meritLedger.length === 0 ? (
-              <p className="text-xs text-[#D6C394] py-3 text-center">
+              <p className="text-xs text-[#6A5234] py-3 text-center">
                 Các thời khóa Dâng Hương, Lần Chuỗi, Tọa Thiền, Tụng Kinh và Trì Giới sẽ tự động lưu tại đây.
               </p>
             ) : (
@@ -450,17 +450,17 @@ export default function AccountProfilePage() {
                 {meritLedger.slice(0, 6).map((entry) => (
                   <div
                     key={entry.id}
-                    className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 flex items-center justify-between gap-2"
+                    className="p-3 rounded-2xl bg-white border border-[#EEDBBA] flex items-center justify-between gap-2"
                   >
                     <div className="min-w-0 flex-1">
-                      <h5 className="font-heading font-serif font-bold text-xs text-[#FFFDF7] truncate">
+                      <h5 className="font-heading font-serif font-bold text-xs text-[#2E1E0F] truncate">
                         {entry.title}
                       </h5>
-                      <p className="text-[11px] text-[#C7B68B] truncate mt-0.5">
+                      <p className="text-[11px] text-[#7D6442] truncate mt-0.5">
                         {entry.detail}
                       </p>
                     </div>
-                    <span className="text-[10px] font-mono font-bold text-[#FFD966] shrink-0">
+                    <span className="text-[10px] font-mono font-bold text-[#8C5500] shrink-0">
                       +{entry.meritPoints}
                     </span>
                   </div>
@@ -472,9 +472,9 @@ export default function AccountProfilePage() {
           {/* 5. SỔ TAY CÁ NHÂN & CÀI ĐẶT DHARMA */}
           <section
             aria-label="Tiện ích Cư Sĩ"
-            className="rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 p-4 sm:p-5 space-y-2 shadow-xl"
+            className="rounded-3xl bg-white border border-[#EEDBBA] p-4 sm:p-5 space-y-2 shadow-xl"
           >
-            <h3 className="font-heading font-serif font-bold text-base text-[#FFD966] pb-1">
+            <h3 className="font-heading font-serif font-bold text-base text-[#8C5500] pb-1">
               Sổ Tay Cư Sĩ &amp; Hệ Thống Dharma
             </h3>
 
@@ -484,15 +484,15 @@ export default function AccountProfilePage() {
                 className="flex items-center justify-between py-3 cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <LotusMinimalIcon className="w-4 h-4 text-[#FFD966]" />
+                  <LotusMinimalIcon className="w-4 h-4 text-[#8C5500]" />
                   <div>
-                    <h5 className="font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h5 className="font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Sổ Hiếu Hạnh Gia Tiên
                     </h5>
-                    <p className="text-[11px] text-[#C7B68B]">Ghi nhớ ngày húy kỵ thân quyến</p>
+                    <p className="text-[11px] text-[#7D6442]">Ghi nhớ ngày húy kỵ thân quyến</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#8C5500]" />
               </div>
 
               <div
@@ -500,15 +500,15 @@ export default function AccountProfilePage() {
                 className="flex items-center justify-between py-3 cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <TempleBellIcon className="w-4 h-4 text-[#FFD966]" />
+                  <TempleBellIcon className="w-4 h-4 text-[#8C5500]" />
                   <div>
-                    <h5 className="font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h5 className="font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Chuông Nhắc Thời Khóa
                     </h5>
-                    <p className="text-[11px] text-[#C7B68B]">Hẹn giờ công phu sáng &amp; tĩnh tâm tối</p>
+                    <p className="text-[11px] text-[#7D6442]">Hẹn giờ công phu sáng &amp; tĩnh tâm tối</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#8C5500]" />
               </div>
 
               <div
@@ -516,15 +516,15 @@ export default function AccountProfilePage() {
                 className="flex items-center justify-between py-3 cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <DharmaWheelIcon className="w-4 h-4 text-[#FFD966]" />
+                  <DharmaWheelIcon className="w-4 h-4 text-[#8C5500]" />
                   <div>
-                    <h5 className="font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h5 className="font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Về Nền Tảng Phật Pháp Dharma
                     </h5>
-                    <p className="text-[11px] text-[#C7B68B]">Tầm nhìn số hóa Tam Tạng &amp; Chánh Niệm</p>
+                    <p className="text-[11px] text-[#7D6442]">Tầm nhìn số hóa Tam Tạng &amp; Chánh Niệm</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#8C5500]" />
               </div>
 
               <div
@@ -532,15 +532,15 @@ export default function AccountProfilePage() {
                 className="flex items-center justify-between py-3 cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <BodhiLeafIcon className="w-4 h-4 text-[#FFD966]" />
+                  <BodhiLeafIcon className="w-4 h-4 text-[#8C5500]" />
                   <div>
-                    <h5 className="font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h5 className="font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Ấn Tống Kinh Điển &amp; Hộ Trì Dharma
                     </h5>
-                    <p className="text-[11px] text-[#C7B68B]">Chung tay lan tỏa ánh sáng Phật Pháp</p>
+                    <p className="text-[11px] text-[#7D6442]">Chung tay lan tỏa ánh sáng Phật Pháp</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#8C5500]" />
               </div>
 
               <div
@@ -560,15 +560,15 @@ export default function AccountProfilePage() {
                 className="flex items-center justify-between py-3 cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <Share2 className="w-4 h-4 text-[#FFD966]" />
+                  <Share2 className="w-4 h-4 text-[#8C5500]" />
                   <div>
-                    <h5 className="font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h5 className="font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Chia Sẻ Pháp Bảo Dharma
                     </h5>
-                    <p className="text-[11px] text-[#C7B68B]">Gieo duyên lành đến đạo hữu &amp; người thân</p>
+                    <p className="text-[11px] text-[#7D6442]">Gieo duyên lành đến đạo hữu &amp; người thân</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#8C5500]" />
               </div>
             </div>
           </section>
@@ -615,18 +615,18 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsEditProfileOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
             <div className="w-12 h-1.5 rounded-full bg-[#F5C542]/40 mx-auto mb-1 sm:hidden" />
-            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
-              <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+            <div className="flex items-center justify-between pb-2 border-b border-[#EEDBBA]">
+              <h3 className="font-heading font-serif font-bold text-base text-[#8C5500]">
                 Cập Nhật Thẻ Cư Sĩ Dharma
               </h3>
               <button
                 type="button"
                 onClick={() => setIsEditProfileOpen(false)}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -634,55 +634,55 @@ export default function AccountProfilePage() {
 
             <form onSubmit={handleSaveProfile} className="space-y-3 text-xs">
               <div>
-                <label className="text-[#F3E3B2] block mb-1 font-medium">Pháp Danh *</label>
+                <label className="text-[#5A4329] block mb-1 font-medium">Pháp Danh *</label>
                 <input
                   type="text"
                   required
                   value={dharmaName}
                   onChange={(e) => setDharmaName(e.target.value)}
                   placeholder="Ví dụ: Tâm An, Minh Giác, Diệu Hiền..."
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:border-[#FFD966] focus:outline-hidden"
+                  className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:border-[#E5C158] focus:outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="text-[#F3E3B2] block mb-1 font-medium">Thế Danh (Họ tên)</label>
+                <label className="text-[#5A4329] block mb-1 font-medium">Thế Danh (Họ tên)</label>
                 <input
                   type="text"
                   value={realName}
                   onChange={(e) => setRealName(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:border-[#FFD966] focus:outline-hidden"
+                  className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:border-[#E5C158] focus:outline-hidden"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[#F3E3B2] block mb-1 font-medium">Chùa Quy Y</label>
+                  <label className="text-[#5A4329] block mb-1 font-medium">Chùa Quy Y</label>
                   <input
                     type="text"
                     value={refugeTemple}
                     onChange={(e) => setRefugeTemple(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F]"
                   />
                 </div>
                 <div>
-                  <label className="text-[#F3E3B2] block mb-1 font-medium">Ngày Quy Y</label>
+                  <label className="text-[#5A4329] block mb-1 font-medium">Ngày Quy Y</label>
                   <input
                     type="date"
                     value={refugeDate}
                     onChange={(e) => setRefugeDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[#F3E3B2] block mb-1 font-medium">Tâm Nguyện Hành Trì</label>
+                <label className="text-[#5A4329] block mb-1 font-medium">Tâm Nguyện Hành Trì</label>
                 <input
                   type="text"
                   value={userMotto}
                   onChange={(e) => setUserMotto(e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:border-[#FFD966] focus:outline-hidden"
+                  className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:border-[#E5C158] focus:outline-hidden"
                 />
               </div>
 
@@ -690,13 +690,13 @@ export default function AccountProfilePage() {
                 <button
                   type="button"
                   onClick={() => setIsEditProfileOpen(false)}
-                  className="flex-1 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/25 text-[#D6C394] font-bold cursor-pointer"
+                  className="flex-1 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#6A5234] font-bold cursor-pointer"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold shadow-md cursor-pointer"
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold shadow-md cursor-pointer"
                 >
                   Lưu Thẻ Cư Sĩ
                 </button>
@@ -714,10 +714,10 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsAboutDharmaOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-4">
-            <div className="w-16 h-16 mx-auto rounded-2xl border border-[#F5C542]/60 overflow-hidden shadow-lg bg-[#181207]">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-6 text-[#2E1E0F] shadow-2xl text-center space-y-4">
+            <div className="w-16 h-16 mx-auto rounded-2xl border border-[#ECD9A8]/60 overflow-hidden shadow-lg bg-white">
               <img
                 src="/dharma-logo.png"
                 alt="Dharma Logo"
@@ -726,22 +726,22 @@ export default function AccountProfilePage() {
             </div>
 
             <div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+              <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
                 DHARMA — Không Gian Chánh Niệm
               </h3>
-              <p className="text-xs text-[#D6C394] mt-1">
+              <p className="text-xs text-[#6A5234] mt-1">
                 Tam Tạng Pháp Bảo • Thiền Quán • Hồi Hướng Công Đức
               </p>
             </div>
 
-            <p className="text-xs text-[#F3E3B2] leading-relaxed text-left p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20">
+            <p className="text-xs text-[#5A4329] leading-relaxed text-left p-3.5 rounded-2xl bg-white border border-[#EEDBBA]">
               Dharma được kiến tạo độc lập với sứ mệnh kết hợp tinh hoa giáo lý Phật Đà nguyên bản cùng công nghệ hiện đại: từ Thời Khóa 4 Thời Tỉnh Thức, Bộ Hòa Âm Thiền Tự Đa Tầng, Trình Tụng Kinh Cuộn Chữ Tự Động cho đến Bảng Tự Kiểm Ngũ Giới và Sổ Công Đức Hồi Hướng.
             </p>
 
             <button
               type="button"
               onClick={() => setIsAboutDharmaOpen(false)}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold text-xs cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs cursor-pointer"
             >
               Hoan Hỷ Đóng
             </button>
@@ -757,22 +757,22 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsSupportDharmaOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-4">
-            <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966]">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-6 text-[#2E1E0F] shadow-2xl text-center space-y-4">
+            <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500]">
               <LotusMinimalIcon className="w-6 h-6" />
             </div>
 
-            <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+            <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
               Ấn Tống Kinh Điển Số &amp; Hộ Trì Dharma
             </h3>
 
-            <p className="text-xs text-[#F3E3B2] leading-relaxed text-left p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 space-y-2">
+            <p className="text-xs text-[#5A4329] leading-relaxed text-left p-3.5 rounded-2xl bg-white border border-[#EEDBBA] space-y-2">
               <span>
                 “Trong các sự cúng dường, cúng dường Pháp là tối thượng.” Mọi sự phát tâm của quý Cư sĩ đều dành trọn cho việc duy trì máy chủ và số hóa Tam Tạng Kinh Điển miễn phí.
               </span>
-              <span className="block font-bold text-[#FFD966] pt-1 font-mono">
+              <span className="block font-bold text-[#8C5500] pt-1 font-mono">
                 Quỹ Ấn Tống Kinh Điển Số DHARMA<br />
                 Nội dung: Hoan hy ho tri Phat Phap Dharma
               </span>
@@ -785,7 +785,7 @@ export default function AccountProfilePage() {
                 showToast('Nam Mô Công Đức Lâm Bồ Tát Ma Ha Tát!');
                 setIsSupportDharmaOpen(false);
               }}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold text-xs cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs cursor-pointer"
             >
               Tuỳ Hỷ Công Đức
             </button>
@@ -801,17 +801,17 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMemorialBookOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
-              <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-[#EEDBBA]">
+              <h3 className="font-heading font-serif font-bold text-base text-[#8C5500]">
                 Sổ Hiếu Hạnh Gia Tiên
               </h3>
               <button
                 type="button"
                 onClick={() => setIsMemorialBookOpen(false)}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -821,32 +821,32 @@ export default function AccountProfilePage() {
               {memorials.map((m) => (
                 <div
                   key={m.id}
-                  className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 flex items-center justify-between text-xs"
+                  className="p-3 rounded-2xl bg-white border border-[#EEDBBA] flex items-center justify-between text-xs"
                 >
                   <div>
-                    <h5 className="font-bold text-[#FFFDF7]">
+                    <h5 className="font-bold text-[#2E1E0F]">
                       {m.name} ({m.relation})
                     </h5>
-                    <p className="text-[#FFD966] font-mono mt-0.5">{m.lunarDate}</p>
+                    <p className="text-[#8C5500] font-mono mt-0.5">{m.lunarDate}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-2 pt-2 border-t border-[#F5C542]/20 text-xs">
+            <div className="space-y-2 pt-2 border-t border-[#EEDBBA] text-xs">
               <input
                 type="text"
                 placeholder="Họ tên & Pháp danh tiên linh"
                 value={newMemName}
                 onChange={(e) => setNewMemName(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F]"
               />
               <input
                 type="text"
                 placeholder="Ngày húy kỵ Âm lịch (VD: 15/07 Âm lịch)"
                 value={newMemDate}
                 onChange={(e) => setNewMemDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F]"
               />
               <button
                 type="button"
@@ -866,7 +866,7 @@ export default function AccountProfilePage() {
                   playWoodenFishSound(0.5);
                   showToast('Đã lưu ngày tưởng niệm vào Sổ Hiếu Hạnh');
                 }}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold cursor-pointer"
               >
                 + Thêm Ngày Tưởng Niệm
               </button>
@@ -883,34 +883,34 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMeditationScheduleOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
-              <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-[#EEDBBA]">
+              <h3 className="font-heading font-serif font-bold text-base text-[#8C5500]">
                 Chuông Nhắc Thời Khóa Hằng Ngày
               </h3>
               <button
                 type="button"
                 onClick={() => setIsMeditationScheduleOpen(false)}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-2.5 text-xs">
-              <div className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/25 flex items-center justify-between">
+              <div className="p-3.5 rounded-2xl bg-white border border-[#EEDBBA] flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-[#FFFDF7] block">05:30 • Tĩnh Tâm Sớm Mai</span>
-                  <span className="text-[#C7B68B]">Thỉnh 3 tiếng chuông &amp; quán hơi thở</span>
+                  <span className="font-bold text-[#2E1E0F] block">05:30 • Tĩnh Tâm Sớm Mai</span>
+                  <span className="text-[#7D6442]">Thỉnh 3 tiếng chuông &amp; quán hơi thở</span>
                 </div>
                 <span className="text-emerald-400 font-bold">Đang bật</span>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/25 flex items-center justify-between">
+              <div className="p-3.5 rounded-2xl bg-white border border-[#EEDBBA] flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-[#FFFDF7] block">21:00 • Tịnh Độ Đêm Khuya</span>
-                  <span className="text-[#C7B68B]">Tự kiểm Ngũ Giới &amp; Hồi hướng công đức</span>
+                  <span className="font-bold text-[#2E1E0F] block">21:00 • Tịnh Độ Đêm Khuya</span>
+                  <span className="text-[#7D6442]">Tự kiểm Ngũ Giới &amp; Hồi hướng công đức</span>
                 </div>
                 <span className="text-emerald-400 font-bold">Đang bật</span>
               </div>
@@ -923,7 +923,7 @@ export default function AccountProfilePage() {
                 showToast('Đã lưu lịch Chuông Nhắc Thời Khóa Dharma');
                 setIsMeditationScheduleOpen(false);
               }}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold text-xs cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs cursor-pointer"
             >
               Hoàn Tất
             </button>
@@ -939,52 +939,52 @@ export default function AccountProfilePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsSettingsOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-[#F5C542]/20">
-              <h3 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-[#EEDBBA]">
+              <h3 className="font-heading font-serif font-bold text-base text-[#8C5500]">
                 Cài Đặt Hệ Thống Dharma
               </h3>
               <button
                 type="button"
                 onClick={() => setIsSettingsOpen(false)}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-3 text-xs">
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#EEDBBA]">
                 <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-[#FFD966]" />
+                  <Globe className="w-4 h-4 text-[#8C5500]" />
                   <span>Ngôn ngữ hiển thị</span>
                 </div>
                 <LanguageSwitcher compact variant="sanctuary" />
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#EEDBBA]">
                 <div className="flex items-center gap-2">
-                  <TempleBellIcon className="w-4 h-4 text-[#FFD966]" />
+                  <TempleBellIcon className="w-4 h-4 text-[#8C5500]" />
                   <span>Âm thanh pháp khí WebAudio</span>
                 </div>
                 <span className="text-emerald-400 font-bold">Độ trễ 0ms</span>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20">
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-[#EEDBBA]">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#FFD966]" />
+                  <ShieldCheck className="w-4 h-4 text-[#8C5500]" />
                   <span>Sổ Công Đức &amp; Hồ Sơ</span>
                 </div>
-                <span className="text-[#FFD966] font-semibold">Đã đồng bộ</span>
+                <span className="text-[#8C5500] font-semibold">Đã đồng bộ</span>
               </div>
             </div>
 
             <button
               type="button"
               onClick={() => setIsSettingsOpen(false)}
-              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold text-xs cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs cursor-pointer"
             >
               Đóng
             </button>
@@ -995,8 +995,8 @@ export default function AccountProfilePage() {
       {/* FLOATING TOAST */}
       {toastMessage && (
         <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#241B0B]/95 border border-[#F5C542] text-center shadow-xl backdrop-blur-md">
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFD966]">
+          <div className="px-4 py-2.5 rounded-2xl bg-white/95 border border-[#ECD9A8] text-center shadow-xl backdrop-blur-md">
+            <p className="font-heading text-xs sm:text-sm font-bold text-[#8C5500]">
               {toastMessage}
             </p>
           </div>

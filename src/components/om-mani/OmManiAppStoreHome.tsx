@@ -530,9 +530,9 @@ export function OmManiAppStoreHome() {
       : FEATURED_ARTICLES.filter((a) => a.category === mobileArticleFilter);
 
   return (
-    <div className="min-h-screen bg-[#181207] text-[#FFFDF7] selection:bg-[#F5C542]/30 selection:text-[#FFD966] relative">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#2E1E0F] selection:bg-[#F5C542]/30 selection:text-[#8C5500] relative">
       {/* Subtle Top Golden Radial Glow */}
-      <div className="fixed top-0 inset-x-0 h-80 bg-[radial-gradient(ellipse_at_top,rgba(245,197,66,0.14),transparent_70%)] pointer-events-none z-0" />
+      <div className="fixed top-0 inset-x-0 h-80 bg-[radial-gradient(ellipse_at_top,rgba(245,197,66,0.18),transparent_70%)] pointer-events-none z-0" />
 
       {/* ========================================================================= */}
       {/* MOBILE VIEW (< lg) - React Native Super-App Architecture                  */}
@@ -540,12 +540,12 @@ export function OmManiAppStoreHome() {
       <div className="block lg:hidden relative z-10">
         <div className="max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-5">
           {/* 1. REACT NATIVE SAFE-AREA TOP NAVIGATION BAR */}
-          <header className="sticky top-2 z-30 rounded-2xl bg-[#211808]/95 backdrop-blur-xl border border-[#F5C542]/30 px-3.5 py-2.5 flex items-center justify-between gap-2 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+          <header className="sticky top-2 z-30 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#EEDBBA] px-3.5 py-2.5 flex items-center justify-between gap-2 shadow-[0_4px_20px_rgba(180,140,50,0.08)]">
             <Link
               href="/ho-so"
               className="flex items-center gap-2.5 min-w-0 flex-1 active:scale-95 transition-transform"
             >
-              <div className="w-10 h-10 rounded-xl overflow-hidden border border-[#F5C542]/50 shadow-[0_2px_12px_rgba(245,197,66,0.35)] bg-[#181207] shrink-0">
+              <div className="w-10 h-10 rounded-xl overflow-hidden border border-[#ECD9A8] shadow-[0_2px_10px_rgba(200,160,50,0.18)] bg-white shrink-0">
                 <img
                   src="/dharma-logo.png"
                   alt="Dharma Logo"
@@ -554,14 +554,14 @@ export function OmManiAppStoreHome() {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-heading font-serif font-black text-sm tracking-wider text-[#FFFDF7] whitespace-nowrap">
+                  <span className="font-heading font-serif font-black text-sm tracking-wider text-[#2E1E0F] whitespace-nowrap">
                     DHARMA
                   </span>
-                  <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-md bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/35 whitespace-nowrap shrink-0">
+                  <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-md bg-[#FFF4D0] text-[#9A6405] border border-[#F2DE9C] whitespace-nowrap shrink-0">
                     {completedPeriods.length}/4 Thời
                   </span>
                 </div>
-                <p className="text-[11px] text-[#D6C394] truncate whitespace-nowrap">
+                <p className="text-[11px] text-[#6A5234] truncate whitespace-nowrap">
                   Chào {user?.dharma_name || user?.full_name || 'Cư sĩ'} • Tâm an vạn sự an
                 </p>
               </div>
@@ -574,7 +574,7 @@ export function OmManiAppStoreHome() {
                   playGrandTempleBellSound(0.5);
                   showToast('Tiếng chuông chánh niệm ngân vang');
                 }}
-                className="w-9 h-9 rounded-xl border border-[#F5C542]/30 bg-[#2B200B] hover:border-[#FFD966] flex items-center justify-center text-[#FFD966] transition-all active:scale-90 cursor-pointer"
+                className="w-9 h-9 rounded-xl border border-[#EEDBBA] bg-[#FFF9EA] hover:border-[#E5C158] flex items-center justify-center text-[#8C5500] transition-all active:scale-90 cursor-pointer shadow-xs"
                 title="Thỉnh chuông"
               >
                 <TempleBellIcon className="w-4 h-4" />
@@ -582,7 +582,7 @@ export function OmManiAppStoreHome() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="w-9 h-9 rounded-xl border border-[#F5C542]/30 bg-[#2B200B] hover:border-[#FFD966] flex items-center justify-center text-[#F3E3B2] transition-all active:scale-90 cursor-pointer"
+                className="w-9 h-9 rounded-xl border border-[#EEDBBA] bg-[#FFF9EA] hover:border-[#E5C158] flex items-center justify-center text-[#6A5234] transition-all active:scale-90 cursor-pointer shadow-xs"
                 title="Tìm kiếm"
               >
                 <Search className="w-4 h-4" />
@@ -591,24 +591,24 @@ export function OmManiAppStoreHome() {
           </header>
 
           {/* 2. BENTO HERO CARD: LUNAR-SOLAR & QUICK SANCTUARY ACTIONS */}
-          <section className="rounded-3xl bg-gradient-to-br from-[#33250C] via-[#251B09] to-[#1A1305] border border-[#F5C542]/40 p-4 shadow-[0_12px_36px_rgba(0,0,0,0.55)] space-y-3.5">
+          <section className="rounded-3xl bg-gradient-to-br from-[#FFFDF2] via-[#FFF9E6] to-[#FFF4D1] border border-[#ECD9A8] p-4 shadow-[0_8px_30px_rgba(200,160,50,0.08)] space-y-3.5">
             <div className="flex items-start justify-between gap-2">
               <div className="space-y-1 min-w-0 flex-1">
-                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#FFD966] bg-[#F5C542]/15 px-2.5 py-0.5 rounded-full border border-[#F5C542]/35 whitespace-nowrap">
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#8C5500] bg-[#FFF4D0] px-2.5 py-0.5 rounded-full border border-[#F2DE9C] whitespace-nowrap">
                   <LotusMinimalIcon className="w-3 h-3 shrink-0" />
                   <span>Lịch Cát Tường Hôm Nay</span>
                 </div>
-                <h2 className="font-heading font-serif text-[15px] sm:text-lg font-bold text-[#FFFDF7] pt-0.5 whitespace-nowrap">
+                <h2 className="font-heading font-serif text-[15px] sm:text-lg font-bold text-[#2E1E0F] pt-0.5 whitespace-nowrap">
                   {selectedDay.lunarDate} tháng 09 Âm lịch • Bính Ngọ
                 </h2>
-                <p className="text-[11px] sm:text-xs text-[#F3E3B2] whitespace-nowrap truncate">
+                <p className="text-[11px] sm:text-xs text-[#6A5234] whitespace-nowrap truncate">
                   {selectedDay.name === 'CN' ? 'Chủ Nhật' : `Thứ ${selectedDay.name}`}, {selectedDay.solarDate}/11/2026 • Tiết Lập Đông
                 </p>
               </div>
 
               <Link
                 href="/lich-phat-giao"
-                className="px-2.5 py-1.5 rounded-xl bg-[#181207]/80 border border-[#F5C542]/30 text-[11px] font-bold text-[#FFD966] flex items-center gap-0.5 shrink-0 whitespace-nowrap active:scale-95"
+                className="px-2.5 py-1.5 rounded-xl bg-white border border-[#EEDBBA] text-[11px] font-bold text-[#8C5500] flex items-center gap-0.5 shrink-0 whitespace-nowrap active:scale-95 shadow-xs"
               >
                 <span>Chi tiết</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -617,11 +617,11 @@ export function OmManiAppStoreHome() {
 
             {/* Highlighted Holy Day Banner */}
             {selectedDay.festivalName && (
-              <div className="p-2.5 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/35 flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-[#F5C542]/20 flex items-center justify-center text-[#FFD966] shrink-0">
+              <div className="p-2.5 rounded-2xl bg-white/90 border border-[#EEDBBA] flex items-center gap-2.5 shadow-xs">
+                <div className="w-8 h-8 rounded-xl bg-[#FFF4D0] border border-[#F2DE9C] flex items-center justify-center text-[#8C5500] shrink-0">
                   <DharmaWheelIcon className="w-4 h-4" />
                 </div>
-                <p className="text-xs font-semibold text-[#FFD966] truncate whitespace-nowrap">
+                <p className="text-xs font-semibold text-[#8C5500] truncate whitespace-nowrap">
                   {selectedDay.festivalName}
                 </p>
               </div>
@@ -642,8 +642,8 @@ export function OmManiAppStoreHome() {
                     className={cn(
                       'aspect-square rounded-xl p-0.5 flex flex-col items-center justify-center transition-all cursor-pointer border',
                       isSelected
-                        ? 'bg-gradient-to-b from-[#FFE07D] via-[#F5C542] to-[#E5A91C] text-[#1A1305] font-bold border-[#FFF0A8] shadow-md'
-                        : 'bg-[#181207]/70 text-[#D6C394] border-[#F5C542]/20 hover:border-[#F5C542]/50'
+                        ? 'bg-gradient-to-b from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold border-[#FFF8CC] shadow-xs'
+                        : 'bg-white text-[#6A5234] border-[#EEDBBA] hover:bg-[#FFF9EA]'
                     )}
                   >
                     <span className="text-[9px] leading-none opacity-85">{day.name}</span>
@@ -651,7 +651,7 @@ export function OmManiAppStoreHome() {
                     <span
                       className={cn(
                         'text-[8px] leading-none mt-0.5',
-                        isSelected ? 'text-[#1A1305]/85 font-bold' : 'text-[#F5C542]'
+                        isSelected ? 'text-[#3D2505]/85 font-bold' : 'text-[#8C5500]'
                       )}
                     >
                       {day.lunarDate}
@@ -666,7 +666,7 @@ export function OmManiAppStoreHome() {
               <button
                 type="button"
                 onClick={() => setIsIncenseOpen(true)}
-                className="py-2.5 px-1.5 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 shadow-md active:scale-95 cursor-pointer whitespace-nowrap"
+                className="py-2.5 px-1.5 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 shadow-xs active:scale-95 cursor-pointer whitespace-nowrap"
               >
                 <IncenseAltarIcon className="w-3.5 h-3.5 shrink-0" />
                 <span>Dâng Hương</span>
@@ -675,7 +675,7 @@ export function OmManiAppStoreHome() {
               <button
                 type="button"
                 onClick={() => setIsMalaOpen(true)}
-                className="py-2.5 px-1.5 rounded-xl bg-[#181207] border border-[#F5C542]/35 text-[#FFD966] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 active:scale-95 cursor-pointer whitespace-nowrap"
+                className="py-2.5 px-1.5 rounded-xl bg-white border border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#8C5500] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 active:scale-95 cursor-pointer whitespace-nowrap shadow-xs"
               >
                 <MalaBeadsMinimalIcon className="w-3.5 h-3.5 shrink-0" />
                 <span>108 Hạt</span>
@@ -684,7 +684,7 @@ export function OmManiAppStoreHome() {
               <button
                 type="button"
                 onClick={() => router.push('/thu-vien')}
-                className="py-2.5 px-1.5 rounded-xl bg-[#181207] border border-[#F5C542]/35 text-[#FFD966] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 active:scale-95 cursor-pointer whitespace-nowrap"
+                className="py-2.5 px-1.5 rounded-xl bg-white border border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#8C5500] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1 active:scale-95 cursor-pointer whitespace-nowrap shadow-xs"
               >
                 <SutraScrollIcon className="w-3.5 h-3.5 shrink-0" />
                 <span>Tụng Kinh</span>
@@ -694,15 +694,15 @@ export function OmManiAppStoreHome() {
 
           {/* 3. REACT NATIVE SEGMENTED CONTROL SWITCHER */}
           <section className="space-y-4">
-            <div className="p-1 rounded-2xl bg-[#221909] border border-[#F5C542]/30 grid grid-cols-3 gap-1">
+            <div className="p-1 rounded-2xl bg-[#FFF9EA] border border-[#EEDBBA] grid grid-cols-3 gap-1 shadow-xs">
               <button
                 type="button"
                 onClick={() => setMobileSegment('thoi-khoa')}
                 className={cn(
                   'py-2 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5',
                   mobileSegment === 'thoi-khoa'
-                    ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] shadow-sm'
-                    : 'text-[#C7B68B] hover:text-[#FFD966]'
+                    ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] shadow-xs'
+                    : 'text-[#7D6442] hover:text-[#2E1E0F]'
                 )}
               >
                 <BodhiLeafIcon className="w-3.5 h-3.5 shrink-0" />
@@ -715,8 +715,8 @@ export function OmManiAppStoreHome() {
                 className={cn(
                   'py-2 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5',
                   mobileSegment === 'phat-dai'
-                    ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] shadow-sm'
-                    : 'text-[#C7B68B] hover:text-[#FFD966]'
+                    ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] shadow-xs'
+                    : 'text-[#7D6442] hover:text-[#2E1E0F]'
                 )}
               >
                 <LotusMinimalIcon className="w-3.5 h-3.5 shrink-0" />
@@ -729,8 +729,8 @@ export function OmManiAppStoreHome() {
                 className={cn(
                   'py-2 px-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5',
                   mobileSegment === 'phap-am'
-                    ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] shadow-sm'
-                    : 'text-[#C7B68B] hover:text-[#FFD966]'
+                    ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] shadow-xs'
+                    : 'text-[#7D6442] hover:text-[#2E1E0F]'
                 )}
               >
                 <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
@@ -740,24 +740,24 @@ export function OmManiAppStoreHome() {
 
             {/* SEGMENT 1: 4 THỜI CÔNG PHU TRONG NGÀY */}
             {mobileSegment === 'thoi-khoa' && (
-              <div className="rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 p-4 space-y-3.5 shadow-xl animate-fade-in">
+              <div className="rounded-3xl bg-white border border-[#EEDBBA] p-4 space-y-3.5 shadow-md animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-heading font-serif font-bold text-sm text-[#FFD966]">
+                    <h3 className="font-heading font-serif font-bold text-sm text-[#8C5500]">
                       Thời Khóa 4 Thời Hôm Nay
                     </h3>
-                    <p className="text-[11px] text-[#C7B68B]">
+                    <p className="text-[11px] text-[#7D6442]">
                       Chạm vào từng thời để ghi nhận công đức tu tập
                     </p>
                   </div>
-                  <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/35">
+                  <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-xl bg-[#FFF4D0] text-[#8C5500] border border-[#F2DE9C]">
                     {progressPercent}%
                   </span>
                 </div>
 
-                <div className="w-full h-1.5 rounded-full bg-[#140F05] overflow-hidden">
+                <div className="w-full h-1.5 rounded-full bg-[#F2E5C7] overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#E5A91C] to-[#FFE07D] transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-[#FAD02C] to-[#E59800] transition-all duration-500"
                     style={{ width: `${Math.max(8, progressPercent)}%` }}
                   />
                 </div>
@@ -773,23 +773,23 @@ export function OmManiAppStoreHome() {
                         className={cn(
                           'w-full p-3.5 rounded-2xl border text-left flex items-center justify-between gap-3 transition-all active:scale-98 cursor-pointer',
                           isDone
-                            ? 'bg-gradient-to-r from-[#3D2D0D] to-[#291E08] border-[#FFD966]/60'
-                            : 'bg-[#1A1306] border-[#F5C542]/20'
+                            ? 'bg-gradient-to-r from-[#FFF5D6] to-[#FFEBB0] border-[#E5C158] shadow-xs'
+                            : 'bg-[#FFFDF8] border-[#EEDBBA] hover:bg-[#FFF9EA]'
                         )}
                       >
                         <div className="min-w-0 flex-1 space-y-0.5">
                           <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-bold uppercase text-[#F5C542]">
+                            <span className="text-[10px] font-bold uppercase text-[#8C5500]">
                               {item.period}
                             </span>
-                            <span className="text-[10px] font-mono text-[#A89874]">
+                            <span className="text-[10px] font-mono text-[#7D6442]">
                               {item.timeRange}
                             </span>
                           </div>
-                          <h4 className="font-heading font-bold text-xs sm:text-sm text-[#FFFDF7]">
+                          <h4 className="font-heading font-bold text-xs sm:text-sm text-[#2E1E0F]">
                             {item.title}
                           </h4>
-                          <p className="text-[11px] text-[#C7B68B] line-clamp-1">
+                          <p className="text-[11px] text-[#6A5234] line-clamp-1">
                             {item.practice}
                           </p>
                         </div>
@@ -798,8 +798,8 @@ export function OmManiAppStoreHome() {
                           className={cn(
                             'w-6 h-6 rounded-lg flex items-center justify-center shrink-0 border transition-all',
                             isDone
-                              ? 'bg-gradient-to-br from-[#FFE07D] to-[#F5C542] text-[#1A1305] border-[#FFF0A8]'
-                              : 'bg-[#140F05] border-[#F5C542]/35 text-transparent'
+                              ? 'bg-gradient-to-br from-[#FFE79A] to-[#FAD02C] text-[#3D2505] border-[#FFF8CC]'
+                              : 'bg-white border-[#EEDBBA] text-transparent'
                           )}
                         >
                           <Check className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -813,34 +813,34 @@ export function OmManiAppStoreHome() {
 
             {/* SEGMENT 2: THỈNH KỆ KINH PHÁP CÚ (DHAMMAPADA ORACLE) */}
             {mobileSegment === 'phat-dai' && (
-              <div className="rounded-3xl bg-gradient-to-br from-[#2E220B] via-[#231908] to-[#181207] border border-[#F5C542]/40 p-5 space-y-4 shadow-xl animate-fade-in">
+              <div className="rounded-3xl bg-gradient-to-br from-[#FFFDF2] via-[#FFF9E6] to-[#FFF4D1] border border-[#ECD9A8] p-5 space-y-4 shadow-md animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <LotusMinimalIcon className="w-4 h-4 text-[#FFD966]" />
-                    <span className="text-xs font-bold text-[#FFD966] uppercase tracking-wider">
+                    <LotusMinimalIcon className="w-4 h-4 text-[#8C5500]" />
+                    <span className="text-xs font-bold text-[#8C5500] uppercase tracking-wider">
                       {currentVerse.number} • {currentVerse.chapter}
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={handleDrawNewVerse}
-                    className="px-3 py-1 rounded-xl bg-[#F5C542]/20 border border-[#F5C542]/40 text-[#FFD966] text-[11px] font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
+                    className="px-3 py-1 rounded-xl bg-[#FFF4D0] border border-[#F2DE9C] text-[#8C5500] text-[11px] font-bold flex items-center gap-1 active:scale-95 cursor-pointer"
                   >
                     <RefreshCw className="w-3 h-3" />
                     <span>Thỉnh Kệ Mới</span>
                   </button>
                 </div>
 
-                <p className="text-xs font-serif italic text-[#C7B68B] border-l-2 border-[#F5C542]/50 pl-3">
+                <p className="text-xs font-serif italic text-[#7D6442] border-l-2 border-[#E5C158] pl-3">
                   &ldquo;{currentVerse.pali}&rdquo;
                 </p>
 
-                <blockquote className="font-heading font-serif text-base font-bold text-[#FFFDF7] leading-relaxed whitespace-pre-line">
+                <blockquote className="font-heading font-serif text-base font-bold text-[#2E1E0F] leading-relaxed whitespace-pre-line">
                   {currentVerse.vietnamese}
                 </blockquote>
 
-                <div className="p-3 rounded-2xl bg-[#140F05]/80 border border-[#F5C542]/25 text-xs text-[#F3E3B2] leading-relaxed">
-                  <strong className="text-[#FFD966]">Ứng dụng chánh niệm: </strong>
+                <div className="p-3 rounded-2xl bg-white/90 border border-[#EEDBBA] text-xs text-[#5A4329] leading-relaxed shadow-xs">
+                  <strong className="text-[#8C5500]">Ứng dụng chánh niệm: </strong>
                   {currentVerse.application}
                 </div>
               </div>
@@ -848,12 +848,12 @@ export function OmManiAppStoreHome() {
 
             {/* SEGMENT 3: BỘ HÒA ÂM THIỀN TỰ ĐA TẦNG */}
             {mobileSegment === 'phap-am' && (
-              <div className="rounded-3xl bg-[#241B0B] border border-[#F5C542]/35 p-4 space-y-3.5 shadow-xl animate-fade-in">
+              <div className="rounded-3xl bg-white border border-[#EEDBBA] p-4 space-y-3.5 shadow-md animate-fade-in">
                 <div>
-                  <h3 className="font-heading font-serif font-bold text-sm text-[#FFD966]">
-                    Bộ Hòa Âm Thiền Tự Đa Tầng (432Hz)
+                  <h3 className="font-heading font-serif font-bold text-sm text-[#8C5500]">
+                    Bộ Hòa Âm Thiền TỰ Đa Tầng (432Hz)
                   </h3>
-                  <p className="text-[11px] text-[#C7B68B]">
+                  <p className="text-[11px] text-[#7D6442]">
                     Kết hợp thanh âm chùa cổ giúp tịnh hóa không gian tu tập
                   </p>
                 </div>
@@ -865,14 +865,14 @@ export function OmManiAppStoreHome() {
                       playGrandTempleBellSound(0.6);
                       showToast('Đang ngân vang: Đại Hồng Chung');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/30 flex items-center gap-3 text-left active:scale-95 cursor-pointer"
+                    className="p-3.5 rounded-2xl bg-[#FFFDF8] border border-[#EEDBBA] hover:bg-[#FFF9EA] flex items-center gap-3 text-left active:scale-95 cursor-pointer shadow-xs"
                   >
-                    <div className="w-9 h-9 rounded-xl bg-[#F5C542]/15 flex items-center justify-center text-[#FFD966] shrink-0">
+                    <div className="w-9 h-9 rounded-xl bg-[#FFF4D0] border border-[#F2DE9C] flex items-center justify-center text-[#8C5500] shrink-0">
                       <TempleBellIcon className="w-5 h-5" />
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-[#FFFDF7] truncate">Đại Hồng Chung</h4>
-                      <p className="text-[10px] text-[#C7B68B]">Thỉnh chuông chùa</p>
+                      <h4 className="text-xs font-bold text-[#2E1E0F] truncate">Đại Hồng Chung</h4>
+                      <p className="text-[10px] text-[#7D6442]">Thỉnh chuông chùa</p>
                     </div>
                   </button>
 
@@ -880,16 +880,16 @@ export function OmManiAppStoreHome() {
                     type="button"
                     onClick={handleToggleAutoWoodenFish}
                     className={cn(
-                      'p-3.5 rounded-2xl border flex items-center gap-3 text-left active:scale-95 cursor-pointer',
+                      'p-3.5 rounded-2xl border flex items-center gap-3 text-left active:scale-95 cursor-pointer shadow-xs',
                       isAutoWoodenFish
-                        ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] border-[#FFF0A8]'
-                        : 'bg-[#181207] border-[#F5C542]/30 text-[#FFFDF7]'
+                        ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] border-[#FFF8CC]'
+                        : 'bg-[#FFFDF8] border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#2E1E0F]'
                     )}
                   >
                     <div
                       className={cn(
                         'w-9 h-9 rounded-xl flex items-center justify-center shrink-0',
-                        isAutoWoodenFish ? 'bg-[#1A1305]/15 text-[#1A1305]' : 'bg-[#F5C542]/15 text-[#FFD966]'
+                        isAutoWoodenFish ? 'bg-[#3D2505]/15 text-[#3D2505]' : 'bg-[#FFF4D0] border border-[#F2DE9C] text-[#8C5500]'
                       )}
                     >
                       <WoodenFishMinimalIcon className="w-5 h-5" />
@@ -898,7 +898,7 @@ export function OmManiAppStoreHome() {
                       <h4 className="text-xs font-bold truncate">
                         {isAutoWoodenFish ? 'Mõ: Đang Gõ' : 'Mõ Giữ Nhịp'}
                       </h4>
-                      <p className={cn('text-[10px]', isAutoWoodenFish ? 'text-[#1A1305]/80' : 'text-[#C7B68B]')}>
+                      <p className={cn('text-[10px]', isAutoWoodenFish ? 'text-[#3D2505]/80 font-bold' : 'text-[#7D6442]')}>
                         Nhịp 60 BPM
                       </p>
                     </div>
@@ -908,23 +908,23 @@ export function OmManiAppStoreHome() {
                     type="button"
                     onClick={handleToggleDrone}
                     className={cn(
-                      'p-3.5 rounded-2xl border flex items-center gap-3 text-left active:scale-95 cursor-pointer',
+                      'p-3.5 rounded-2xl border flex items-center gap-3 text-left active:scale-95 cursor-pointer shadow-xs',
                       isDroneActive
-                        ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] border-[#FFF0A8]'
-                        : 'bg-[#181207] border-[#F5C542]/30 text-[#FFFDF7]'
+                        ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] border-[#FFF8CC]'
+                        : 'bg-[#FFFDF8] border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#2E1E0F]'
                     )}
                   >
                     <div
                       className={cn(
                         'w-9 h-9 rounded-xl flex items-center justify-center shrink-0',
-                        isDroneActive ? 'bg-[#1A1305]/15 text-[#1A1305]' : 'bg-[#F5C542]/15 text-[#FFD966]'
+                        isDroneActive ? 'bg-[#3D2505]/15 text-[#3D2505]' : 'bg-[#FFF4D0] border border-[#F2DE9C] text-[#8C5500]'
                       )}
                     >
                       {isDroneActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                     </div>
                     <div className="min-w-0">
                       <h4 className="text-xs font-bold truncate">Tần Số 432Hz</h4>
-                      <p className={cn('text-[10px]', isDroneActive ? 'text-[#1A1305]/80' : 'text-[#C7B68B]')}>
+                      <p className={cn('text-[10px]', isDroneActive ? 'text-[#3D2505]/80 font-bold' : 'text-[#7D6442]')}>
                         {isDroneActive ? 'Đang phát' : 'Sóng âm định tâm'}
                       </p>
                     </div>
@@ -936,14 +936,14 @@ export function OmManiAppStoreHome() {
                       playBellSound(0.5);
                       showToast('Khánh đồng tỉnh thức');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/30 flex items-center gap-3 text-left active:scale-95 cursor-pointer"
+                    className="p-3.5 rounded-2xl bg-[#FFFDF8] border border-[#EEDBBA] hover:bg-[#FFF9EA] flex items-center gap-3 text-left active:scale-95 cursor-pointer shadow-xs"
                   >
-                    <div className="w-9 h-9 rounded-xl bg-[#F5C542]/15 flex items-center justify-center text-[#FFD966] shrink-0">
+                    <div className="w-9 h-9 rounded-xl bg-[#FFF4D0] border border-[#F2DE9C] flex items-center justify-center text-[#8C5500] shrink-0">
                       <Volume2 className="w-5 h-5" />
                     </div>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-[#FFFDF7] truncate">Khánh Đồng</h4>
-                      <p className="text-[10px] text-[#C7B68B]">Chuông nhập thiền</p>
+                      <h4 className="text-xs font-bold text-[#2E1E0F] truncate">Khánh Đồng</h4>
+                      <p className="text-[10px] text-[#7D6442]">Chuông nhập thiền</p>
                     </div>
                   </button>
                 </div>
@@ -955,12 +955,12 @@ export function OmManiAppStoreHome() {
           <section className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <LotusMinimalIcon className="w-4 h-4 text-[#FFD966]" />
-                <h3 className="font-heading font-serif font-bold text-base text-[#FFFDF7]">
+                <LotusMinimalIcon className="w-4 h-4 text-[#8C5500]" />
+                <h3 className="font-heading font-serif font-bold text-base text-[#2E1E0F]">
                   Chiêm Bái Chư Phật &amp; Bồ Tát
                 </h3>
               </div>
-              <span className="text-[11px] text-[#C7B68B]">Vuốt ngang →</span>
+              <span className="text-[11px] text-[#7D6442]">Vuốt ngang →</span>
             </div>
 
             <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-1">
@@ -971,21 +971,21 @@ export function OmManiAppStoreHome() {
                     playBellSound(0.35);
                     setSelectedBuddha(b);
                   }}
-                  className="snap-start w-48 shrink-0 rounded-2xl bg-[#241B0B] border border-[#F5C542]/30 overflow-hidden shadow-lg active:scale-95 transition-all cursor-pointer group"
+                  className="snap-start w-48 shrink-0 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] overflow-hidden shadow-sm active:scale-95 transition-all cursor-pointer group"
                 >
-                  <div className="aspect-square relative overflow-hidden bg-[#181207]">
+                  <div className="aspect-square relative overflow-hidden bg-[#FFFDF7]">
                     <img
                       src={b.image}
                       alt={b.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#241B0B] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   </div>
                   <div className="p-3 space-y-0.5">
-                    <h4 className="font-heading font-serif font-bold text-xs text-[#FFD966] truncate whitespace-nowrap">
+                    <h4 className="font-heading font-serif font-bold text-xs text-[#8C5500] truncate whitespace-nowrap">
                       {b.name}
                     </h4>
-                    <p className="text-[10px] text-[#C7B68B] line-clamp-2 leading-snug">
+                    <p className="text-[10px] text-[#6A5234] line-clamp-2 leading-snug">
                       {b.vow}
                     </p>
                   </div>
@@ -998,14 +998,14 @@ export function OmManiAppStoreHome() {
           <section className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <PagodaMinimalIcon className="w-4 h-4 text-[#FFD966]" />
-                <h3 className="font-heading font-serif font-bold text-base text-[#FFFDF7]">
+                <PagodaMinimalIcon className="w-4 h-4 text-[#8C5500]" />
+                <h3 className="font-heading font-serif font-bold text-base text-[#2E1E0F]">
                   Danh Lam Cổ Tự Việt Nam
                 </h3>
               </div>
               <Link
                 href="/di-chua-online"
-                className="text-xs font-semibold text-[#FFD966] flex items-center gap-0.5"
+                className="text-xs font-semibold text-[#8C5500] flex items-center gap-0.5"
               >
                 <span>Chánh điện</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1020,9 +1020,9 @@ export function OmManiAppStoreHome() {
                     playBellSound(0.35);
                     setSelectedTemple(temple);
                   }}
-                  className="snap-start w-52 shrink-0 rounded-2xl overflow-hidden border border-[#F5C542]/30 bg-[#241B0B] group cursor-pointer active:scale-95 transition-all shadow-lg"
+                  className="snap-start w-52 shrink-0 rounded-2xl overflow-hidden border border-[#EEDBBA] hover:border-[#E5C158] bg-white group cursor-pointer active:scale-95 transition-all shadow-sm"
                 >
-                  <div className="aspect-[16/10] overflow-hidden bg-[#181207]">
+                  <div className="aspect-[16/10] overflow-hidden bg-[#FFFDF7]">
                     <img
                       src={temple.image}
                       alt={temple.name}
@@ -1030,11 +1030,11 @@ export function OmManiAppStoreHome() {
                     />
                   </div>
                   <div className="p-3">
-                    <h4 className="font-heading font-serif font-bold text-xs text-[#FFFDF7] truncate">
+                    <h4 className="font-heading font-serif font-bold text-xs text-[#2E1E0F] truncate">
                       {temple.name}
                     </h4>
-                    <p className="text-[11px] text-[#C7B68B] flex items-center gap-1 mt-0.5 truncate">
-                      <MapPin className="w-3 h-3 text-[#F5C542] shrink-0" />
+                    <p className="text-[11px] text-[#6A5234] flex items-center gap-1 mt-0.5 truncate">
+                      <MapPin className="w-3 h-3 text-[#B87B08] shrink-0" />
                       <span>{temple.location}</span>
                     </p>
                   </div>
@@ -1047,8 +1047,8 @@ export function OmManiAppStoreHome() {
           <section className="space-y-3.5 pt-1">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <SutraScrollIcon className="w-4 h-4 text-[#FFD966]" />
-                <h3 className="font-heading font-serif font-bold text-base text-[#FFFDF7]">
+                <SutraScrollIcon className="w-4 h-4 text-[#8C5500]" />
+                <h3 className="font-heading font-serif font-bold text-base text-[#2E1E0F]">
                   Cẩm Nang Chuyển Hóa Tâm
                 </h3>
               </div>
@@ -1065,8 +1065,8 @@ export function OmManiAppStoreHome() {
                     className={cn(
                       'px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 transition-all cursor-pointer',
                       mobileArticleFilter === cat
-                        ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold shadow-sm'
-                        : 'bg-[#241B0B] border border-[#F5C542]/25 text-[#D6C394]'
+                        ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold shadow-xs'
+                        : 'bg-white border border-[#EEDBBA] text-[#6A5234]'
                     )}
                   >
                     {cat}
@@ -1083,9 +1083,9 @@ export function OmManiAppStoreHome() {
                     playWoodenFishSound(0.25);
                     setSelectedArticle(article);
                   }}
-                  className="p-3 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] flex items-center gap-3.5 cursor-pointer active:scale-[0.99] transition-all shadow-md group"
+                  className="p-3 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center gap-3.5 cursor-pointer active:scale-[0.99] transition-all shadow-sm group"
                 >
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 bg-[#181207] border border-[#F5C542]/30">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 bg-[#FFFDF7] border border-[#ECD9A8]">
                     <img
                       src={article.image}
                       alt={article.title}
@@ -1095,15 +1095,15 @@ export function OmManiAppStoreHome() {
 
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-bold text-[#FFD966] bg-[#F5C542]/15 px-2 py-0.5 rounded-md border border-[#F5C542]/30 whitespace-nowrap">
+                      <span className="text-[10px] font-bold text-[#8C5500] bg-[#FFF4D0] px-2 py-0.5 rounded-md border border-[#F2DE9C] whitespace-nowrap">
                         {article.category}
                       </span>
-                      <span className="text-[10px] text-[#A89874] whitespace-nowrap">{article.readTime}</span>
+                      <span className="text-[10px] text-[#7D6442] whitespace-nowrap">{article.readTime}</span>
                     </div>
-                    <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] group-hover:text-[#FFD966] line-clamp-2 leading-snug">
+                    <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#2E1E0F] group-hover:text-[#8C5500] line-clamp-2 leading-snug">
                       {article.title}
                     </h4>
-                    <p className="text-[11px] text-[#C7B68B] line-clamp-1 leading-relaxed">
+                    <p className="text-[11px] text-[#6A5234] line-clamp-1 leading-relaxed">
                       {article.excerpt}
                     </p>
                   </div>
@@ -1113,22 +1113,22 @@ export function OmManiAppStoreHome() {
           </section>
 
           {/* 7. DHARMA MISSION FOOTER CARD */}
-          <section className="rounded-3xl bg-gradient-to-br from-[#2A1F0A] to-[#1B1406] border border-[#F5C542]/35 p-5 text-center space-y-3 shadow-xl">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#E5A91C] to-[#FFE07D] flex items-center justify-center text-[#1A1305] mx-auto shadow-md">
+          <section className="rounded-3xl bg-gradient-to-br from-[#FFFDF2] via-[#FFF9E6] to-[#FFF4D1] border border-[#ECD9A8] p-5 text-center space-y-3 shadow-sm">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#FAD02C] to-[#FFE79A] flex items-center justify-center text-[#3D2505] mx-auto shadow-xs">
               <DharmaWheelIcon className="w-6 h-6" />
             </div>
             <div className="space-y-1">
-              <h4 className="font-heading font-serif font-bold text-base text-[#FFD966]">
+              <h4 className="font-heading font-serif font-bold text-base text-[#8C5500]">
                 DHARMA — Ánh Sáng Chánh Pháp
               </h4>
-              <p className="text-xs text-[#D6C394] leading-relaxed">
+              <p className="text-xs text-[#6A5234] leading-relaxed">
                 Đạo tràng kỹ thuật số thanh tịnh dành cho người cư sĩ tại gia: giữ trọn 4 thời công phu, thọ trì kinh điển và nuôi dưỡng Bồ Đề tâm mỗi ngày.
               </p>
             </div>
             <button
               type="button"
               onClick={() => setIsAboutOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/40 text-[#FFD966] text-xs font-bold active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-white border border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#8C5500] text-xs font-bold active:scale-95 cursor-pointer shadow-xs"
             >
               <LotusMinimalIcon className="w-4 h-4" />
               <span>Tìm Hiểu Tôn Chỉ Dharma</span>
@@ -1180,17 +1180,17 @@ export function OmManiAppStoreHome() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedBuddha(null);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border border-[#F5C542]/45 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl animate-scale-in space-y-4">
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 sm:p-6 text-[#2E1E0F] shadow-2xl animate-scale-in space-y-4">
             <button
               onClick={() => setSelectedBuddha(null)}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-[#FFF9EA] border border-[#EEDBBA]"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full overflow-hidden border-2 border-[#FFD966] shadow-[0_0_25px_rgba(245,197,66,0.35)]">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full overflow-hidden border-2 border-[#E5A716] shadow-[0_0_25px_rgba(230,170,30,0.3)] bg-[#FFFDF7]">
               <img
                 src={selectedBuddha.image}
                 alt={selectedBuddha.name}
@@ -1199,16 +1199,16 @@ export function OmManiAppStoreHome() {
             </div>
 
             <div className="text-center space-y-1">
-              <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFD966]">
+              <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#8C5500]">
                 {selectedBuddha.title}
               </h3>
-              <p className="text-xs text-[#F3E3B2] font-serif italic">
+              <p className="text-xs text-[#6A5234] font-serif italic">
                 &ldquo;{selectedBuddha.mantra}&rdquo;
               </p>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#140F05]/80 border border-[#F5C542]/25 text-xs text-[#D6C394] leading-relaxed">
-              <p className="font-bold text-[#FFD966] mb-1">Đại Nguyện &amp; Công Đức:</p>
+            <div className="p-3.5 rounded-2xl bg-[#FFFDF8] border border-[#F2E5C7] text-xs text-[#5A4329] leading-relaxed">
+              <p className="font-bold text-[#8C5500] mb-1">Đại Nguyện &amp; Công Đức:</p>
               <p>{selectedBuddha.vow}</p>
             </div>
 
@@ -1220,7 +1220,7 @@ export function OmManiAppStoreHome() {
                   setSelectedBuddha(null);
                   setIsMalaOpen(true);
                 }}
-                className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs shadow-md active:scale-95 cursor-pointer"
+                className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs shadow-xs active:scale-95 cursor-pointer"
               >
                 Lần Chuỗi Niệm Phật
               </button>
@@ -1229,7 +1229,7 @@ export function OmManiAppStoreHome() {
                   setSelectedBuddha(null);
                   setIsIncenseOpen(true);
                 }}
-                className="py-2.5 px-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs active:scale-95 cursor-pointer"
+                className="py-2.5 px-2 rounded-xl bg-white border border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#8C5500] font-bold text-xs active:scale-95 cursor-pointer shadow-xs"
               >
                 Dâng Hương Lễ Phật
               </button>
@@ -1244,27 +1244,27 @@ export function OmManiAppStoreHome() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedTemple(null);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border border-[#F5C542]/45 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl animate-scale-in space-y-4">
-            <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#F5C542]/20">
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 sm:p-6 text-[#2E1E0F] shadow-2xl animate-scale-in space-y-4">
+            <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#EEDBBA]">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block">
                   {selectedTemple.tradition || 'Danh Lam Cổ Tự Việt Nam'}
                 </span>
-                <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFFDF7] mt-0.5">
+                <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#2E1E0F] mt-0.5">
                   {selectedTemple.name}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedTemple(null)}
-                className="text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25 shrink-0"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-[#FFF9EA] border border-[#EEDBBA] shrink-0"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="rounded-2xl overflow-hidden aspect-[16/9] border border-[#F5C542]/30 bg-[#181207]">
+            <div className="rounded-2xl overflow-hidden aspect-[16/9] border border-[#ECD9A8] bg-[#FFFDF7]">
               <img
                 src={selectedTemple.image}
                 alt={selectedTemple.name}
@@ -1272,12 +1272,12 @@ export function OmManiAppStoreHome() {
               />
             </div>
 
-            <p className="text-xs text-[#FFD966] flex items-center gap-1.5 font-medium">
-              <MapPin className="w-3.5 h-3.5 shrink-0" />
+            <p className="text-xs text-[#8C5500] flex items-center gap-1.5 font-medium">
+              <MapPin className="w-3.5 h-3.5 shrink-0 text-[#B87B08]" />
               <span>Địa điểm: {selectedTemple.location}</span>
             </p>
 
-            <div className="p-3.5 rounded-2xl bg-[#140F05]/80 border border-[#F5C542]/25 text-xs text-[#F3E3B2] leading-relaxed">
+            <div className="p-3.5 rounded-2xl bg-[#FFFDF8] border border-[#F2E5C7] text-xs text-[#5A4329] leading-relaxed">
               {selectedTemple.history}
             </div>
 
@@ -1288,7 +1288,7 @@ export function OmManiAppStoreHome() {
                   setSelectedTemple(null);
                   setIsIncenseOpen(true);
                 }}
-                className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs shadow-md active:scale-95 cursor-pointer"
+                className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs shadow-xs active:scale-95 cursor-pointer"
               >
                 Dâng Hương Lễ Phật
               </button>
@@ -1298,7 +1298,7 @@ export function OmManiAppStoreHome() {
                   setSelectedTemple(null);
                   router.push('/di-chua-online');
                 }}
-                className="py-2.5 px-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs active:scale-95 cursor-pointer"
+                className="py-2.5 px-2 rounded-xl bg-white border border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#8C5500] font-bold text-xs active:scale-95 cursor-pointer shadow-xs"
               >
                 Vào Chánh Điện Online
               </button>
@@ -1313,24 +1313,24 @@ export function OmManiAppStoreHome() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setSelectedArticle(null);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-lg max-h-[86vh] flex flex-col rounded-3xl bg-gradient-to-b from-[#2A1F0B] to-[#181207] border border-[#F5C542]/45 p-5 sm:p-6 text-[#FFFDF7] shadow-2xl animate-scale-in">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
-              <div className="flex items-center gap-2 text-xs text-[#FFD966] font-bold">
-                <SutraScrollIcon className="w-4 h-4" />
+          <div className="relative w-full max-w-lg max-h-[86vh] flex flex-col rounded-3xl bg-white border border-[#ECD9A8] p-5 sm:p-6 text-[#2E1E0F] shadow-2xl animate-scale-in">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA] shrink-0">
+              <div className="flex items-center gap-2 text-xs text-[#8C5500] font-bold">
+                <SutraScrollIcon className="w-4 h-4 text-[#B87B08]" />
                 <span>{selectedArticle.category || 'Pháp Bảo Dharma'}</span>
               </div>
               <button
                 onClick={() => setSelectedArticle(null)}
-                className="text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-[#FFF9EA] border border-[#EEDBBA]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="overflow-y-auto no-scrollbar py-4 space-y-4 pr-1">
-              <div className="rounded-2xl overflow-hidden aspect-[16/9] border border-[#F5C542]/30">
+              <div className="rounded-2xl overflow-hidden aspect-[16/9] border border-[#ECD9A8]">
                 <img
                   src={selectedArticle.image}
                   alt={selectedArticle.title}
@@ -1338,21 +1338,21 @@ export function OmManiAppStoreHome() {
                 />
               </div>
 
-              <h3 className="font-heading font-serif font-bold text-base sm:text-xl text-[#FFD966] leading-snug">
+              <h3 className="font-heading font-serif font-bold text-base sm:text-xl text-[#8C5500] leading-snug">
                 {selectedArticle.title}
               </h3>
 
-              <div className="text-xs text-[#A89874]">
-                Nguồn: <span className="text-[#F3E3B2]">{selectedArticle.authorOrSource}</span> •{' '}
+              <div className="text-xs text-[#7D6442]">
+                Nguồn: <span className="text-[#5A4329] font-medium">{selectedArticle.authorOrSource}</span> •{' '}
                 {selectedArticle.readTime}
               </div>
 
-              <div className="text-xs sm:text-sm text-[#FFFDF7]/90 leading-relaxed whitespace-pre-line space-y-3 font-serif">
+              <div className="text-xs sm:text-sm text-[#3E2D1D] leading-relaxed whitespace-pre-line space-y-3 font-serif">
                 {selectedArticle.content}
               </div>
             </div>
 
-            <div className="pt-3 border-t border-[#F5C542]/20 flex items-center justify-between gap-3 shrink-0">
+            <div className="pt-3 border-t border-[#EEDBBA] flex items-center justify-between gap-3 shrink-0">
               <button
                 type="button"
                 onClick={() => {
@@ -1360,7 +1360,7 @@ export function OmManiAppStoreHome() {
                   showToast('Hoan hỷ ghi nhận công đức pháp học!');
                   setSelectedArticle(null);
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
+                className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-xs"
               >
                 <LotusMinimalIcon className="w-4 h-4" />
                 <span>Hoan Hỷ Thọ Trì</span>
@@ -1373,7 +1373,7 @@ export function OmManiAppStoreHome() {
                   }
                   showToast('Đã sao chép liên kết bài pháp');
                 }}
-                className="px-4 py-2.5 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-[#FFD966] font-semibold text-xs flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                className="px-4 py-2.5 rounded-xl bg-white border border-[#EEDBBA] hover:bg-[#FFF9EA] text-[#8C5500] font-semibold text-xs flex items-center gap-1.5 active:scale-95 cursor-pointer shadow-xs"
               >
                 <Share2 className="w-3.5 h-3.5" />
                 <span>Chia sẻ</span>
@@ -1389,17 +1389,17 @@ export function OmManiAppStoreHome() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsAboutOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-gradient-to-b from-[#2B200B] to-[#181207] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl animate-scale-in text-center space-y-4">
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-6 text-[#2E1E0F] shadow-2xl animate-scale-in text-center space-y-4">
             <button
               onClick={() => setIsAboutOpen(false)}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFD966] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-[#FFF9EA] border border-[#EEDBBA]"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden border border-[#F5C542]/50 shadow-lg bg-[#181207]">
+            <div className="w-16 h-16 mx-auto rounded-2xl overflow-hidden border border-[#ECD9A8] shadow-md bg-[#FFFDF7]">
               <img
                 src="/dharma-logo.png"
                 alt="Dharma Logo"
@@ -1408,19 +1408,19 @@ export function OmManiAppStoreHome() {
             </div>
 
             <div>
-              <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#FFD966]">
+              <h3 className="font-heading font-serif font-bold text-base sm:text-lg text-[#8C5500]">
                 DHARMA — Không Gian Chánh Niệm &amp; Pháp Bảo
               </h3>
-              <p className="text-xs text-[#D6C394] mt-1">
+              <p className="text-xs text-[#6A5234] mt-1">
                 Đạo tràng trực tuyến thanh tịnh dành cho người con Phật
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#140F05]/80 border border-[#F5C542]/25 text-xs text-[#F3E3B2] leading-relaxed text-left space-y-2">
+            <div className="p-4 rounded-2xl bg-[#FFFDF8] border border-[#F2E5C7] text-xs text-[#5A4329] leading-relaxed text-left space-y-2">
               <p>
-                <strong className="text-[#FFD966]">Tôn chỉ:</strong> Đưa lời Phật dạy vào từng hơi thở và thời khóa thực hành mỗi ngày với giao diện trang nghiêm, tịnh khiết.
+                <strong className="text-[#8C5500]">Tôn chỉ:</strong> Đưa lời Phật dạy vào từng hơi thở và thời khóa thực hành mỗi ngày với giao diện trang nghiêm, tịnh khiết.
               </p>
-              <ul className="list-disc list-inside space-y-1 text-[#C7B68B]">
+              <ul className="list-disc list-inside space-y-1 text-[#6A5234]">
                 <li>Thời khóa 4 thời công phu &amp; Thỉnh kệ Kinh Pháp Cú</li>
                 <li>Lịch Vạn Niên, ngày Trai giới &amp; thực đơn chay dưỡng sinh</li>
                 <li>Mõ tụng kinh tự động theo nhịp BPM &amp; Trình đọc kinh chạy chữ</li>
@@ -1431,7 +1431,7 @@ export function OmManiAppStoreHome() {
             <button
               type="button"
               onClick={() => setIsAboutOpen(false)}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#1A1305] font-bold text-xs shadow-md active:scale-95 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs shadow-xs active:scale-95 cursor-pointer"
             >
               Đóng
             </button>
@@ -1442,9 +1442,9 @@ export function OmManiAppStoreHome() {
       {/* Floating Toast */}
       {toastMessage && (
         <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#241B0B]/95 border border-[#F5C542] text-center shadow-2xl backdrop-blur-md flex items-center gap-2">
-            <LotusMinimalIcon className="w-4 h-4 text-[#FFD966] shrink-0" />
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFD966]">
+          <div className="px-4 py-2.5 rounded-2xl bg-white/95 border border-[#EEDBBA] text-center shadow-xl backdrop-blur-md flex items-center gap-2">
+            <LotusMinimalIcon className="w-4 h-4 text-[#B87B08] shrink-0" />
+            <p className="font-heading text-xs sm:text-sm font-bold text-[#8C5500]">
               {toastMessage}
             </p>
           </div>

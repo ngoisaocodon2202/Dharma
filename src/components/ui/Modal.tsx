@@ -57,7 +57,7 @@ export function Modal({
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/75 dark:bg-black/85 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/50 dark:bg-black/50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -66,7 +66,7 @@ export function Modal({
       <div
         onClick={(e) => e.stopPropagation()}
         className={cn(
-          'relative w-full max-h-[88vh] overflow-y-auto no-scrollbar bg-[#241B0B] text-[#FFFDF7] rounded-3xl shadow-2xl border border-[#F5C542]/45 p-4 sm:p-6 z-10 animate-scale-in overscroll-contain',
+          'relative w-full max-h-[88vh] overflow-y-auto no-scrollbar bg-white text-[#2E1E0F] rounded-3xl shadow-2xl border border-[#ECD9A8] p-4 sm:p-6 z-10 animate-scale-in overscroll-contain',
           maxWidths[maxWidth]
         )}
         role="dialog"
@@ -74,7 +74,7 @@ export function Modal({
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 text-[#C7B68B] hover:text-[#FFD966] rounded-xl bg-[#181207] border border-[#F5C542]/25 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-1.5 text-[#7D6442] hover:text-[#8C5500] rounded-xl bg-white border border-[#EEDBBA] transition-colors cursor-pointer"
           aria-label="Đóng"
         >
           <X className="w-5 h-5" />
@@ -82,11 +82,11 @@ export function Modal({
 
         {title && (
           <div className="mb-4 pr-8">
-            <h3 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFD966]">
+            <h3 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#8C5500]">
               {title}
             </h3>
             {description && (
-              <p className="text-xs text-[#C7B68B] mt-1">
+              <p className="text-xs text-[#7D6442] mt-1">
                 {description}
               </p>
             )}

@@ -229,23 +229,23 @@ export function OmManiDesktopPractice({
       {/* ========================================================================= */}
       {/* 1. TOP HEADER TITLE                                                       */}
       {/* ========================================================================= */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-[#F5C542]/25">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-[#EEDBBA]">
         <div className="flex items-center gap-3.5">
           <div className="w-12 h-12 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_20px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
-            <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
-              <MeditatingMonkOutlineIcon className="w-6 h-6 text-[#FFD966]" />
+            <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center">
+              <MeditatingMonkOutlineIcon className="w-6 h-6 text-[#8C5500]" />
             </div>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#F5C542]/15 border border-[#F5C542]/35 text-[10px] font-bold uppercase tracking-widest text-[#FFD966]">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#FFF4D0] border border-[#EEDBBA] text-[10px] font-bold uppercase tracking-widest text-[#8C5500]">
                 DHARMA SANCTUARY
               </span>
-              <span className="text-xs text-[#C7B68B]">
+              <span className="text-xs text-[#7D6442]">
                 Lộ Trình 3 Bước: Định Tâm → Trì Niệm → Hồi Hướng
               </span>
             </div>
-            <h1 className="font-heading font-serif text-2xl font-bold text-[#FFFDF7] mt-1">
+            <h1 className="font-heading font-serif text-2xl font-bold text-[#2E1E0F] mt-1">
               Không Gian Hành Trì &amp; Thiền Quán Hơi Thở
             </h1>
           </div>
@@ -256,7 +256,7 @@ export function OmManiDesktopPractice({
           <button
             type="button"
             onClick={onOpenMeritLedger}
-            className="px-4 py-2.5 rounded-2xl bg-[#241B0B] border border-[#F5C542]/40 hover:border-[#FFD966] text-[#FFD966] text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md"
+            className="px-4 py-2.5 rounded-2xl bg-white border border-[#ECD9A8] hover:border-[#E5C158] text-[#8C5500] text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md"
           >
             <BodhiLeafIcon className="w-4 h-4" />
             <span>Sổ Công Đức Hồi Hướng</span>
@@ -268,11 +268,11 @@ export function OmManiDesktopPractice({
             className={cn(
               'px-4 py-2.5 rounded-2xl border text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md',
               isMusicPlaying
-                ? 'bg-[#F5C542]/25 border-[#FFD966] text-[#FFD966]'
-                : 'bg-[#241B0B] border-white/10 text-[#D6C394] hover:text-[#FFFDF7]'
+                ? 'bg-[#FFF4D0] border-[#E5C158] text-[#8C5500]'
+                : 'bg-white border-white/10 text-[#6A5234] hover:text-[#2E1E0F]'
             )}
           >
-            <Volume2 className={cn('w-4 h-4', isMusicPlaying && 'animate-pulse text-[#FFD966]')} />
+            <Volume2 className={cn('w-4 h-4', isMusicPlaying && 'animate-pulse text-[#8C5500]')} />
             <span>{isMusicPlaying ? 'Đang Phát Tần Số 432Hz' : 'Bật Tần Số Thiền 432Hz'}</span>
           </button>
 
@@ -282,7 +282,7 @@ export function OmManiDesktopPractice({
               playGrandTempleBellSound(0.5);
               showToast('Tiếng Đại Hồng Chung ngân vang • Thở vào tâm tĩnh lặng');
             }}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-md"
+            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-md"
           >
             <TempleBellIcon className="w-4 h-4" />
             <span>Thỉnh Đại Hồng Chung</span>
@@ -295,24 +295,24 @@ export function OmManiDesktopPractice({
       {/* ========================================================================= */}
       <section className="grid grid-cols-12 gap-8 items-stretch">
         {/* Left Column: Interactive Anapanasati 4-4-6 Breathing Clock (7 cols) */}
-        <div className="col-span-12 xl:col-span-7 p-8 rounded-3xl bg-gradient-to-br from-[#241B0B] via-[#2E220E] to-[#181207] border border-[#F5C542]/35 shadow-2xl space-y-6 flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#F5C542]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="col-span-12 xl:col-span-7 p-8 rounded-3xl bg-gradient-to-br from-[#FFFDF2] via-[#FFF9E6] to-[#FFF4D1] border border-[#EEDBBA] shadow-2xl space-y-6 flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FFF9EA] rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/40 font-bold uppercase tracking-wider">
+              <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#FFF4D0] text-[#8C5500] border border-[#ECD9A8] font-bold uppercase tracking-wider">
                 Bước 1 • Định Tâm Quán Niệm Hơi Thở (Anapanasati)
               </span>
-              <span className="text-xs text-[#F3E3B2] font-serif italic">
+              <span className="text-xs text-[#5A4329] font-serif italic">
                 “Tâm dẫn đầu các pháp, tâm làm chủ, tâm tạo”
               </span>
             </div>
 
             <div>
-              <h2 className="font-heading font-serif text-2xl font-bold text-[#FFFDF7]">
+              <h2 className="font-heading font-serif text-2xl font-bold text-[#2E1E0F]">
                 Phòng Thiền Hơi Thở Chánh Niệm 4-4-6
               </h2>
-              <p className="text-xs text-[#D6C394] mt-1">
+              <p className="text-xs text-[#6A5234] mt-1">
                 Hít vào sâu 4 giây • Giữ hơi an trú 4 giây • Thở ra chậm rãi buông thư 6 giây. Khi hoàn mãn tự động ghi nhận vào Sổ Công Đức.
               </p>
             </div>
@@ -323,27 +323,27 @@ export function OmManiDesktopPractice({
             <div className="relative w-52 h-52 flex items-center justify-center">
               <div
                 className={cn(
-                  'absolute inset-0 rounded-full border border-[#F5C542]/35 transition-all duration-1000',
+                  'absolute inset-0 rounded-full border border-[#EEDBBA] transition-all duration-1000',
                   isTimerRunning && breathTick < 4
-                    ? 'scale-115 border-[#FFD966] bg-[#F5C542]/10'
+                    ? 'scale-115 border-[#E5C158] bg-[#FFF9EA]'
                     : isTimerRunning && breathTick >= 8
-                    ? 'scale-95 border-[#F5C542]/25'
+                    ? 'scale-95 border-[#EEDBBA]'
                     : 'scale-105'
                 )}
               />
               <div
                 className={cn(
-                  'absolute inset-4 rounded-full border-2 border-dashed border-[#F5C542]/45 transition-all duration-1000',
+                  'absolute inset-4 rounded-full border-2 border-dashed border-[#ECD9A8] transition-all duration-1000',
                   isTimerRunning ? 'animate-[spin_40s_linear_infinite]' : ''
                 )}
               />
 
               {/* Central Clock Display */}
               <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
-                <span className="font-mono text-3xl sm:text-4xl font-black text-[#FFD966] tracking-wider">
+                <span className="font-mono text-3xl sm:text-4xl font-black text-[#8C5500] tracking-wider">
                   {formatTime(secondsRemaining)}
                 </span>
-                <span className="text-[11px] font-bold text-[#FFFDF7] mt-1.5 leading-snug">
+                <span className="text-[11px] font-bold text-[#2E1E0F] mt-1.5 leading-snug">
                   {getBreathingPhaseLabel()}
                 </span>
               </div>
@@ -359,8 +359,8 @@ export function OmManiDesktopPractice({
                   className={cn(
                     'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer',
                     meditationMinutes === m
-                      ? 'bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] shadow-md font-black'
-                      : 'bg-[#181207] text-[#D6C394] hover:text-[#FFFDF7] border border-[#F5C542]/20'
+                      ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] shadow-md font-black'
+                      : 'bg-white text-[#6A5234] hover:text-[#2E1E0F] border border-[#EEDBBA]'
                   )}
                 >
                   {m} phút
@@ -370,11 +370,11 @@ export function OmManiDesktopPractice({
           </div>
 
           {/* Action Control Buttons */}
-          <div className="relative z-10 flex items-center gap-3 pt-4 border-t border-[#F5C542]/20">
+          <div className="relative z-10 flex items-center gap-3 pt-4 border-t border-[#EEDBBA]">
             <button
               type="button"
               onClick={handleToggleTimer}
-              className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-sm shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               {isTimerRunning ? (
                 <>
@@ -392,7 +392,7 @@ export function OmManiDesktopPractice({
             <button
               type="button"
               onClick={handleResetTimer}
-              className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/30 hover:border-[#FFD966] text-[#FFD966] transition-all active:scale-95 cursor-pointer"
+              className="p-3 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] text-[#8C5500] transition-all active:scale-95 cursor-pointer"
               title="Đặt lại đồng hồ"
             >
               <RotateCcw className="w-4 h-4" />
@@ -401,12 +401,12 @@ export function OmManiDesktopPractice({
         </div>
 
         {/* Right Column: 3-Step Dharma Practice Architecture Spotlight (5 cols) */}
-        <div className="col-span-12 xl:col-span-5 p-8 rounded-3xl bg-[#241B0B] border border-[#F5C542]/30 shadow-xl flex flex-col justify-between space-y-6">
+        <div className="col-span-12 xl:col-span-5 p-8 rounded-3xl bg-white border border-[#EEDBBA] shadow-xl flex flex-col justify-between space-y-6">
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA]">
               <div className="flex items-center gap-2">
-                <DharmaWheelIcon className="w-4 h-4 text-[#FFD966]" />
-                <h3 className="font-heading font-serif font-bold text-sm text-[#FFD966]">
+                <DharmaWheelIcon className="w-4 h-4 text-[#8C5500]" />
+                <h3 className="font-heading font-serif font-bold text-sm text-[#8C5500]">
                   Tam Đẳng Hành Trì Tại Gia
                 </h3>
               </div>
@@ -415,8 +415,8 @@ export function OmManiDesktopPractice({
               </span>
             </div>
 
-            <p className="text-xs text-[#F3E3B2] leading-relaxed">
-              Khác với việc sử dụng các công cụ rời rạc, Dharma thiết kế hành trình tu tập mỗi ngày theo đúng 3 bước truyền thống của người con Phật: <strong className="text-[#FFD966]">Định Tâm → Trì Niệm → Hồi Hướng</strong>.
+            <p className="text-xs text-[#5A4329] leading-relaxed">
+              Khác với việc sử dụng các công cụ rời rạc, Dharma thiết kế hành trình tu tập mỗi ngày theo đúng 3 bước truyền thống của người con Phật: <strong className="text-[#8C5500]">Định Tâm → Trì Niệm → Hồi Hướng</strong>.
             </p>
 
             {/* Quick Actions List */}
@@ -424,63 +424,63 @@ export function OmManiDesktopPractice({
               <button
                 type="button"
                 onClick={onOpenMala}
-                className="w-full p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] text-left flex items-center justify-between group transition-all cursor-pointer"
+                className="w-full p-3.5 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] text-left flex items-center justify-between group transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966]">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF4D0] border border-[#EEDBBA] flex items-center justify-center text-[#8C5500]">
                     <MalaBeadsMinimalIcon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h4 className="text-xs font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Bước 1 • Lần Chuỗi Bồ Đề 108 Hạt
                     </h4>
-                    <p className="text-[11px] text-[#C7B68B]">Nhiếp tâm qua từng hạt chuỗi và danh hiệu Phật</p>
+                    <p className="text-[11px] text-[#7D6442]">Nhiếp tâm qua từng hạt chuỗi và danh hiệu Phật</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#C7B68B] group-hover:text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#7D6442] group-hover:text-[#8C5500]" />
               </button>
 
               <button
                 type="button"
                 onClick={onOpenBellFish}
-                className="w-full p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] text-left flex items-center justify-between group transition-all cursor-pointer"
+                className="w-full p-3.5 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] text-left flex items-center justify-between group transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966]">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF4D0] border border-[#EEDBBA] flex items-center justify-center text-[#8C5500]">
                     <WoodenFishMinimalIcon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h4 className="text-xs font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Bước 2 • Mõ Nhịp Tự Động 50 / 68 / 88 BPM
                     </h4>
-                    <p className="text-[11px] text-[#C7B68B]">Giữ nhịp tụng kinh đều đặn không mỏi tay</p>
+                    <p className="text-[11px] text-[#7D6442]">Giữ nhịp tụng kinh đều đặn không mỏi tay</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#C7B68B] group-hover:text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#7D6442] group-hover:text-[#8C5500]" />
               </button>
 
               <button
                 type="button"
                 onClick={onOpenPrayPeace}
-                className="w-full p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] text-left flex items-center justify-between group transition-all cursor-pointer"
+                className="w-full p-3.5 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] text-left flex items-center justify-between group transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966]">
+                  <div className="w-10 h-10 rounded-xl bg-[#FFF4D0] border border-[#EEDBBA] flex items-center justify-center text-[#8C5500]">
                     <LotusLanternIcon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#FFFDF7] group-hover:text-[#FFD966]">
+                    <h4 className="text-xs font-bold text-[#2E1E0F] group-hover:text-[#8C5500]">
                       Bước 3 • Thắp Đèn Hoa Đăng &amp; Hồi Hướng
                     </h4>
-                    <p className="text-[11px] text-[#C7B68B]">Lưu giữ lời nguyện vào Sổ Công Đức cá nhân</p>
+                    <p className="text-[11px] text-[#7D6442]">Lưu giữ lời nguyện vào Sổ Công Đức cá nhân</p>
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-[#C7B68B] group-hover:text-[#FFD966]" />
+                <ChevronRight className="w-4 h-4 text-[#7D6442] group-hover:text-[#8C5500]" />
               </button>
             </div>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/20 text-xs text-[#FFD966] italic text-center font-serif">
+          <div className="p-3.5 rounded-2xl bg-white border border-[#EEDBBA] text-xs text-[#8C5500] italic text-center font-serif">
             “Nguyện đem công đức này, hướng về khắp tất cả, đệ tử và chúng sinh, đều trọn thành Phật đạo.”
           </div>
         </div>
@@ -490,15 +490,15 @@ export function OmManiDesktopPractice({
       {/* 3. TEN DHARMA PRACTICE VEHICLES GRID (5 COLUMNS)                          */}
       {/* ========================================================================= */}
       <section className="space-y-6">
-        <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/25">
+        <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA]">
           <div>
-            <h2 className="font-heading font-serif text-xl font-bold text-[#FFFDF7] flex items-center gap-2.5">
+            <h2 className="font-heading font-serif text-xl font-bold text-[#2E1E0F] flex items-center gap-2.5">
               <span>Mười Pháp Khí &amp; Phương Tiện Hành Trì</span>
-              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#F5C542]/20 text-[#FFD966] border border-[#F5C542]/35">
+              <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#FFF4D0] text-[#8C5500] border border-[#EEDBBA]">
                 10 Pháp Khí
               </span>
             </h2>
-            <p className="text-xs text-[#C7B68B] mt-1">
+            <p className="text-xs text-[#7D6442] mt-1">
               Mọi pháp khí đều tích hợp âm thanh thiền tự chân thực và tự động lưu vào Sổ Công Đức
             </p>
           </div>
@@ -515,8 +515,8 @@ export function OmManiDesktopPractice({
                 className={cn(
                   'group relative rounded-3xl overflow-hidden aspect-[4/4.3] p-4 flex flex-col justify-between border cursor-pointer active:scale-95 transition-all duration-300 hover:-translate-y-1 shadow-xl bg-cover bg-center',
                   card.isHighlighted
-                    ? 'border-[#FFD966] ring-2 ring-[#F5C542]/60'
-                    : 'border-[#F5C542]/25 hover:border-[#FFD966]'
+                    ? 'border-[#E5C158] ring-2 ring-[#F5C542]/60'
+                    : 'border-[#EEDBBA] hover:border-[#E5C158]'
                 )}
                 style={{
                   backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.55) 55%, rgba(24, 18, 7, 0.25) 100%), url('${card.image}')`,
@@ -524,20 +524,20 @@ export function OmManiDesktopPractice({
               >
                 {/* Top Row: Step Tag & Minimalist SVG Icon */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-1 rounded-full bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/35 text-[10px] font-bold text-[#FFD966]">
+                  <span className="px-2.5 py-1 rounded-full bg-white backdrop-blur-md border border-[#EEDBBA] text-[10px] font-bold text-[#8C5500]">
                     {card.step}
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-[#181207]/80 backdrop-blur-md border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] shadow-md group-hover:scale-110 transition-transform">
+                  <div className="w-9 h-9 rounded-xl bg-white backdrop-blur-md border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] shadow-md group-hover:scale-110 transition-transform">
                     <Icon className="w-4 h-4" />
                   </div>
                 </div>
 
                 {/* Bottom Card Title & Subtitle */}
                 <div className="space-y-1">
-                  <h4 className="font-heading font-serif font-bold text-base text-[#FFFDF7] group-hover:text-[#FFD966] transition-colors leading-tight">
+                  <h4 className="font-heading font-serif font-bold text-base text-[#2E1E0F] group-hover:text-[#8C5500] transition-colors leading-tight">
                     {card.title}
                   </h4>
-                  <p className="text-xs text-[#F3E3B2]/90 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-[#5A4329]/90 line-clamp-2 leading-relaxed">
                     {card.subtitle}
                   </p>
                 </div>

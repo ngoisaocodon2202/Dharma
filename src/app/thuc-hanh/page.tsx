@@ -341,7 +341,7 @@ export default function PracticePage() {
       : MOBILE_VEHICLES.filter((v) => v.category === stepFilter);
 
   return (
-    <div className="min-h-screen bg-[#181207] text-[#FFFDF7] selection:bg-[#F5C542]/30 selection:text-[#FFD966]">
+    <div className="min-h-screen bg-white text-[#2E1E0F] selection:bg-[#F5C542]/30 selection:text-[#8C5500]">
       {/* ========================================================================= */}
       {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP PRACTICE               */}
       {/* ========================================================================= */}
@@ -351,15 +351,15 @@ export default function PracticePage() {
           <header className="flex items-center justify-between gap-2 pt-2">
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
-                <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
-                  <MeditatingMonkOutlineIcon className="w-5 h-5 text-[#FFD966]" />
+                <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center">
+                  <MeditatingMonkOutlineIcon className="w-5 h-5 text-[#8C5500]" />
                 </div>
               </div>
               <div className="min-w-0 flex-1">
-                <span className="text-[9.5px] font-bold uppercase tracking-normal text-[#FFD966] block whitespace-nowrap">
+                <span className="text-[9.5px] font-bold uppercase tracking-normal text-[#8C5500] block whitespace-nowrap">
                   DHARMA • TAM ĐẲNG HÀNH TRÌ
                 </span>
-                <h1 className="font-heading font-serif text-base sm:text-xl font-bold text-[#FFFDF7] leading-tight whitespace-nowrap">
+                <h1 className="font-heading font-serif text-base sm:text-xl font-bold text-[#2E1E0F] leading-tight whitespace-nowrap">
                   Định Tâm &amp; Hành Trì
                 </h1>
               </div>
@@ -371,7 +371,7 @@ export default function PracticePage() {
                 playWoodenFishSound(0.3);
                 setIsMeritLedgerOpen(true);
               }}
-              className="px-2.5 py-2 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-[#FFD966] text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-all cursor-pointer shadow-sm shrink-0 whitespace-nowrap"
+              className="px-2.5 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#8C5500] text-[11px] font-bold flex items-center gap-1 active:scale-95 transition-all cursor-pointer shadow-sm shrink-0 whitespace-nowrap"
             >
               <BodhiLeafIcon className="w-3.5 h-3.5 shrink-0" />
               <span>Sổ Công Đức</span>
@@ -381,26 +381,26 @@ export default function PracticePage() {
           {/* 2. HERO CARD: ANAPANASATI BREATHING MEDITATION */}
           <section aria-label="Phòng thiền hơi thở chánh niệm">
             <div
-              className="relative rounded-3xl overflow-hidden border border-[#F5C542]/35 shadow-2xl p-4 flex flex-col justify-between gap-4 bg-cover bg-center"
+              className="relative rounded-3xl overflow-hidden border border-[#EEDBBA] shadow-2xl p-4 flex flex-col justify-between gap-4 bg-cover bg-center"
               style={{
                 backgroundImage:
                   "linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.55) 55%, rgba(24, 18, 7, 0.25) 100%), url('/images/buddha_meditation.jpg')",
               }}
             >
               <div className="flex items-center justify-between relative z-10">
-                <div className="px-3 py-1 rounded-full bg-[#181207]/80 backdrop-blur-md text-[#FFD966] text-[10px] font-bold uppercase tracking-wider border border-[#F5C542]/40 whitespace-nowrap">
+                <div className="px-3 py-1 rounded-full bg-white backdrop-blur-md text-[#8C5500] text-[10px] font-bold uppercase tracking-wider border border-[#ECD9A8] whitespace-nowrap">
                   Bước 1 • Thiền Quán Hơi Thở 4-4-6
                 </div>
-                <div className="relative w-9 h-9 rounded-2xl border border-[#F5C542]/45 bg-[#181207]/75 backdrop-blur-md flex items-center justify-center text-[#FFD966] shadow-md shrink-0">
+                <div className="relative w-9 h-9 rounded-2xl border border-[#ECD9A8] bg-white/75 backdrop-blur-md flex items-center justify-center text-[#8C5500] shadow-md shrink-0">
                   <MeditatingMonkOutlineIcon className="w-4 h-4" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1">
-                <h2 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFFDF7] leading-tight whitespace-nowrap truncate">
+                <h2 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#2E1E0F] leading-tight whitespace-nowrap truncate">
                   Thiền Hơi Thở Anapanasati
                 </h2>
-                <p className="text-[11px] sm:text-xs text-[#F3E3B2] whitespace-nowrap truncate">
+                <p className="text-[11px] sm:text-xs text-[#5A4329] whitespace-nowrap truncate">
                   Hít vào 4s • An trú chánh niệm 4s • Thở ra buông xả 6s
                 </p>
 
@@ -411,7 +411,7 @@ export default function PracticePage() {
                       playBellSound(0.4);
                       setIsMeditationModalOpen(true);
                     }}
-                    className="py-2.5 px-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                    className="py-2.5 px-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                   >
                     <Play className="w-3.5 h-3.5 fill-current shrink-0" />
                     <span>Bắt Đầu Thiền</span>
@@ -423,7 +423,7 @@ export default function PracticePage() {
                       playGrandTempleBellSound(0.5);
                       showToast('Tiếng Đại Hồng Chung ngân vang • Tâm bình an');
                     }}
-                    className="py-2.5 px-3 rounded-2xl bg-[#181207]/85 border border-[#F5C542]/40 text-[#FFD966] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                    className="py-2.5 px-3 rounded-2xl bg-white border border-[#ECD9A8] text-[#8C5500] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                   >
                     <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
                     <span>Thỉnh Chuông</span>
@@ -434,7 +434,7 @@ export default function PracticePage() {
           </section>
 
           {/* 3. REACT NATIVE 4-PILL SEGMENTED STEP FILTER */}
-          <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25">
+          <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-white border border-[#EEDBBA]">
             {[
               { id: 'all', label: 'Tất Cả' },
               { id: 'dinh_tam', label: '1. Định Tâm' },
@@ -453,8 +453,8 @@ export default function PracticePage() {
                   className={cn(
                     'py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap',
                     active
-                      ? 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] shadow-sm'
-                      : 'text-[#D6C394] hover:text-[#FFFDF7]'
+                      ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-sm'
+                      : 'text-[#6A5234] hover:text-[#2E1E0F]'
                   )}
                 >
                   {tab.label}
@@ -475,27 +475,27 @@ export default function PracticePage() {
                     className={cn(
                       'relative rounded-2xl overflow-hidden aspect-[4/3] p-3 flex flex-col justify-between border cursor-pointer group active:scale-95 transition-all shadow-lg bg-cover bg-center',
                       item.active
-                        ? 'border-[#FFD966] ring-2 ring-[#F5C542]/60'
-                        : 'border-[#F5C542]/25 hover:border-[#FFD966]'
+                        ? 'border-[#E5C158] ring-2 ring-[#F5C542]/60'
+                        : 'border-[#EEDBBA] hover:border-[#E5C158]'
                     )}
                     style={{
                       backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.45) 60%, rgba(24, 18, 7, 0.2) 100%), url('${item.image}')`,
                     }}
                   >
                     <div className="flex items-center justify-between gap-1">
-                      <span className="px-2 py-0.5 rounded-full bg-[#181207]/85 backdrop-blur-md border border-[#F5C542]/35 text-[9px] font-bold text-[#FFD966] whitespace-nowrap">
+                      <span className="px-2 py-0.5 rounded-full bg-white backdrop-blur-md border border-[#EEDBBA] text-[9px] font-bold text-[#8C5500] whitespace-nowrap">
                         {item.stepBadge}
                       </span>
-                      <div className="w-7 h-7 rounded-xl bg-[#181207]/85 backdrop-blur-md border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] shrink-0">
+                      <div className="w-7 h-7 rounded-xl bg-white backdrop-blur-md border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] shrink-0">
                         <Icon className="w-3.5 h-3.5" />
                       </div>
                     </div>
 
                     <div className="min-w-0">
-                      <h4 className="font-heading font-serif font-bold text-[13px] sm:text-sm text-[#FFFDF7] group-hover:text-[#FFD966] transition-colors leading-tight truncate whitespace-nowrap">
+                      <h4 className="font-heading font-serif font-bold text-[13px] sm:text-sm text-[#2E1E0F] group-hover:text-[#8C5500] transition-colors leading-tight truncate whitespace-nowrap">
                         {item.title}
                       </h4>
-                      <p className="text-[10px] text-[#F3E3B2]/90 mt-0.5 truncate whitespace-nowrap">
+                      <p className="text-[10px] text-[#5A4329]/90 mt-0.5 truncate whitespace-nowrap">
                         {item.subtitle}
                       </p>
                     </div>
@@ -540,28 +540,28 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMeditationModalOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-6 text-[#2E1E0F] shadow-2xl text-center space-y-5">
             <button
               type="button"
               onClick={() => {
                 setIsMeditationActive(false);
                 setIsMeditationModalOpen(false);
               }}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C5500] block">
                 THIỀN QUÁN HƠI THỞ ANAPANASATI
               </span>
-              <h3 className="font-heading font-serif text-xl font-bold text-[#FFFDF7] mt-1">
+              <h3 className="font-heading font-serif text-xl font-bold text-[#2E1E0F] mt-1">
                 Phòng Thiền Hơi Thở 4-4-6
               </h3>
-              <p className="text-xs text-[#D6C394] mt-1">
+              <p className="text-xs text-[#6A5234] mt-1">
                 {getBreathingPhaseText()}
               </p>
             </div>
@@ -569,22 +569,22 @@ export default function PracticePage() {
             <div className="relative w-44 h-44 mx-auto flex items-center justify-center my-3">
               <div
                 className={cn(
-                  'absolute inset-0 rounded-full border-2 border-[#F5C542]/35 transition-all duration-1000',
+                  'absolute inset-0 rounded-full border-2 border-[#EEDBBA] transition-all duration-1000',
                   isMeditationActive && breathTick < 4
-                    ? 'scale-115 border-[#FFD966]'
+                    ? 'scale-115 border-[#E5C158]'
                     : isMeditationActive && breathTick >= 8
-                    ? 'scale-95 border-[#F5C542]/20'
+                    ? 'scale-95 border-[#EEDBBA]'
                     : 'scale-105'
                 )}
               />
-              <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-[#F5C542]/25 to-[#FFD966]/10 border border-[#F5C542]/45 flex flex-col items-center justify-center shadow-[0_0_25px_rgba(245,197,66,0.25)]">
-                <span className="font-mono text-3xl font-black text-[#FFD966]">
+              <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-[#F5C542]/25 to-[#FFD966]/10 border border-[#ECD9A8] flex flex-col items-center justify-center shadow-[0_0_25px_rgba(245,197,66,0.25)]">
+                <span className="font-mono text-3xl font-black text-[#8C5500]">
                   {Math.floor(meditationSecondsLeft / 60)
                     .toString()
                     .padStart(2, '0')}
                   :{(meditationSecondsLeft % 60).toString().padStart(2, '0')}
                 </span>
-                <span className="text-[10px] text-[#FFFDF7] uppercase tracking-wider font-bold mt-1">
+                <span className="text-[10px] text-[#2E1E0F] uppercase tracking-wider font-bold mt-1">
                   {isMeditationActive ? 'Đang Thiền Định' : 'Sẵn Sàng'}
                 </span>
               </div>
@@ -603,8 +603,8 @@ export default function PracticePage() {
                     className={cn(
                       'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer',
                       meditationMinutes === mins
-                        ? 'bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207]'
-                        : 'bg-[#181207] text-[#C7B68B] border border-[#F5C542]/20'
+                        ? 'bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505]'
+                        : 'bg-white text-[#7D6442] border border-[#EEDBBA]'
                     )}
                   >
                     {mins} phút
@@ -626,7 +626,7 @@ export default function PracticePage() {
                     showToast('Bắt đầu thiền hơi thở • Nguyện thân tâm an lạc');
                   }
                 }}
-                className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-sm shadow-md cursor-pointer"
+                className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-sm shadow-md cursor-pointer"
               >
                 {isMeditationActive ? 'Tạm Dừng' : 'Bắt Đầu Tọa Thiền'}
               </button>
@@ -639,7 +639,7 @@ export default function PracticePage() {
                   setBreathTick(0);
                   playWoodenFishSound(0.4);
                 }}
-                className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/30 text-[#FFD966] cursor-pointer"
+                className="p-3 rounded-2xl bg-white border border-[#EEDBBA] text-[#8C5500] cursor-pointer"
                 title="Đặt lại"
               >
                 <RotateCcw className="w-5 h-5" />
@@ -657,9 +657,9 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsChantMachineOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => {
@@ -667,19 +667,19 @@ export default function PracticePage() {
                 setIsChantingPlaying(false);
                 setIsChantMachineOpen(false);
               }}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] mb-2">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] mb-2">
                 <TempleBellIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+              <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
                 Pháp Âm Niệm Phật &amp; Trì Chú
               </h3>
-              <p className="text-xs text-[#D6C394]">
+              <p className="text-xs text-[#6A5234]">
                 Thanh âm niệm hồng danh chư Phật &amp; thần chú tịnh hóa
               </p>
             </div>
@@ -700,13 +700,13 @@ export default function PracticePage() {
                   className={cn(
                     'p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between',
                     activeChantTrack === track.id
-                      ? 'bg-[#F5C542]/20 border-[#FFD966] text-[#FFFDF7]'
-                      : 'bg-[#181207] border-[#F5C542]/15 text-[#C7B68B]'
+                      ? 'bg-[#FFF4D0] border-[#E5C158] text-[#2E1E0F]'
+                      : 'bg-white border-[#F2E5C7] text-[#7D6442]'
                   )}
                 >
                   <div>
-                    <h5 className="font-bold text-xs sm:text-sm text-[#FFFDF7]">{track.title}</h5>
-                    <p className="text-[11px] text-[#D6C394] mt-0.5">{track.sub}</p>
+                    <h5 className="font-bold text-xs sm:text-sm text-[#2E1E0F]">{track.title}</h5>
+                    <p className="text-[11px] text-[#6A5234] mt-0.5">{track.sub}</p>
                   </div>
                   {activeChantTrack === track.id && (
                     <span className="w-2.5 h-2.5 rounded-full bg-[#FFD966]" />
@@ -730,7 +730,7 @@ export default function PracticePage() {
                     showToast('Đang phát Pháp Âm Niệm Phật thanh tịnh');
                   }
                 }}
-                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isChantingPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
                 <span>{isChantingPlaying ? 'Tạm Dừng Pháp Âm' : 'Phát Pháp Âm Niệm Phật'}</span>
@@ -751,28 +751,28 @@ export default function PracticePage() {
               setIsBellsModalOpen(false);
             }
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-6 text-[#FFFDF7] shadow-2xl text-center space-y-5">
+          <div className="relative w-full max-w-md max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-6 text-[#2E1E0F] shadow-2xl text-center space-y-5">
             <button
               type="button"
               onClick={() => {
                 setIsAutoFishPlaying(false);
                 setIsBellsModalOpen(false);
               }}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFD966] block">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C5500] block">
                 PHÁP KHÍ THIỀN MÔN
               </span>
-              <h3 className="font-heading font-serif text-xl font-bold text-[#FFFDF7] mt-1">
+              <h3 className="font-heading font-serif text-xl font-bold text-[#2E1E0F] mt-1">
                 Đại Hồng Chung &amp; Mõ Nhịp BPM
               </h3>
-              <p className="text-xs text-[#D6C394] mt-1">
+              <p className="text-xs text-[#6A5234] mt-1">
                 Thỉnh chuông thủ công hoặc bật Mõ Tự Động giữ nhịp tụng kinh
               </p>
             </div>
@@ -785,15 +785,15 @@ export default function PracticePage() {
                   playGrandTempleBellSound(0.55);
                   showToast('Tiếng chuông ngân vang • Phiền não nhẹ tan');
                 }}
-                className="p-5 rounded-3xl bg-[#181207] border border-[#F5C542]/35 hover:border-[#FFD966] active:scale-95 transition-all shadow-xl flex flex-col items-center justify-center group cursor-pointer"
+                className="p-5 rounded-3xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] active:scale-95 transition-all shadow-xl flex flex-col items-center justify-center group cursor-pointer"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] group-hover:scale-110 transition-transform mb-2.5">
+                <div className="w-14 h-14 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] group-hover:scale-110 transition-transform mb-2.5">
                   <TempleBellIcon className="w-7 h-7" />
                 </div>
-                <span className="font-heading font-serif font-bold text-sm text-[#FFFDF7]">
+                <span className="font-heading font-serif font-bold text-sm text-[#2E1E0F]">
                   Thỉnh Chuông
                 </span>
-                <span className="text-[10px] text-[#C7B68B] mt-0.5">Đại Hồng Chung</span>
+                <span className="text-[10px] text-[#7D6442] mt-0.5">Đại Hồng Chung</span>
               </button>
 
               <button
@@ -802,25 +802,25 @@ export default function PracticePage() {
                   playWoodenFishSound(0.7);
                   setFishBeatCount((c) => c + 1);
                 }}
-                className="p-5 rounded-3xl bg-[#181207] border border-[#F5C542]/35 hover:border-[#FFD966] active:scale-95 transition-all shadow-xl flex flex-col items-center justify-center group cursor-pointer"
+                className="p-5 rounded-3xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] active:scale-95 transition-all shadow-xl flex flex-col items-center justify-center group cursor-pointer"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] group-hover:scale-110 transition-transform mb-2.5">
+                <div className="w-14 h-14 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] group-hover:scale-110 transition-transform mb-2.5">
                   <WoodenFishMinimalIcon className="w-7 h-7" />
                 </div>
-                <span className="font-heading font-serif font-bold text-sm text-[#FFFDF7]">
+                <span className="font-heading font-serif font-bold text-sm text-[#2E1E0F]">
                   Gõ Mõ ({fishBeatCount})
                 </span>
-                <span className="text-[10px] text-[#C7B68B] mt-0.5">Mõ Gỗ Trầm</span>
+                <span className="text-[10px] text-[#7D6442] mt-0.5">Mõ Gỗ Trầm</span>
               </button>
             </div>
 
             {/* Auto-Rhythm BPM Controller */}
-            <div className="p-4 rounded-2xl bg-[#181207] border border-[#F5C542]/25 space-y-3 text-left">
+            <div className="p-4 rounded-2xl bg-white border border-[#EEDBBA] space-y-3 text-left">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#FFD966]">
+                <span className="text-xs font-bold text-[#8C5500]">
                   Chế Độ Mõ Tự Động Trợ Duyệt Tụng Kinh
                 </span>
-                <span className="text-[11px] font-mono text-[#D6C394]">
+                <span className="text-[11px] font-mono text-[#6A5234]">
                   {fishBpm} nhịp/phút
                 </span>
               </div>
@@ -838,8 +838,8 @@ export default function PracticePage() {
                     className={cn(
                       'py-2 px-2 rounded-xl text-[11px] font-bold border transition-all cursor-pointer text-center',
                       fishBpm === opt.bpm
-                        ? 'bg-[#F5C542]/25 border-[#FFD966] text-[#FFD966]'
-                        : 'bg-[#241B0B] border-[#F5C542]/15 text-[#C7B68B]'
+                        ? 'bg-[#FFF4D0] border-[#E5C158] text-[#8C5500]'
+                        : 'bg-white border-[#F2E5C7] text-[#7D6442]'
                     )}
                   >
                     {opt.label}
@@ -863,7 +863,7 @@ export default function PracticePage() {
                   'w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer',
                   isAutoFishPlaying
                     ? 'bg-emerald-500/20 border border-emerald-400/50 text-emerald-300'
-                    : 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207]'
+                    : 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505]'
                 )}
               >
                 {isAutoFishPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -884,49 +884,49 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerPeaceOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => setIsPrayerPeaceOpen(false)}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] mb-2">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] mb-2">
                 <LotusLanternIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+              <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
                 Thắp Đèn Hoa Đăng Cầu An
               </h3>
-              <p className="text-xs text-[#D6C394] mt-0.5">
+              <p className="text-xs text-[#6A5234] mt-0.5">
                 Dâng ánh sáng từ bi nguyện cầu bình an cho cha mẹ &amp; gia quyến
               </p>
             </div>
 
             <div className="space-y-3 text-xs">
               <div>
-                <label className="text-[#F3E3B2] block mb-1 font-medium">Phật tử / Gia chủ phát nguyện</label>
+                <label className="text-[#5A4329] block mb-1 font-medium">Phật tử / Gia chủ phát nguyện</label>
                 <input
                   type="text"
                   value={peaceName}
                   onChange={(e) => setPeaceName(e.target.value)}
                   placeholder="Ví dụ: Phật tử Tâm An cùng gia quyến..."
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
+                  className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
                 />
               </div>
 
               <div>
-                <label className="text-[#F3E3B2] block mb-1 font-medium">Lời nguyện Cầu An</label>
+                <label className="text-[#5A4329] block mb-1 font-medium">Lời nguyện Cầu An</label>
                 <textarea
                   rows={3}
                   value={peaceWish}
                   onChange={(e) => setPeaceWish(e.target.value)}
                   placeholder="Nguyện mười phương Chư Phật gia hộ cho cha mẹ và gia quyến thân tâm thường an lạc, tật bệnh tiêu trừ..."
-                  className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
                 />
               </div>
 
@@ -947,7 +947,7 @@ export default function PracticePage() {
                   showToast('Đã thắp Hoa Đăng Cầu An & lưu vào Sổ Công Đức Dharma!');
                   setIsPrayerPeaceOpen(false);
                 }}
-                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold shadow-md cursor-pointer mt-2"
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold shadow-md cursor-pointer mt-2"
               >
                 Thắp Đèn Hoa Đăng &amp; Hồi Hướng
               </button>
@@ -964,49 +964,49 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerRebirthOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => setIsPrayerRebirthOpen(false)}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#F5C542]/15 border border-[#F5C542]/40 flex items-center justify-center text-[#FFD966] mb-2">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] mb-2">
                 <IncenseAltarIcon className="w-6 h-6" />
               </div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+              <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
                 Hoa Đăng Kỳ Siêu &amp; Tưởng Niệm
               </h3>
-              <p className="text-xs text-[#D6C394] mt-0.5">
+              <p className="text-xs text-[#6A5234] mt-0.5">
                 Hồi hướng công đức cầu siêu cửu huyền thất tổ &amp; hương linh quá vãng
               </p>
             </div>
 
             <div className="space-y-3 text-xs">
               <div>
-                <label className="text-[#F3E3B2] block mb-1 font-medium">Hương linh / Cửu huyền thất tổ</label>
+                <label className="text-[#5A4329] block mb-1 font-medium">Hương linh / Cửu huyền thất tổ</label>
                 <input
                   type="text"
                   value={rebirthName}
                   onChange={(e) => setRebirthName(e.target.value)}
                   placeholder="Ví dụ: Cửu huyền thất tổ nội ngoại hai bên..."
-                  className="w-full px-3 py-2.5 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
+                  className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
                 />
               </div>
 
               <div>
-                <label className="text-[#F3E3B2] block mb-1 font-medium">Lời nguyện Kỳ Siêu</label>
+                <label className="text-[#5A4329] block mb-1 font-medium">Lời nguyện Kỳ Siêu</label>
                 <textarea
                   rows={3}
                   value={rebirthWish}
                   onChange={(e) => setRebirthWish(e.target.value)}
                   placeholder="Nguyện nương nhờ ánh sáng từ bi của Đức Phật A Di Đà tiếp dẫn hương linh siêu sinh Tịnh Độ..."
-                  className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7] focus:outline-hidden focus:border-[#FFD966]"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
                 />
               </div>
 
@@ -1027,7 +1027,7 @@ export default function PracticePage() {
                   showToast('Đã gửi lời Kỳ Siêu Hồi Hướng vào Sổ Công Đức Dharma!');
                   setIsPrayerRebirthOpen(false);
                 }}
-                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold shadow-md cursor-pointer mt-2"
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold shadow-md cursor-pointer mt-2"
               >
                 Gửi Lời Hồi Hướng Công Đức
               </button>
@@ -1044,20 +1044,20 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsBuddhasModalOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA] shrink-0">
               <div>
-                <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
                   Tôn Tượng Chư Phật &amp; Đại Nguyện
                 </h3>
-                <p className="text-xs text-[#C7B68B]">Chiêm bái tôn tượng &amp; trì niệm hồng danh</p>
+                <p className="text-xs text-[#7D6442]">Chiêm bái tôn tượng &amp; trì niệm hồng danh</p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsBuddhasModalOpen(false)}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1072,15 +1072,15 @@ export default function PracticePage() {
                     setSelectedBuddha(buddha);
                     showToast(`Nam Mô ${buddha.name}`);
                   }}
-                  className="flex gap-3.5 items-center p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 hover:border-[#FFD966] cursor-pointer transition-all"
+                  className="flex gap-3.5 items-center p-3 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] cursor-pointer transition-all"
                 >
-                  <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-[#F5C542]/35">
+                  <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-[#EEDBBA]">
                     <img src={buddha.image} alt={buddha.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h5 className="font-heading font-serif font-bold text-sm text-[#FFFDF7]">{buddha.name}</h5>
-                    <p className="text-xs text-[#FFD966] font-mono truncate mt-0.5">{buddha.mantra}</p>
-                    <p className="text-[11px] text-[#D6C394] mt-1 line-clamp-2">{buddha.vow}</p>
+                    <h5 className="font-heading font-serif font-bold text-sm text-[#2E1E0F]">{buddha.name}</h5>
+                    <p className="text-xs text-[#8C5500] font-mono truncate mt-0.5">{buddha.mantra}</p>
+                    <p className="text-[11px] text-[#6A5234] mt-1 line-clamp-2">{buddha.vow}</p>
                   </div>
                 </div>
               ))}
@@ -1097,22 +1097,22 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMemorialBookOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl space-y-4">
+          <div className="relative w-full max-w-sm max-h-[86vh] overflow-y-auto no-scrollbar rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl space-y-4">
             <button
               type="button"
               onClick={() => setIsMemorialBookOpen(false)}
-              className="absolute top-4 right-4 text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+              <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
                 Sổ Hiếu Hạnh Gia Tiên
               </h3>
-              <p className="text-xs text-[#D6C394]">
+              <p className="text-xs text-[#6A5234]">
                 Ghi nhớ ngày húy kỵ tổ tiên để tụng kinh &amp; hồi hướng báo hiếu
               </p>
             </div>
@@ -1121,13 +1121,13 @@ export default function PracticePage() {
               {memorials.map((m) => (
                 <div
                   key={m.id}
-                  className="p-3 rounded-2xl bg-[#181207] border border-[#F5C542]/20 flex items-center justify-between text-xs"
+                  className="p-3 rounded-2xl bg-white border border-[#EEDBBA] flex items-center justify-between text-xs"
                 >
                   <div>
-                    <h5 className="font-bold text-[#FFFDF7]">
+                    <h5 className="font-bold text-[#2E1E0F]">
                       {m.name} ({m.relation})
                     </h5>
-                    <p className="text-[#FFD966] font-mono mt-0.5">
+                    <p className="text-[#8C5500] font-mono mt-0.5">
                       Âm lịch: {m.lunarDate} {m.solarDate && `• ${m.solarDate}`}
                     </p>
                   </div>
@@ -1137,7 +1137,7 @@ export default function PracticePage() {
                       setMemorials((prev) => prev.filter((item) => item.id !== m.id));
                       showToast('Đã xóa mục ghi nhớ');
                     }}
-                    className="text-[#C7B68B] hover:text-red-400 p-1 cursor-pointer"
+                    className="text-[#7D6442] hover:text-red-400 p-1 cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -1145,13 +1145,13 @@ export default function PracticePage() {
               ))}
             </div>
 
-            <div className="space-y-2 pt-2 border-t border-[#F5C542]/20 text-xs">
+            <div className="space-y-2 pt-2 border-t border-[#EEDBBA] text-xs">
               <input
                 type="text"
                 placeholder="Họ tên & Pháp danh người thân"
                 value={newMemName}
                 onChange={(e) => setNewMemName(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
+                className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F]"
               />
               <div className="flex gap-2">
                 <input
@@ -1159,14 +1159,14 @@ export default function PracticePage() {
                   placeholder="Quan hệ (Ông/Bà/Cha/Mẹ)"
                   value={newMemRelation}
                   onChange={(e) => setNewMemRelation(e.target.value)}
-                  className="flex-1 px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
+                  className="flex-1 px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F]"
                 />
                 <input
                   type="text"
                   placeholder="Ngày Âm (15/07)"
                   value={newMemDate}
                   onChange={(e) => setNewMemDate(e.target.value)}
-                  className="flex-1 px-3 py-2 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFFDF7]"
+                  className="flex-1 px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F]"
                 />
               </div>
 
@@ -1188,7 +1188,7 @@ export default function PracticePage() {
                   playWoodenFishSound(0.5);
                   showToast('Đã lưu vào Sổ Hiếu Hạnh Gia Tiên');
                 }}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold cursor-pointer"
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold cursor-pointer"
               >
                 + Lưu Ngày Tưởng Niệm
               </button>
@@ -1205,17 +1205,17 @@ export default function PracticePage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsMeritLedgerOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20">
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA]">
               <div className="flex items-center gap-2">
-                <BodhiLeafIcon className="w-5 h-5 text-[#FFD966]" />
+                <BodhiLeafIcon className="w-5 h-5 text-[#8C5500]" />
                 <div>
-                  <h3 className="font-heading font-serif text-lg font-bold text-[#FFD966]">
+                  <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
                     Sổ Công Đức Hồi Hướng Dharma
                   </h3>
-                  <p className="text-xs text-[#C7B68B]">
+                  <p className="text-xs text-[#7D6442]">
                     Ghi nhận các thời khóa tọa thiền, trì niệm &amp; dâng hương
                   </p>
                 </div>
@@ -1223,7 +1223,7 @@ export default function PracticePage() {
               <button
                 type="button"
                 onClick={() => setIsMeritLedgerOpen(false)}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1231,9 +1231,9 @@ export default function PracticePage() {
 
             <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-2.5">
               {meritEntries.length === 0 ? (
-                <div className="p-6 rounded-2xl bg-[#181207] border border-[#F5C542]/15 text-center space-y-2">
-                  <LotusMinimalIcon className="w-8 h-8 text-[#FFD966] mx-auto opacity-80" />
-                  <p className="text-xs text-[#F3E3B2]">
+                <div className="p-6 rounded-2xl bg-white border border-[#F2E5C7] text-center space-y-2">
+                  <LotusMinimalIcon className="w-8 h-8 text-[#8C5500] mx-auto opacity-80" />
+                  <p className="text-xs text-[#5A4329]">
                     Sổ Công Đức đang chờ ghi nhận thời khóa đầu tiên của bạn hôm nay.
                   </p>
                 </div>
@@ -1241,17 +1241,17 @@ export default function PracticePage() {
                 meritEntries.map((entry) => (
                   <div
                     key={entry.id}
-                    className="p-3.5 rounded-2xl bg-[#181207] border border-[#F5C542]/25 space-y-1"
+                    className="p-3.5 rounded-2xl bg-white border border-[#EEDBBA] space-y-1"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-heading font-serif font-bold text-xs text-[#FFD966]">
+                      <span className="font-heading font-serif font-bold text-xs text-[#8C5500]">
                         {entry.title}
                       </span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F5C542]/15 text-[#FFD966]">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FFF4D0] text-[#8C5500]">
                         +{entry.meritPoints} công đức
                       </span>
                     </div>
-                    <p className="text-xs text-[#F3E3B2]">{entry.detail}</p>
+                    <p className="text-xs text-[#5A4329]">{entry.detail}</p>
                   </div>
                 ))
               )}
@@ -1263,8 +1263,8 @@ export default function PracticePage() {
       {/* FLOATING TOAST */}
       {toastMessage && (
         <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#241B0B]/95 border border-[#F5C542] text-center shadow-xl backdrop-blur-md">
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFD966]">
+          <div className="px-4 py-2.5 rounded-2xl bg-white/95 border border-[#ECD9A8] text-center shadow-xl backdrop-blur-md">
+            <p className="font-heading text-xs sm:text-sm font-bold text-[#8C5500]">
               {toastMessage}
             </p>
           </div>

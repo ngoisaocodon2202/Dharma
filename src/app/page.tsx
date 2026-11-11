@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <main className="w-full min-h-screen bg-[#181207]">
+    <main className="w-full min-h-screen bg-[#FDFBF7] text-[#2E1E0F]">
       <OmManiAppStoreHome />
     </main>
   );

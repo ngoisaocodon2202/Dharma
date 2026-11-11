@@ -364,7 +364,7 @@ export default function SutrasLibraryPage() {
   const totalChantedBiens = Object.values(sutraChantCounts).reduce((a, b) => a + b, 0);
 
   return (
-    <div className="min-h-screen bg-[#181207] text-[#FFFDF7] selection:bg-[#F5C542]/30 selection:text-[#FFD966]">
+    <div className="min-h-screen bg-white text-[#2E1E0F] selection:bg-[#F5C542]/30 selection:text-[#8C5500]">
       {/* ========================================================================= */}
       {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP SUTRAS                 */}
       {/* ========================================================================= */}
@@ -374,25 +374,25 @@ export default function SutrasLibraryPage() {
           <header className="flex items-center justify-between gap-2 pt-2">
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
               <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
-                <div className="w-full h-full rounded-[14px] bg-[#181207] flex items-center justify-center">
-                  <SutraScrollIcon className="w-5 h-5 text-[#FFD966]" />
+                <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center">
+                  <SutraScrollIcon className="w-5 h-5 text-[#8C5500]" />
                 </div>
               </div>
               <div className="min-w-0 flex-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block whitespace-nowrap truncate">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block whitespace-nowrap truncate">
                   DHARMA • TAM TẠNG PHÁP BẢO
                 </span>
-                <h1 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#FFFDF7] leading-tight whitespace-nowrap truncate">
+                <h1 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#2E1E0F] leading-tight whitespace-nowrap truncate">
                   Kinh Tạng &amp; Trì Tụng
                 </h1>
               </div>
             </div>
 
-            <div className="px-3 py-1.5 rounded-xl bg-[#241B0B] border border-[#F5C542]/35 text-right shrink-0 whitespace-nowrap">
-              <span className="text-[9px] uppercase tracking-wider text-[#C7B68B] block">
+            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#EEDBBA] text-right shrink-0 whitespace-nowrap">
+              <span className="text-[9px] uppercase tracking-wider text-[#7D6442] block">
                 Đã trì tụng
               </span>
-              <span className="text-xs font-mono font-bold text-[#FFD966]">
+              <span className="text-xs font-mono font-bold text-[#8C5500]">
                 {totalChantedBiens} biến
               </span>
             </div>
@@ -400,20 +400,20 @@ export default function SutrasLibraryPage() {
 
           {/* 2. SEARCH BAR */}
           <section aria-label="Tìm kiếm bài kinh">
-            <div className="relative w-full rounded-2xl bg-[#241B0B] border border-[#F5C542]/30 px-4 py-2.5 flex items-center gap-2.5 shadow-inner">
-              <Search className="w-4 h-4 text-[#FFD966] shrink-0" />
+            <div className="relative w-full rounded-2xl bg-white border border-[#EEDBBA] px-4 py-2.5 flex items-center gap-2.5 shadow-inner">
+              <Search className="w-4 h-4 text-[#8C5500] shrink-0" />
               <input
                 type="text"
                 placeholder="Tìm bài kinh, Bát Nhã, Từ Bi, Dược Sư..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent w-full text-xs sm:text-sm text-[#FFFDF7] placeholder-[#C7B68B]/60 focus:outline-none"
+                className="bg-transparent w-full text-xs sm:text-sm text-[#2E1E0F] placeholder-[#C7B68B]/60 focus:outline-none"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="text-[#C7B68B] hover:text-[#FFFDF7] p-0.5 cursor-pointer"
+                  className="text-[#7D6442] hover:text-[#2E1E0F] p-0.5 cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -422,7 +422,7 @@ export default function SutrasLibraryPage() {
           </section>
 
           {/* 3. REACT NATIVE 4-CATEGORY SEGMENTED CONTROL */}
-          <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25">
+          <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-white border border-[#EEDBBA]">
             {[
               { id: 'all', label: 'Tất Cả' },
               { id: 'nam-tong', label: 'Nikāya' },
@@ -441,8 +441,8 @@ export default function SutrasLibraryPage() {
                   className={cn(
                     'py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap',
                     active
-                      ? 'bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] shadow-sm'
-                      : 'text-[#D6C394] hover:text-[#FFFDF7]'
+                      ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-sm'
+                      : 'text-[#6A5234] hover:text-[#2E1E0F]'
                   )}
                 >
                   {cat.label}
@@ -458,22 +458,22 @@ export default function SutrasLibraryPage() {
                 playBellSound(0.4);
                 setIsPrayerModalOpen(true);
               }}
-              className="rounded-2xl p-3 bg-gradient-to-r from-[#241B0B] via-[#2E220E] to-[#241B0B] border border-[#F5C542]/40 flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all shadow-md group"
+              className="rounded-2xl p-3 bg-gradient-to-r from-[#FFFDF2] via-[#FFF9E6] to-[#FFFDF2] border border-[#ECD9A8] flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all shadow-md group"
             >
               <div className="flex items-center gap-3 min-w-0 flex-1 pr-2">
-                <div className="w-9 h-9 rounded-xl bg-[#F5C542]/15 border border-[#F5C542]/35 flex items-center justify-center text-[#FFD966] shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-[#FFF4D0] border border-[#EEDBBA] flex items-center justify-center text-[#8C5500] shrink-0">
                   <LotusMinimalIcon className="w-4 h-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFD966] block whitespace-nowrap truncate">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block whitespace-nowrap truncate">
                     Nghi Thức Khuyến Tu Hôm Nay
                   </span>
-                  <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#FFFDF7] truncate whitespace-nowrap mt-0.5">
+                  <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#2E1E0F] truncate whitespace-nowrap mt-0.5">
                     Văn Khấn &amp; Quán Đảnh Chơn Ngôn Phật Dược Sư
                   </h4>
                 </div>
               </div>
-              <ChevronRight className="w-4 h-4 text-[#FFD966] shrink-0" />
+              <ChevronRight className="w-4 h-4 text-[#8C5500] shrink-0" />
             </div>
           </section>
 
@@ -488,10 +488,10 @@ export default function SutrasLibraryPage() {
                     playPageTurnSound(0.3);
                     setReadingSutra(sutra);
                   }}
-                  className="p-3 rounded-2xl bg-[#241B0B] border border-[#F5C542]/25 hover:border-[#FFD966] flex items-center justify-between gap-3 cursor-pointer active:scale-[0.99] transition-all group shadow-md"
+                  className="p-3 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-between gap-3 cursor-pointer active:scale-[0.99] transition-all group shadow-md"
                 >
                   <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0 border border-[#F5C542]/35 bg-[#181207]">
+                    <div className="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0 border border-[#EEDBBA] bg-white">
                       <img
                         src={sutra.image}
                         alt={sutra.title}
@@ -501,7 +501,7 @@ export default function SutrasLibraryPage() {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-[#FFD966] font-bold uppercase tracking-wider truncate whitespace-nowrap">
+                        <span className="text-[10px] text-[#8C5500] font-bold uppercase tracking-wider truncate whitespace-nowrap">
                           {sutra.categoryLabel}
                         </span>
                         {count > 0 && (
@@ -510,16 +510,16 @@ export default function SutrasLibraryPage() {
                           </span>
                         )}
                       </div>
-                      <h3 className="font-heading font-serif font-bold text-sm text-[#FFFDF7] leading-snug truncate whitespace-nowrap mt-0.5 group-hover:text-[#FFD966]">
+                      <h3 className="font-heading font-serif font-bold text-sm text-[#2E1E0F] leading-snug truncate whitespace-nowrap mt-0.5 group-hover:text-[#8C5500]">
                         {sutra.title}
                       </h3>
-                      <p className="text-[11px] text-[#C7B68B] truncate whitespace-nowrap mt-0.5">
+                      <p className="text-[11px] text-[#7D6442] truncate whitespace-nowrap mt-0.5">
                         {sutra.excerpt}
                       </p>
                     </div>
                   </div>
 
-                  <div className="w-8 h-8 rounded-xl bg-[#181207] border border-[#F5C542]/30 flex items-center justify-center text-[#FFD966] shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-white border border-[#EEDBBA] flex items-center justify-center text-[#8C5500] shrink-0">
                     <SutraScrollIcon className="w-4 h-4" />
                   </div>
                 </div>
@@ -561,16 +561,16 @@ export default function SutrasLibraryPage() {
               setReadingSutra(null);
             }
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/50 p-4 sm:p-6 text-[#FFFDF7] shadow-2xl">
+          <div className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-3xl bg-white border border-[#E5C158] p-4 sm:p-6 text-[#2E1E0F] shadow-2xl">
             {/* Top Bar inside Reader */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA] shrink-0">
               <div className="min-w-0 pr-2 flex-1">
-                <span className="text-[10px] text-[#FFD966] font-bold uppercase tracking-wider block whitespace-nowrap truncate">
+                <span className="text-[10px] text-[#8C5500] font-bold uppercase tracking-wider block whitespace-nowrap truncate">
                   {readingSutra.categoryLabel} • Đã tụng: {sutraChantCounts[readingSutra.id] || 0} biến
                 </span>
-                <h2 className="font-heading font-serif text-base sm:text-xl font-bold text-[#FFFDF7] truncate mt-0.5">
+                <h2 className="font-heading font-serif text-base sm:text-xl font-bold text-[#2E1E0F] truncate mt-0.5">
                   {readingSutra.title}
                 </h2>
               </div>
@@ -582,17 +582,17 @@ export default function SutrasLibraryPage() {
                   setIsReaderFishBeating(false);
                   setReadingSutra(null);
                 }}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207] border border-[#F5C542]/25 shrink-0 cursor-pointer"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white border border-[#EEDBBA] shrink-0 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Smart Chanting Toolbar: Font Size + Auto-Scroll Teleprompter + Rhythm Wooden Fish */}
-            <div className="flex flex-wrap items-center justify-between gap-2 py-2.5 border-b border-[#F5C542]/20 text-xs shrink-0">
+            <div className="flex flex-wrap items-center justify-between gap-2 py-2.5 border-b border-[#EEDBBA] text-xs shrink-0">
               {/* Font Size */}
               <div className="flex items-center gap-1">
-                <span className="text-[#C7B68B] text-[11px] mr-1">Chữ:</span>
+                <span className="text-[#7D6442] text-[11px] mr-1">Chữ:</span>
                 {(['sm', 'base', 'lg', 'xl'] as const).map((sz) => (
                   <button
                     key={sz}
@@ -601,8 +601,8 @@ export default function SutrasLibraryPage() {
                     className={cn(
                       'px-2 py-1 rounded-lg font-mono text-[11px] transition-all cursor-pointer',
                       fontSize === sz
-                        ? 'bg-[#F5C542] text-[#181207] font-bold'
-                        : 'bg-[#181207] text-[#C7B68B] hover:text-[#FFFDF7]'
+                        ? 'bg-[#F5C542] text-[#3D2505] font-bold'
+                        : 'bg-white text-[#7D6442] hover:text-[#2E1E0F]'
                     )}
                   >
                     {sz === 'sm' ? 'A-' : sz === 'base' ? 'A' : sz === 'lg' ? 'A+' : 'A++'}
@@ -612,7 +612,7 @@ export default function SutrasLibraryPage() {
 
               {/* Teleprompter Auto-Scroll Controls */}
               <div className="flex items-center gap-1">
-                <span className="text-[#C7B68B] text-[11px] mr-1">Cuộn tự động:</span>
+                <span className="text-[#7D6442] text-[11px] mr-1">Cuộn tự động:</span>
                 {[
                   { speed: 0, label: 'Tắt' },
                   { speed: 1, label: '1x' },
@@ -626,8 +626,8 @@ export default function SutrasLibraryPage() {
                     className={cn(
                       'px-2 py-1 rounded-lg font-mono text-[11px] transition-all cursor-pointer',
                       autoScrollSpeed === opt.speed
-                        ? 'bg-[#F5C542] text-[#181207] font-bold'
-                        : 'bg-[#181207] text-[#C7B68B] hover:text-[#FFFDF7]'
+                        ? 'bg-[#F5C542] text-[#3D2505] font-bold'
+                        : 'bg-white text-[#7D6442] hover:text-[#2E1E0F]'
                     )}
                   >
                     {opt.label}
@@ -648,7 +648,7 @@ export default function SutrasLibraryPage() {
                     'flex items-center gap-1 px-2.5 py-1 rounded-xl border text-[11px] font-bold transition-all cursor-pointer',
                     isReaderFishBeating
                       ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300'
-                      : 'bg-[#181207] border-[#F5C542]/30 text-[#FFD966]'
+                      : 'bg-white border-[#EEDBBA] text-[#8C5500]'
                   )}
                 >
                   <WoodenFishMinimalIcon className="w-3.5 h-3.5" />
@@ -661,7 +661,7 @@ export default function SutrasLibraryPage() {
                     playBellSound(0.45);
                     showToast('Tiếng chuông ngân vang tĩnh tâm');
                   }}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-[#181207] border border-[#F5C542]/30 text-[#FFD966] text-[11px] font-bold cursor-pointer"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white border border-[#EEDBBA] text-[#8C5500] text-[11px] font-bold cursor-pointer"
                 >
                   <TempleBellIcon className="w-3.5 h-3.5" />
                   <span>Chuông</span>
@@ -673,7 +673,7 @@ export default function SutrasLibraryPage() {
             <div
               ref={readerScrollRef}
               className={cn(
-                'flex-1 overflow-y-auto no-scrollbar py-5 px-2 leading-relaxed font-serif text-[#FFFDF7] whitespace-pre-line space-y-4 select-text',
+                'flex-1 overflow-y-auto no-scrollbar py-5 px-2 leading-relaxed font-serif text-[#2E1E0F] whitespace-pre-line space-y-4 select-text',
                 fontSize === 'sm' && 'text-xs sm:text-sm leading-relaxed',
                 fontSize === 'base' && 'text-sm sm:text-base leading-loose',
                 fontSize === 'lg' && 'text-base sm:text-lg leading-loose',
@@ -684,7 +684,7 @@ export default function SutrasLibraryPage() {
             </div>
 
             {/* Reader Footer Controls: Bookmark & Complete 1 Biến */}
-            <div className="pt-3 border-t border-[#F5C542]/20 flex flex-wrap items-center justify-between gap-2 shrink-0">
+            <div className="pt-3 border-t border-[#EEDBBA] flex flex-wrap items-center justify-between gap-2 shrink-0">
               <button
                 type="button"
                 onClick={() => {
@@ -697,8 +697,8 @@ export default function SutrasLibraryPage() {
                 className={cn(
                   'flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs font-bold transition-all cursor-pointer',
                   isBookmarked
-                    ? 'bg-[#F5C542]/25 border-[#FFD966] text-[#FFD966]'
-                    : 'bg-[#181207] border-[#F5C542]/25 text-[#C7B68B] hover:text-[#FFFDF7]'
+                    ? 'bg-[#FFF4D0] border-[#E5C158] text-[#8C5500]'
+                    : 'bg-white border-[#EEDBBA] text-[#7D6442] hover:text-[#2E1E0F]'
                 )}
               >
                 <Bookmark className="w-3.5 h-3.5 fill-current" />
@@ -708,7 +708,7 @@ export default function SutrasLibraryPage() {
               <button
                 type="button"
                 onClick={() => handleCompleteSutraRecitation(readingSutra)}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#F5C542] via-[#FFD966] to-[#E5A91C] text-[#181207] font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
               >
                 <Check className="w-4 h-4 stroke-[2.5] shrink-0" />
                 <span>Hoàn Mãn 1 Biến (+30 Công Đức)</span>
@@ -726,28 +726,28 @@ export default function SutrasLibraryPage() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsPrayerModalOpen(false);
           }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-[#241B0B] border border-[#F5C542]/45 p-5 text-[#FFFDF7] shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#F5C542]/20 shrink-0">
+          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA] shrink-0">
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#FFD966] tracking-wider">
+                <span className="text-[10px] uppercase font-bold text-[#8C5500] tracking-wider">
                   NGHI THỨC KHUYẾN TU HÔM NAY
                 </span>
-                <h3 className="font-heading font-serif font-bold text-base text-[#FFFDF7] mt-0.5">
+                <h3 className="font-heading font-serif font-bold text-base text-[#2E1E0F] mt-0.5">
                   Văn Khấn &amp; Chú Dược Sư Lưu Ly Quang
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setIsPrayerModalOpen(false)}
-                className="text-[#C7B68B] hover:text-[#FFFDF7] p-1.5 rounded-full bg-[#181207]"
+                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-3 text-xs sm:text-sm text-[#F3E3B2] leading-relaxed font-serif whitespace-pre-line">
+            <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-3 text-xs sm:text-sm text-[#5A4329] leading-relaxed font-serif whitespace-pre-line">
               {`Quy mạng Dược Sư Lưu Ly Quang,
 Bổn nguyện rộng sâu độ thế gian.
 Cứu khổ trừ tai thân mạng vững,
@@ -762,7 +762,7 @@ Lời khấn nguyện hồi hướng:
 Đệ tử chúng con chí thành hướng về Tam Bảo, nguyện cầu ánh quang minh lưu ly của Đức Phật Dược Sư soi chiếu thân tâm, tiêu trừ chướng ngại, tật bệnh thuyên giảm, gia quyến an khang, đạo tâm kiên cố.`}
             </div>
 
-            <div className="pt-3 border-t border-[#F5C542]/20 flex justify-end">
+            <div className="pt-3 border-t border-[#EEDBBA] flex justify-end">
               <button
                 type="button"
                 onClick={() => {
@@ -776,7 +776,7 @@ Lời khấn nguyện hồi hướng:
                   showToast('Đã ghi nhận công đức trì tụng Nghi Thức Dược Sư!');
                   setIsPrayerModalOpen(false);
                 }}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F5C542] to-[#FFD966] text-[#181207] font-bold text-xs cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs cursor-pointer"
               >
                 Hoàn Mãn &amp; Hồi Hướng
               </button>
@@ -788,8 +788,8 @@ Lời khấn nguyện hồi hướng:
       {/* FLOATING TOAST */}
       {toastMessage && (
         <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#241B0B]/95 border border-[#F5C542] text-center shadow-xl backdrop-blur-md">
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#FFD966]">
+          <div className="px-4 py-2.5 rounded-2xl bg-white/95 border border-[#ECD9A8] text-center shadow-xl backdrop-blur-md">
+            <p className="font-heading text-xs sm:text-sm font-bold text-[#8C5500]">
               {toastMessage}
             </p>
           </div>

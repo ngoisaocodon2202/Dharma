@@ -147,7 +147,7 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
             className="w-full px-3 py-2 rounded-xl bg-black/40 border border-[#D4AF37]/50 text-xs sm:text-sm text-[#FFE082] focus:outline-none focus:ring-1 focus:ring-[#D4AF37]"
           >
             {MANTRAS.map((m) => (
-              <option key={m.id} value={m.id} className="bg-[#24130A] text-[#FDF8EC]">
+              <option key={m.id} value={m.id} className="bg-white text-[#2E1E0F]">
                 {m.name}
               </option>
             ))}
@@ -167,7 +167,7 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
             className="w-full px-3 py-2 rounded-xl bg-black/40 border border-[#D4AF37]/50 text-xs sm:text-sm text-[#FFE082] focus:outline-none focus:ring-1 focus:ring-[#D4AF37]"
           >
             {BEAD_SIZES.map((b) => (
-              <option key={b.size} value={b.size} className="bg-[#24130A] text-[#FDF8EC]">
+              <option key={b.size} value={b.size} className="bg-white text-[#2E1E0F]">
                 {b.label}
               </option>
             ))}

@@ -117,14 +117,14 @@ export function MindfulnessProvider({ children }: { children: React.ReactNode })
       {/* Mindful Bell Toast Notification */}
       {mindfulNotification && (
         <div className="fixed top-6 inset-x-4 z-50 flex justify-center pointer-events-none animate-fade-in-down">
-          <div className="max-w-md w-full bg-[#24130A]/95 border-2 border-[#D4AF37] rounded-3xl p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.85)] text-center backdrop-blur-md">
-            <div className="flex items-center justify-center gap-2 text-[#FFE082] text-xs font-bold tracking-widest uppercase mb-1">
+          <div className="max-w-md w-full bg-white/95 border-2 border-[#ECD9A8] rounded-3xl p-4 sm:p-5 shadow-[0_20px_60px_rgba(180,140,50,0.18)] text-center backdrop-blur-md">
+            <div className="flex items-center justify-center gap-2 text-[#8C5500] text-xs font-bold tracking-widest uppercase mb-1">
               <span>🔔 Tiếng Chuông Tỉnh Thức</span>
             </div>
-            <p className="font-heading text-sm sm:text-base font-bold text-[#FFFDF5] leading-relaxed">
+            <p className="font-heading text-sm sm:text-base font-bold text-[#2E1E0F] leading-relaxed">
               &ldquo;{mindfulNotification}&rdquo;
             </p>
-            <p className="text-[11px] text-[#D4AF37] mt-1.5 opacity-80">
+            <p className="text-[11px] text-[#7D6442] mt-1.5 opacity-90">
               Hãy dừng lại, hít vào một hơi thật sâu và thở ra mỉm cười...
             </p>
           </div>
