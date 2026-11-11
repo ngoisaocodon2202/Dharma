@@ -109,6 +109,7 @@ export default function PracticePage() {
   const [isBellsModalOpen, setIsBellsModalOpen] = useState(false);
   const [isPrayerPeaceOpen, setIsPrayerPeaceOpen] = useState(false);
   const [isPrayerRebirthOpen, setIsPrayerRebirthOpen] = useState(false);
+  const [prayerTab, setPrayerTab] = useState<'sieu' | 'an'>('sieu');
   const [isBuddhasModalOpen, setIsBuddhasModalOpen] = useState(false);
   const [isMemorialBookOpen, setIsMemorialBookOpen] = useState(false);
   const [isMeritLedgerOpen, setIsMeritLedgerOpen] = useState(false);
@@ -233,112 +234,73 @@ export default function PracticePage() {
 
   const MOBILE_VEHICLES = [
     {
+      id: 'thu-vien-bon-ton',
+      title: 'Thư viện Bổn Tôn',
+      subtitle: 'Chiêm bái chư Phật',
+      image: '/images/golden_buddha.jpg',
+      Icon: LotusMinimalIcon,
+      onClick: () => setIsBuddhasModalOpen(true),
+    },
+    {
+      id: 'di-chua',
+      title: 'Đi chùa',
+      subtitle: 'Lễ Phật cùng mọi người nơi chánh điện',
+      image: '/images/temple_sanctuary_bg.jpg',
+      Icon: PagodaMinimalIcon,
+      onClick: () => router.push('/di-chua-online'),
+    },
+    {
+      id: 'cau-sieu',
+      title: 'Cầu siêu',
+      subtitle: 'Thành tâm tưởng niệm',
+      image: '/images/tran_nhan_tong_yentu.jpg',
+      Icon: IncenseAltarIcon,
+      onClick: () => {
+        setPrayerTab('sieu');
+        setIsPrayerRebirthOpen(true);
+      },
+    },
+    {
+      id: 'may-niem-phat',
+      title: 'Máy niệm Phật',
+      subtitle: 'Niệm danh hiệu, trì chú',
+      image: '/images/golden_buddha_altar.jpg',
+      Icon: TempleBellIcon,
+      onClick: () => setIsChantMachineOpen(true),
+    },
+    {
+      id: 'nghe-kinh',
+      title: 'Nghe kinh',
+      subtitle: 'Tải về, nghe không cần mạng',
+      image: '/images/buddha_meditation.jpg',
+      Icon: SutraScrollIcon,
+      onClick: () => setIsChantMachineOpen(true),
+    },
+    {
       id: 'trang-hat',
-      category: 'tri_niem',
-      stepBadge: 'Trì Niệm',
-      title: '108 Chuỗi Bồ Đề',
-      subtitle: 'Lần hạt trì niệm danh hiệu',
+      title: 'Tràng hạt',
+      subtitle: 'Lần hạt, trì niệm',
       image: '/images/monk_incense.jpg',
       Icon: MalaBeadsMinimalIcon,
       onClick: () => setIsMalaOpen(true),
     },
     {
       id: 'chuong-mo',
-      category: 'tri_niem',
-      stepBadge: 'Giữ Nhịp',
-      title: 'Chuông Mõ Nhịp BPM',
-      subtitle: 'Mõ tự động 50/68/88 BPM',
+      title: 'Chuông mõ',
+      subtitle: 'Thỉnh chuông, gõ mõ tịnh tâm',
       image: '/images/ancient_pagoda.jpg',
       Icon: WoodenFishMinimalIcon,
       onClick: () => setIsBellsModalOpen(true),
     },
     {
-      id: 'may-niem-phat',
-      category: 'tri_niem',
-      stepBadge: 'Chuyên Nhất',
-      title: 'Pháp Âm Niệm Phật',
-      subtitle: 'Niệm hồng danh & thần chú',
-      image: '/images/golden_buddha.jpg',
-      Icon: TempleBellIcon,
-      onClick: () => setIsChantMachineOpen(true),
-    },
-    {
-      id: 'nghe-kinh',
-      category: 'dinh_tam',
-      stepBadge: 'Văn Tư Tu',
-      title: 'Thính Pháp Âm',
-      subtitle: 'Pháp thoại & lời Phật dạy',
-      image: '/images/buddha_meditation.jpg',
-      Icon: SutraScrollIcon,
-      onClick: () => setIsChantMachineOpen(true),
-    },
-    {
-      id: 'cau-an',
-      category: 'hoi_huong',
-      stepBadge: 'Hồi Hướng',
-      title: 'Hoa Đăng Cầu An',
-      subtitle: 'Thắp đèn sen cầu bình an',
-      image: '/images/quan_am_bodhisattva.jpg',
-      Icon: LotusLanternIcon,
-      onClick: () => setIsPrayerPeaceOpen(true),
-    },
-    {
-      id: 'cau-sieu',
-      category: 'hoi_huong',
-      stepBadge: 'Hồi Hướng',
-      title: 'Hoa Đăng Kỳ Siêu',
-      subtitle: 'Hồi hướng cửu huyền thất tổ',
-      image: '/images/tran_nhan_tong_yentu.jpg',
-      Icon: IncenseAltarIcon,
-      onClick: () => setIsPrayerRebirthOpen(true),
-    },
-    {
-      id: 'di-chua',
-      category: 'dinh_tam',
-      stepBadge: 'Lễ Bái',
-      title: 'Chánh Điện Lễ Phật',
-      subtitle: 'Dâng hương lễ bái Tam Bảo',
-      image: '/images/temple_sanctuary_bg.jpg',
-      Icon: PagodaMinimalIcon,
-      onClick: () => router.push('/di-chua-online'),
-    },
-    {
-      id: 'thu-vien-bon-ton',
-      category: 'dinh_tam',
-      stepBadge: 'Quán Tưởng',
-      title: 'Tôn Tượng Chư Phật',
-      subtitle: 'Chiêm bái hồng danh & nguyện',
-      image: '/images/golden_buddha_altar.jpg',
-      Icon: LotusMinimalIcon,
-      onClick: () => setIsBuddhasModalOpen(true),
-    },
-    {
-      id: 'nhac-tu-tap',
-      category: 'dinh_tam',
-      stepBadge: 'Tịnh Tâm',
-      title: 'Tần Số Thiền 432Hz',
-      subtitle: isMusicPlaying ? 'Đang phát thanh tịnh...' : 'Thanh âm chuông xoay tịnh tâm',
-      image: '/images/lotus_blooming.jpg',
-      Icon: DharmaWheelIcon,
-      onClick: handleToggleMusic,
-      active: isMusicPlaying,
-    },
-    {
       id: 'so-gio-chap',
-      category: 'hoi_huong',
-      stepBadge: 'Tri Ân',
-      title: 'Sổ Hiếu Hạnh Tổ Tiên',
-      subtitle: 'Ghi nhớ ngày húy kỵ gia tiên',
+      title: 'Sổ Giỗ Chạp',
+      subtitle: 'Ghi nhớ ngày giỗ người thân',
       image: '/images/sutra_book.jpg',
       Icon: BodhiLeafIcon,
       onClick: () => setIsMemorialBookOpen(true),
     },
   ];
-
-  const filteredMobileVehicles =
-    stepFilter === 'all'
-      ? MOBILE_VEHICLES
-      : MOBILE_VEHICLES.filter((v) => v.category === stepFilter);
 
   return (
     <div className="min-h-screen bg-white text-[#2E1E0F] selection:bg-[#F5C542]/30 selection:text-[#8C5500]">
@@ -381,37 +343,37 @@ export default function PracticePage() {
           {/* 2. HERO CARD: ANAPANASATI BREATHING MEDITATION */}
           <section aria-label="Phòng thiền hơi thở chánh niệm">
             <div
-              className="relative rounded-3xl overflow-hidden border border-[#EEDBBA] shadow-2xl p-4 flex flex-col justify-between gap-4 bg-cover bg-center"
+              className="relative rounded-3xl overflow-hidden border border-[#EEDBBA] shadow-md p-4 flex flex-col justify-between gap-3 bg-cover bg-center"
               style={{
                 backgroundImage:
-                  "linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.55) 55%, rgba(24, 18, 7, 0.25) 100%), url('/images/buddha_meditation.jpg')",
+                  "linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0.2) 100%), url('/images/buddha_meditation.jpg')",
               }}
             >
               <div className="flex items-center justify-between relative z-10">
-                <div className="px-3 py-1 rounded-full bg-white backdrop-blur-md text-[#8C5500] text-[10px] font-bold uppercase tracking-wider border border-[#ECD9A8] whitespace-nowrap">
-                  Bước 1 • Thiền Quán Hơi Thở 4-4-6
+                <div className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#8C5500] text-[10px] font-bold uppercase tracking-wider border border-[#ECD9A8] whitespace-nowrap">
+                  Thiền Quán Hơi Thở 4-4-6
                 </div>
-                <div className="relative w-9 h-9 rounded-2xl border border-[#ECD9A8] bg-white/75 backdrop-blur-md flex items-center justify-center text-[#8C5500] shadow-md shrink-0">
+                <div className="relative w-8 h-8 rounded-full border border-white/20 bg-black/40 backdrop-blur-md flex items-center justify-center text-white shadow-sm shrink-0">
                   <MeditatingMonkOutlineIcon className="w-4 h-4" />
                 </div>
               </div>
 
               <div className="relative z-10 space-y-1">
-                <h2 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#2E1E0F] leading-tight whitespace-nowrap truncate">
+                <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-white leading-tight whitespace-nowrap truncate">
                   Thiền Hơi Thở Anapanasati
-                </h2>
-                <p className="text-[11px] sm:text-xs text-[#5A4329] whitespace-nowrap truncate">
+                </h3>
+                <p className="text-[11px] text-white/85 whitespace-nowrap truncate">
                   Hít vào 4s • An trú chánh niệm 4s • Thở ra buông xả 6s
                 </p>
 
-                <div className="pt-3 grid grid-cols-2 gap-2">
+                <div className="pt-2 grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => {
                       playBellSound(0.4);
                       setIsMeditationModalOpen(true);
                     }}
-                    className="py-2.5 px-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                    className="py-2 px-3 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                   >
                     <Play className="w-3.5 h-3.5 fill-current shrink-0" />
                     <span>Bắt Đầu Thiền</span>
@@ -423,7 +385,7 @@ export default function PracticePage() {
                       playGrandTempleBellSound(0.5);
                       showToast('Tiếng Đại Hồng Chung ngân vang • Tâm bình an');
                     }}
-                    className="py-2.5 px-3 rounded-2xl bg-white border border-[#ECD9A8] text-[#8C5500] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                    className="py-2 px-3 rounded-xl bg-white/95 border border-[#ECD9A8] text-[#8C5500] font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                   >
                     <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
                     <span>Thỉnh Chuông</span>
@@ -433,69 +395,40 @@ export default function PracticePage() {
             </div>
           </section>
 
-          {/* 3. REACT NATIVE 4-PILL SEGMENTED STEP FILTER */}
-          <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-white border border-[#EEDBBA]">
-            {[
-              { id: 'all', label: 'Tất Cả' },
-              { id: 'dinh_tam', label: '1. Định Tâm' },
-              { id: 'tri_niem', label: '2. Trì Niệm' },
-              { id: 'hoi_huong', label: '3. Hồi Hướng' },
-            ].map((tab) => {
-              const active = stepFilter === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => {
-                    playWoodenFishSound(0.2);
-                    setStepFilter(tab.id as PracticeStepFilter);
-                  }}
-                  className={cn(
-                    'py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap',
-                    active
-                      ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-sm'
-                      : 'text-[#6A5234] hover:text-[#2E1E0F]'
-                  )}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
+          {/* 3. SECTION TITLE: PHƯƠNG TIỆN TU TẬP (100% MATCHING SCREENSHOT) */}
+          <div className="pt-1">
+            <h2 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#2E1E0F]">
+              Phương tiện tu tập
+            </h2>
           </div>
 
-          {/* 4. BENTO GRID OF DHARMA PRACTICE VEHICLES */}
-          <section aria-label="Pháp khí hành trì" className="space-y-3">
+          {/* 4. 2-COLUMN GRID OF THE 8 PRACTICE VEHICLES IN EXACT SCREENSHOT ORDER */}
+          <section aria-label="Phương tiện tu tập">
             <div className="grid grid-cols-2 gap-3">
-              {filteredMobileVehicles.map((item) => {
+              {MOBILE_VEHICLES.map((item) => {
                 const Icon = item.Icon;
                 return (
                   <div
                     key={item.id}
                     onClick={item.onClick}
-                    className={cn(
-                      'relative rounded-2xl overflow-hidden aspect-[4/3] p-3 flex flex-col justify-between border cursor-pointer group active:scale-95 transition-all shadow-lg bg-cover bg-center',
-                      item.active
-                        ? 'border-[#E5C158] ring-2 ring-[#F5C542]/60'
-                        : 'border-[#EEDBBA] hover:border-[#E5C158]'
-                    )}
+                    className="relative rounded-3xl overflow-hidden aspect-[1.28/1] p-3.5 flex flex-col justify-between border border-[#ECD9A8]/50 hover:border-[#E5C158] cursor-pointer group active:scale-95 transition-all shadow-md bg-cover bg-center select-none"
                     style={{
-                      backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.45) 60%, rgba(24, 18, 7, 0.2) 100%), url('${item.image}')`,
+                      backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.38) 55%, rgba(0, 0, 0, 0.15) 100%), url('${item.image}')`,
                     }}
                   >
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="px-2 py-0.5 rounded-full bg-white backdrop-blur-md border border-[#EEDBBA] text-[9px] font-bold text-[#8C5500] whitespace-nowrap">
-                        {item.stepBadge}
-                      </span>
-                      <div className="w-7 h-7 rounded-xl bg-white backdrop-blur-md border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] shrink-0">
-                        <Icon className="w-3.5 h-3.5" />
+                    {/* Top Right Translucent Icon Badge (Matching screenshot 100%) */}
+                    <div className="flex justify-end">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/95 shadow-sm group-hover:scale-105 transition-transform">
+                        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </div>
                     </div>
 
-                    <div className="min-w-0">
-                      <h4 className="font-heading font-serif font-bold text-[13px] sm:text-sm text-[#2E1E0F] group-hover:text-[#8C5500] transition-colors leading-tight truncate whitespace-nowrap">
+                    {/* Center / Bottom Title and Subtitle (Matching screenshot 100%) */}
+                    <div className="text-center px-1 pb-1">
+                      <h4 className="font-heading font-serif font-bold text-sm sm:text-base text-white drop-shadow-md leading-tight">
                         {item.title}
                       </h4>
-                      <p className="text-[10px] text-[#5A4329]/90 mt-0.5 truncate whitespace-nowrap">
+                      <p className="text-[10px] sm:text-[11px] text-white/80 drop-shadow-sm mt-0.5 leading-snug line-clamp-1">
                         {item.subtitle}
                       </p>
                     </div>
@@ -957,7 +890,7 @@ export default function PracticePage() {
       )}
 
       {/* ========================================================================= */}
-      {/* 6. MODAL: ĐÀN TRÀNG HOA ĐĂNG KỲ SIÊU                                      */}
+      {/* 6. MODAL: ĐÀN TRÀNG HOA ĐĂNG KỲ SIÊU & CẦU AN                             */}
       {/* ========================================================================= */}
       {isPrayerRebirthOpen && (
         <div
@@ -970,68 +903,160 @@ export default function PracticePage() {
             <button
               type="button"
               onClick={() => setIsPrayerRebirthOpen(false)}
-              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
+              className="absolute top-4 right-4 text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white z-10"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] mb-2">
-                <IncenseAltarIcon className="w-6 h-6" />
-              </div>
-              <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
-                Hoa Đăng Kỳ Siêu &amp; Tưởng Niệm
-              </h3>
-              <p className="text-xs text-[#6A5234] mt-0.5">
-                Hồi hướng công đức cầu siêu cửu huyền thất tổ &amp; hương linh quá vãng
-              </p>
-            </div>
-
-            <div className="space-y-3 text-xs">
-              <div>
-                <label className="text-[#5A4329] block mb-1 font-medium">Hương linh / Cửu huyền thất tổ</label>
-                <input
-                  type="text"
-                  value={rebirthName}
-                  onChange={(e) => setRebirthName(e.target.value)}
-                  placeholder="Ví dụ: Cửu huyền thất tổ nội ngoại hai bên..."
-                  className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
-                />
-              </div>
-
-              <div>
-                <label className="text-[#5A4329] block mb-1 font-medium">Lời nguyện Kỳ Siêu</label>
-                <textarea
-                  rows={3}
-                  value={rebirthWish}
-                  onChange={(e) => setRebirthWish(e.target.value)}
-                  placeholder="Nguyện nương nhờ ánh sáng từ bi của Đức Phật A Di Đà tiếp dẫn hương linh siêu sinh Tịnh Độ..."
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
-                />
-              </div>
-
+            {/* Tab switch between Cầu Siêu & Cầu An */}
+            <div className="flex rounded-2xl p-1 bg-[#FFF4D0] border border-[#ECD9A8] mt-1">
               <button
                 type="button"
-                onClick={() => {
-                  playGrandTempleBellSound(0.5);
-                  recordDharmaMerit({
-                    type: 'lantern',
-                    title: `Kỳ Siêu Hồi Hướng (${rebirthName.trim() || 'Cửu huyền thất tổ'})`,
-                    detail:
-                      rebirthWish.trim() ||
-                      'Nguyện hương linh nương nhờ công đức siêu sinh cõi Tịnh Độ an vui',
-                    meritPoints: 20,
-                  });
-                  setRebirthName('');
-                  setRebirthWish('');
-                  showToast('Đã gửi lời Kỳ Siêu Hồi Hướng vào Sổ Công Đức Dharma!');
-                  setIsPrayerRebirthOpen(false);
-                }}
-                className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold shadow-md cursor-pointer mt-2"
+                onClick={() => setPrayerTab('sieu')}
+                className={cn(
+                  'flex-1 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer',
+                  prayerTab === 'sieu'
+                    ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-xs'
+                    : 'text-[#7D6442] hover:text-[#2E1E0F]'
+                )}
               >
-                Gửi Lời Hồi Hướng Công Đức
+                Hoa Đăng Cầu Siêu
+              </button>
+              <button
+                type="button"
+                onClick={() => setPrayerTab('an')}
+                className={cn(
+                  'flex-1 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer',
+                  prayerTab === 'an'
+                    ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-xs'
+                    : 'text-[#7D6442] hover:text-[#2E1E0F]'
+                )}
+              >
+                Hoa Đăng Cầu An
               </button>
             </div>
+
+            {prayerTab === 'sieu' ? (
+              <>
+                <div className="text-center">
+                  <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] mb-2">
+                    <IncenseAltarIcon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
+                    Hoa Đăng Kỳ Siêu &amp; Tưởng Niệm
+                  </h3>
+                  <p className="text-xs text-[#6A5234] mt-0.5">
+                    Hồi hướng công đức cầu siêu cửu huyền thất tổ &amp; hương linh quá vãng
+                  </p>
+                </div>
+
+                <div className="space-y-3 text-xs">
+                  <div>
+                    <label className="text-[#5A4329] block mb-1 font-medium">Hương linh / Cửu huyền thất tổ</label>
+                    <input
+                      type="text"
+                      value={rebirthName}
+                      onChange={(e) => setRebirthName(e.target.value)}
+                      placeholder="Ví dụ: Cửu huyền thất tổ nội ngoại hai bên..."
+                      className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[#5A4329] block mb-1 font-medium">Lời nguyện Kỳ Siêu</label>
+                    <textarea
+                      rows={3}
+                      value={rebirthWish}
+                      onChange={(e) => setRebirthWish(e.target.value)}
+                      placeholder="Nguyện nương nhờ ánh sáng từ bi của Đức Phật A Di Đà tiếp dẫn hương linh siêu sinh Tịnh Độ..."
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playGrandTempleBellSound(0.5);
+                      recordDharmaMerit({
+                        type: 'lantern',
+                        title: `Kỳ Siêu Hồi Hướng (${rebirthName.trim() || 'Cửu huyền thất tổ'})`,
+                        detail:
+                          rebirthWish.trim() ||
+                          'Nguyện hương linh nương nhờ công đức siêu sinh cõi Tịnh Độ an vui',
+                        meritPoints: 20,
+                      });
+                      setRebirthName('');
+                      setRebirthWish('');
+                      showToast('Đã gửi lời Kỳ Siêu Hồi Hướng vào Sổ Công Đức Dharma!');
+                      setIsPrayerRebirthOpen(false);
+                    }}
+                    className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold shadow-md cursor-pointer mt-2"
+                  >
+                    Gửi Lời Hồi Hướng Công Đức
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-center">
+                  <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] mb-2">
+                    <LotusLanternIcon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
+                    Thắp Đèn Hoa Đăng Cầu An
+                  </h3>
+                  <p className="text-xs text-[#6A5234] mt-0.5">
+                    Dâng ánh sáng từ bi nguyện cầu bình an cho cha mẹ &amp; gia quyến
+                  </p>
+                </div>
+
+                <div className="space-y-3 text-xs">
+                  <div>
+                    <label className="text-[#5A4329] block mb-1 font-medium">Phật tử / Gia chủ phát nguyện</label>
+                    <input
+                      type="text"
+                      value={peaceName}
+                      onChange={(e) => setPeaceName(e.target.value)}
+                      placeholder="Ví dụ: Phật tử Tâm An cùng gia quyến..."
+                      className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[#5A4329] block mb-1 font-medium">Lời nguyện Cầu An</label>
+                    <textarea
+                      rows={3}
+                      value={peaceWish}
+                      onChange={(e) => setPeaceWish(e.target.value)}
+                      placeholder="Nguyện mười phương Chư Phật gia hộ cho cha mẹ và gia quyến thân tâm thường an lạc, tật bệnh tiêu trừ..."
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-[#EEDBBA] text-[#2E1E0F] focus:outline-hidden focus:border-[#E5C158]"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playGrandTempleBellSound(0.5);
+                      recordDharmaMerit({
+                        type: 'lantern',
+                        title: `Thắp Hoa Đăng Cầu An (${peaceName.trim() || 'Gia đạo bình an'})`,
+                        detail:
+                          peaceWish.trim() ||
+                          'Nguyện cầu thân tâm an lạc, tật bệnh tiêu trừ, đạo tâm kiên cố',
+                        meritPoints: 20,
+                      });
+                      setPeaceName('');
+                      setPeaceWish('');
+                      showToast('Đã thắp Hoa Đăng Cầu An & lưu vào Sổ Công Đức Dharma!');
+                      setIsPrayerRebirthOpen(false);
+                    }}
+                    className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold shadow-md cursor-pointer mt-2"
+                  >
+                    Thắp Đèn Hoa Đăng Cầu An
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

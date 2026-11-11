@@ -132,92 +132,73 @@ export function OmManiDesktopPractice({
 
   const PRACTICE_CARDS = [
     {
+      id: 'thu-vien-bon-ton',
+      number: '01',
+      title: 'Thư viện Bổn Tôn',
+      subtitle: 'Chiêm bái hồng danh & đại nguyện chư Phật, Bồ Tát',
+      Icon: LotusMinimalIcon,
+      image: '/images/golden_buddha.jpg',
+      action: onOpenBuddhas,
+    },
+    {
+      id: 'di-chua',
+      number: '02',
+      title: 'Đi chùa',
+      subtitle: 'Lễ Phật cùng đại chúng nơi chánh điện trang nghiêm',
+      Icon: PagodaMinimalIcon,
+      image: '/images/temple_sanctuary_bg.jpg',
+      action: onOpenOnlineTemple,
+    },
+    {
+      id: 'cau-sieu',
+      number: '03',
+      title: 'Cầu siêu',
+      subtitle: 'Thành tâm tưởng niệm cửu huyền thất tổ & hồi hướng cầu an',
+      Icon: IncenseAltarIcon,
+      image: '/images/tran_nhan_tong_yentu.jpg',
+      action: onOpenPrayRebirth,
+    },
+    {
+      id: 'may-niem-phat',
+      number: '04',
+      title: 'Máy niệm Phật',
+      subtitle: 'Niệm danh hiệu chư Phật, trì chú & phát nguyện tịnh hóa',
+      Icon: TempleBellIcon,
+      image: '/images/golden_buddha_altar.jpg',
+      action: onOpenChantMachine,
+    },
+    {
+      id: 'nghe-kinh',
+      number: '05',
+      title: 'Nghe kinh',
+      subtitle: 'Tải về, nghe không cần mạng lời Phật dạy & pháp thoại',
+      Icon: SutraScrollIcon,
+      image: '/images/buddha_meditation.jpg',
+      action: () => router.push('/phap-thoai'),
+    },
+    {
       id: 'trang-hat',
-      step: 'Bước 2 • Trì Niệm',
-      title: '108 Chuỗi Bồ Đề',
-      subtitle: 'Lần hạt trì niệm danh hiệu Phật & Bồ Tát',
+      number: '06',
+      title: 'Tràng hạt',
+      subtitle: '108 hạt Bồ Đề lần hạt trì niệm danh hiệu chư Phật',
       Icon: MalaBeadsMinimalIcon,
       image: '/images/monk_incense.jpg',
       action: onOpenMala,
     },
     {
       id: 'chuong-mo',
-      step: 'Bước 2 • Giữ Nhịp',
-      title: 'Chuông Mõ Nhịp BPM',
-      subtitle: 'Mõ tự động 50/68/88 BPM trợ duyên tụng kinh',
+      number: '07',
+      title: 'Chuông mõ',
+      subtitle: 'Thỉnh chuông, gõ mõ tịnh tâm nhịp tự động BPM',
       Icon: WoodenFishMinimalIcon,
       image: '/images/ancient_pagoda.jpg',
       action: onOpenBellFish,
     },
     {
-      id: 'may-niem-phat',
-      step: 'Bước 2 • Chuyên Nhất',
-      title: 'Pháp Âm Niệm Phật',
-      subtitle: 'Tần số niệm danh hiệu Phật & thần chú tịnh hóa',
-      Icon: TempleBellIcon,
-      image: '/images/golden_buddha.jpg',
-      action: onOpenChantMachine,
-    },
-    {
-      id: 'nghe-kinh',
-      step: 'Bước 1 • Văn Tư Tu',
-      title: 'Thính Pháp Âm',
-      subtitle: 'Lắng nghe lời Phật dạy & pháp thoại chuyển hóa',
-      Icon: SutraScrollIcon,
-      image: '/images/buddha_meditation.jpg',
-      action: () => router.push('/phap-thoai'),
-    },
-    {
-      id: 'cau-an',
-      step: 'Bước 3 • Hồi Hướng',
-      title: 'Hoa Đăng Cầu An',
-      subtitle: 'Thắp đèn sen vàng cầu bình an cho gia quyến',
-      Icon: LotusLanternIcon,
-      image: '/images/quan_am_bodhisattva.jpg',
-      action: onOpenPrayPeace,
-    },
-    {
-      id: 'cau-sieu',
-      step: 'Bước 3 • Hồi Hướng',
-      title: 'Hoa Đăng Kỳ Siêu',
-      subtitle: 'Tưởng niệm cửu huyền thất tổ siêu sinh Tịnh Độ',
-      Icon: IncenseAltarIcon,
-      image: '/images/tran_nhan_tong_yentu.jpg',
-      action: onOpenPrayRebirth,
-    },
-    {
-      id: 'di-chua',
-      step: 'Bước 1 • Lễ Bái',
-      title: 'Chánh Điện Lễ Phật',
-      subtitle: 'Dâng hương lễ bái Tam Bảo trực tuyến trang nghiêm',
-      Icon: PagodaMinimalIcon,
-      image: '/images/temple_sanctuary_bg.jpg',
-      action: onOpenOnlineTemple,
-    },
-    {
-      id: 'thu-vien-bon-ton',
-      step: 'Bước 1 • Quán Tưởng',
-      title: 'Tôn Tượng Chư Phật',
-      subtitle: 'Chiêm bái hồng danh & đại nguyện chư Phật, Bồ Tát',
-      Icon: LotusMinimalIcon,
-      image: '/images/golden_buddha_altar.jpg',
-      action: onOpenBuddhas,
-    },
-    {
-      id: 'nhac-tu-tap',
-      step: 'Bước 1 • Tịnh Tâm',
-      title: 'Tần Số Thiền 432Hz',
-      subtitle: isMusicPlaying ? 'Đang phát tần số thiền định...' : 'Thanh âm chuông xoay tịnh hóa tâm thức',
-      Icon: DharmaWheelIcon,
-      image: '/images/lotus_blooming.jpg',
-      action: onToggleMusic,
-      isHighlighted: isMusicPlaying,
-    },
-    {
       id: 'so-gio-chap',
-      step: 'Bước 3 • Tri Ân',
-      title: 'Sổ Hiếu Hạnh Tổ Tiên',
-      subtitle: 'Ghi nhớ ngày húy kỵ gia tiên & lời nguyện tri ân',
+      number: '08',
+      title: 'Sổ Giỗ Chạp',
+      subtitle: 'Ghi nhớ ngày giỗ người thân & tri ân tổ tiên',
       Icon: BodhiLeafIcon,
       image: '/images/sutra_book.jpg',
       action: onOpenMemorial,
@@ -487,57 +468,52 @@ export function OmManiDesktopPractice({
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. TEN DHARMA PRACTICE VEHICLES GRID (5 COLUMNS)                          */}
+      {/* 3. EIGHT DHARMA PRACTICE VEHICLES GRID (4 COLUMNS)                        */}
       {/* ========================================================================= */}
       <section className="space-y-6">
         <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA]">
           <div>
             <h2 className="font-heading font-serif text-xl font-bold text-[#2E1E0F] flex items-center gap-2.5">
-              <span>Mười Pháp Khí &amp; Phương Tiện Hành Trì</span>
+              <span>Phương Tiện Tu Tập</span>
               <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#FFF4D0] text-[#8C5500] border border-[#EEDBBA]">
-                10 Pháp Khí
+                8 Pháp Khí
               </span>
             </h2>
             <p className="text-xs text-[#7D6442] mt-1">
-              Mọi pháp khí đều tích hợp âm thanh thiền tự chân thực và tự động lưu vào Sổ Công Đức
+              Pháp khí hành trì chuẩn mực — Tích lũy công đức và nuôi dưỡng bồ đề tâm mỗi ngày
             </p>
           </div>
         </div>
 
-        {/* 5-Column Responsive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        {/* 4-Column Responsive Grid (2 rows x 4 cols = 8 cards) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {PRACTICE_CARDS.map((card) => {
             const Icon = card.Icon;
             return (
               <div
                 key={card.id}
                 onClick={card.action}
-                className={cn(
-                  'group relative rounded-3xl overflow-hidden aspect-[4/4.3] p-4 flex flex-col justify-between border cursor-pointer active:scale-95 transition-all duration-300 hover:-translate-y-1 shadow-xl bg-cover bg-center',
-                  card.isHighlighted
-                    ? 'border-[#E5C158] ring-2 ring-[#F5C542]/60'
-                    : 'border-[#EEDBBA] hover:border-[#E5C158]'
-                )}
+                className="group relative rounded-3xl overflow-hidden aspect-[4/3.8] p-4 flex flex-col justify-between border border-[#ECD9A8]/60 hover:border-[#E5C158] cursor-pointer active:scale-95 transition-all duration-300 hover:-translate-y-1 shadow-lg bg-cover bg-center select-none"
                 style={{
-                  backgroundImage: `linear-gradient(to top, rgba(24, 18, 7, 0.96) 0%, rgba(24, 18, 7, 0.55) 55%, rgba(24, 18, 7, 0.25) 100%), url('${card.image}')`,
+                  backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.42) 55%, rgba(0, 0, 0, 0.15) 100%), url('${card.image}')`,
                 }}
               >
-                {/* Top Row: Step Tag & Minimalist SVG Icon */}
+                {/* Top Row: Number Badge & Translucent Icon Badge (Matching layout) */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="px-2.5 py-1 rounded-full bg-white backdrop-blur-md border border-[#EEDBBA] text-[10px] font-bold text-[#8C5500]">
-                    {card.step}
+                  <span className="w-7 h-7 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[11px] font-mono font-bold text-[#FFE79A] flex items-center justify-center shadow-sm">
+                    {card.number}
                   </span>
-                  <div className="w-9 h-9 rounded-xl bg-white backdrop-blur-md border border-[#ECD9A8] flex items-center justify-center text-[#8C5500] shadow-md group-hover:scale-110 transition-transform">
+                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/95 shadow-sm group-hover:scale-110 transition-transform">
                     <Icon className="w-4 h-4" />
                   </div>
                 </div>
 
-                {/* Bottom Card Title & Subtitle */}
-                <div className="space-y-1">
-                  <h4 className="font-heading font-serif font-bold text-base text-[#2E1E0F] group-hover:text-[#8C5500] transition-colors leading-tight">
+                {/* Bottom Card Title & Subtitle (Centered matching screenshot style) */}
+                <div className="text-center px-1">
+                  <h4 className="font-heading font-serif font-bold text-base text-white group-hover:text-[#FFE79A] transition-colors leading-tight drop-shadow-md">
                     {card.title}
                   </h4>
-                  <p className="text-xs text-[#5A4329]/90 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-white/80 line-clamp-2 leading-relaxed mt-1 drop-shadow-sm">
                     {card.subtitle}
                   </p>
                 </div>
