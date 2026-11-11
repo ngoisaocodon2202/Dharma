@@ -37,64 +37,8 @@ import {
   stopMeditativeDrone,
 } from '@/lib/buddhistSounds';
 import { OmManiDesktopPractice } from '@/components/om-mani/desktop/OmManiDesktopPractice';
+import { BuddhasGalleryModal } from '@/components/buddhas/BuddhasGalleryModal';
 import { cn } from '@/lib/utils';
-
-// =============================================================================
-// DATA: TÔN TƯỢNG CHƯ PHẬT & ĐẠI NGUYỆN
-// =============================================================================
-interface BuddhaCard {
-  id: string;
-  name: string;
-  title: string;
-  image: string;
-  mantra: string;
-  vow: string;
-}
-
-const BUDDHAS_DATA: BuddhaCard[] = [
-  {
-    id: 'thich-ca',
-    name: 'Đức Phật Thích Ca Mâu Ni',
-    title: 'Từ Phụ Bổn Sư Thích Ca Mâu Ni Phật',
-    image: '/images/golden_buddha_altar.jpg',
-    mantra: 'Nam Mô Bổn Sư Thích Ca Mâu Ni Phật',
-    vow: 'Bậc Đạo Sư giác ngộ hoàn toàn tại cõi Ta Bà, chỉ bày con đường Tứ Diệu Đế và Bát Chánh Đạo đưa chúng sinh thoát khỏi luân hồi sinh tử.',
-  },
-  {
-    id: 'duoc-su',
-    name: 'Đức Phật Dược Sư',
-    title: 'Dược Sư Lưu Ly Quang Vương Như Lai',
-    image: '/images/buddha_temple.jpg',
-    mantra: 'Nam Mô Dược Sư Lưu Ly Quang Vương Phật',
-    vow: '12 Đại nguyện diệt trừ mọi tật bệnh thân tâm, ban phát ánh sáng lưu ly thanh tịnh cho muôn loài.',
-  },
-  {
-    id: 'a-di-da',
-    name: 'Đức Phật A Di Đà',
-    title: 'Tiếp Dẫn Đạo Sư A Di Đà Phật',
-    image: '/images/golden_buddha.jpg',
-    mantra: 'Nam Mô A Di Đà Phật',
-    vow: '48 Đại nguyện tiếp dẫn chúng sinh trì niệm danh hiệu về cõi Tây Phương Cực Lạc an vui giải thoát.',
-  },
-  {
-    id: 'quan-am',
-    name: 'Bồ Tát Quán Thế Âm',
-    title: 'Đại Bi Quán Thế Âm Bồ Tát',
-    image: '/images/quan_am_bodhisattva.jpg',
-    mantra: 'Nam Mô Đại Bi Quán Thế Âm Bồ Tát',
-    vow: 'Tầm thanh cứu khổ, lắng nghe tiếng kêu cầu của muôn loài trong mười phương bằng lòng từ bi vô lượng.',
-  },
-  {
-    id: 'dia-tang',
-    name: 'Bồ Tát Địa Tạng Vương',
-    title: 'Đại Nguyện Địa Tạng Vương Bồ Tát',
-    image: '/images/tran_nhan_tong_yentu.jpg',
-    mantra: 'Nam Mô Đại Nguyện Địa Tạng Vương Bồ Tát',
-    vow: '“Địa ngục vị không, thệ bất thành Phật. Chúng sinh độ tận, phương chứng Bồ Đề.”',
-  },
-];
-
-type PracticeStepFilter = 'all' | 'dinh_tam' | 'tri_niem' | 'hoi_huong';
 
 export default function PracticePage() {
   const router = useRouter();
@@ -113,7 +57,6 @@ export default function PracticePage() {
   const [isBuddhasModalOpen, setIsBuddhasModalOpen] = useState(false);
   const [isMemorialBookOpen, setIsMemorialBookOpen] = useState(false);
   const [isMeritLedgerOpen, setIsMeritLedgerOpen] = useState(false);
-  const [selectedBuddha, setSelectedBuddha] = useState<BuddhaCard | null>(null);
 
   // Sound & music state
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
@@ -1062,57 +1005,13 @@ export default function PracticePage() {
       )}
 
       {/* ========================================================================= */}
-      {/* 7. MODAL: TÔN TƯỢNG CHƯ PHẬT & ĐẠI NGUYỆN                                 */}
+      {/* 7. MODAL: THƯ VIỆN BỔN TÔN • 18 TÔN TƯỢNG PHẬT & BỒ TÁT                    */}
       {/* ========================================================================= */}
-      {isBuddhasModalOpen && (
-        <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsBuddhasModalOpen(false);
-          }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
-        >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA] shrink-0">
-              <div>
-                <h3 className="font-heading font-serif text-lg font-bold text-[#8C5500]">
-                  Tôn Tượng Chư Phật &amp; Đại Nguyện
-                </h3>
-                <p className="text-xs text-[#7D6442]">Chiêm bái tôn tượng &amp; trì niệm hồng danh</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsBuddhasModalOpen(false)}
-                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-3">
-              {BUDDHAS_DATA.map((buddha) => (
-                <div
-                  key={buddha.id}
-                  onClick={() => {
-                    playBellSound(0.4);
-                    setSelectedBuddha(buddha);
-                    showToast(`Nam Mô ${buddha.name}`);
-                  }}
-                  className="flex gap-3.5 items-center p-3 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] cursor-pointer transition-all"
-                >
-                  <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-[#EEDBBA]">
-                    <img src={buddha.image} alt={buddha.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h5 className="font-heading font-serif font-bold text-sm text-[#2E1E0F]">{buddha.name}</h5>
-                    <p className="text-xs text-[#8C5500] font-mono truncate mt-0.5">{buddha.mantra}</p>
-                    <p className="text-[11px] text-[#6A5234] mt-1 line-clamp-2">{buddha.vow}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      <BuddhasGalleryModal
+        isOpen={isBuddhasModalOpen}
+        onClose={() => setIsBuddhasModalOpen(false)}
+        showToast={showToast}
+      />
 
       {/* ========================================================================= */}
       {/* 8. MODAL: SỔ HIẾU HẠNH GIA TIÊN                                           */}
