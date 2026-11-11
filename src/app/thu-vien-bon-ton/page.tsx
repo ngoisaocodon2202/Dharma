@@ -80,55 +80,37 @@ export default function ThuVienBonTonPage() {
       {/* VIEW 1: FULL-PAGE 18 BUDDHAS & BODHISATTVAS GRID (MATCHING USER SCREENSHOT) */}
       {/* ========================================================================= */}
       {!selectedBuddha ? (
-        <div className="max-w-md sm:max-w-2xl lg:max-w-6xl mx-auto px-3.5 sm:px-6 pt-3 pb-32 space-y-4">
-          {/* Top Bar Header with Back Button */}
-          <header className="flex items-center justify-between gap-3 pt-1 pb-2 border-b border-[#EEDBBA]">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => router.push('/thuc-hanh')}
-                className="w-10 h-10 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#7D6442] hover:text-[#2E1E0F] active:scale-95 transition-all cursor-pointer shadow-xs"
-                title="Trở về Phương Tiện Tu Tập"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <div>
-                <h1 className="font-heading font-serif text-lg sm:text-2xl font-bold text-[#2E1E0F] leading-tight">
-                  Phật &amp; Bồ Tát
-                </h1>
-                <p className="text-[11px] sm:text-xs text-[#8C5500] font-medium">
-                  Thư Viện Bổn Tôn • 18 Tôn Tượng Trang Nghiêm
-                </p>
-              </div>
-            </div>
+        <div className="max-w-md sm:max-w-2xl lg:max-w-6xl mx-auto px-3 sm:px-6 pt-2 pb-16 space-y-3">
+          {/* Top Bar Header with Back Button (Exactly matching user app screenshot) */}
+          <header className="flex items-center justify-between gap-3 pt-2 pb-2 sticky top-0 bg-[#FDFBF7]/95 backdrop-blur-md z-30">
+            <button
+              type="button"
+              onClick={() => router.push('/thuc-hanh')}
+              className="w-10 h-10 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#2E1E0F] active:scale-95 transition-all cursor-pointer shadow-xs shrink-0"
+              title="Trở về Phương Tiện Tu Tập"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
 
-            <span className="text-[10px] sm:text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-[#FFF4D0] text-[#8C5500] border border-[#ECD9A8]">
-              18 Vị Bổn Tôn
-            </span>
+            <h1 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#2E1E0F] tracking-wide text-center whitespace-nowrap flex-1">
+              Phật &amp; Bồ Tát
+            </h1>
+
+            {/* Empty balance spacer to perfectly center the title */}
+            <div className="w-10 h-10 shrink-0" aria-hidden="true" />
           </header>
-
-          {/* Clean Instruction Sub-bar (Single-line, no wrapping) */}
-          <div className="px-3.5 py-2 rounded-2xl bg-gradient-to-r from-[#FFFDF5] to-[#FFF9E6] border border-[#ECD9A8] flex items-center justify-between text-center shadow-xs">
-            <span className="text-[11px] sm:text-xs text-[#8C5500] font-medium flex items-center gap-1.5">
-              <LotusMinimalIcon className="w-4 h-4 text-[#8C5500] shrink-0" />
-              <span>Chạm ảnh để xem: <strong>Tiểu Sử • Đại Nguyện • Thần Chú</strong></span>
-            </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#FFF4D0] text-[#8C5500] font-bold shrink-0">
-              Chính Thống
-            </span>
-          </div>
 
           {/* 18 Buddha Cards Grid (2 cols on mobile, 3 cols on tablet, 6 cols on desktop) */}
           <section aria-label="Danh sách 18 Tôn Tượng Phật và Bồ Tát">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 lg:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-5">
               {BUDDHAS_DATA.map((buddha) => (
                 <div
                   key={buddha.id}
                   onClick={() => handleSelectBuddha(buddha)}
-                  className="group rounded-3xl overflow-hidden border border-[#ECD9A8] hover:border-[#E5C158] shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col bg-[#FDF9F0] active:scale-95 select-none"
+                  className="group rounded-2xl sm:rounded-3xl overflow-hidden border border-[#ECD9A8] hover:border-[#E5C158] shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col bg-[#FDF9F0] active:scale-95 select-none"
                 >
                   {/* High-Resolution Artwork Area */}
-                  <div className="relative aspect-[1.02/1] w-full overflow-hidden bg-[#FAF3E0] flex items-center justify-center">
+                  <div className="relative aspect-square w-full overflow-hidden bg-[#FAF3E0] flex items-center justify-center">
                     <img
                       src={buddha.image}
                       alt={buddha.name}
@@ -137,9 +119,9 @@ export default function ThuVienBonTonPage() {
                     />
                   </div>
 
-                  {/* Bottom Solid Dark Bar with Centered Name (No truncation with ..., wraps naturally onto 2 lines) */}
-                  <div className="bg-[#241B0B] py-2.5 px-2 text-center flex items-center justify-center min-h-[48px] sm:min-h-[52px]">
-                    <h2 className="font-heading font-serif text-[11.5px] sm:text-xs font-bold text-white tracking-wide leading-tight group-hover:text-[#FFE79A] transition-colors">
+                  {/* Bottom Solid Dark Bar with Centered Name (NO WRAPPING - EXACT 1 LINE) */}
+                  <div className="bg-[#241B0B] py-2.5 px-1.5 text-center flex items-center justify-center min-h-[42px] sm:min-h-[46px]">
+                    <h2 className="font-heading font-serif text-[11px] sm:text-xs font-bold text-white tracking-tight whitespace-nowrap overflow-hidden text-ellipsis group-hover:text-[#FFE79A] transition-colors">
                       {buddha.name}
                     </h2>
                   </div>
@@ -152,34 +134,32 @@ export default function ThuVienBonTonPage() {
         /* ========================================================================= */
         /* VIEW 2: FULL-PAGE DETAIL VIEW (1. TIỂU SỬ, 2. ĐẠI NGUYỆN, 3. THẦN CHÚ)     */
         /* ========================================================================= */
-        <div className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto px-3.5 sm:px-6 pt-3 pb-32 space-y-5 animate-fade-in">
+        <div className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto px-3.5 sm:px-6 pt-2 pb-16 space-y-4 animate-fade-in">
           {/* Detail Top Header with Back to 18 Buddhas Grid */}
-          <header className="flex items-center justify-between gap-3 pt-1 pb-2 border-b border-[#EEDBBA]">
-            <div className="flex items-center gap-3 min-w-0">
-              <button
-                type="button"
-                onClick={() => setSelectedBuddha(null)}
-                className="w-10 h-10 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#7D6442] hover:text-[#2E1E0F] active:scale-95 transition-all cursor-pointer shadow-xs shrink-0"
-                title="Quay lại danh sách 18 Bổn Tôn"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <div className="min-w-0">
-                <h1 className="font-heading font-serif text-lg sm:text-2xl font-bold text-[#8C5500] truncate">
-                  {selectedBuddha.title}
-                </h1>
-                <p className="text-xs text-[#7D6442] truncate font-sans">
-                  {selectedBuddha.sanskrit} • {selectedBuddha.realm}
-                </p>
-              </div>
+          <header className="flex items-center justify-between gap-2.5 pt-2 pb-2 sticky top-0 bg-[#FDFBF7]/95 backdrop-blur-md z-30 border-b border-[#EEDBBA]">
+            <button
+              type="button"
+              onClick={() => setSelectedBuddha(null)}
+              className="w-10 h-10 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#2E1E0F] active:scale-95 transition-all cursor-pointer shadow-xs shrink-0"
+              title="Quay lại danh sách 18 Bổn Tôn"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div className="min-w-0 text-center flex-1 px-1">
+              <h1 className="font-heading font-serif text-base sm:text-lg font-bold text-[#8C5500] whitespace-nowrap truncate">
+                {selectedBuddha.title}
+              </h1>
+              <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate font-sans">
+                {selectedBuddha.sanskrit}
+              </p>
             </div>
 
             <button
               type="button"
               onClick={() => setSelectedBuddha(null)}
-              className="text-xs font-bold text-[#8C5500] hover:text-[#2E1E0F] px-3 py-1.5 rounded-xl bg-white border border-[#ECD9A8] shrink-0"
+              className="text-xs font-bold text-[#8C5500] hover:text-[#2E1E0F] px-2.5 py-1.5 rounded-xl bg-white border border-[#ECD9A8] shrink-0 whitespace-nowrap"
             >
-              Đổi Vị Khác
+              Đổi vị
             </button>
           </header>
 

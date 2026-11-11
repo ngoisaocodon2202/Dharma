@@ -246,7 +246,9 @@ export function Header() {
   if (
     /^\/cong-dong\/.+/.test(pathname) ||
     pathname === '/cau-nguyen' ||
-    pathname === '/di-chua-online'
+    pathname === '/di-chua-online' ||
+    pathname === '/thu-vien-bon-ton' ||
+    pathname.startsWith('/thu-vien-bon-ton')
   ) {
     return null;
   }
