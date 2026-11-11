@@ -239,6 +239,8 @@ export function Header() {
   if (
     /^\/cong-dong\/.+/.test(pathname) ||
     pathname === '/cau-nguyen' ||
+    pathname === '/cau-sieu' ||
+    pathname.startsWith('/cau-sieu') ||
     pathname === '/di-chua-online' ||
     pathname === '/thu-vien-bon-ton' ||
     pathname.startsWith('/thu-vien-bon-ton')

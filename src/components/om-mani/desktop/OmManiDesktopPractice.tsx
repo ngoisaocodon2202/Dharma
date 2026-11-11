@@ -155,7 +155,7 @@ export function OmManiDesktopPractice({
       title: 'Cầu siêu',
       subtitle: 'Thành tâm tưởng niệm cửu huyền thất tổ & hồi hướng cầu an',
       Icon: IncenseAltarIcon,
-      image: '/images/tran_nhan_tong_yentu.jpg',
+      image: '/images/cau-sieu-bg.jpg',
       action: onOpenPrayRebirth,
     },
     {

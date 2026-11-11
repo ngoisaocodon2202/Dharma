@@ -194,12 +194,9 @@ export default function PracticePage() {
       id: 'cau-sieu',
       title: 'Cầu siêu',
       subtitle: 'Thành tâm tưởng niệm',
-      image: '/images/tran_nhan_tong_yentu.jpg',
+      image: '/images/cau-sieu-bg.jpg',
       Icon: IncenseAltarIcon,
-      onClick: () => {
-        setPrayerTab('sieu');
-        setIsPrayerRebirthOpen(true);
-      },
+      onClick: () => router.push('/cau-sieu'),
     },
     {
       id: 'may-niem-phat',
@@ -390,7 +387,7 @@ export default function PracticePage() {
           onOpenBellFish={() => setIsBellsModalOpen(true)}
           onOpenChantMachine={() => setIsChantMachineOpen(true)}
           onOpenPrayPeace={() => setIsPrayerPeaceOpen(true)}
-          onOpenPrayRebirth={() => setIsPrayerRebirthOpen(true)}
+          onOpenPrayRebirth={() => router.push('/cau-sieu')}
           onOpenOnlineTemple={() => router.push('/di-chua-online')}
           onOpenBuddhas={() => router.push('/thu-vien-bon-ton')}
           onOpenMemorial={() => setIsMemorialBookOpen(true)}
