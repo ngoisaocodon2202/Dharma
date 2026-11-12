@@ -1,46 +1,24 @@
 // Tam Tạng Kinh Điển Trì Tụng (8 Bộ Kinh & Nghi Thức Cốt Tủy — Đầy Đủ Các Phần Khai Kinh -> Tịnh Pháp Giới -> Toàn Văn -> Bát Nhã -> Hồi Hướng -> Tam Tự Quy Y)
 
-export type SutraCategory =
-  | 'Kinh Nhật Tụng'
-  | 'Tịnh Độ Tông'
-  | 'Mật Tông'
-  | 'Thiền & Bát Nhã'
-  | 'Kinh Nguyên Thủy (Nikaya)'
-  | 'Nghi Thức Sám Hối & Cúng Cơm';
+import type {
+  SutraCategory,
+  SutraSection,
+  SutraText,
+  SutraRawEntry,
+} from './sutrasTypes';
+import { SUTRA_CATEGORIES } from './sutrasTypes';
+import { NIKAYA_AND_VERSE_ENTRIES } from './catalog/nikayaAndVerseCatalog';
+import { ZEN_AND_LOTUS_ENTRIES } from './catalog/zenAndLotusCatalog';
+import { PURELAND_AND_MANTRA_ENTRIES } from './catalog/pureLandAndMantraCatalog';
+import { DAILY_AND_RITUAL_ENTRIES } from './catalog/dailyAndRitualCatalog';
 
-export interface SutraSection {
-  title: string;
-  subtitle?: string;
-  paragraphs: string[];
-}
-
-export interface SutraText {
-  id: string;
-  slug: string; // Dùng cho URL ?kinh=...
-  title: string;
-  sanskritOrPaliTitle: string;
-  category: SutraCategory;
-  durationMins: number;
-  translator: string;
-  summary: string;
-  meritNote: string;
-  // Cấu trúc Nghi thức Trì tụng Chuẩn Thiền Môn Việt Nam
-  khaiKinh: SutraSection;
-  tinhPhapGioi: SutraSection;
-  toanVan: SutraSection[];
-  batNhaTamKinh: SutraSection;
-  hoiHuong: SutraSection;
-  tamTuQuyY: SutraSection;
-}
-
-export const SUTRA_CATEGORIES: SutraCategory[] = [
-  'Kinh Nhật Tụng',
-  'Tịnh Độ Tông',
-  'Mật Tông',
-  'Thiền & Bát Nhã',
-  'Kinh Nguyên Thủy (Nikaya)',
-  'Nghi Thức Sám Hối & Cúng Cơm',
-];
+export {
+  SUTRA_CATEGORIES,
+  type SutraCategory,
+  type SutraSection,
+  type SutraText,
+  type SutraRawEntry,
+};
 
 const SHARED_KHAI_KINH: SutraSection = {
   title: 'I. Nghi Thức Niệm Hương & Kệ Khai Kinh',
@@ -91,7 +69,7 @@ const SHARED_TAM_TU_QUY_Y: SutraSection = {
   ],
 };
 
-export const SUTRAS_DATA: SutraText[] = [
+const CORE_SUTRAS_DATA: SutraText[] = [
   {
     id: 'bat-nha-tam-kinh',
     slug: 'bat-nha',
@@ -397,6 +375,31 @@ export const SUTRAS_DATA: SutraText[] = [
     hoiHuong: SHARED_HOI_HUONG,
     tamTuQuyY: SHARED_TAM_TU_QUY_Y,
   },
+];
+
+function withLiturgicalFrame(entry: SutraRawEntry): SutraText {
+  return {
+    ...entry,
+    khaiKinh: SHARED_KHAI_KINH,
+    tinhPhapGioi: SHARED_TINH_PHAP_GIOI,
+    batNhaTamKinh: SHARED_BAT_NHA_SHORT,
+    hoiHuong: SHARED_HOI_HUONG,
+    tamTuQuyY: SHARED_TAM_TU_QUY_Y,
+  };
+}
+
+const CRAWLED_RAW_ENTRIES: SutraRawEntry[] = [
+  ...DAILY_AND_RITUAL_ENTRIES,
+  ...PURELAND_AND_MANTRA_ENTRIES,
+  ...ZEN_AND_LOTUS_ENTRIES,
+  ...NIKAYA_AND_VERSE_ENTRIES,
+];
+
+export const SUTRAS_DATA: SutraText[] = [
+  ...CORE_SUTRAS_DATA,
+  ...CRAWLED_RAW_ENTRIES.filter(
+    (entry) => !CORE_SUTRAS_DATA.some((core) => core.slug === entry.slug || core.id === entry.id)
+  ).map(withLiturgicalFrame),
 ];
 
 export function getSutraBySlugOrId(key: string): SutraText | undefined {

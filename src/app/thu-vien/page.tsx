@@ -31,7 +31,59 @@ import { playPageTurnSound, playBeadTickSound, playOmTempleBellSound } from '@/l
 
 const SUTRA_COUNTS_STORAGE_KEY = 'phatphap_dharma_sutra_counts_v2';
 
-function mapSutraImage(slug: string): string {
+const BUDDHA_THUMBS_BY_CATEGORY: Record<string, string[]> = {
+  'Kinh Nhật Tụng': [
+    '/images/buddhas/duc-phat-thich-ca.png',
+    '/images/buddhas/duc-phat-duoc-su.png',
+    '/images/buddhas/phat-di-lac.png',
+    '/images/buddhas/quan-the-am-bo-tat.png',
+  ],
+  'Tịnh Độ Tông': [
+    '/images/buddhas/duc-phat-a-di-da.png',
+    '/images/buddhas/dai-the-chi-bo-tat.png',
+    '/images/buddhas/quan-the-am-bo-tat.png',
+    '/images/buddhas/pho-hien-bo-tat.png',
+  ],
+  'Mật Tông': [
+    '/images/buddhas/quan-the-am-nghin-mat-nghin-tay.png',
+    '/images/buddhas/chuan-de-bo-tat.png',
+    '/images/buddhas/kim-cang-thu-bo-tat.png',
+    '/images/buddhas/duc-tara-da-la-bo-tat.png',
+    '/images/buddhas/dai-nhat-nhu-lai.png',
+  ],
+  'Thiền & Bát Nhã': [
+    '/images/buddhas/van-thu-su-loi-bo-tat.png',
+    '/images/buddhas/to-su-bo-de-dat-ma.png',
+    '/images/buddhas/ton-gia-ma-ha-ca-diep.png',
+    '/images/buddhas/duc-phat-thich-ca.png',
+  ],
+  'Kinh Nguyên Thủy (Nikaya)': [
+    '/images/buddhas/duc-phat-thich-ca.png',
+    '/images/buddhas/ton-gia-a-nan-da.png',
+    '/images/buddhas/ton-gia-ma-ha-ca-diep.png',
+    '/images/buddhas/dai-nhat-nhu-lai.png',
+  ],
+  'Kinh Đại Thừa & Pháp Hoa': [
+    '/images/buddhas/pho-hien-bo-tat.png',
+    '/images/buddhas/van-thu-su-loi-bo-tat.png',
+    '/images/buddhas/quan-the-am-bo-tat.png',
+    '/images/buddhas/duc-phat-thich-ca.png',
+  ],
+  'Thiền Kệ & Lời Phật Dạy': [
+    '/images/buddhas/to-su-bo-de-dat-ma.png',
+    '/images/buddhas/ton-gia-ma-ha-ca-diep.png',
+    '/images/buddhas/ton-gia-a-nan-da.png',
+    '/images/buddhas/duc-phat-thich-ca.png',
+  ],
+  'Nghi Thức Sám Hối & Cúng Cơm': [
+    '/images/buddhas/dia-tang-vuong-bo-tat.png',
+    '/images/buddhas/vi-da-ton-thien-bo-tat.png',
+    '/images/buddhas/quan-the-am-bo-tat.png',
+    '/images/buddhas/duc-phat-a-di-da.png',
+  ],
+};
+
+function mapSutraImage(slug: string, category?: string, idx = 0): string {
   switch (slug) {
     case 'bat-nha':
       return '/images/buddhas/van-thu-su-loi-bo-tat.png';
@@ -50,9 +102,23 @@ function mapSutraImage(slug: string): string {
     case 'phap-cu':
       return '/images/buddhas/dai-nhat-nhu-lai.png';
     case 'vu-lan':
+    case 'vu-lan-sam-hoi':
       return '/images/buddhas/pho-hien-bo-tat.png';
-    default:
-      return '/images/buddhas/duc-phat-thich-ca.png';
+    default: {
+      const s = slug.toLowerCase();
+      if (s.includes('duoc-su')) return '/images/buddhas/duc-phat-duoc-su.png';
+      if (s.includes('di-lac')) return '/images/buddhas/phat-di-lac.png';
+      if (s.includes('chuan-de')) return '/images/buddhas/chuan-de-bo-tat.png';
+      if (s.includes('pho-hien')) return '/images/buddhas/pho-hien-bo-tat.png';
+      if (s.includes('van-thu')) return '/images/buddhas/van-thu-su-loi-bo-tat.png';
+      if (s.includes('dia-tang') || s.includes('chieu-hon')) return '/images/buddhas/dia-tang-vuong-bo-tat.png';
+      if (s.includes('quan-am') || s.includes('dai-bi') || s.includes('om-mani')) return '/images/buddhas/quan-the-am-nghin-mat-nghin-tay.png';
+      if (s.includes('a-di-da') || s.includes('vo-luong-tho') || s.includes('niem-phat') || s.includes('vang-sanh')) return '/images/buddhas/duc-phat-a-di-da.png';
+      if (s.includes('lang-nghiem')) return '/images/buddhas/kim-cang-thu-bo-tat.png';
+      if (s.includes('luc-to') || s.includes('tin-tam') || s.includes('chung-dao')) return '/images/buddhas/to-su-bo-de-dat-ma.png';
+      const pool = (category && BUDDHA_THUMBS_BY_CATEGORY[category]) || BUDDHA_THUMBS_BY_CATEGORY['Kinh Nhật Tụng'];
+      return pool[idx % pool.length];
+    }
   }
 }
 
@@ -68,6 +134,7 @@ function BuddhistLibraryInner() {
   );
 
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'bookmarked' | SutraCategory>('all');
+  const [visibleLimit, setVisibleLimit] = useState<number>(30);
   const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [readingSutra, setReadingSutra] = useState<(SutraText & { image?: string }) | null>(null);
@@ -85,9 +152,9 @@ function BuddhistLibraryInner() {
 
   const sutrasWithImages = useMemo(
     () =>
-      SUTRAS_DATA.map((s) => ({
+      SUTRAS_DATA.map((s, idx) => ({
         ...s,
-        image: mapSutraImage(s.slug),
+        image: mapSutraImage(s.slug, s.category, idx),
       })),
     []
   );
@@ -122,7 +189,7 @@ function BuddhistLibraryInner() {
     if (found) {
       setReadingSutra({
         ...found,
-        image: mapSutraImage(found.slug),
+        image: mapSutraImage(found.slug, found.category, 0),
       });
     }
   }, [searchParams]);
@@ -365,27 +432,65 @@ function BuddhistLibraryInner() {
         </header>
 
         {/* ===================================================================== */}
-        {/* SEARCH PILL                                                           */}
+        {/* SEARCH PILL & CATEGORY CHIPS                                          */}
         {/* ===================================================================== */}
-        <div className="relative">
-          <Search className="w-4 h-4 text-[#8C5500] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Tìm kiếm bài kinh, thần chú, nghi thức..."
-            className="w-full h-11 pl-11 pr-10 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] text-sm text-[#2C1E10] placeholder:text-[#8E7A63] focus:outline-none focus:border-[#8C5500] transition-colors shadow-xs"
-          />
-          {searchQuery && (
+        <div className="space-y-2.5">
+          <div className="relative">
+            <Search className="w-4 h-4 text-[#8C5500] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={`Tìm trong ${sutrasWithImages.length} bài kinh, thần chú, nghi thức...`}
+              className="w-full h-11 pl-11 pr-10 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] text-sm text-[#2C1E10] placeholder:text-[#8E7A63] focus:outline-none focus:border-[#8C5500] transition-colors shadow-xs"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B533B] hover:text-[#2C1E10] cursor-pointer"
+                aria-label="Xoá tìm kiếm"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
             <button
               type="button"
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B533B] hover:text-[#2C1E10] cursor-pointer"
-              aria-label="Xoá tìm kiếm"
+              onClick={() => {
+                setSelectedCategory('all');
+                setVisibleLimit(30);
+              }}
+              className={cn(
+                'px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap shrink-0 border transition-colors cursor-pointer',
+                selectedCategory === 'all'
+                  ? 'bg-[#8C5500] border-[#8C5500] text-white'
+                  : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B] hover:border-[#C68B19] hover:text-[#2C1E10]'
+              )}
             >
-              <X className="w-4 h-4" />
+              Tất cả ({categoryCounts.all})
             </button>
-          )}
+            {SUTRA_CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  setVisibleLimit(60);
+                }}
+                className={cn(
+                  'px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap shrink-0 border transition-colors cursor-pointer',
+                  selectedCategory === cat
+                    ? 'bg-[#8C5500] border-[#8C5500] text-white'
+                    : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B] hover:border-[#C68B19] hover:text-[#2C1E10]'
+                )}
+              >
+                {cat} ({categoryCounts[cat] || 0})
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* ===================================================================== */}
@@ -409,8 +514,12 @@ function BuddhistLibraryInner() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {filteredSutras.map((sutra) => {
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+              {(selectedCategory === 'all' && !searchQuery.trim()
+                ? filteredSutras.slice(0, visibleLimit)
+                : filteredSutras
+              ).map((sutra) => {
               const count = sutraChantCounts[sutra.id] || 0;
               const isBookmarked = bookmarkedSutraIds.includes(sutra.id);
               return (
@@ -476,7 +585,19 @@ function BuddhistLibraryInner() {
                 </div>
               );
             })}
-          </div>
+            </div>
+            {selectedCategory === 'all' && !searchQuery.trim() && visibleLimit < filteredSutras.length && (
+              <div className="flex justify-center pt-2">
+                <button
+                  type="button"
+                  onClick={() => setVisibleLimit((prev) => prev + 30)}
+                  className="px-5 py-2.5 rounded-2xl bg-[#FFFFFF] border border-[#DFC27D] text-xs font-bold text-[#8C5500] hover:bg-[#FFF9EB] transition-colors cursor-pointer shadow-xs"
+                >
+                  Xem thêm kinh điển ({filteredSutras.length - visibleLimit} bài còn lại)
+                </button>
+              </div>
+            )}
+          </>
         )}
 
         {/* ===================================================================== */}
