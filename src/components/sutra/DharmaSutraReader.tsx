@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   ArrowLeft,
   Play,
@@ -121,8 +121,99 @@ export function DharmaSutraReader({
   const scrollRemainderRef = useRef<number>(0);
   const manualPauseUntilRef = useRef<number>(0);
 
-  // Soothing Voice Recitation + 432Hz Healing Audio
+  // Soothing Voice Recitation with Karaoke Highlight & Persistent Resume
   const [isVoiceChanting, setIsVoiceChanting] = useState(false);
+  const [activeParaKey, setActiveParaKey] = useState<string | null>(null);
+  const [voiceSeekNonce, setVoiceSeekNonce] = useState(0);
+  const voiceChunkIdxRef = useRef<number>(0);
+  const paraElementsRef = useRef<Record<string, HTMLElement | null>>({});
+  const lastScrolledParaRef = useRef<string | null>(null);
+
+  const orderedSections = useMemo(
+    () => [
+      { secKey: 'khai-kinh', section: sutra.khaiKinh, badge: 'Nghi Thức Mở Đầu' },
+      { secKey: 'tinh-phap-gioi', section: sutra.tinhPhapGioi, badge: 'Thanh Tịnh Tam Nghiệp' },
+      ...sutra.toanVan.map((ch, idx) => ({
+        secKey: `toanvan-${idx}`,
+        section: ch,
+        badge: `Chánh Văn • Phần ${idx + 1}/${sutra.toanVan.length}`,
+      })),
+      { secKey: 'bat-nha', section: sutra.batNhaTamKinh, badge: 'Trí Tuệ Bát Nhã' },
+      { secKey: 'hoi-huong', section: sutra.hoiHuong, badge: 'Phát Nguyện Hồi Hướng' },
+      { secKey: 'tam-tu-quy-y', section: sutra.tamTuQuyY, badge: 'Kết Thời Lễ Tạ' },
+    ],
+    [sutra]
+  );
+
+  const { voiceChunks, paraOrderMap, paraFirstChunkIdxMap } = useMemo(() => {
+    const chunks: Array<{ text: string; paraKey: string; paraOrder: number }> = [];
+    const orderMap: Record<string, number> = {};
+    const firstChunkMap: Record<string, number> = {};
+    let paraSeq = 0;
+
+    for (const { secKey, section } of orderedSections) {
+      for (let pIdx = 0; pIdx < section.paragraphs.length; pIdx += 1) {
+        const paraKey = `${secKey}::${pIdx}`;
+        const currentOrder = paraSeq;
+        orderMap[paraKey] = currentOrder;
+        firstChunkMap[paraKey] = chunks.length;
+        paraSeq += 1;
+
+        const clean = section.paragraphs[pIdx].replace(/\s+/g, ' ').trim();
+        if (!clean) continue;
+
+        if (clean.length <= 220) {
+          chunks.push({ text: clean, paraKey, paraOrder: currentOrder });
+        } else {
+          const parts = clean.split(/(?<=[.!?…。])\s+/);
+          let buf = '';
+          for (const part of parts) {
+            if ((buf + ' ' + part).trim().length > 220 && buf) {
+              chunks.push({ text: buf.trim(), paraKey, paraOrder: currentOrder });
+              buf = part;
+            } else {
+              buf = buf ? `${buf} ${part}` : part;
+            }
+          }
+          if (buf.trim()) {
+            chunks.push({ text: buf.trim(), paraKey, paraOrder: currentOrder });
+          }
+        }
+      }
+    }
+
+    return {
+      voiceChunks: chunks,
+      paraOrderMap: orderMap,
+      paraFirstChunkIdxMap: firstChunkMap,
+    };
+  }, [orderedSections]);
+
+  // Restore saved reading position when opening a sutra
+  useEffect(() => {
+    lastScrolledParaRef.current = null;
+    try {
+      const raw = localStorage.getItem('dharma_sutra_voice_pos');
+      const map = raw ? JSON.parse(raw) : {};
+      const saved = map?.[sutra.id];
+      if (saved && typeof saved.idx === 'number' && saved.idx > 0 && saved.idx < voiceChunks.length) {
+        voiceChunkIdxRef.current = saved.idx;
+        setActiveParaKey(saved.paraKey || voiceChunks[saved.idx]?.paraKey || null);
+        return;
+      }
+    } catch {}
+    voiceChunkIdxRef.current = 0;
+    setActiveParaKey(null);
+  }, [sutra.id, voiceChunks]);
+
+  const saveVoiceBookmark = (chunkIdx: number, paraKey: string | null) => {
+    try {
+      const raw = localStorage.getItem('dharma_sutra_voice_pos');
+      const map = raw ? JSON.parse(raw) : {};
+      map[sutra.id] = { idx: chunkIdx, paraKey };
+      localStorage.setItem('dharma_sutra_voice_pos', JSON.stringify(map));
+    } catch {}
+  };
 
   // Floating Chanting Assistant (Mõ & Chuông)
   const [isAutoFishOn, setIsAutoFishOn] = useState(false);
@@ -165,7 +256,7 @@ export function DharmaSutraReader({
     return () => cancelAnimationFrame(rafId);
   }, [isAutoScrolling, scrollSpeed]);
 
-  // Pure soothing voice reading (no Hz drone buzz underneath speech)
+  // Pure soothing voice reading with resume-from-pause & live paragraph highlight
   useEffect(() => {
     stopHealingDrone();
     if (!isVoiceChanting) {
@@ -176,54 +267,51 @@ export function DharmaSutraReader({
     }
 
     let cancelled = false;
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window && voiceChunks.length > 0) {
       try {
         window.speechSynthesis.cancel();
-        const rawSegments = [
-          sutra.title,
-          ...sutra.khaiKinh.paragraphs,
-          ...sutra.toanVan.flatMap((c) => [c.title, ...c.paragraphs]),
-          ...sutra.hoiHuong.paragraphs,
-        ];
 
-        // Split into smooth sentence-sized chunks so browser speech synthesis never cuts off
-        const chunks: string[] = [];
-        for (const seg of rawSegments) {
-          const clean = seg.replace(/\s+/g, ' ').trim();
-          if (!clean) continue;
-          if (clean.length <= 220) {
-            chunks.push(clean);
-          } else {
-            const parts = clean.split(/(?<=[.!?…。])\s+/);
-            let buf = '';
-            for (const part of parts) {
-              if ((buf + ' ' + part).trim().length > 220 && buf) {
-                chunks.push(buf.trim());
-                buf = part;
-              } else {
-                buf = buf ? `${buf} ${part}` : part;
-              }
-            }
-            if (buf.trim()) chunks.push(buf.trim());
-          }
+        // Resume from saved chunk index; wrap back to 0 only if finished completely
+        if (voiceChunkIdxRef.current >= voiceChunks.length) {
+          voiceChunkIdxRef.current = 0;
         }
 
         const voices = window.speechSynthesis.getVoices();
         const viVoice = voices.find((v) => v.lang.toLowerCase().startsWith('vi'));
 
-        let idx = 0;
         const speakNext = () => {
-          if (cancelled || idx >= chunks.length) {
-            if (!cancelled) setIsVoiceChanting(false);
+          const i = voiceChunkIdxRef.current;
+          if (cancelled || i >= voiceChunks.length) {
+            if (!cancelled && i >= voiceChunks.length) {
+              voiceChunkIdxRef.current = 0;
+              setActiveParaKey(null);
+              saveVoiceBookmark(0, null);
+              setIsVoiceChanting(false);
+            }
             return;
           }
-          const utter = new SpeechSynthesisUtterance(chunks[idx]);
+
+          const chunk = voiceChunks[i];
+          setActiveParaKey(chunk.paraKey);
+          saveVoiceBookmark(i, chunk.paraKey);
+
+          if (lastScrolledParaRef.current !== chunk.paraKey) {
+            lastScrolledParaRef.current = chunk.paraKey;
+            const targetEl = paraElementsRef.current[chunk.paraKey];
+            if (targetEl) {
+              manualPauseUntilRef.current = Date.now() + 1800;
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+
+          const utter = new SpeechSynthesisUtterance(chunk.text);
           utter.lang = 'vi-VN';
           if (viVoice) utter.voice = viVoice;
           utter.rate = 0.85;
           utter.pitch = 1.0;
           utter.onend = () => {
-            idx += 1;
+            if (cancelled) return;
+            voiceChunkIdxRef.current = i + 1;
             speakNext();
           };
           utter.onerror = () => {
@@ -245,7 +333,22 @@ export function DharmaSutraReader({
         window.speechSynthesis.cancel();
       }
     };
-  }, [isVoiceChanting, sutra]);
+  }, [isVoiceChanting, sutra, voiceChunks, voiceSeekNonce]);
+
+  const handleSelectParagraphForVoice = (secKey: string, pIdx: number) => {
+    const paraKey = `${secKey}::${pIdx}`;
+    const targetIdx = paraFirstChunkIdxMap[paraKey];
+    if (typeof targetIdx !== 'number') return;
+    voiceChunkIdxRef.current = targetIdx;
+    lastScrolledParaRef.current = null;
+    setActiveParaKey(paraKey);
+    saveVoiceBookmark(targetIdx, paraKey);
+    if (isVoiceChanting) {
+      setVoiceSeekNonce((n) => n + 1);
+    } else {
+      showToast('Đã đánh dấu đoạn kinh — bấm "Giọng Đọc Kinh" để đọc tiếp từ đây');
+    }
+  };
 
   // Auto-BPM Woodfish interval
   useEffect(() => {
@@ -306,9 +409,11 @@ export function DharmaSutraReader({
     showToast(`Hoàn mãn thời kinh "${sutra.title}"! Đã lưu vào Sổ Công Đức.`);
   };
 
-  const renderSection = (sec: SutraSection, badge?: string) => (
+  const activeParaOrder = activeParaKey != null ? paraOrderMap[activeParaKey] ?? -1 : -1;
+
+  const renderSection = (secKey: string, sec: SutraSection, badge?: string) => (
     <section
-      key={sec.title}
+      key={secKey}
       className={cn('p-4 sm:p-6 rounded-2xl border space-y-3 shadow-2xs', theme.cardBg, theme.border)}
     >
       <div className="space-y-1 pb-2 border-b border-[#EAD7A7]/60">
@@ -324,19 +429,68 @@ export function DharmaSutraReader({
       </div>
 
       <div className="space-y-4">
-        {sec.paragraphs.map((p, idx) => (
-          <p
-            key={idx}
-            style={{ fontSize: `${fontSizePx}px`, lineHeight: 1.85 }}
-            className={cn(
-              'whitespace-pre-line',
-              fontStyle === 'serif' ? 'font-serif' : 'font-sans',
-              theme.text
-            )}
-          >
-            {p}
-          </p>
-        ))}
+        {sec.paragraphs.map((p, idx) => {
+          const paraKey = `${secKey}::${idx}`;
+          const pOrder = paraOrderMap[paraKey] ?? -1;
+          const isCurrent = activeParaKey === paraKey;
+          const isAlreadyRead = activeParaOrder >= 0 && pOrder >= 0 && pOrder < activeParaOrder;
+
+          return (
+            <div
+              key={paraKey}
+              ref={(el) => {
+                paraElementsRef.current[paraKey] = el;
+              }}
+              onClick={() => handleSelectParagraphForVoice(secKey, idx)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleSelectParagraphForVoice(secKey, idx);
+                }
+              }}
+              title="Chạm để đánh dấu hoặc đọc tiếp từ đoạn này"
+              className={cn(
+                'rounded-xl transition-all duration-300 cursor-pointer',
+                isCurrent
+                  ? isVoiceChanting
+                    ? 'bg-[#FFF1C2] border-l-4 border-[#C8780A] px-3.5 py-2.5 shadow-2xs'
+                    : 'bg-[#FFF8DE] border-l-4 border-[#D9A02E] px-3.5 py-2.5 shadow-2xs'
+                  : 'hover:bg-[#FFF9EB]/60 px-1 py-0.5'
+              )}
+            >
+              {isCurrent && (
+                <span
+                  className={cn(
+                    'inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider mb-1 px-2 py-0.5 rounded-full',
+                    isVoiceChanting
+                      ? 'bg-[#C8780A] text-white'
+                      : 'bg-[#F3D89B] text-[#6B4200]'
+                  )}
+                >
+                  {isVoiceChanting ? 'Đang đọc đoạn này' : 'Đã đọc tới đây'}
+                </span>
+              )}
+              <p
+                style={{ fontSize: `${fontSizePx}px`, lineHeight: 1.85 }}
+                className={cn(
+                  'whitespace-pre-line transition-colors duration-300',
+                  fontStyle === 'serif' ? 'font-serif' : 'font-sans',
+                  isCurrent
+                    ? isVoiceChanting
+                      ? 'text-[#9A4200] font-semibold'
+                      : 'text-[#7A4900] font-medium'
+                    : isAlreadyRead
+                    ? 'text-[#9C7F57]'
+                    : theme.text
+                )}
+              >
+                {p}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -469,9 +623,17 @@ export function DharmaSutraReader({
                   setScrollProgressPct(0);
                   setIsAutoScrolling(true);
                 }
+                voiceChunkIdxRef.current = 0;
+                lastScrolledParaRef.current = null;
+                setActiveParaKey(null);
+                saveVoiceBookmark(0, null);
+                if (isVoiceChanting) {
+                  setVoiceSeekNonce((n) => n + 1);
+                }
+                showToast('Đã đưa vị trí đọc & tự lướt về đầu bài');
               }}
               className={cn('p-1 rounded-xl border cursor-pointer shrink-0', theme.cardBg, theme.border, theme.subtext)}
-              title="Cuộn lại từ đầu"
+              title="Đọc và cuộn lại từ đầu"
             >
               <RotateCcw className="w-3.5 h-3.5" />
             </button>
@@ -562,25 +724,10 @@ export function DharmaSutraReader({
             </p>
           </div>
 
-          {/* 1. Khai Kinh */}
-          {renderSection(sutra.khaiKinh, 'Nghi Thức Mở Đầu')}
-
-          {/* 2. Tịnh Pháp Giới */}
-          {renderSection(sutra.tinhPhapGioi, 'Thanh Tịnh Tam Nghiệp')}
-
-          {/* 3. Toàn Văn Chánh Kinh */}
-          {sutra.toanVan.map((chapter, idx) =>
-            renderSection(chapter, `Chánh Văn • Phần ${idx + 1}/${sutra.toanVan.length}`)
+          {/* Nghi Thức & Toàn Văn Chánh Kinh (Đồng Bộ Đánh Dấu Giọng Đọc) */}
+          {orderedSections.map(({ secKey, section, badge }) =>
+            renderSection(secKey, section, badge)
           )}
-
-          {/* 4. Bát Nhã Tâm Kinh */}
-          {renderSection(sutra.batNhaTamKinh, 'Trí Tuệ Bát Nhã')}
-
-          {/* 5. Hồi Hướng */}
-          {renderSection(sutra.hoiHuong, 'Phát Nguyện Hồi Hướng')}
-
-          {/* 6. Tam Tự Quy Y */}
-          {renderSection(sutra.tamTuQuyY, 'Kết Thời Lễ Tạ')}
 
           {/* Merit Note + Completion Action */}
           <div className={cn('p-6 rounded-2xl border text-center space-y-4 shadow-2xs', theme.cardBg, theme.border)}>
