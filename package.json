@@ -13,6 +13,8 @@
     "db:setup": "npx tsx src/lib/db/migrate.ts && npx tsx src/lib/db/seed.ts"
   },
   "dependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "@electric-sql/pglite-socket": "^0.2.19",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
@@ -22,7 +24,8 @@
     "pg": "^8.13.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "tailwind-merge": "^2.5.5"
+    "tailwind-merge": "^2.5.5",
+    "zustand": "^5.1.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

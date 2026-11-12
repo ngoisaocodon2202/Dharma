@@ -1,163 +1,182 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { query } from '@/lib/db';
-import { formatDate } from '@/lib/utils';
-import { Badge } from '@/components/ui/Badge';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card';
-import { Clock, Eye, BookOpen } from 'lucide-react';
-import { EmptyState } from '@/components/ui/EmptyState';
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
+import { BookOpen, Clock, Search, Bookmark, BookmarkCheck, ChevronRight } from 'lucide-react';
+import { CURATED_ARTICLES } from '@/data/articles';
+import { useDharmaStore } from '@/store/useDharmaStore';
+import { cn } from '@/lib/utils';
 
-export const dynamic = 'force-dynamic';
+export default function ArticlesPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('Tất cả');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [onlyBookmarked, setOnlyBookmarked] = useState<boolean>(false);
 
-interface Props {
-  searchParams: Promise<{ 'chuyen-muc'?: string; q?: string }>;
-}
+  const bookmarkedArticleSlugs = useDharmaStore((s) => s.bookmarkedArticleSlugs);
+  const toggleArticleBookmark = useDharmaStore((s) => s.toggleArticleBookmark);
 
-export default async function ArticlesPage({ searchParams }: Props) {
-  const { 'chuyen-muc': categorySlug, q: searchQuery } = await searchParams;
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(CURATED_ARTICLES.map((a) => a.category)));
+    return ['Tất cả', ...unique];
+  }, []);
 
-  // 1. Fetch categories
-  const categoriesRes = await query(
-    'SELECT id, name, slug, description FROM article_categories ORDER BY sort_order ASC, name ASC'
-  );
-  const categories = categoriesRes.rows;
-
-  // 2. Build articles query
-  let sql = `
-    SELECT a.id, a.title, a.slug, a.excerpt, a.cover_image, a.reading_time_minutes, a.view_count, a.published_at,
-           c.name as category_name, c.slug as category_slug,
-           p.full_name as author_name, p.dharma_name as author_dharma_name, p.avatar_url as author_avatar
-    FROM articles a
-    JOIN article_categories c ON a.category_id = c.id
-    JOIN profiles p ON a.author_id = p.user_id
-    WHERE a.status = 'PUBLISHED' AND a.deleted_at IS NULL
-  `;
-  const params: any[] = [];
-
-  if (categorySlug) {
-    params.push(categorySlug);
-    sql += ` AND c.slug = $${params.length}`;
-  }
-
-  if (searchQuery) {
-    params.push(`%${searchQuery}%`);
-    sql += ` AND (a.title ILIKE $${params.length} OR a.excerpt ILIKE $${params.length})`;
-  }
-
-  sql += ' ORDER BY a.published_at DESC LIMIT 20';
-
-  const articlesRes = await query(sql, params);
-  const articles = articlesRes.rows;
+  const filteredArticles = useMemo(() => {
+    return CURATED_ARTICLES.filter((a) => {
+      if (selectedCategory !== 'Tất cả' && a.category !== selectedCategory) return false;
+      if (onlyBookmarked && !bookmarkedArticleSlugs.includes(a.slug)) return false;
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        return (
+          a.title.toLowerCase().includes(q) ||
+          a.excerpt.toLowerCase().includes(q) ||
+          a.category.toLowerCase().includes(q) ||
+          a.authorOrSource.toLowerCase().includes(q)
+        );
+      }
+      return true;
+    });
+  }, [selectedCategory, onlyBookmarked, searchQuery, bookmarkedArticleSlugs]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-      {/* Page Header */}
-      <div className="space-y-3 border-b border-ivory-200 dark:border-charcoal-800 pb-6 animate-fade-in-up">
-        <div className="inline-flex items-center gap-1.5 text-xs text-saffron-700 dark:text-saffron-400 font-semibold uppercase tracking-wider">
-          <BookOpen className="w-4 h-4 animate-pulse-glow flex-shrink-0" />
-          <span>Cập nhật hàng ngày từ Chư Tăng Ni & Tự Viện</span>
-        </div>
-        <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal-900 dark:text-charcoal-50 leading-tight">
-          Bài Giảng & Pháp Thoại Từ Các Sư Thầy, Chùa Chiền
-        </h1>
-        <p className="text-xs sm:text-sm text-charcoal-600 dark:text-charcoal-400 max-w-2xl leading-relaxed">
-          Các bài pháp thoại, giảng giải giáo lý, phương pháp thiền tập và lời khuyên chuyển hóa tâm thức do Chư Tôn Đức Tăng Ni và các Chùa, Tự Viện đăng tải và cập nhật mới theo từng ngày.
-        </p>
+    <div className="min-h-screen bg-[#FAF7F0] text-[#2C1E10]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-20 space-y-6">
+        {/* Header */}
+        <header className="space-y-4 border-b border-[#EAD7A7] pb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 text-xs text-[#8C5500] font-bold uppercase tracking-wider">
+                <BookOpen className="w-4 h-4 shrink-0" />
+                <span>Pháp Học &amp; Thực Hành • 8 Bài Cẩm Nang</span>
+              </div>
+              <h1 className="font-heading font-serif text-2xl sm:text-3xl font-bold text-[#2C1E10]">
+                Cẩm Nang Chuyển Hóa Tâm
+              </h1>
+              <p className="text-xs sm:text-sm text-[#6B533B] max-w-2xl">
+                Tuyển tập 8 bài luận giải giáo lý và lộ trình thực hành 3 bước hằng ngày trích dẫn từ Kinh tạng Nikaya &amp; Đại Thừa.
+              </p>
+            </div>
 
-        {/* Category Pills Filter — Horizontal Scroll on Mobile, Wrap on Desktop */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth pt-3 sm:pt-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-          <Link
-            href="/bai-viet"
-            className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0 transition-all ${
-              !categorySlug
-                ? 'bg-saffron-500 text-white shadow-sm'
-                : 'bg-white dark:bg-charcoal-800 border border-ivory-200 dark:border-charcoal-700 text-charcoal-700 dark:text-charcoal-300 hover:border-saffron-400'
-            }`}
-          >
-            Tất cả
-          </Link>
-          {categories.map((cat: any) => (
-            <Link
-              key={cat.id}
-              href={`/bai-viet?chuyen-muc=${cat.slug}`}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0 transition-all ${
-                categorySlug === cat.slug
-                  ? 'bg-saffron-500 text-white shadow-sm'
-                  : 'bg-white dark:bg-charcoal-800 border border-ivory-200 dark:border-charcoal-700 text-charcoal-700 dark:text-charcoal-300 hover:border-saffron-400'
-              }`}
-            >
-              {cat.name}
-            </Link>
-          ))}
-        </div>
-      </div>
+            {/* Search & Bookmark Filter */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1 sm:w-64">
+                <Search className="w-4 h-4 text-[#8C5500] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Tìm bài pháp học..."
+                  className="w-full pl-10 pr-4 py-2 rounded-2xl bg-[#FFFFFF] border border-[#DFC27D] focus:border-[#C68B19] text-xs text-[#2C1E10] placeholder-[#8E775B] outline-none"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => setOnlyBookmarked((v) => !v)}
+                className={cn(
+                  'px-3.5 py-2 rounded-2xl border text-xs font-bold inline-flex items-center gap-1.5 shrink-0 cursor-pointer transition-colors',
+                  onlyBookmarked
+                    ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#2C1E10] border-[#C68B19]'
+                    : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#8C5500]'
+                )}
+              >
+                <Bookmark className="w-3.5 h-3.5" />
+                <span>Đã lưu ({bookmarkedArticleSlugs.length})</span>
+              </button>
+            </div>
+          </div>
 
-      {/* Articles Grid */}
-      {articles.length > 0 ? (
-        <ScrollReveal delayMs={100}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.map((article: any) => (
-              <Card key={article.id} className="flex flex-col justify-between overflow-hidden group hover-lift">
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {categories.map((cat) => {
+              const active = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat)}
+                  className={cn(
+                    'px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer border',
+                    active
+                      ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#2C1E10] border-[#C68B19]'
+                      : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B] hover:border-[#C68B19]'
+                  )}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        </header>
+
+        {/* Articles Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {filteredArticles.map((art) => {
+            const isSaved = bookmarkedArticleSlugs.includes(art.slug);
+            return (
+              <article
+                key={art.slug}
+                className="group rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] overflow-hidden shadow-xs flex flex-col justify-between transition-all"
+              >
                 <div>
-                  <div className="relative aspect-[16/10] bg-ivory-100 overflow-hidden">
+                  <Link href={`/bai-viet/${art.slug}`} className="block relative aspect-[16/9] bg-[#FFF9EB] overflow-hidden border-b border-[#EAD7A7]">
                     <img
-                      src={article.cover_image || '/images/lotus_blooming.jpg'}
-                      alt={article.title}
+                      src={art.image}
+                      alt={art.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-3 left-3">
-                      <Badge variant="saffron">{article.category_name}</Badge>
-                    </div>
-                  </div>
-                  <CardHeader className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs text-charcoal-400">
-                      <span>{formatDate(article.published_at)}</span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" /> {article.reading_time_minutes} phút đọc
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#FFFFFF]/95 border border-[#DFC27D] text-[10px] font-bold text-[#8C5500] shadow-2xs">
+                      {art.category}
+                    </span>
+                  </Link>
+
+                  <div className="p-5 space-y-2.5">
+                    <div className="flex items-center justify-between gap-2 text-xs text-[#6B533B]">
+                      <span className="inline-flex items-center gap-1 font-semibold">
+                        <Clock className="w-3.5 h-3.5 text-[#8C5500]" />
+                        {art.readTime}
                       </span>
+                      <span className="truncate">{art.authorOrSource}</span>
                     </div>
-                    <Link href={`/bai-viet/${article.slug}`}>
-                      <h2 className="font-heading text-lg font-bold text-charcoal-900 dark:text-charcoal-100 hover:text-saffron-600 dark:hover:text-saffron-400 transition-colors line-clamp-2 leading-snug">
-                        {article.title}
+
+                    <Link href={`/bai-viet/${art.slug}`}>
+                      <h2 className="font-serif text-lg sm:text-xl font-bold text-[#2C1E10] group-hover:text-[#8C5500] transition-colors leading-snug">
+                        {art.title}
                       </h2>
                     </Link>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-xs text-charcoal-600 dark:text-charcoal-400 line-clamp-3 leading-relaxed">
-                      {article.excerpt}
+
+                    <p className="text-xs sm:text-sm text-[#6B533B] line-clamp-3 leading-relaxed">
+                      {art.excerpt}
                     </p>
-                  </CardContent>
+                  </div>
                 </div>
 
-                <CardFooter>
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-6 h-6 rounded-full bg-saffron-200 dark:bg-saffron-800 flex items-center justify-center text-[10px] font-semibold text-saffron-800 shrink-0">
-                      {article.author_avatar ? (
-                        <img src={article.author_avatar} alt={article.author_name} className="w-full h-full object-cover rounded-full" />
-                      ) : (
-                        article.author_name.charAt(0)
-                      )}
-                    </div>
-                    <span className="text-xs font-medium text-charcoal-700 dark:text-charcoal-300 truncate">
-                      {article.author_name}
-                    </span>
-                  </div>
-                  <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-400 whitespace-nowrap shrink-0">
-                    {article.author_dharma_name || 'Chùa / Tự viện'}
-                  </span>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </ScrollReveal>
-      ) : (
-        <EmptyState
-          title="Chưa có bài viết nào"
-          description="Hiện chưa có bài viết nào trong chuyên mục này. Quý đạo hữu vui lòng quay lại sau."
-        />
-      )}
+                <div className="px-5 py-3.5 bg-[#FFF9EB] border-t border-[#EAD7A7] flex items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    onClick={() => toggleArticleBookmark(art.slug)}
+                    className={cn(
+                      'px-3 py-1.5 rounded-xl text-xs font-bold border inline-flex items-center gap-1.5 cursor-pointer transition-colors',
+                      isSaved
+                        ? 'bg-[#FFF6DF] border-[#C68B19] text-[#8C5500]'
+                        : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B] hover:text-[#2C1E10]'
+                    )}
+                  >
+                    {isSaved ? <BookmarkCheck className="w-3.5 h-3.5" /> : <Bookmark className="w-3.5 h-3.5" />}
+                    <span>{isSaved ? 'Đã lưu' : 'Lưu bài'}</span>
+                  </button>
+
+                  <Link
+                    href={`/bai-viet/${art.slug}`}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-[#8C5500] hover:underline"
+                  >
+                    <span>Đọc &amp; Thực hành 3 bước</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

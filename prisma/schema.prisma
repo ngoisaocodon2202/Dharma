@@ -1,0 +1,68 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model UserProfile {
+  id              String   @id @default(cuid())
+  fullName        String   @default("Cư sĩ Tâm An")
+  dharmaName      String   @default("Thiện Tâm")
+  refugeDate      String?  // Ngày quy y Tam Bảo
+  vowText         String   @default("Nguyện giữ tâm thanh tịnh, thực hành từ bi và chánh niệm mỗi ngày.")
+  vegetarianMode  String   @default("LUC_TRAI") // LUC_TRAI | THAP_TRAI | TRUONG_CHAY
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model DailyPracticeLog {
+  id              String   @id @default(cuid())
+  dateKey         String   @unique // YYYY-MM-DD
+  thoiKhuya       Boolean  @default(false) // Công phu khuya (Lăng Nghiêm / Tịnh Độ)
+  thoiSang        Boolean  @default(false) // Công phu sáng (Chú Đại Bi / Kinh Nhật Tụng)
+  thoiChieu       Boolean  @default(false) // Công phu chiều (Kinh Di Đà / Cúng Mông Sơn)
+  thoiToi         Boolean  @default(false) // Công phu tối (Tịnh Độ / Sám Hối)
+  meditationMins  Int      @default(0)
+  malaBeadsCount  Int      @default(0)
+  sutrasReadCount Int      @default(0)
+  precept1NoKill  Boolean  @default(true)
+  precept2NoSteal Boolean  @default(true)
+  precept3Chaste  Boolean  @default(true)
+  precept4Truth   Boolean  @default(true)
+  precept5Sober   Boolean  @default(true)
+  reflectionNote  String?
+}
+
+model MeritEntry {
+  id              String   @id @default(cuid())
+  timestamp       DateTime @default(now())
+  category        String   // HUONG_DANG | TUNG_KINH | NIEM_PHAT | TOA_THIEN | PHONG_SINH
+  title           String
+  dedicationText  String   // Lời hồi hướng công đức
+  targetName      String?  // Tên người/gia quyến được hồi hướng
+}
+
+model AncestralMemorial {
+  id              String   @id @default(cuid())
+  fullName        String   // Họ tên hương linh
+  dharmaName      String?  // Pháp danh
+  relationship    String   // Ông nội, Bà ngoại, Thân phụ, Cửu huyền...
+  lunarDeathDay   Int      // 1 - 30
+  lunarDeathMonth Int      // 1 - 12
+  lunarDeathYear  Int?
+  notes           String?  // Ghi chú mâm cúng chay / kinh tụng kỳ siêu
+  incenseCount    Int      @default(0)
+}
+
+model PrayerLamp {
+  id              String   @id @default(cuid())
+  type            String   // CAU_AN | CAU_SIEU
+  senderName      String
+  recipientName   String
+  wishContent     String
+  createdAt       DateTime @default(now())
+}
+

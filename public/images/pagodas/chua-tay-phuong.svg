@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF7E2"/>
+      <stop offset="100%" stop-color="#F4D58D"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="36%" r="35%">
+      <stop offset="0%" stop-color="#FFF4B8" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFF4B8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="520" fill="url(#sky)"/>
+  <circle cx="400" cy="185" r="160" fill="url(#halo)"/>
+  <circle cx="400" cy="175" r="56" fill="none" stroke="#8C5500" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.55"/>
+  <path d="M 0 380 Q 170 290 360 355 T 800 345 L 800 520 L 0 520 Z" fill="#8C5500" opacity="0.18"/>
+  <path d="M 0 415 Q 240 335 470 390 T 800 385 L 800 520 L 0 520 Z" fill="#3F270E" opacity="0.12"/>
+  
+  <line x1="400" y1="228" x2="400" y2="263" stroke="#8C5500" stroke-width="3"/>
+  <path d="M 309 300 Q 400 282 491 300 L 471 310 L 329 310 Z" fill="#3F270E" opacity="0.86"/><rect x="339" y="310" width="122" height="16" fill="#8C5500" opacity="0.75"/><path d="M 317 274 Q 400 256 483 274 L 463 284 L 337 284 Z" fill="#3F270E" opacity="0.86"/><rect x="347" y="284" width="106" height="16" fill="#8C5500" opacity="0.75"/>
+  <rect x="290" y="326" width="220" height="76" rx="4" fill="#3F270E" opacity="0.88"/>
+  <path d="M 250 328 Q 400 292 550 328 L 535 338 L 265 338 Z" fill="#8C5500"/>
+  <rect x="378" y="348" width="44" height="54" rx="22" fill="#FFF8E1" opacity="0.92"/>
+  <circle cx="400" cy="428" r="10" fill="#F59E0B" opacity="0.75"/>
+  <text x="400" y="465" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#3F270E">Chùa Tây Phương</text>
+  <text x="400" y="490" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" letter-spacing="1.5" fill="#8C5500">MIỀN BẮC • THẠCH THẤT</text>
+</svg>

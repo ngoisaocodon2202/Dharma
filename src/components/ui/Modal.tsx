@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@/lib/utils';
-import { X } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -20,7 +19,6 @@ export function Modal({
   title,
   description,
   children,
-  maxWidth = 'md',
 }: ModalProps) {
   const [mounted, setMounted] = useState(false);
 
@@ -46,54 +44,39 @@ export function Modal({
 
   if (!isOpen || !mounted) return null;
 
-  const maxWidths = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-2xl',
-  };
-
   return createPortal(
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4">
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/50 dark:bg-black/50 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Modal Dialog */}
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={cn(
-          'relative w-full max-h-[88vh] overflow-y-auto no-scrollbar bg-white text-[#2E1E0F] rounded-3xl shadow-2xl border border-[#ECD9A8] p-4 sm:p-6 z-10 animate-scale-in overscroll-contain',
-          maxWidths[maxWidth]
-        )}
-        role="dialog"
-        aria-modal="true"
-      >
+    <div
+      className="fixed inset-0 w-screen h-[100dvh] z-[99999] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 text-[#7D6442] hover:text-[#8C5500] rounded-xl bg-white border border-[#EEDBBA] transition-colors cursor-pointer"
-          aria-label="Đóng"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer shrink-0"
+          aria-label="Quay lại"
         >
-          <X className="w-5 h-5" />
+          <ArrowLeft className="w-4 h-4" />
+          <span>Quay lại</span>
         </button>
 
         {title && (
-          <div className="mb-4 pr-8">
-            <h3 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#8C5500]">
+          <div className="min-w-0 flex-1 text-center">
+            <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#2C1E10] truncate">
               {title}
             </h3>
             {description && (
-              <p className="text-xs text-[#7D6442] mt-1">
-                {description}
-              </p>
+              <p className="text-[11px] text-[#6B533B] truncate">{description}</p>
             )}
           </div>
         )}
 
-        <div>{children}</div>
+        <div className="w-20 shrink-0" />
+      </header>
+
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 max-w-3xl mx-auto w-full">
+        {children}
       </div>
     </div>,
     document.body

@@ -202,35 +202,35 @@ export default function PersonalDestinyAnalysisPage() {
   return (
     <div className="max-w-5xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 sm:space-y-8">
       {/* 1. Hero Header with Clear Anti-Superstition Orientation */}
-      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#3d1f0d] via-[#5c1616] to-[#2b1408] text-white p-5 sm:p-8 shadow-xl border border-[#d4af37]/40">
+      <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-[#FFFDF8] via-[#FFF9EB] to-[#FCECC2] text-[#2C1E10] p-5 sm:p-8 shadow-sm border border-[#DFC27D]">
         <div className="relative z-10 max-w-3xl space-y-2.5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#ffd966] text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">
-            <Compass className="w-3.5 h-3.5 text-[#ffd966] shrink-0" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#DFC27D] text-[#8C5500] text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">
+            <Compass className="w-3.5 h-3.5 text-[#8C5500] shrink-0" />
             <span>Phân Tích Bản Mệnh • Màu Hợp & Ngày Tốt</span>
           </div>
 
-          <h1 className="font-heading text-xl sm:text-3xl font-bold text-amber-50 leading-snug">
+          <h1 className="font-heading text-xl sm:text-3xl font-bold text-[#2C1E10] leading-snug">
             Nhập Thông Tin Cá Nhân & Phân Tích Bản Mệnh Hướng Thiện
           </h1>
 
-          <p className="text-xs sm:text-sm text-[#e8d5b5] leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#6B533B] leading-relaxed">
             Nhập họ tên, ngày tháng năm sinh và giờ sinh để hệ thống tổng hợp thông số{' '}
-            <strong>Can Chi, Ngũ Hành Nạp Âm, Màu Chủ Đạo, Ngày Tốt</strong> và gợi ý định hướng sống chánh niệm.
+            <strong className="text-[#2C1E10]">Can Chi, Ngũ Hành Nạp Âm, Màu Chủ Đạo, Ngày Tốt</strong> và gợi ý định hướng sống chánh niệm.
           </p>
 
           {/* Explicit Non-Superstition Disclaimer Badge */}
           <div className="pt-1 flex flex-wrap items-center gap-2">
-            <div className="inline-flex items-start sm:items-center gap-2 px-3.5 py-2 rounded-2xl bg-black/25 border border-amber-300/25 text-[11px] sm:text-xs text-amber-200/95">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5 sm:mt-0" />
+            <div className="inline-flex items-start sm:items-center gap-2 px-3.5 py-2 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] text-[11px] sm:text-xs text-[#2C1E10]">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5 sm:mt-0" />
               <span>
-                <strong>Lưu ý Chánh kiến:</strong> Kết quả phân tích dựa trên văn hóa lịch pháp Đông phương và triết lý Nhân Quả,{' '}
-                <span className="underline decoration-amber-400/60">chỉ mang tính chất tham khảo</span>, hoàn toàn không cổ xúy mê tín dị đoan.
+                <strong className="text-[#8C5500]">Lưu ý Chánh kiến:</strong> Kết quả phân tích dựa trên văn hóa lịch pháp Đông phương và triết lý Nhân Quả,{' '}
+                <span className="underline decoration-[#C68B19]">chỉ mang tính chất tham khảo</span>, hoàn toàn không cổ xúy mê tín dị đoan.
               </span>
             </div>
 
             <Link
               href="/cau-nguyen"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-[#d4af37] hover:bg-[#b89528] text-[#2C1A12] font-bold text-xs shadow-md active:scale-95 transition-all whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#2C1E10] border border-[#C68B19] font-bold text-xs shadow-2xs active:scale-95 transition-all whitespace-nowrap"
             >
               <span>🙏 Đi Chùa & Cầu Nguyện Online</span>
             </Link>

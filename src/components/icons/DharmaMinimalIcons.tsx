@@ -263,3 +263,6 @@ export const PagodaMinimalIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }
   </svg>
 );
 
+export const TempleSanctuaryIcon = PagodaMinimalIcon;
+
+

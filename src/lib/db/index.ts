@@ -83,6 +83,12 @@ export function getPool(): Pool | null {
 
 export const pool = {
   query: (text: string, params?: any[]) => query(text, params),
+  end: async () => {
+    if (poolInstance) {
+      await poolInstance.end();
+      poolInstance = null;
+    }
+  },
 };
 
 function makeResult<T extends QueryResultRow = any>(rows: any[]): QueryResult<T> {

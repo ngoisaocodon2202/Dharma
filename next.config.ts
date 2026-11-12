@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   devIndicators: false,
+  serverExternalPackages: ["@electric-sql/pglite", "@electric-sql/pglite-socket", "pg"],
   typescript: {
     ignoreBuildErrors: true,
   },

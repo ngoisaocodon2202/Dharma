@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { BUDDHAS_DATA, BuddhaItem } from '@/data/buddhasData';
 import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
-import { recordDharmaMerit } from '@/components/om-mani/OmManiInteractiveTools';
+import { recordDharmaMerit } from '@/components/dharma/DharmaInteractiveTools';
 import { LotusMinimalIcon, DharmaWheelIcon, TempleBellIcon } from '@/components/icons/DharmaMinimalIcons';
 import { cn } from '@/lib/utils';
 
@@ -75,28 +75,24 @@ export function BuddhasGalleryModal({
   };
 
   return (
-    <div
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-2 sm:p-4 bg-black/65 backdrop-blur-md animate-fade-in"
-    >
-      <div className="relative w-full max-w-xl max-h-[92vh] flex flex-col rounded-3xl bg-white border border-[#ECD9A8] text-[#2E1E0F] shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2E1E0F] flex flex-col overflow-hidden animate-fade-in">
+      <div className="relative w-full h-full flex flex-col bg-[#FAF7F0] text-[#2E1E0F] overflow-hidden">
         {/* ========================================================================= */}
-        {/* VIEW 1: GRID OF 18 BUDDHAS & BODHISATTVAS (MATCHING SCREENSHOT 100%)       */}
+        {/* VIEW 1: GRID OF 18 BUDDHAS & BODHISATTVAS (FULL-SCREEN PAGE)              */}
         {/* ========================================================================= */}
         {!selectedBuddha ? (
           <>
             {/* Top Bar Header */}
-            <div className="h-16 px-4 bg-white border-b border-[#EEDBBA] flex items-center justify-between shrink-0 shadow-xs">
+            <div className="h-16 px-4 bg-[#FFFDF8] border-b border-[#EEDBBA] flex items-center justify-between shrink-0 shadow-xs">
               <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="w-9 h-9 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#7D6442] hover:text-[#2E1E0F] active:scale-90 transition-all cursor-pointer shadow-xs"
-                  title="Đóng"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] active:scale-95 transition-all cursor-pointer shadow-xs"
+                  title="Quay lại"
                 >
                   <ArrowLeft className="w-4 h-4" />
+                  <span>Quay lại</span>
                 </button>
                 <div>
                   <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#2E1E0F] leading-tight">
@@ -108,13 +104,9 @@ export function BuddhasGalleryModal({
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={onClose}
-                className="w-9 h-9 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#7D6442] hover:text-[#2E1E0F] active:scale-90 transition-all cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-[#FFF9EB] border border-[#DFC27D] text-[#8C5500]">
+                18 Bổn Tôn
+              </span>
             </div>
 
             {/* Instruction banner */}
@@ -147,10 +139,10 @@ export function BuddhasGalleryModal({
                       />
                     </div>
 
-                    {/* Bottom Solid Dark Bar with Centered Name (100% matching screenshot) */}
-                    <div className="bg-[#241B0B] py-2 px-1.5 text-center flex items-center justify-center min-h-[48px]">
-                      <h4 className="font-heading font-serif text-[11px] sm:text-xs font-bold text-white tracking-wide leading-tight group-hover:text-[#FFE79A] transition-colors">
-                        {buddha.name}
+                    {/* Bottom Solid Dark Bar with Centered Name (100% single-line) */}
+                    <div className="bg-[#FFFBF2] border-t border-[#F0E2BE] py-2 px-2 text-center flex items-center justify-center">
+                      <h4 className="font-heading font-serif text-[11px] sm:text-xs font-bold text-[#2C1E10] tracking-tight group-hover:text-[#9A6200] transition-colors whitespace-nowrap truncate w-full">
+                        {buddha.name.replace(/^Đức Phật\s+/i, 'Phật ').replace(/\s+Bồ Tát$/i, '')}
                       </h4>
                     </div>
                   </div>
@@ -164,15 +156,16 @@ export function BuddhasGalleryModal({
           /* ========================================================================= */
           <>
             {/* Top Detail Navigation Header */}
-            <div className="h-16 px-4 bg-white border-b border-[#EEDBBA] flex items-center justify-between shrink-0 shadow-xs">
+            <div className="h-16 px-4 bg-[#FFFDF8] border-b border-[#EEDBBA] flex items-center justify-between shrink-0 shadow-xs">
               <div className="flex items-center gap-2.5 min-w-0">
                 <button
                   type="button"
                   onClick={handleBackToGrid}
-                  className="w-9 h-9 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#7D6442] hover:text-[#2E1E0F] active:scale-90 transition-all cursor-pointer shadow-xs shrink-0"
-                  title="Trở lại danh sách Bổn Tôn"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] active:scale-95 transition-all cursor-pointer shadow-xs shrink-0"
+                  title="Quay lại danh sách Bổn Tôn"
                 >
                   <ArrowLeft className="w-4 h-4" />
+                  <span>Quay lại</span>
                 </button>
                 <div className="min-w-0">
                   <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#8C5500] truncate">
@@ -187,14 +180,14 @@ export function BuddhasGalleryModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-9 h-9 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#7D6442] hover:text-[#2E1E0F] active:scale-90 transition-all cursor-pointer shrink-0"
+                className="px-3 py-1.5 rounded-xl bg-white border border-[#EEDBBA] hover:border-[#8C5500] text-xs font-bold text-[#7D6442] hover:text-[#2E1E0F] cursor-pointer shrink-0"
               >
-                <X className="w-4 h-4" />
+                Đóng thư viện
               </button>
             </div>
 
             {/* Scrollable Detail Content */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 custom-dropdown-scroll">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 max-w-3xl mx-auto w-full space-y-5 custom-dropdown-scroll">
               {/* Buddha Hero Presentation Card */}
               <div className="rounded-3xl p-4 sm:p-5 bg-gradient-to-br from-[#FFFDF7] via-[#FFF9EA] to-[#FFF3D0] border border-[#ECD9A8] shadow-md flex flex-col sm:flex-row gap-4 items-center">
                 <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[#E5C158] shadow-md shrink-0 bg-[#FAF3E0]">
@@ -216,30 +209,30 @@ export function BuddhasGalleryModal({
                     Pháp bảo &amp; Biểu tượng: {selectedBuddha.symbol}
                   </p>
 
-                  <div className="pt-2 flex flex-wrap gap-2 justify-center sm:justify-start">
+                  <div className="pt-2 grid grid-cols-2 gap-2 w-full">
                     <button
                       type="button"
                       onClick={handleChantMantra}
-                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs flex items-center gap-1.5 shadow-sm active:scale-95 transition-all cursor-pointer"
+                      className="px-2.5 py-2 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                     >
-                      <TempleBellIcon className="w-3.5 h-3.5" />
-                      <span>Trì Niệm (+10 Công Đức)</span>
+                      <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
+                      <span className="whitespace-nowrap truncate">Trì Niệm Công Đức</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={handleCopyMantra}
-                      className="px-3 py-1.5 rounded-xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] text-[#8C5500] text-xs font-semibold flex items-center gap-1 active:scale-95 transition-all cursor-pointer"
+                      className="px-2.5 py-2 rounded-xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] text-[#8C5500] text-[11px] sm:text-xs font-semibold flex items-center justify-center gap-1 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                     >
-                      {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5" />}
-                      <span>{isCopied ? 'Đã Sao Chép' : 'Chép Chân Ngôn'}</span>
+                      {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> : <Share2 className="w-3.5 h-3.5 shrink-0" />}
+                      <span className="whitespace-nowrap truncate">{isCopied ? 'Đã Sao Chép' : 'Chép Chân Ngôn'}</span>
                     </button>
                   </div>
                 </div>
               </div>
 
               {/* 3 Pillar Tabs Switcher (1. Tiểu Sử, 2. Đại Nguyện, 3. Thần Chú) */}
-              <div className="grid grid-cols-3 gap-1.5 p-1 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8]">
+              <div className="grid grid-cols-3 gap-1 p-1 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8]">
                 {[
                   { id: 'tieu_su', label: '1. Tiểu Sử', icon: BookOpen },
                   { id: 'dai_nguyen', label: '2. Đại Nguyện', icon: Heart },
@@ -256,14 +249,14 @@ export function BuddhasGalleryModal({
                         setActiveTab(tab.id as DetailTab);
                       }}
                       className={cn(
-                        'py-2 px-1 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer',
+                        'py-2 px-1.5 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer whitespace-nowrap',
                         isActive
                           ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-xs'
                           : 'text-[#7D6442] hover:text-[#2E1E0F]'
                       )}
                     >
                       <Icon className="w-3.5 h-3.5 shrink-0" />
-                      <span>{tab.label}</span>
+                      <span className="whitespace-nowrap">{tab.label}</span>
                     </button>
                   );
                 })}

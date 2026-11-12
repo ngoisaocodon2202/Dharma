@@ -1,800 +1,778 @@
 'use client';
 
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Search,
-  X,
+  BookOpen,
+  MoreHorizontal,
   Bookmark,
-  ChevronRight,
+  X,
+  ChevronDown,
+  Copy,
   Check,
   Play,
   Pause,
+  ArrowLeft,
 } from 'lucide-react';
-import {
-  SutraScrollIcon,
-  DharmaWheelIcon,
-  LotusMinimalIcon,
-  WoodenFishMinimalIcon,
-  TempleBellIcon,
-  BodhiLeafIcon,
-} from '@/components/icons/DharmaMinimalIcons';
-import {
-  playBellSound,
-  playWoodenFishSound,
-  playPageTurnSound,
-  playGrandTempleBellSound,
-} from '@/lib/buddhistSounds';
-import { recordDharmaMerit } from '@/components/om-mani/OmManiInteractiveTools';
-import { OmManiDesktopSutras } from '@/components/om-mani/desktop/OmManiDesktopSutras';
 import { cn } from '@/lib/utils';
+import {
+  SUTRAS_DATA,
+  SUTRA_CATEGORIES,
+  getSutraBySlugOrId,
+  type SutraCategory,
+  type SutraText,
+} from '@/data/sutras';
+import { BAI_KHAN_DATA, type BaiKhanItem } from '@/data/dharmaExtraData';
+import { DharmaSutraReader } from '@/components/sutra/DharmaSutraReader';
+import { useDharmaPracticeStore } from '@/store/useDharmaPracticeStore';
+import { getLunarDate } from '@/lib/lunar-calendar';
+import { playPageTurnSound, playBeadTickSound, playOmTempleBellSound } from '@/lib/buddhistSounds';
 
-// =============================================================================
-// INTERFACES & SUTRAS DATA
-// =============================================================================
-export interface SutraItem {
-  id: string;
-  tradition: 'Nam Tông' | 'Bắc Tông' | 'Mật Tông';
-  categoryLabel: string;
-  title: string;
-  image: string;
-  excerpt: string;
-  content: string;
-  versesCount?: number;
+const SUTRA_COUNTS_STORAGE_KEY = 'phatphap_dharma_sutra_counts_v2';
+
+function mapSutraImage(slug: string): string {
+  switch (slug) {
+    case 'bat-nha':
+      return '/images/buddhas/van-thu-su-loi-bo-tat.png';
+    case 'kim-cuong':
+      return '/images/buddhas/duc-phat-thich-ca.png';
+    case 'duoc-su':
+      return '/images/buddhas/duc-phat-duoc-su.png';
+    case 'a-di-da':
+      return '/images/buddhas/duc-phat-a-di-da.png';
+    case 'dia-tang':
+      return '/images/buddhas/dia-tang-vuong-bo-tat.png';
+    case 'dai-bi':
+      return '/images/buddhas/quan-the-am-nghin-mat-nghin-tay.png';
+    case 'pho-mon':
+      return '/images/buddhas/quan-the-am-bo-tat.png';
+    case 'phap-cu':
+      return '/images/buddhas/dai-nhat-nhu-lai.png';
+    case 'vu-lan':
+      return '/images/buddhas/pho-hien-bo-tat.png';
+    default:
+      return '/images/buddhas/duc-phat-thich-ca.png';
+  }
 }
 
-const SUTRA_COUNTS_STORAGE_KEY = 'phatphap_dharma_sutra_counts_v1';
+function BuddhistLibraryInner() {
+  const searchParams = useSearchParams();
+  const bookmarkedSutraIds = useDharmaPracticeStore((s) => s.bookmarkedSutraIds);
+  const toggleSutraBookmark = useDharmaPracticeStore((s) => s.toggleSutraBookmark);
 
-const SUTRAS_LIST: SutraItem[] = [
-  {
-    id: 'kinh-bat-nha-tam-kinh',
-    tradition: 'Bắc Tông',
-    categoryLabel: 'Kinh Đại Thừa • Bát Nhã',
-    title: 'Bát Nhã Ba La Mật Đa Tâm Kinh',
-    image: '/images/tripitaka_koreana.jpg',
-    versesCount: 25,
-    excerpt: 'Tinh túy trí tuệ Bát Nhã soi sáng bản chất Ngũ Uẩn Giai Không của vạn pháp, giúp hành giả vượt qua mọi khổ ách và sợ hãi.',
-    content: `MA HA BÁT NHÃ BA LA MẬT ĐA TÂM KINH
-(Việt dịch & Âm Hán Việt Nhật Tụng)
+  const [nowDate] = useState<Date>(() => new Date());
+  const todayLunar = useMemo(
+    () => getLunarDate(nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate()),
+    [nowDate]
+  );
 
-1. Bản Âm Hán Việt:
-Quán Tự Tại Bồ Tát hành thâm Bát Nhã Ba La Mật Đa thời, chiếu kiến ngũ uẩn giai không, độ nhất thiết khổ ách.
-Xá Lợi Tử! Sắc bất dị không, không bất dị sắc; sắc tức thị không, không tức thị sắc; thọ, tưởng, hành, thức diệc phục như thị.
-Xá Lợi Tử! Thị chư pháp không tướng: Bất sinh bất diệt, bất cấu bất tịnh, bất tăng bất giảm. Thị cố không trung vô sắc, vô thọ, tưởng, hành, thức; vô nhãn, nhĩ, tỷ, thiệt, thân, ý; vô sắc, thanh, hương, vị, xúc, pháp; vô nhãn giới nãi chí vô ý thức giới; vô vô minh diệc vô vô minh tận, nãi chí vô lão tử, diệc vô lão tử tận; vô khổ, tập, diệt, đạo; vô trí diệc vô đắc.
-Dĩ vô sở đắc cố, Bồ Đề Tát Đỏa y Bát Nhã Ba La Mật Đa cố, tâm vô quái ngại; vô quái ngại cố, vô hữu khủng bố, viễn ly điên đảo mộng tưởng, cứu cánh Niết Bàn. Tam thế chư Phật y Bát Nhã Ba La Mật Đa cố, đắc A Nậu Đa La Tam Miệu Tam Bồ Đề.
-Cố tri Bát Nhã Ba La Mật Đa thị đại thần chú, thị đại minh chú, thị vô thượng chú, thị vô đẳng đẳng chú, năng trừ nhất thiết khổ, chân thật bất hư.
-Cố thuyết Bát Nhã Ba La Mật Đa chú, tức thuyết chú viết:
-"Yết đế, yết đế, ba la yết đế, ba la tăng yết đế, Bồ đề tát bà ha." (3 biến)
-
-2. Nghĩa Việt Tường Giải:
-Khi Bồ Tát Quán Tự Tại thực hành sâu xa trí tuệ Bát Nhã Ba La Mật Đa, Ngài soi thấy năm uẩn đều không có tự tính riêng biệt, liền vượt qua hết thảy khổ đau ách nạn...`,
-  },
-  {
-    id: 'kinh-tu-bi-metta',
-    tradition: 'Nam Tông',
-    categoryLabel: 'Kinh Nguyên Thủy • Nikāya',
-    title: 'Kinh Từ Bi (Karaṇīya Mettā Sutta)',
-    image: '/images/buddha_meditation.jpg',
-    versesCount: 10,
-    excerpt: 'Lời Đức Thế Tôn chỉ dạy phương pháp rải tâm từ bi vô lượng không biên giới đến khắp muôn loài chúng sinh trong mười phương.',
-    content: `KINH TỪ BI (KARAṆĪYA METTĀ SUTTA)
-(Tiểu Bộ Kinh — Khuddakapāṭha)
-
-1. Phẩm Chất Người Hành Đạo Từ Bi:
-Người muốn thấu đạt cảnh giới an tịnh Niết Bàn cần phải thực hành những điều lành sau đây:
-Có khả năng, ngay thẳng, trung thực tuyệt đối, lời nói hiền hòa, dịu dàng và không kiêu mạn.
-Biết đủ trong đời sống, dễ nuôi dưỡng, ít bận rộn thế sự, sống giản dị thanh bần, các căn trầm tĩnh, trí tuệ sáng suốt, thân khẩu ý trang nghiêm, không quyến luyến gia đình thế tục.
-Không làm bất cứ điều gì nhỏ nhặt mà bậc Hiền Trí có thể khiển trách.
-
-2. Quán Chiếu Tâm Từ Vô Lượng:
-Hãy thường xuyên phát nguyện:
-"Nguyện cho tất cả chúng sinh được an vui, hạnh phúc và an toàn.
-Phàm những loài chúng sinh nào có mặt trên đời:
-Dù yếu kém hay mạnh mẽ, không bỏ sót một ai;
-Dù dài lớn, trung bình hay thấp nhỏ, vi tế hay thô đại;
-Dù thấy được hay không thấy được;
-Dù ở gần hay ở xa;
-Dù đã sinh ra hay sắp sửa sinh ra —
-Nguyện cho tất cả muôn loài đều được tràn đầy an lạc!"
-
-3. Trái Tim Người Mẹ Hiền:
-"Như người mẹ đem cả mạng sống mình che chở cho đứa con một duy nhất, hãy mở rộng tâm từ bi không bờ bến đối với tất cả muôn loài.
-Khi đứng, khi đi, khi ngồi hay khi nằm, bao lâu còn thức tỉnh, hãy an trú vững chãi trong chánh niệm Từ Bi ấy. Đó chính là Phạm Trú cao thượng nhất ở đời."`,
-  },
-  {
-    id: 'kinh-phuoc-duc-mangala',
-    tradition: 'Nam Tông',
-    categoryLabel: 'Kinh Nguyên Thủy • Nikāya',
-    title: 'Kinh Phước Đức (Maṅgala Sutta)',
-    image: '/images/golden_buddha.jpg',
-    versesCount: 12,
-    excerpt: 'Ba mươi tám pháp phước lành cao thượng nhất giúp người cư sĩ xây dựng gia đình ấm êm, sự nghiệp chánh mạng và tâm hồn bất động.',
-    content: `KINH PHƯỚC ĐỨC (MAṄGALA SUTTA)
-(Lời Phật Dạy Về 38 Phước Lành Cao Thượng)
-
-Như vầy tôi nghe: Một thời Thế Tôn ngự tại thành Xá Vệ, rừng Kỳ Đà, vườn ông Cấp Cô Độc. Khi đêm đã khuya, một vị Thiên Nhân hào quang rực rỡ đến đảnh lễ Đức Phật và bạch hỏi về các điều Phước Lành tối thượng. Đức Thế Tôn liền thuyết kệ đáp rằng:
-
-1. Nền Tảng Thân Cận Thiện Hữu:
-Không gần gũi kẻ ác,
-Thân cận bậc trí hiền,
-Đảnh lễ người đáng kính —
-Ấy phước lành cao nhất.
-
-2. Môi Trường & Công Đức:
-Ở trú xứ thích hợp,
-Đời trước có phước xưa,
-Chân chánh hướng tự tâm —
-Ấy phước lành cao nhất.
-
-3. Học Rộng & Ái Ngữ:
-Đa văn và nghề giỏi,
-Giữ giới luật tinh nghiêm,
-Nói những lời chân thật —
-Ấy phước lành cao nhất.
-
-4. Hiếu Hạnh & Gia Đạo:
-Phụng dưỡng cha và mẹ,
-Yêu thương vợ cùng con,
-Nghề nghiệp không rối ren —
-Ấy phước lành cao nhất.
-
-5. Tâm Bất Động Giữa Tám Ngọn Gió Đời:
-Khi tiếp xúc việc đời,
-Tâm không hề giao động,
-Không sầu, không nhiễm ô,
-An nhiên và tự tại —
-Ấy phước lành cao nhất.`,
-  },
-  {
-    id: 'kinh-kim-cuong-bat-nha',
-    tradition: 'Bắc Tông',
-    categoryLabel: 'Kinh Đại Thừa • Bát Nhã',
-    title: 'Kinh Kim Cương Bát Nhã Ba La Mật',
-    image: '/images/sutra_book.jpg',
-    versesCount: 32,
-    excerpt: 'Bảo kiếm trí tuệ Kim Cương chặt đứt bốn tướng Ngã, Nhân, Chúng Sinh, Thọ Giả để hiển lộ bản tâm thanh tịnh.',
-    content: `KINH KIM CƯƠNG BÁT NHÃ BA LA MẬT
-(Trích Phẩm Tinh Yếu Nhật Tụng)
-
-1. Vô Trụ Tướng Bố Thí:
-Đức Phật bảo ngài Tu Bồ Đề:
-"Các vị Bồ Tát lớn nên như thế mà hàng phục vọng tâm: Phàm có bao nhiêu loài chúng sinh, hoặc sinh từ trứng, hoặc sinh từ thai, hoặc sinh chỗ ẩm ướt, hoặc hóa sinh; hoặc có sắc, hoặc không sắc; hoặc có tưởng, hoặc không tưởng... Ta đều khiến vào Vô Dư Niết Bàn mà diệt độ hết. Diệt độ vô lượng chúng sinh như thế, nhưng thật không có một chúng sinh nào được diệt độ cả."
-
-2. Phàm Sở Hữu Tướng Giai Thị Hư Vọng:
-"Này Tu Bồ Đề! Bồ Tát khi bố thí không nên trụ vào sắc, không nên trụ vào thanh, hương, vị, xúc, pháp. Phàm cái gì có hình tướng đều là hư vọng. Nếu thấy các tướng chẳng phải tướng, tức thấy Như Lai."
-
-3. Ưng Vô Sở Trụ Nhi Sinh Kỳ Tâm:
-"Bồ Tát nên lìa tất cả tướng, phát tâm Vô Thượng Chánh Đẳng Chánh Giác. Không nên trụ nơi sắc mà sinh tâm, không nên trụ nơi thanh, hương, vị, xúc, pháp mà sinh tâm; nên không có chỗ trụ mà sinh tâm thanh tịnh."
-
-4. Bài Kệ Tứ Cú Tuyệt Đỉnh:
-"Tất cả pháp hữu vi,
-Như mộng, huyễn, bọt, bóng,
-Như sương mai, ánh chớp,
-Hãy quán chiếu như vậy."`,
-  },
-  {
-    id: 'kinh-muoi-nguyen-pho-hien',
-    tradition: 'Bắc Tông',
-    categoryLabel: 'Kinh Đại Thừa • Hoa Nghiêm',
-    title: 'Phẩm Phổ Hiền Hạnh Nguyện (10 Đại Nguyện)',
-    image: '/images/golden_buddha_altar.jpg',
-    versesCount: 10,
-    excerpt: 'Mười đại nguyện vương rộng lớn của Bồ Tát Phổ Hiền dẫn dắt hành giả tu phước và tu huệ viên mãn.',
-    content: `KINH HOA NGHIÊM — MƯỜI ĐẠI NGUYỆN PHỔ HIỀN
-(Thập Đại Nguyện Vương)
-
-Một là: Lễ kính chư Phật — Tâm thường cung kính đảnh lễ mười phương ba đời hết thảy chư Phật.
-Hai là: Xưng揚 tán thán Như Lai — Dùng lời chân thật ca ngợi công đức lành của bậc Giác Ngộ.
-Ba là: Quảng tu cúng dường — Cúng dường pháp bảo, tu hành đúng lời Phật dạy là sự cúng dường tối thượng.
-Bốn là: Sám hối nghiệp chướng — Chí thành phát lộ ăn năn mọi lỗi lầm do tham, sân, si gây tạo từ vô thủy.
-Năm là: Tùy hỷ công đức — Hoan hỷ vui mừng trước mọi điều thiện lành, phước báu của tất cả chúng sinh.
-Sáu là: Thỉnh chuyển pháp luân — Cầu thỉnh các bậc Thiện Tri Thức giảng nói Chánh Pháp lợi lạc quần sinh.
-Bảy là: Thỉnh Phật trụ thế — Cầu xin chư Phật, Bồ Tát và bậc chân tu trụ lâu nơi đời làm bóng cây che mát.
-Tám là: Thường tùy Phật học — Tinh tấn học hỏi theo gương đại hùng đại lực đại từ bi của Đức Phật.
-Chín là: Hằng thuận chúng sinh — Thấu hiểu, cảm thông và phụng sự muôn loài bằng trái tim vô ngã.
-Mười là: Phổ giai hồi hướng — Đem hết thảy công đức tu tập hồi hướng về Pháp Giới chúng sinh đồng thành Phật đạo.`,
-  },
-  {
-    id: 'kinh-duoc-su-bon-nguyen',
-    tradition: 'Bắc Tông',
-    categoryLabel: 'Kinh Đại Thừa • Dược Sư',
-    title: 'Kinh Dược Sư Lưu Ly Quang Bổn Nguyện',
-    image: '/images/buddha_temple.jpg',
-    versesCount: 20,
-    excerpt: 'Mười hai đại nguyện của Đức Phật Dược Sư tiêu trừ bệnh khổ thân tâm, chuyển hóa nghiệp chướng và hộ trì gia đạo bình an.',
-    content: `KINH DƯỢC SƯ LƯU LY QUANG NHƯ LAI BỔN NGUYỆN CÔNG ĐỨC
-(Trích Phẩm Mười Hai Đại Nguyện & Chơn Ngôn)
-
-1. Cõi Tịnh Lưu Ly Phương Đông:
-Đức Phật Thích Ca Mâu Ni bảo Bồ Tát Văn Thù Sư Lợi:
-"Về phương Đông, cách đây hơn mười hằng hà sa cõi Phật, có thế giới tên là Tịnh Lưu Ly, Phật hiệu là Dược Sư Lưu Ly Quang Như Lai, Ứng Cúng, Chánh Biến Tri, Minh Hạnh Túc, Thiện Thệ, Thế Gian Giải, Vô Thượng Sĩ, Điều Ngự Trượng Phu, Thiên Nhân Sư, Phật, Thế Tôn."
-
-2. Tinh Yếu 12 Đại Nguyện Cứu Khổ:
-- Nguyện ánh sáng thân Ngài chiếu rọi vô biên thế giới, khiến chúng sinh đều được trang nghiêm ba mươi hai tướng tốt.
-- Nguyện thân như ngọc lưu ly trong suốt không tỳ vết, vượt hơn ánh mặt trời và mặt trăng, soi sáng cho những ai đang đi trong đêm tối vô minh.
-- Nguyện dùng trí tuệ phương tiện vô tận giúp chúng sinh không bao giờ thiếu thốn vật dụng tu học.
-- Nguyện ai có thân thể đau yếu, tật nguyền, khổ sở không người cứu chữa, vừa nghe danh hiệu Ngài liền được tiêu trừ mọi bệnh khổ, thân tâm an lạc.
-
-3. Dược Sư Quán Đảnh Chơn Ngôn:
-"Nam mô bạt già phạt đế, bệ sát xã, lũ lô thích lưu ly, phách lạt bà, hắt ra xà dã, đát tha yết đa da, a ra ha đế, tam miệu tam bột đà da, đát điệt tha: Án, bệ sát thệ, bệ sát thệ, bệ sát xã, tam một yết đế tằng sa ha."`,
-  },
-  {
-    id: 'kinh-trung-dao-duyen-khoi',
-    tradition: 'Nam Tông',
-    categoryLabel: 'Kinh Nguyên Thủy • Nikāya',
-    title: 'Kinh Trung Đạo & Giáo Lý Duyên Khởi',
-    image: '/images/lotus_blooming.jpg',
-    versesCount: 16,
-    excerpt: 'Thấu rõ lý Duyên Khởi “Cái này có nên cái kia có”, xa lìa hai thái cực Thường Kiến và Đoạn Kiến.',
-    content: `KINH KACCĀNAGOTTA (CHÁNH KIẾN TRUNG ĐẠO)
-(Tương Ưng Bộ Kinh — Saṃyutta Nikāya)
-
-1. Lìa Hai Cực Đoan Có & Không:
-Đức Thế Tôn dạy Tôn giả Kaccāyana:
-"Này Kaccāyana, thế gian phần nhiều dựa vào hai cực đoan: Một là chấp Có (Thường kiến), hai là chấp Không (Đoạn kiến).
-Kẻ nào với chánh trí tuệ thấy như thật sự tập khởi của thế gian, thì không còn chấp rằng thế gian là Không.
-Kẻ nào với chánh trí tuệ thấy như thật sự đoạn diệt của thế gian, thì không còn chấp rằng thế gian là Có vĩnh hằng."
-
-2. Định Luật Duyên Khởi:
-"Từ bỏ hai cực đoan ấy, Như Lai thuyết pháp theo con đường Trung Đạo:
-Do cái này có mặt, cái kia có mặt.
-Do cái này sinh khởi, cái kia sinh khởi.
-Do cái này không có mặt, cái kia không có mặt.
-Do cái này đoạn diệt, cái kia đoạn diệt.
-Nghĩa là: Vô minh diệt thì Hành diệt, Hành diệt thì Thức diệt... như vậy là toàn bộ khối khổ đau sầu bi khổ ưu não này đều được đoạn tận."`,
-  },
-  {
-    id: 'kinh-ho-niem-lam-chung',
-    tradition: 'Mật Tông',
-    categoryLabel: 'Nghi Thức • Khai Thị & Hồi Hướng',
-    title: 'Nghi Thức Khai Thị & Trợ Niệm An Tịnh',
-    image: '/images/quan_am_bodhisattva.jpg',
-    versesCount: 18,
-    excerpt: 'Lời khai thị chánh niệm giúp người bệnh và người lâm chung buông xả sợ hãi, nhất tâm quy hướng Tam Bảo.',
-    content: `NGHI THỨC KHAI THỊ & TRỢ NIỆM CHÁNH NIỆM
-(Dành Cho Người Bệnh & Thời Khắc Chuyển Tiếp)
-
-1. Lắng Lòng Thanh Tịnh:
-Khi chăm sóc người bệnh nặng hoặc người sắp xả báo thân, gia quyến giữ không khí trang nghiêm, ấm áp, tránh tiếng ồn ào bi lụy để tâm người bệnh được an ổn.
-
-2. Lời Khai Thị Buông Xả:
-"Thân tứ đại vốn do nhân duyên hòa hợp, có sinh ắt có già, có bệnh và có lúc trả về cho đất nước gió lửa. Tuy thân xác có đổi thay, nhưng chân tâm Phật tính và phước báu thiện lành vẫn luôn sáng ngời. Hãy nhẹ nhàng buông xuống mọi lo toan, tha thứ cho tất cả và niệm thầm danh hiệu Đức Phật."
-
-3. Bài Kệ Hồi Hướng Chung:
-"Nguyện đem công đức này,
-Hướng về khắp tất cả,
-Đệ tử và chúng sinh,
-Đều trọn thành Phật đạo."`,
-  },
-];
-
-export default function SutrasLibraryPage() {
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'bookmarked' | SutraCategory>('all');
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-
-  // Reader Modal State + Smart Teleprompter & Wooden Fish
-  const [readingSutra, setReadingSutra] = useState<SutraItem | null>(null);
-  const [fontSize, setFontSize] = useState<'sm' | 'base' | 'lg' | 'xl'>('base');
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [autoScrollSpeed, setAutoScrollSpeed] = useState<0 | 1 | 2 | 3>(0);
-  const [isReaderFishBeating, setIsReaderFishBeating] = useState(false);
+  const [readingSutra, setReadingSutra] = useState<(SutraText & { image?: string }) | null>(null);
+  const [menuSutra, setMenuSutra] = useState<(SutraText & { image: string }) | null>(null);
+  const [showBaiKhanModal, setShowBaiKhanModal] = useState(false);
+  const [selectedBaiKhan, setSelectedBaiKhan] = useState<BaiKhanItem>(BAI_KHAN_DATA[0]);
+  const [copiedKhan, setCopiedKhan] = useState(false);
   const [sutraChantCounts, setSutraChantCounts] = useState<Record<string, number>>({});
-
-  const readerScrollRef = useRef<HTMLDivElement | null>(null);
-
-  // Prayer text modal
-  const [isPrayerModalOpen, setIsPrayerModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Auto-scroll state for Bài Khấn full-screen teleprompter
+  const baiKhanScrollRef = useRef<HTMLDivElement | null>(null);
+  const [isBaiKhanAutoScrolling, setIsBaiKhanAutoScrolling] = useState(true);
+  const [baiKhanSpeed, setBaiKhanSpeed] = useState<number>(1);
+
+  const sutrasWithImages = useMemo(
+    () =>
+      SUTRAS_DATA.map((s) => ({
+        ...s,
+        image: mapSutraImage(s.slug),
+      })),
+    []
+  );
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(SUTRA_COUNTS_STORAGE_KEY);
-      if (saved) {
-        setSutraChantCounts(JSON.parse(saved));
+      const savedCounts = localStorage.getItem(SUTRA_COUNTS_STORAGE_KEY);
+      if (savedCounts) {
+        setSutraChantCounts(JSON.parse(savedCounts));
       }
     } catch {}
+    fetch(`/api/dharma/sync?resource=kv&key=${encodeURIComponent(SUTRA_COUNTS_STORAGE_KEY)}`, {
+      cache: 'no-store',
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data?.value) {
+          try {
+            const parsed = typeof data.value === 'string' ? JSON.parse(data.value) : data.value;
+            setSutraChantCounts(parsed);
+          } catch {}
+        }
+      })
+      .catch(() => {});
   }, []);
+
+  // Support deep-link ?kinh=<slug|id>
+  useEffect(() => {
+    const kinhParam = searchParams?.get('kinh');
+    if (!kinhParam) return;
+    const found = getSutraBySlugOrId(kinhParam);
+    if (found) {
+      setReadingSutra({
+        ...found,
+        image: mapSutraImage(found.slug),
+      });
+    }
+  }, [searchParams]);
+
+  // Smooth sub-pixel auto-scroll for Bài Khấn full-screen teleprompter
+  useEffect(() => {
+    if (!showBaiKhanModal || !isBaiKhanAutoScrolling) return;
+    let rafId: number;
+    let lastTs = performance.now();
+    let acc = 0;
+
+    const step = (ts: number) => {
+      const dt = Math.min(64, ts - lastTs);
+      lastTs = ts;
+      const el = baiKhanScrollRef.current;
+      if (el) {
+        const pxPerSec = 26 * baiKhanSpeed;
+        acc += (pxPerSec * dt) / 1000;
+        if (acc >= 0.5) {
+          const move = Math.floor(acc * 2) / 2;
+          el.scrollTop += move;
+          acc -= move;
+        }
+        if (el.scrollTop + el.clientHeight >= el.scrollHeight - 4) {
+          setIsBaiKhanAutoScrolling(false);
+          return;
+        }
+      }
+      rafId = requestAnimationFrame(step);
+    };
+
+    rafId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafId);
+  }, [showBaiKhanModal, isBaiKhanAutoScrolling, baiKhanSpeed, selectedBaiKhan]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3200);
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // Auto-Scroll Teleprompter Effect inside Sutra Reader
-  useEffect(() => {
-    if (!readingSutra || autoScrollSpeed === 0) return;
-    const intervalMs = autoScrollSpeed === 1 ? 65 : autoScrollSpeed === 2 ? 38 : 22;
-    const timer = setInterval(() => {
-      if (readerScrollRef.current) {
-        readerScrollRef.current.scrollTop += 1;
-      }
-    }, intervalMs);
-    return () => clearInterval(timer);
-  }, [readingSutra, autoScrollSpeed]);
-
-  // Auto-Beat Wooden Fish inside Sutra Reader (68 BPM)
-  useEffect(() => {
-    if (!readingSutra || !isReaderFishBeating) return;
-    const timer = setInterval(() => {
-      playWoodenFishSound(0.5);
-    }, 880);
-    return () => clearInterval(timer);
-  }, [readingSutra, isReaderFishBeating]);
-
-  const handleCompleteSutraRecitation = (sutra: SutraItem) => {
-    playGrandTempleBellSound(0.6);
-    setAutoScrollSpeed(0);
-    setIsReaderFishBeating(false);
-
-    const nextCount = (sutraChantCounts[sutra.id] || 0) + 1;
-    const updated = { ...sutraChantCounts, [sutra.id]: nextCount };
-    setSutraChantCounts(updated);
+  const handleRecitationComplete = (sutra: SutraText) => {
+    const nextCounts = {
+      ...sutraChantCounts,
+      [sutra.id]: (sutraChantCounts[sutra.id] || 0) + 1,
+    };
+    setSutraChantCounts(nextCounts);
     try {
-      localStorage.setItem(SUTRA_COUNTS_STORAGE_KEY, JSON.stringify(updated));
+      const raw = JSON.stringify(nextCounts);
+      localStorage.setItem(SUTRA_COUNTS_STORAGE_KEY, raw);
+      fetch('/api/dharma/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          resource: 'kv',
+          key: SUTRA_COUNTS_STORAGE_KEY,
+          value: raw,
+        }),
+      }).catch(() => {});
     } catch {}
-
-    recordDharmaMerit({
-      type: 'sutra',
-      title: `Hoàn Mãn 1 Biến: ${sutra.title}`,
-      detail: `Đã trì tụng tổng cộng ${nextCount} biến • Hồi hướng công đức Pháp Giới chúng sinh`,
-      meritPoints: 30,
-    });
-
-    showToast(`Hoàn mãn 1 biến "${sutra.title}" (Tổng: ${nextCount} biến)! Đã lưu vào Sổ Công Đức.`);
-    setReadingSutra(null);
   };
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: sutrasWithImages.length };
+    for (const s of sutrasWithImages) {
+      counts[s.category] = (counts[s.category] || 0) + 1;
+    }
+    return counts;
+  }, [sutrasWithImages]);
 
   const filteredSutras = useMemo(() => {
-    return SUTRAS_LIST.filter((sutra) => {
-      if (selectedCategory === 'nam-tong' && sutra.tradition !== 'Nam Tông') return false;
-      if (selectedCategory === 'bac-tong' && sutra.tradition !== 'Bắc Tông') return false;
-      if (selectedCategory === 'mat-tong' && sutra.tradition !== 'Mật Tông') return false;
+    return sutrasWithImages.filter((s) => {
+      if (selectedCategory === 'bookmarked') {
+        if (!bookmarkedSutraIds.includes(s.id)) return false;
+      } else if (selectedCategory !== 'all') {
+        if (s.category !== selectedCategory) return false;
+      }
 
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
+      if (searchQuery.trim() !== '') {
+        const q = searchQuery.toLowerCase();
         return (
-          sutra.title.toLowerCase().includes(q) ||
-          sutra.content.toLowerCase().includes(q) ||
-          sutra.categoryLabel.toLowerCase().includes(q)
+          s.title.toLowerCase().includes(q) ||
+          s.sanskritOrPaliTitle.toLowerCase().includes(q) ||
+          s.summary.toLowerCase().includes(q) ||
+          s.category.toLowerCase().includes(q)
         );
       }
       return true;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [sutrasWithImages, selectedCategory, searchQuery, bookmarkedSutraIds]);
 
-  const totalChantedBiens = Object.values(sutraChantCounts).reduce((a, b) => a + b, 0);
+  const todayRitualHeadline = todayLunar.viaChuPhat
+    ? `Hôm nay • ${todayLunar.viaChuPhat}`
+    : todayLunar.lunarDay === 1 || todayLunar.lunarDay === 15
+    ? `Hôm nay • ${todayLunar.lunarDay === 1 ? 'Mùng 1 Sóc' : 'Ngày Rằm'} tháng ${todayLunar.lunarMonth} Âm lịch`
+    : `Hôm nay • ${String(todayLunar.lunarDay).padStart(2, '0')}/${String(
+        todayLunar.lunarMonth
+      ).padStart(2, '0')} Âm lịch • Niệm Phật Hồi Hướng`;
+
+  const handleOpenTodayRitualSutra = () => {
+    const lowerVia = (todayLunar.viaChuPhat || '').toLowerCase();
+    const targetSlug = lowerVia.includes('địa tạng')
+      ? 'dia-tang'
+      : lowerVia.includes('quán thế âm')
+      ? 'dai-bi'
+      : lowerVia.includes('a di đà')
+      ? 'a-di-da'
+      : lowerVia.includes('dược sư')
+      ? 'duoc-su'
+      : 'bat-nha';
+    const target = sutrasWithImages.find((s) => s.slug === targetSlug) || sutrasWithImages[0];
+    setShowBaiKhanModal(false);
+    playPageTurnSound(0.3);
+    setReadingSutra(target);
+  };
+
+  const handleCopyBaiKhan = async () => {
+    const fullText = [
+      selectedBaiKhan.title,
+      '',
+      selectedBaiKhan.openingVerse,
+      '',
+      ...selectedBaiKhan.paragraphs,
+      '',
+      selectedBaiKhan.closingVerse,
+    ].join('\n');
+    try {
+      await navigator.clipboard.writeText(fullText);
+      setCopiedKhan(true);
+      setTimeout(() => setCopiedKhan(false), 2000);
+      showToast('Đã sao chép văn khấn');
+    } catch {
+      showToast('Không thể sao chép trên trình duyệt này');
+    }
+  };
+
+  const activeFilterLabel =
+    selectedCategory === 'all'
+      ? 'Tất cả'
+      : selectedCategory === 'bookmarked'
+      ? 'Đã lưu'
+      : selectedCategory;
 
   return (
-    <div className="min-h-screen bg-white text-[#2E1E0F] selection:bg-[#F5C542]/30 selection:text-[#8C5500]">
-      {/* ========================================================================= */}
-      {/* MOBILE VIEW (< lg) - DHARMA REACT NATIVE SUPER-APP SUTRAS                 */}
-      {/* ========================================================================= */}
-      <div className="block lg:hidden">
-        <div className="max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-4 pt-3 pb-32 space-y-4">
-          {/* 1. SAFE-AREA HEADER — Single-Line Guaranteed */}
-          <header className="flex items-center justify-between gap-2 pt-2">
-            <div className="flex items-center gap-2.5 min-w-0 flex-1">
-              <div className="w-10 h-10 rounded-2xl p-[1.5px] bg-gradient-to-tr from-[#E5A91C] via-[#FFD966] to-[#F5C542] shadow-[0_0_16px_rgba(245,197,66,0.3)] flex items-center justify-center shrink-0">
-                <div className="w-full h-full rounded-[14px] bg-white flex items-center justify-center">
-                  <SutraScrollIcon className="w-5 h-5 text-[#8C5500]" />
+    <div className="min-h-screen bg-[#FAF7F0] text-[#2C1E10]">
+      <div className="max-w-5xl mx-auto px-3.5 sm:px-6 pt-3 lg:pt-6 pb-48 lg:pb-16 space-y-4">
+        {/* ===================================================================== */}
+        {/* DHARMA TOP BAR: Filter Pill | Centered Title | Bookmark Button        */}
+        {/* ===================================================================== */}
+        <header className="relative flex items-center justify-between gap-3 pt-1">
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowCategoryMenu((v) => !v)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] text-xs font-bold text-[#2C1E10] hover:border-[#C68B19] transition-colors cursor-pointer shadow-xs"
+            >
+              <span className="truncate max-w-[120px]">{activeFilterLabel}</span>
+              <ChevronDown className="w-3.5 h-3.5 text-[#8C5500]" />
+            </button>
+
+            {showCategoryMenu && (
+              <>
+                <div
+                  className="fixed inset-0 z-30"
+                  onClick={() => setShowCategoryMenu(false)}
+                />
+                <div className="absolute left-0 mt-2 w-60 rounded-2xl bg-[#FFFFFF] border border-[#DFC27D] shadow-xl p-1.5 z-40 space-y-0.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory('all');
+                      setShowCategoryMenu(false);
+                    }}
+                    className={cn(
+                      'w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold cursor-pointer transition-colors',
+                      selectedCategory === 'all'
+                        ? 'bg-[#FFF9EB] text-[#8C5500] border border-[#DFC27D]'
+                        : 'text-[#2C1E10] hover:bg-[#FFF9EB]'
+                    )}
+                  >
+                    <span>Tất cả kinh điển</span>
+                    <span className="text-[11px] text-[#6B533B]">{categoryCounts.all}</span>
+                  </button>
+                  {SUTRA_CATEGORIES.map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        setSelectedCategory(cat);
+                        setShowCategoryMenu(false);
+                      }}
+                      className={cn(
+                        'w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold cursor-pointer transition-colors',
+                        selectedCategory === cat
+                          ? 'bg-[#FFF9EB] text-[#8C5500] border border-[#DFC27D]'
+                          : 'text-[#2C1E10] hover:bg-[#FFF9EB]'
+                      )}
+                    >
+                      <span className="truncate">{cat}</span>
+                      <span className="text-[11px] text-[#6B533B]">
+                        {categoryCounts[cat] || 0}
+                      </span>
+                    </button>
+                  ))}
                 </div>
-              </div>
-              <div className="min-w-0 flex-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block whitespace-nowrap truncate">
-                  DHARMA • TAM TẠNG PHÁP BẢO
-                </span>
-                <h1 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#2E1E0F] leading-tight whitespace-nowrap truncate">
-                  Kinh Tạng &amp; Trì Tụng
-                </h1>
-              </div>
-            </div>
-
-            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#EEDBBA] text-right shrink-0 whitespace-nowrap">
-              <span className="text-[9px] uppercase tracking-wider text-[#7D6442] block">
-                Đã trì tụng
-              </span>
-              <span className="text-xs font-mono font-bold text-[#8C5500]">
-                {totalChantedBiens} biến
-              </span>
-            </div>
-          </header>
-
-          {/* 2. SEARCH BAR */}
-          <section aria-label="Tìm kiếm bài kinh">
-            <div className="relative w-full rounded-2xl bg-white border border-[#EEDBBA] px-4 py-2.5 flex items-center gap-2.5 shadow-inner">
-              <Search className="w-4 h-4 text-[#8C5500] shrink-0" />
-              <input
-                type="text"
-                placeholder="Tìm bài kinh, Bát Nhã, Từ Bi, Dược Sư..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent w-full text-xs sm:text-sm text-[#2E1E0F] placeholder-[#C7B68B]/60 focus:outline-none"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="text-[#7D6442] hover:text-[#2E1E0F] p-0.5 cursor-pointer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-          </section>
-
-          {/* 3. REACT NATIVE 4-CATEGORY SEGMENTED CONTROL */}
-          <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-white border border-[#EEDBBA]">
-            {[
-              { id: 'all', label: 'Tất Cả' },
-              { id: 'nam-tong', label: 'Nikāya' },
-              { id: 'bac-tong', label: 'Đại Thừa' },
-              { id: 'mat-tong', label: 'Nghi Thức' },
-            ].map((cat) => {
-              const active = selectedCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => {
-                    playWoodenFishSound(0.2);
-                    setSelectedCategory(cat.id);
-                  }}
-                  className={cn(
-                    'py-2 px-1 rounded-xl text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap',
-                    active
-                      ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-sm'
-                      : 'text-[#6A5234] hover:text-[#2E1E0F]'
-                  )}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
+              </>
+            )}
           </div>
 
-          {/* 4. TODAY'S RITUAL BANNER */}
-          <section aria-label="Nghi thức hôm nay">
-            <div
-              onClick={() => {
-                playBellSound(0.4);
-                setIsPrayerModalOpen(true);
-              }}
-              className="rounded-2xl p-3 bg-gradient-to-r from-[#FFFDF2] via-[#FFF9E6] to-[#FFFDF2] border border-[#ECD9A8] flex items-center justify-between cursor-pointer active:scale-[0.98] transition-all shadow-md group"
-            >
-              <div className="flex items-center gap-3 min-w-0 flex-1 pr-2">
-                <div className="w-9 h-9 rounded-xl bg-[#FFF4D0] border border-[#EEDBBA] flex items-center justify-center text-[#8C5500] shrink-0">
-                  <LotusMinimalIcon className="w-4 h-4" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block whitespace-nowrap truncate">
-                    Nghi Thức Khuyến Tu Hôm Nay
-                  </span>
-                  <h4 className="font-heading font-serif font-bold text-xs sm:text-sm text-[#2E1E0F] truncate whitespace-nowrap mt-0.5">
-                    Văn Khấn &amp; Quán Đảnh Chơn Ngôn Phật Dược Sư
-                  </h4>
-                </div>
-              </div>
-              <ChevronRight className="w-4 h-4 text-[#8C5500] shrink-0" />
-            </div>
-          </section>
+          <div className="text-center min-w-0">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block truncate">
+              TAM TẠNG KINH ĐIỂN
+            </span>
+            <h1 className="text-base lg:text-xl font-bold text-[#2C1E10] tracking-tight truncate">
+              Pháp Âm &amp; Kinh Tạng
+            </h1>
+          </div>
 
-          {/* 5. SUTRAS BENTO LIST */}
-          <section aria-label="Danh sách bài kinh" className="space-y-2.5">
+          <button
+            type="button"
+            onClick={() => {
+              playBeadTickSound(0.25);
+              setSelectedCategory((prev) => (prev === 'bookmarked' ? 'all' : 'bookmarked'));
+            }}
+            className={cn(
+              'w-10 h-10 rounded-xl border flex items-center justify-center transition-colors cursor-pointer relative shadow-xs',
+              selectedCategory === 'bookmarked'
+                ? 'bg-[#8C5500] border-[#8C5500] text-white'
+                : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#2C1E10] hover:border-[#C68B19]'
+            )}
+            aria-label="Lọc kinh đã lưu"
+            title={`Kinh đã lưu (${bookmarkedSutraIds.length})`}
+          >
+            <BookOpen className="w-4 h-4" />
+            {bookmarkedSutraIds.length > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C68B19] text-white text-[9px] font-bold flex items-center justify-center">
+                {bookmarkedSutraIds.length}
+              </span>
+            )}
+          </button>
+        </header>
+
+        {/* ===================================================================== */}
+        {/* SEARCH PILL                                                           */}
+        {/* ===================================================================== */}
+        <div className="relative">
+          <Search className="w-4 h-4 text-[#8C5500] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Tìm kiếm bài kinh, thần chú, nghi thức..."
+            className="w-full h-11 pl-11 pr-10 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] text-sm text-[#2C1E10] placeholder:text-[#8E7A63] focus:outline-none focus:border-[#8C5500] transition-colors shadow-xs"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6B533B] hover:text-[#2C1E10] cursor-pointer"
+              aria-label="Xoá tìm kiếm"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+
+        {/* ===================================================================== */}
+        {/* SUTRA LIST (COMPACT SQUARE THUMBNAIL CARDS - ZERO TEXT OVERFLOW)      */}
+        {/* ===================================================================== */}
+        {filteredSutras.length === 0 ? (
+          <div className="py-16 text-center space-y-2 rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] shadow-xs">
+            <BookOpen className="w-8 h-8 text-[#8C5500] mx-auto" />
+            <p className="text-sm font-bold text-[#2C1E10]">
+              Không tìm thấy bài kinh phù hợp
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('all');
+                setSearchQuery('');
+              }}
+              className="px-4 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+            >
+              Hiển thị toàn bộ Tam Tạng Kinh
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {filteredSutras.map((sutra) => {
               const count = sutraChantCounts[sutra.id] || 0;
+              const isBookmarked = bookmarkedSutraIds.includes(sutra.id);
               return (
                 <div
                   key={sutra.id}
                   onClick={() => {
-                    playPageTurnSound(0.3);
+                    playPageTurnSound(0.32);
                     setReadingSutra(sutra);
                   }}
-                  className="p-3 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-between gap-3 cursor-pointer active:scale-[0.99] transition-all group shadow-md"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      playPageTurnSound(0.32);
+                      setReadingSutra(sutra);
+                    }
+                  }}
+                  className="group flex items-center gap-3 p-3 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] hover:bg-[#FFF9EB]/60 transition-all cursor-pointer shadow-xs min-w-0"
                 >
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0 border border-[#EEDBBA] bg-white">
-                      <img
-                        src={sutra.image}
-                        alt={sutra.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
+                  {/* Square rounded artwork thumbnail */}
+                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#FFF9EB] border border-[#DFC27D] shrink-0 relative">
+                    <img
+                      src={sutra.image}
+                      alt={sutra.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-[#8C5500] font-bold uppercase tracking-wider truncate whitespace-nowrap">
-                          {sutra.categoryLabel}
+                  {/* Text column */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#8C5500] truncate">
+                      <span className="truncate">Kinh • {sutra.category}</span>
+                      {isBookmarked && (
+                        <Bookmark className="w-3 h-3 text-[#C68B19] fill-[#C68B19] shrink-0" />
+                      )}
+                      {count > 0 && (
+                        <span className="text-[10px] font-bold text-emerald-700 whitespace-nowrap">
+                          • {count} biến
                         </span>
-                        {count > 0 && (
-                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 whitespace-nowrap shrink-0">
-                            {count} biến
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="font-heading font-serif font-bold text-sm text-[#2E1E0F] leading-snug truncate whitespace-nowrap mt-0.5 group-hover:text-[#8C5500]">
-                        {sutra.title}
-                      </h3>
-                      <p className="text-[11px] text-[#7D6442] truncate whitespace-nowrap mt-0.5">
-                        {sutra.excerpt}
-                      </p>
+                      )}
                     </div>
+                    <h2 className="text-sm sm:text-[15px] font-bold text-[#2C1E10] truncate group-hover:text-[#8C5500] transition-colors mt-0.5">
+                      {sutra.title}
+                    </h2>
+                    <p className="text-[11px] text-[#6B533B] truncate">
+                      Thời lượng trì tụng ~{sutra.durationMins} phút
+                    </p>
                   </div>
 
-                  <div className="w-8 h-8 rounded-xl bg-white border border-[#EEDBBA] flex items-center justify-center text-[#8C5500] shrink-0">
-                    <SutraScrollIcon className="w-4 h-4" />
-                  </div>
+                  {/* More menu (...) */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setMenuSutra(sutra);
+                    }}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center text-[#6B533B] hover:text-[#2C1E10] hover:bg-[#FFF9EB] border border-transparent hover:border-[#DFC27D] transition-colors shrink-0 cursor-pointer"
+                    aria-label={`Tùy chọn cho ${sutra.title}`}
+                  >
+                    <MoreHorizontal className="w-4 h-4" />
+                  </button>
                 </div>
               );
             })}
-          </section>
+          </div>
+        )}
+
+        {/* ===================================================================== */}
+        {/* STICKY / PINNED "VĂN KHẤN CỔ TRUYỀN" BANNER                           */}
+        {/* ===================================================================== */}
+        <div className="fixed bottom-[76px] inset-x-3.5 z-20 lg:static lg:pt-4">
+          <button
+            type="button"
+            onClick={() => {
+              playOmTempleBellSound(0.4);
+              setIsBaiKhanAutoScrolling(true);
+              setShowBaiKhanModal(true);
+            }}
+            className="w-full max-w-5xl mx-auto flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-[#FFF9EB] via-[#FCECC9] to-[#F5DC9C] border border-[#DFC27D] shadow-lg text-left relative overflow-hidden group cursor-pointer hover:border-[#8C5500] transition-all"
+          >
+            <div className="min-w-0 flex-1 relative z-10">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block truncate">
+                NGHI THỨC LỄ BÁI GIA TIÊN &amp; TAM BẢO
+              </span>
+              <p className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
+                Văn Khấn Truyền Thống Việt Nam
+              </p>
+              <p className="text-xs text-[#6B533B] mt-0.5 truncate">
+                {todayRitualHeadline}
+              </p>
+            </div>
+            <img
+              src="/images/quan_am_altar.jpg"
+              alt=""
+              aria-hidden="true"
+              className="w-14 h-14 rounded-xl object-cover border border-[#DFC27D] shrink-0 pointer-events-none"
+            />
+          </button>
         </div>
       </div>
 
-      {/* ========================================================================= */}
-      {/* DESKTOP VIEW (>= lg) - DHARMA RADIANT GOLD SUTRAS                         */}
-      {/* ========================================================================= */}
-      <div className="hidden lg:block">
-        <OmManiDesktopSutras
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          filteredSutras={filteredSutras}
-          onOpenSutra={(s) => setReadingSutra(s)}
-          onOpenPrayerModal={() => {
-            playBellSound(0.4);
-            setIsPrayerModalOpen(true);
-          }}
-          sutraChantCounts={sutraChantCounts}
-          showToast={showToast}
-        />
-      </div>
-
-      {/* ========================================================================= */}
-      {/* SMART SUTRA READER MODAL (AUTO-SCROLL TELEPROMPTER + WOODEN FISH)         */}
-      {/* ========================================================================= */}
-      {readingSutra && (
-        <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setAutoScrollSpeed(0);
-              setIsReaderFishBeating(false);
-              setReadingSutra(null);
-            }
-          }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
-        >
-          <div className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-3xl bg-white border border-[#E5C158] p-4 sm:p-6 text-[#2E1E0F] shadow-2xl">
-            {/* Top Bar inside Reader */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA] shrink-0">
-              <div className="min-w-0 pr-2 flex-1">
-                <span className="text-[10px] text-[#8C5500] font-bold uppercase tracking-wider block whitespace-nowrap truncate">
-                  {readingSutra.categoryLabel} • Đã tụng: {sutraChantCounts[readingSutra.id] || 0} biến
-                </span>
-                <h2 className="font-heading font-serif text-base sm:text-xl font-bold text-[#2E1E0F] truncate mt-0.5">
-                  {readingSutra.title}
-                </h2>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setAutoScrollSpeed(0);
-                  setIsReaderFishBeating(false);
-                  setReadingSutra(null);
-                }}
-                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white border border-[#EEDBBA] shrink-0 cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Smart Chanting Toolbar: Font Size + Auto-Scroll Teleprompter + Rhythm Wooden Fish */}
-            <div className="flex flex-wrap items-center justify-between gap-2 py-2.5 border-b border-[#EEDBBA] text-xs shrink-0">
-              {/* Font Size */}
-              <div className="flex items-center gap-1">
-                <span className="text-[#7D6442] text-[11px] mr-1">Chữ:</span>
-                {(['sm', 'base', 'lg', 'xl'] as const).map((sz) => (
-                  <button
-                    key={sz}
-                    type="button"
-                    onClick={() => setFontSize(sz)}
-                    className={cn(
-                      'px-2 py-1 rounded-lg font-mono text-[11px] transition-all cursor-pointer',
-                      fontSize === sz
-                        ? 'bg-[#F5C542] text-[#3D2505] font-bold'
-                        : 'bg-white text-[#7D6442] hover:text-[#2E1E0F]'
-                    )}
-                  >
-                    {sz === 'sm' ? 'A-' : sz === 'base' ? 'A' : sz === 'lg' ? 'A+' : 'A++'}
-                  </button>
-                ))}
-              </div>
-
-              {/* Teleprompter Auto-Scroll Controls */}
-              <div className="flex items-center gap-1">
-                <span className="text-[#7D6442] text-[11px] mr-1">Cuộn tự động:</span>
-                {[
-                  { speed: 0, label: 'Tắt' },
-                  { speed: 1, label: '1x' },
-                  { speed: 2, label: '2x' },
-                  { speed: 3, label: '3x' },
-                ].map((opt) => (
-                  <button
-                    key={opt.speed}
-                    type="button"
-                    onClick={() => setAutoScrollSpeed(opt.speed as 0 | 1 | 2 | 3)}
-                    className={cn(
-                      'px-2 py-1 rounded-lg font-mono text-[11px] transition-all cursor-pointer',
-                      autoScrollSpeed === opt.speed
-                        ? 'bg-[#F5C542] text-[#3D2505] font-bold'
-                        : 'bg-white text-[#7D6442] hover:text-[#2E1E0F]'
-                    )}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Rhythm Wooden Fish & Bell */}
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const next = !isReaderFishBeating;
-                    setIsReaderFishBeating(next);
-                    if (next) playWoodenFishSound(0.5);
-                  }}
-                  className={cn(
-                    'flex items-center gap-1 px-2.5 py-1 rounded-xl border text-[11px] font-bold transition-all cursor-pointer',
-                    isReaderFishBeating
-                      ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300'
-                      : 'bg-white border-[#EEDBBA] text-[#8C5500]'
-                  )}
-                >
-                  <WoodenFishMinimalIcon className="w-3.5 h-3.5" />
-                  <span>{isReaderFishBeating ? 'Mõ: Đang gõ' : 'Bật Mõ Nhịp'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    playBellSound(0.45);
-                    showToast('Tiếng chuông ngân vang tĩnh tâm');
-                  }}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-white border border-[#EEDBBA] text-[#8C5500] text-[11px] font-bold cursor-pointer"
-                >
-                  <TempleBellIcon className="w-3.5 h-3.5" />
-                  <span>Chuông</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Scrollable Sutra Text */}
-            <div
-              ref={readerScrollRef}
-              className={cn(
-                'flex-1 overflow-y-auto no-scrollbar py-5 px-2 leading-relaxed font-serif text-[#2E1E0F] whitespace-pre-line space-y-4 select-text',
-                fontSize === 'sm' && 'text-xs sm:text-sm leading-relaxed',
-                fontSize === 'base' && 'text-sm sm:text-base leading-loose',
-                fontSize === 'lg' && 'text-base sm:text-lg leading-loose',
-                fontSize === 'xl' && 'text-lg sm:text-xl leading-loose font-medium'
-              )}
+      {/* ======================================================================= */}
+      {/* FULL-SCREEN SUTRA DETAIL & OPTIONS PAGE (100% FULL SCREEN + QUAY LẠI)   */}
+      {/* ======================================================================= */}
+      {menuSutra && (
+        <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
+          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+            <button
+              type="button"
+              onClick={() => setMenuSutra(null)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
             >
-              {readingSutra.content}
+              <ArrowLeft className="w-4 h-4" />
+              <span>Quay lại</span>
+            </button>
+            <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
+              Thông Tin Kinh Điển
+            </h2>
+            <div className="w-20" />
+          </header>
+
+          <div className="flex-1 overflow-y-auto p-5 max-w-2xl mx-auto w-full space-y-5">
+            <div className="p-4 rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] flex items-center gap-4 shadow-xs">
+              <img
+                src={menuSutra.image}
+                alt={menuSutra.title}
+                className="w-20 h-20 rounded-2xl object-cover border border-[#DFC27D] shrink-0"
+              />
+              <div className="min-w-0 flex-1 space-y-1">
+                <span className="text-xs font-bold text-[#8C5500]">
+                  {menuSutra.category} • ~{menuSutra.durationMins} phút
+                </span>
+                <h3 className="text-lg font-bold text-[#2C1E10] leading-snug">
+                  {menuSutra.title}
+                </h3>
+                <p className="text-xs text-[#6B533B] truncate">
+                  {menuSutra.sanskritOrPaliTitle}
+                </p>
+              </div>
             </div>
 
-            {/* Reader Footer Controls: Bookmark & Complete 1 Biến */}
-            <div className="pt-3 border-t border-[#EEDBBA] flex flex-wrap items-center justify-between gap-2 shrink-0">
+            <div className="p-5 rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] space-y-2 shadow-xs">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C5500]">
+                Ý Nghĩa &amp; Công Đức Trì Tụng
+              </h4>
+              <p className="text-sm text-[#2C1E10] leading-relaxed">{menuSutra.summary}</p>
+            </div>
+
+            <div className="space-y-3 pt-2">
               <button
                 type="button"
                 onClick={() => {
-                  setIsBookmarked((prev) => {
-                    const next = !prev;
-                    showToast(next ? 'Đã đánh dấu bản kinh thường tụng' : 'Đã bỏ đánh dấu');
-                    return next;
-                  });
+                  const s = menuSutra;
+                  setMenuSutra(null);
+                  playPageTurnSound(0.32);
+                  setReadingSutra(s);
                 }}
-                className={cn(
-                  'flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs font-bold transition-all cursor-pointer',
-                  isBookmarked
-                    ? 'bg-[#FFF4D0] border-[#E5C158] text-[#8C5500]'
-                    : 'bg-white border-[#EEDBBA] text-[#7D6442] hover:text-[#2E1E0F]'
-                )}
+                className="w-full py-3.5 rounded-2xl bg-[#8C5500] text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#6E4200] transition-colors cursor-pointer shadow-sm"
               >
-                <Bookmark className="w-3.5 h-3.5 fill-current" />
-                <span>{isBookmarked ? 'Đã Lưu Tủ Kinh' : 'Lưu Tủ Kinh'}</span>
+                <Play className="w-4 h-4 fill-current" />
+                <span>Mở Kinh Trì Tụng Ngay</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleCompleteSutraRecitation(readingSutra)}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs shadow-lg transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                onClick={() => {
+                  const id = menuSutra.id;
+                  const existed = bookmarkedSutraIds.includes(id);
+                  playBeadTickSound(0.3);
+                  toggleSutraBookmark(id);
+                  showToast(existed ? 'Đã bỏ lưu bản kinh' : 'Đã lưu vào Tủ Kinh Yêu Thích');
+                  setMenuSutra(null);
+                }}
+                className="w-full py-3.5 rounded-2xl bg-[#FFF9EB] border border-[#DFC27D] text-[#2C1E10] font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#FCECC9] transition-colors cursor-pointer"
               >
-                <Check className="w-4 h-4 stroke-[2.5] shrink-0" />
-                <span>Hoàn Mãn 1 Biến (+30 Công Đức)</span>
+                <Bookmark
+                  className={cn(
+                    'w-4 h-4',
+                    bookmarkedSutraIds.includes(menuSutra.id) && 'fill-[#8C5500] text-[#8C5500]'
+                  )}
+                />
+                <span>
+                  {bookmarkedSutraIds.includes(menuSutra.id)
+                    ? 'Bỏ khỏi kinh đã lưu'
+                    : 'Lưu bản kinh yêu thích'}
+                </span>
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* MODAL: NGHI THỨC KHẤN NGUYỆN & CHÚ DƯỢC SƯ                                */}
-      {/* ========================================================================= */}
-      {isPrayerModalOpen && (
-        <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsPrayerModalOpen(false);
-          }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-4 bg-black/50 backdrop-blur-md animate-fade-in"
-        >
-          <div className="relative w-full max-w-md max-h-[85vh] flex flex-col rounded-3xl bg-white border border-[#ECD9A8] p-5 text-[#2E1E0F] shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#EEDBBA] shrink-0">
-              <div>
-                <span className="text-[10px] uppercase font-bold text-[#8C5500] tracking-wider">
-                  NGHI THỨC KHUYẾN TU HÔM NAY
-                </span>
-                <h3 className="font-heading font-serif font-bold text-base text-[#2E1E0F] mt-0.5">
-                  Văn Khấn &amp; Chú Dược Sư Lưu Ly Quang
-                </h3>
-              </div>
+      {/* ======================================================================= */}
+      {/* FULL-SCREEN BÀI KHẤN TRUYỀN THỐNG + AUTO-SCROLL TELEPROMPTER            */}
+      {/* ======================================================================= */}
+      {showBaiKhanModal && (
+        <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
+          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex flex-wrap items-center justify-between gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setShowBaiKhanModal(false)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Quay lại</span>
+            </button>
+
+            <div className="flex items-center gap-1.5">
               <button
                 type="button"
-                onClick={() => setIsPrayerModalOpen(false)}
-                className="text-[#7D6442] hover:text-[#2E1E0F] p-1.5 rounded-full bg-white"
+                onClick={() => setIsBaiKhanAutoScrolling((v) => !v)}
+                className={cn(
+                  'px-3 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer border',
+                  isBaiKhanAutoScrolling
+                    ? 'bg-[#8C5500] text-white border-[#8C5500]'
+                    : 'bg-[#FFF9EB] text-[#8C5500] border-[#DFC27D]'
+                )}
               >
-                <X className="w-4 h-4" />
+                {isBaiKhanAutoScrolling ? (
+                  <>
+                    <Pause className="w-3.5 h-3.5" />
+                    <span>Đang tự lướt</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-3.5 h-3.5" />
+                    <span>Tự động lướt</span>
+                  </>
+                )}
               </button>
+
+              {[0.5, 1, 1.5, 2].map((spd) => (
+                <button
+                  key={spd}
+                  type="button"
+                  onClick={() => setBaiKhanSpeed(spd)}
+                  className={cn(
+                    'px-2.5 py-1.5 rounded-xl text-xs font-bold cursor-pointer border',
+                    baiKhanSpeed === spd
+                      ? 'bg-[#C68B19] text-white border-[#C68B19]'
+                      : 'bg-[#FFFFFF] text-[#6B533B] border-[#EAD7A7]'
+                  )}
+                >
+                  {spd}x
+                </button>
+              ))}
             </div>
+          </header>
 
-            <div className="flex-1 overflow-y-auto no-scrollbar py-4 space-y-3 text-xs sm:text-sm text-[#5A4329] leading-relaxed font-serif whitespace-pre-line">
-              {`Quy mạng Dược Sư Lưu Ly Quang,
-Bổn nguyện rộng sâu độ thế gian.
-Cứu khổ trừ tai thân mạng vững,
-Ánh sáng lưu ly tỏa muôn phương.
-
-Nam Mô Dược Sư Hải Hội Phật Bồ Tát (3 lần)
-
-Dược Sư Quán Đảnh Chơn Ngôn:
-"Nam mô bạt già phạt đế, bệ sát xã, lũ lô thích lưu ly, phách lạt bà, hắt ra xà dã, đát tha yết đa da, a ra ha đế, tam miệu tam bột đà da, đát điệt tha: Án, bệ sát thệ, bệ sát thệ, bệ sát xã, tam một yết đế tằng sa ha." (Trì tụng 7 biến hoặc 21 biến)
-
-Lời khấn nguyện hồi hướng:
-Đệ tử chúng con chí thành hướng về Tam Bảo, nguyện cầu ánh quang minh lưu ly của Đức Phật Dược Sư soi chiếu thân tâm, tiêu trừ chướng ngại, tật bệnh thuyên giảm, gia quyến an khang, đạo tâm kiên cố.`}
-            </div>
-
-            <div className="pt-3 border-t border-[#EEDBBA] flex justify-end">
+          {/* Selector pills */}
+          <div className="px-4 py-2.5 bg-[#FFF9EB] border-b border-[#EAD7A7] flex gap-2 overflow-x-auto no-scrollbar shrink-0">
+            {BAI_KHAN_DATA.map((item) => (
               <button
+                key={item.id}
                 type="button"
                 onClick={() => {
-                  playGrandTempleBellSound(0.5);
-                  recordDharmaMerit({
-                    type: 'sutra',
-                    title: 'Trì Tụng Chú Dược Sư & Nghi Thức Khấn Nguyện',
-                    detail: 'Hồi hướng bình an và sức khỏe cho gia quyến',
-                    meritPoints: 20,
-                  });
-                  showToast('Đã ghi nhận công đức trì tụng Nghi Thức Dược Sư!');
-                  setIsPrayerModalOpen(false);
+                  setSelectedBaiKhan(item);
+                  setIsBaiKhanAutoScrolling(true);
+                  if (baiKhanScrollRef.current) baiKhanScrollRef.current.scrollTop = 0;
                 }}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs cursor-pointer"
+                className={cn(
+                  'px-3.5 py-1.5 rounded-xl text-xs font-bold shrink-0 cursor-pointer transition-colors border',
+                  selectedBaiKhan.id === item.id
+                    ? 'bg-[#8C5500] text-white border-[#8C5500]'
+                    : 'bg-[#FFFFFF] text-[#5C3A08] border-[#DFC27D]'
+                )}
               >
-                Hoàn Mãn &amp; Hồi Hướng
+                {item.title}
               </button>
+            ))}
+          </div>
+
+          {/* Prayer body with smooth auto-scroll */}
+          <div
+            ref={baiKhanScrollRef}
+            className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 max-w-3xl mx-auto w-full space-y-5"
+          >
+            <div className="space-y-1 text-center">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#8C5500]">
+                {selectedBaiKhan.eyebrow}
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#2C1E10]">
+                {selectedBaiKhan.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#6B533B] italic">{selectedBaiKhan.occasion}</p>
             </div>
+
+            <div className="p-5 sm:p-7 rounded-3xl bg-[#FFFFFF] border border-[#DFC27D] space-y-5 text-base sm:text-xl leading-relaxed text-[#2C1E10] font-serif shadow-xs">
+              <p className="whitespace-pre-line font-bold text-[#8C5500]">
+                {selectedBaiKhan.openingVerse}
+              </p>
+              {selectedBaiKhan.paragraphs.map((p, idx) => (
+                <p key={idx} className="whitespace-pre-line leading-loose">
+                  {p}
+                </p>
+              ))}
+              <p className="whitespace-pre-line font-bold text-[#8C5500] pt-4 border-t border-[#EAD7A7]">
+                {selectedBaiKhan.closingVerse}
+              </p>
+            </div>
+            <div className="h-32" />
+          </div>
+
+          {/* Footer actions */}
+          <div className="px-4 py-3 border-t border-[#EAD7A7] bg-[#FFFDF8] flex flex-wrap items-center justify-between gap-2.5 max-w-3xl mx-auto w-full shrink-0">
+            <button
+              type="button"
+              onClick={handleCopyBaiKhan}
+              className="px-4 py-2.5 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] flex items-center gap-1.5 cursor-pointer"
+            >
+              {copiedKhan ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copiedKhan ? 'Đã sao chép' : 'Sao chép bài khấn'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleOpenTodayRitualSutra}
+              className="px-4 py-2.5 rounded-xl bg-[#8C5500] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer hover:bg-[#6E4200]"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Mở kinh tụng hôm nay</span>
+            </button>
           </div>
         </div>
+      )}
+
+      {/* ======================================================================= */}
+      {/* FULL-SCREEN DHARMA INTERACTIVE SUTRA READER                             */}
+      {/* ======================================================================= */}
+      {readingSutra && (
+        <DharmaSutraReader
+          sutra={readingSutra}
+          onClose={() => setReadingSutra(null)}
+          showToast={showToast}
+          chantCount={sutraChantCounts[readingSutra.id] || 0}
+          onRecitationComplete={handleRecitationComplete}
+        />
       )}
 
       {/* FLOATING TOAST */}
       {toastMessage && (
-        <div className="fixed top-16 inset-x-3 z-50 flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-white/95 border border-[#ECD9A8] text-center shadow-xl backdrop-blur-md">
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#8C5500]">
-              {toastMessage}
-            </p>
+        <div className="fixed top-16 inset-x-3 z-[999999] flex justify-center pointer-events-none animate-fadeInDown">
+          <div className="px-4 py-2.5 rounded-2xl bg-[#FFFDF8] border border-[#DFC27D] text-center shadow-xl">
+            <p className="text-xs sm:text-sm font-bold text-[#8C5500]">{toastMessage}</p>
           </div>
         </div>
       )}
     </div>
+  );
+}
+
+export default function BuddhistLibraryPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#FAF7F0] flex items-center justify-center text-sm font-bold text-[#8C5500]">
+          Đang khai mở Kinh sách...
+        </div>
+      }
+    >
+      <BuddhistLibraryInner />
+    </Suspense>
   );
 }

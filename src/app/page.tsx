@@ -1,18 +1,18 @@
 import React from 'react';
-import { OmManiAppStoreHome } from '@/components/om-mani/OmManiAppStoreHome';
+import { DharmaHomeView } from '@/components/dharma/DharmaHomeView';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'DHARMA — Ánh Sáng Chánh Pháp | Không Gian Hành Trì & Kinh Điển',
+  title: 'DHARMA — Liên Hoa Đài & Không Gian Chánh Niệm',
   description:
-    'Không gian tu học Phật pháp thanh tịnh: Thời khóa 4 thời, Kệ Pháp Cú mỗi ngày, Lịch Vạn Niên & Trai Giới, Mõ Tụng Kinh Tự Động và Tam Tạng Pháp Bảo.',
+    'Ứng dụng tu tập chánh niệm hằng ngày: Nhật Lịch Cát Tường, Pháp Khí Tu Tập, Tam Tạng Kinh Điển, Phòng Cầu An & Cầu Siêu.',
 };
 
 export default function HomePage() {
   return (
-    <main className="w-full min-h-screen bg-[#FDFBF7] text-[#2E1E0F]">
-      <OmManiAppStoreHome />
-    </main>
+    <div className="w-full min-h-screen bg-[#FAF7F0] text-[#2C1E10]">
+      <DharmaHomeView />
+    </div>
   );
 }

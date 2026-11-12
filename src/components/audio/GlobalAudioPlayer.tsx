@@ -54,7 +54,7 @@ export function GlobalAudioPlayer() {
   return (
     <aside
       aria-label="Trình phát âm thanh Phật pháp"
-      className="fixed bottom-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-charcoal-900/95 backdrop-blur-md border-t border-ivory-200 dark:border-charcoal-700 shadow-2xl transition-all duration-300 animate-in slide-in-from-bottom"
+      className="fixed bottom-[4.75rem] lg:bottom-0 left-0 right-0 z-40 bg-[#FFFDF8]/98 backdrop-blur-xl border-t border-[#EAD7A7] text-[#2C1E10] shadow-xl transition-all duration-300 animate-in slide-in-from-bottom"
     >
       {/* Top micro progress bar for quick visual & scrubbing */}
       <div

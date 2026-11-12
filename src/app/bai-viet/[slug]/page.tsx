@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Clock, Share2 } from 'lucide-react';
 import { BookmarkButton } from '@/components/article/BookmarkButton';
 import { CommentSection } from '@/components/article/CommentSection';
+import { CuratedArticleReader } from '@/components/article/CuratedArticleReader';
+import { getArticleBySlug } from '@/data/articles';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -17,6 +19,19 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const curated = getArticleBySlug(slug);
+  if (curated) {
+    return {
+      title: `${curated.title} — DHARMA`,
+      description: curated.excerpt,
+      openGraph: {
+        title: curated.title,
+        description: curated.excerpt,
+        images: [{ url: curated.image }],
+        type: 'article',
+      },
+    };
+  }
   const res = await query('SELECT title, excerpt, cover_image FROM articles WHERE slug = $1', [slug]);
   const article = res.rows[0];
   if (!article) return { title: 'Bài viết không tìm thấy — Phật Pháp' };
@@ -34,6 +49,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticleDetailPage({ params }: Props) {
   const { slug } = await params;
+
+  const curated = getArticleBySlug(slug);
+  if (curated) {
+    return <CuratedArticleReader article={curated} />;
+  }
 
   const res = await query(
     `SELECT a.id, a.title, a.slug, a.excerpt, a.content, a.cover_image,

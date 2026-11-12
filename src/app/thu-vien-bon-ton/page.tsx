@@ -1,29 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   ArrowLeft,
   BookOpen,
   Heart,
   Sparkles,
-  Check,
   Share2,
-  X,
+  Check,
 } from 'lucide-react';
-import { BUDDHAS_DATA, BuddhaItem } from '@/data/buddhasData';
+import { BUDDHAS_DATA, type BuddhaItem } from '@/data/buddhasData';
 import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
-import { recordDharmaMerit } from '@/components/om-mani/OmManiInteractiveTools';
-import { LotusMinimalIcon, TempleBellIcon } from '@/components/icons/DharmaMinimalIcons';
+import { useDharmaStore } from '@/store/useDharmaStore';
+import { TempleBellIcon } from '@/components/icons/DharmaMinimalIcons';
 import { cn } from '@/lib/utils';
 
 type DetailTab = 'tieu_su' | 'dai_nguyen' | 'than_chu';
 
-export default function ThuVienBonTonPage() {
+function BonTonLibraryInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const idParam = searchParams?.get('id');
+
+  const addMeritEntry = useDharmaStore((s) => s.addMeritEntry);
+
   const [selectedBuddha, setSelectedBuddha] = useState<BuddhaItem | null>(null);
   const [activeTab, setActiveTab] = useState<DetailTab>('tieu_su');
-  const [chantCount, setChantCount] = useState<Record<string, number>>({});
   const [isCopied, setIsCopied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -32,84 +35,98 @@ export default function ThuVienBonTonPage() {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
+  useEffect(() => {
+    if (!idParam) return;
+    const found = BUDDHAS_DATA.find((b) => b.id === idParam);
+    if (found) {
+      setSelectedBuddha(found);
+      setActiveTab('tieu_su');
+    }
+  }, [idParam]);
+
   const handleSelectBuddha = (buddha: BuddhaItem) => {
-    playBellSound(0.35);
+    playBellSound(0.25);
     setSelectedBuddha(buddha);
     setActiveTab('tieu_su');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleChantMantra = () => {
-    if (!selectedBuddha) return;
-    playGrandTempleBellSound(0.5);
-    const newCount = (chantCount[selectedBuddha.id] || 0) + 1;
-    setChantCount((prev) => ({ ...prev, [selectedBuddha.id]: newCount }));
-
-    recordDharmaMerit({
-      type: 'mantra',
-      title: `Trì Tụng ${selectedBuddha.thanChu.name}`,
-      detail: `Hồng danh: ${selectedBuddha.name} • Lần thứ ${newCount}`,
-      meritPoints: 10,
-    });
-
-    showToast(`Nam Mô ${selectedBuddha.name} • Đã trì tụng (${newCount} biến)`);
+  const handleBackToGrid = () => {
+    setSelectedBuddha(null);
+    if (idParam) {
+      router.replace('/thu-vien-bon-ton', { scroll: false });
+    }
   };
 
-  const handleCopyMantra = () => {
+  const handleChantMantra = () => {
     if (!selectedBuddha) return;
-    const text = `${selectedBuddha.thanChu.name}\nPhạn văn: ${selectedBuddha.thanChu.sanskrit}\nPhiên âm: ${selectedBuddha.thanChu.vietnamese}\nÝ nghĩa: ${selectedBuddha.thanChu.meaning}`;
-    navigator.clipboard.writeText(text);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
-    showToast('Đã sao chép Thần Chú & Ý nghĩa');
+    playGrandTempleBellSound(0.45);
+    addMeritEntry({
+      category: 'NIEM_PHAT',
+      title: `Chiêm Bái & Trì Chú ${selectedBuddha.name}`,
+      dedicationText: `Nhất tâm trì tụng: ${selectedBuddha.thanChu.name}. Nguyện hồi hướng bình an & trí tuệ.`,
+    });
+    showToast(`Hoan hỷ trì niệm ${selectedBuddha.name} • Đã ghi vào Sổ Công Đức`);
+  };
+
+  const handleCopyMantra = async () => {
+    if (!selectedBuddha) return;
+    const text = `${selectedBuddha.name}\n${selectedBuddha.thanChu.name}\nPhạn văn: ${selectedBuddha.thanChu.sanskrit}\nPhiên âm: ${selectedBuddha.thanChu.vietnamese}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+      showToast('Đã sao chép Chân Ngôn');
+    } catch {
+      showToast('Không thể sao chép trên trình duyệt này');
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#2E1E0F] selection:bg-[#F5C542]/30 selection:text-[#8C5500]">
-      {/* Toast Notification */}
+    <div className="min-h-screen bg-[#FAF7F0] text-[#2C1E10]">
       {toastMessage && (
-        <div className="fixed top-5 inset-x-4 z-50 flex justify-center pointer-events-none animate-fade-in-down">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#241B0B]/95 text-white text-xs sm:text-sm font-medium shadow-2xl border border-[#ECD9A8] backdrop-blur-md flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#FFD966] shrink-0" />
-            <span>{toastMessage}</span>
+        <div className="fixed top-14 inset-x-4 z-[999999] flex justify-center pointer-events-none animate-fadeInDown">
+          <div className="px-4 py-2 rounded-2xl bg-[#FFFDF8] border border-[#D4A024] text-center shadow-lg">
+            <p className="text-xs font-bold text-[#8A5400] whitespace-nowrap truncate">{toastMessage}</p>
           </div>
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* VIEW 1: FULL-PAGE 18 BUDDHAS & BODHISATTVAS GRID (MATCHING USER SCREENSHOT) */}
-      {/* ========================================================================= */}
       {!selectedBuddha ? (
-        <div className="max-w-md sm:max-w-2xl lg:max-w-6xl mx-auto px-3 sm:px-6 pt-2 pb-16 space-y-3">
-          {/* Top Bar Header with Back Button (Exactly matching user app screenshot) */}
-          <header className="flex items-center justify-between gap-3 pt-2 pb-2 sticky top-0 bg-[#FDFBF7]/95 backdrop-blur-md z-30">
+        /* =================================================================== */
+        /* GRID VIEW: 18 BỔN TÔN (LIGHT WARM GOLD & WHITE COMPACT CARDS)       */
+        /* =================================================================== */
+        <div className="max-w-5xl mx-auto px-3 sm:px-5 pt-3 pb-10 space-y-3.5">
+          <header className="flex items-center justify-between gap-2 py-1.5">
             <button
               type="button"
               onClick={() => router.push('/thuc-hanh')}
-              className="w-10 h-10 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#2E1E0F] active:scale-95 transition-all cursor-pointer shadow-xs shrink-0"
-              title="Trở về Phương Tiện Tu Tập"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-[#EAD7A7] text-[#8A5400] hover:border-[#C58C1B] text-xs font-bold active:scale-95 transition-all cursor-pointer shadow-xs shrink-0 whitespace-nowrap"
+              aria-label="Quay lại Đạo Tràng"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span>Quay lại</span>
             </button>
 
-            <h1 className="font-heading font-serif text-lg sm:text-xl font-bold text-[#2E1E0F] tracking-wide text-center whitespace-nowrap flex-1">
-              Phật &amp; Bồ Tát
+            <h1 className="text-base sm:text-lg font-bold text-[#2C1E10] tracking-tight whitespace-nowrap truncate">
+              Liên Hoa Bảo Điện (18 Vị)
             </h1>
 
-            {/* Empty balance spacer to perfectly center the title */}
-            <div className="w-10 h-10 shrink-0" aria-hidden="true" />
+            <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FFF6DC] border border-[#EAD7A7] text-[#8A5400] whitespace-nowrap shrink-0">
+              18 Bổn Tôn
+            </span>
           </header>
 
-          {/* 18 Buddha Cards Grid (2 cols on mobile, 3 cols on tablet, 6 cols on desktop) */}
           <section aria-label="Danh sách 18 Tôn Tượng Phật và Bồ Tát">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5">
               {BUDDHAS_DATA.map((buddha) => (
-                <div
+                <button
                   key={buddha.id}
+                  type="button"
                   onClick={() => handleSelectBuddha(buddha)}
-                  className="group rounded-2xl sm:rounded-3xl overflow-hidden border border-[#ECD9A8] hover:border-[#E5C158] shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col bg-[#FDF9F0] active:scale-95 select-none"
+                  className="group rounded-2xl overflow-hidden border border-[#EAD7A7] hover:border-[#C58C1B] shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col bg-white active:scale-[0.98] text-center"
                 >
-                  {/* High-Resolution Artwork Area */}
+                  {/* Warm Ivory Artwork Box */}
                   <div className="relative aspect-square w-full overflow-hidden bg-[#FAF3E0] flex items-center justify-center">
                     <img
                       src={buddha.image}
@@ -119,53 +136,54 @@ export default function ThuVienBonTonPage() {
                     />
                   </div>
 
-                  {/* Bottom Solid Dark Bar with Centered Name (NO WRAPPING - EXACT 1 LINE) */}
-                  <div className="bg-[#241B0B] py-2.5 px-1.5 text-center flex items-center justify-center min-h-[42px] sm:min-h-[46px]">
-                    <h2 className="font-heading font-serif text-[11px] sm:text-xs font-bold text-white tracking-tight whitespace-nowrap overflow-hidden text-ellipsis group-hover:text-[#FFE79A] transition-colors">
-                      {buddha.name}
+                  {/* Single-Line Caption Bar — Never Wraps Awkwardly */}
+                  <div className="w-full bg-[#FFFBF2] border-t border-[#F0E2BE] px-2 py-2 flex items-center justify-center">
+                    <h2 className="text-[11px] sm:text-xs font-bold text-[#2C1E10] group-hover:text-[#9A6200] transition-colors whitespace-nowrap truncate w-full">
+                      {buddha.name.replace(/^Đức Phật\s+/i, 'Phật ').replace(/\s+Bồ Tát$/i, '')}
                     </h2>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </section>
         </div>
       ) : (
-        /* ========================================================================= */
-        /* VIEW 2: FULL-PAGE DETAIL VIEW (1. TIỂU SỬ, 2. ĐẠI NGUYỆN, 3. THẦN CHÚ)     */
-        /* ========================================================================= */
-        <div className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto px-3.5 sm:px-6 pt-2 pb-16 space-y-4 animate-fade-in">
-          {/* Detail Top Header with Back to 18 Buddhas Grid */}
-          <header className="flex items-center justify-between gap-2.5 pt-2 pb-2 sticky top-0 bg-[#FDFBF7]/95 backdrop-blur-md z-30 border-b border-[#EEDBBA]">
+        /* =================================================================== */
+        /* DETAIL VIEW: 1. TIỂU SỬ • 2. ĐẠI NGUYỆN • 3. THẦN CHÚ              */
+        /* =================================================================== */
+        <div className="max-w-3xl mx-auto px-3 sm:px-5 pt-2.5 pb-10 space-y-3.5 animate-fade-in">
+          <header className="flex items-center justify-between gap-2 py-2 sticky top-0 bg-[#FAF7F0]/95 backdrop-blur-md z-30 border-b border-[#EAD7A7]">
             <button
               type="button"
-              onClick={() => setSelectedBuddha(null)}
-              className="w-10 h-10 rounded-full bg-white border border-[#EEDBBA] hover:border-[#E5C158] flex items-center justify-center text-[#2E1E0F] active:scale-95 transition-all cursor-pointer shadow-xs shrink-0"
-              title="Quay lại danh sách 18 Bổn Tôn"
+              onClick={handleBackToGrid}
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-[#EAD7A7] text-[#8A5400] hover:border-[#C58C1B] text-xs font-bold active:scale-95 transition-all cursor-pointer shrink-0 whitespace-nowrap"
+              aria-label="Quay lại danh sách 18 Bổn Tôn"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span>Quay lại</span>
             </button>
+
             <div className="min-w-0 text-center flex-1 px-1">
-              <h1 className="font-heading font-serif text-base sm:text-lg font-bold text-[#8C5500] whitespace-nowrap truncate">
-                {selectedBuddha.title}
+              <h1 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
+                {selectedBuddha.name}
               </h1>
-              <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate font-sans">
+              <p className="text-[10px] text-[#7D6442] whitespace-nowrap truncate">
                 {selectedBuddha.sanskrit}
               </p>
             </div>
 
             <button
               type="button"
-              onClick={() => setSelectedBuddha(null)}
-              className="text-xs font-bold text-[#8C5500] hover:text-[#2E1E0F] px-2.5 py-1.5 rounded-xl bg-white border border-[#ECD9A8] shrink-0 whitespace-nowrap"
+              onClick={handleBackToGrid}
+              className="text-xs font-bold text-[#8A5400] px-3 py-1.5 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] hover:border-[#C58C1B] shrink-0 cursor-pointer whitespace-nowrap"
             >
               Đổi vị
             </button>
           </header>
 
-          {/* Buddha Presentation Card */}
-          <div className="rounded-3xl p-5 bg-gradient-to-br from-[#FFFDF7] via-[#FFF9EA] to-[#FFF3D0] border border-[#ECD9A8] shadow-md flex flex-col sm:flex-row gap-5 items-center">
-            <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl overflow-hidden border-2 border-[#E5C158] shadow-lg shrink-0 bg-[#FAF3E0]">
+          {/* Hero Sacred Plaque */}
+          <div className="rounded-2xl p-4 bg-white border border-[#EAD7A7] shadow-xs flex flex-col sm:flex-row gap-3.5 items-center">
+            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden border-2 border-[#D4A024] shadow-sm shrink-0 bg-[#FAF3E0]">
               <img
                 src={selectedBuddha.image}
                 alt={selectedBuddha.name}
@@ -173,41 +191,48 @@ export default function ThuVienBonTonPage() {
               />
             </div>
 
-            <div className="flex-1 text-center sm:text-left space-y-2 min-w-0">
-              <div className="inline-block px-3 py-1 rounded-full bg-[#FFF4D0] border border-[#EEDBBA] text-[10px] font-bold uppercase tracking-wider text-[#8C5500]">
+            <div className="flex-1 text-center sm:text-left space-y-2 min-w-0 w-full">
+              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFF6DC] border border-[#EAD7A7] text-[10px] font-bold text-[#8A5400] whitespace-nowrap max-w-full truncate">
                 {selectedBuddha.realm}
-              </div>
-              <h2 className="font-heading font-serif text-xl sm:text-2xl font-bold text-[#2E1E0F]">
+              </span>
+              <h2 className="text-lg sm:text-xl font-bold text-[#2C1E10] whitespace-nowrap truncate">
                 {selectedBuddha.name}
               </h2>
-              <p className="text-xs sm:text-[13px] text-[#5A4329] leading-relaxed">
-                <strong className="text-[#8C5500]">Pháp bảo &amp; Biểu tượng:</strong> {selectedBuddha.symbol}
+              <p className="text-xs text-[#6B5438] leading-snug line-clamp-2">
+                <strong className="text-[#8A5400]">Pháp bảo:</strong> {selectedBuddha.symbol}
               </p>
 
-              <div className="pt-2 flex flex-wrap gap-2.5 justify-center sm:justify-start">
+              {/* Side-by-side single-line buttons */}
+              <div className="pt-1.5 grid grid-cols-2 gap-2 w-full">
                 <button
                   type="button"
                   onClick={handleChantMantra}
-                  className="px-4 py-2 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md active:scale-95 transition-all cursor-pointer"
+                  className="py-2.5 px-2.5 rounded-xl bg-[#C58C1B] text-white hover:bg-[#A6730E] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap shadow-xs"
                 >
-                  <TempleBellIcon className="w-4 h-4 shrink-0" />
-                  <span>Trì Niệm (+10 Công Đức)</span>
+                  <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap truncate">Trì Niệm Công Đức</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={handleCopyMantra}
-                  className="px-4 py-2 rounded-2xl bg-white border border-[#EEDBBA] hover:border-[#E5C158] text-[#8C5500] text-xs font-semibold flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer shadow-xs"
+                  className="py-2.5 px-2.5 rounded-xl bg-[#FFFDF8] border border-[#EAD7A7] hover:border-[#C58C1B] text-[#5C4428] text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                 >
-                  {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
-                  <span>{isCopied ? 'Đã Sao Chép' : 'Chép Chân Ngôn'}</span>
+                  {isCopied ? (
+                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  ) : (
+                    <Share2 className="w-3.5 h-3.5 text-[#9A6200] shrink-0" />
+                  )}
+                  <span className="whitespace-nowrap truncate">
+                    {isCopied ? 'Đã Sao Chép' : 'Chép Chân Ngôn'}
+                  </span>
                 </button>
               </div>
             </div>
           </div>
 
-          {/* 3 Pillar Tabs Switcher (1. Tiểu Sử, 2. Đại Nguyện, 3. Thần Chú) */}
-          <div className="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8]">
+          {/* 3 Pillar Tabs Switcher — Strictly Single-Line (`whitespace-nowrap`) */}
+          <div className="grid grid-cols-3 gap-1 p-1 rounded-2xl bg-[#FFF6DC] border border-[#EAD7A7]">
             {[
               { id: 'tieu_su', label: '1. Tiểu Sử', icon: BookOpen },
               { id: 'dai_nguyen', label: '2. Đại Nguyện', icon: Heart },
@@ -224,160 +249,170 @@ export default function ThuVienBonTonPage() {
                     setActiveTab(tab.id as DetailTab);
                   }}
                   className={cn(
-                    'py-2.5 px-1 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer',
+                    'py-2 px-1.5 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer whitespace-nowrap',
                     isActive
-                      ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-sm'
-                      : 'text-[#7D6442] hover:text-[#2E1E0F]'
+                      ? 'bg-[#C58C1B] text-white shadow-xs'
+                      : 'text-[#6E5536] hover:text-[#2C1E10]'
                   )}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  <span>{tab.label}</span>
+                  <Icon className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">{tab.label}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* TAB 1: 1. TIỂU SỬ */}
+          {/* TAB 1: TIỂU SỬ */}
           {activeTab === 'tieu_su' && (
-            <div className="rounded-3xl p-5 sm:p-6 bg-white border border-[#EEDBBA] shadow-sm space-y-4 animate-fade-in">
-              <div className="flex items-center gap-2.5 pb-3 border-b border-[#F2E5C7]">
-                <div className="w-9 h-9 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500]">
-                  <BookOpen className="w-5 h-5" />
+            <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
+              <div className="flex items-center gap-2.5 pb-2.5 border-b border-[#F2E5C7]">
+                <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
+                  <BookOpen className="w-4 h-4" />
                 </div>
-                <div>
-                  <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#8C5500]">
+                <div className="min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
                     Tiểu Sử &amp; Cội Nguồn Kinh Điển
                   </h3>
-                  <p className="text-xs text-[#7D6442]">Hành trạng hóa độ &amp; xuất xứ chính thống</p>
+                  <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
+                    Hành trạng hóa độ &amp; xuất xứ chính thống
+                  </p>
                 </div>
               </div>
 
-              <div className="space-y-3.5 text-xs sm:text-[13px] leading-relaxed text-[#2E1E0F]">
-                <div className="p-4 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7] space-y-1">
-                  <span className="font-bold text-[#8C5500] text-xs uppercase tracking-wider block">
+              <div className="space-y-2.5 text-xs sm:text-sm leading-relaxed">
+                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
+                  <span className="font-bold text-[#8A5400] text-[11px] uppercase tracking-wider block">
                     Xuất Xứ &amp; Căn Bản Kinh Điển
                   </span>
-                  <p className="text-[#5A4329] leading-relaxed">{selectedBuddha.tieuSu.origin}</p>
+                  <p className="text-[#4A3620]">{selectedBuddha.tieuSu.origin}</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7] space-y-1">
-                  <span className="font-bold text-[#8C5500] text-xs uppercase tracking-wider block">
+                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
+                  <span className="font-bold text-[#8A5400] text-[11px] uppercase tracking-wider block">
                     Hành Trạng &amp; Tích Hóa Độ
                   </span>
-                  <p className="text-[#5A4329] leading-relaxed">{selectedBuddha.tieuSu.story}</p>
+                  <p className="text-[#4A3620]">{selectedBuddha.tieuSu.story}</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7] space-y-1">
-                  <span className="font-bold text-[#8C5500] text-xs uppercase tracking-wider block">
+                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
+                  <span className="font-bold text-[#8A5400] text-[11px] uppercase tracking-wider block">
                     Ý Nghĩa Biểu Pháp
                   </span>
-                  <p className="text-[#5A4329] leading-relaxed">{selectedBuddha.tieuSu.meaning}</p>
+                  <p className="text-[#4A3620]">{selectedBuddha.tieuSu.meaning}</p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* TAB 2: 2. ĐẠI NGUYỆN */}
+          {/* TAB 2: ĐẠI NGUYỆN */}
           {activeTab === 'dai_nguyen' && (
-            <div className="rounded-3xl p-5 sm:p-6 bg-white border border-[#EEDBBA] shadow-sm space-y-4 animate-fade-in">
-              <div className="flex items-center gap-2.5 pb-3 border-b border-[#F2E5C7]">
-                <div className="w-9 h-9 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500]">
-                  <Heart className="w-5 h-5" />
+            <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
+              <div className="flex items-center gap-2.5 pb-2.5 border-b border-[#F2E5C7]">
+                <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
+                  <Heart className="w-4 h-4" />
                 </div>
-                <div>
-                  <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#8C5500]">
+                <div className="min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
                     Bổn Nguyện &amp; Lời Thệ Nguyện
                   </h3>
-                  <p className="text-xs text-[#7D6442]">Đại nguyện cứu độ muôn loài trong pháp giới</p>
+                  <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
+                    Đại nguyện cứu độ muôn loài trong pháp giới
+                  </p>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <p className="text-xs sm:text-sm font-semibold text-[#8C5500] italic leading-relaxed">
-                  {selectedBuddha.daiNguyen.summary}
-                </p>
+              <p className="text-xs sm:text-sm font-semibold text-[#8A5400] italic leading-relaxed">
+                {selectedBuddha.daiNguyen.summary}
+              </p>
 
-                <div className="space-y-2.5">
-                  {selectedBuddha.daiNguyen.vows.map((vow, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3.5 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7] flex items-start gap-3 text-xs sm:text-[13px] text-[#3D2505]"
-                    >
-                      <span className="w-6 h-6 rounded-full bg-[#FFF4D0] text-[#8C5500] font-mono font-bold text-[11px] flex items-center justify-center shrink-0 mt-0.5 border border-[#ECD9A8]">
-                        {idx + 1}
-                      </span>
-                      <p className="leading-relaxed flex-1">{vow}</p>
-                    </div>
-                  ))}
-                </div>
+              <div className="space-y-2">
+                {selectedBuddha.daiNguyen.vows.map((vow, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] flex items-start gap-2.5 text-xs sm:text-sm text-[#3D2914]"
+                  >
+                    <span className="w-5 h-5 rounded-full bg-[#FFF0C2] text-[#8A5400] font-mono font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5 border border-[#E2C275]">
+                      {idx + 1}
+                    </span>
+                    <p className="leading-relaxed flex-1">{vow}</p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
-          {/* TAB 3: 3. THẦN CHÚ */}
+          {/* TAB 3: THẦN CHÚ */}
           {activeTab === 'than_chu' && (
-            <div className="rounded-3xl p-5 sm:p-6 bg-white border border-[#EEDBBA] shadow-sm space-y-4 animate-fade-in">
-              <div className="flex items-center justify-between pb-3 border-b border-[#F2E5C7]">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500]">
-                    <Sparkles className="w-5 h-5" />
+            <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
+              <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#F2E5C7]">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
+                    <Sparkles className="w-4 h-4" />
                   </div>
-                  <div>
-                    <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#8C5500]">
+                  <div className="min-w-0">
+                    <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
                       {selectedBuddha.thanChu.name}
                     </h3>
-                    <p className="text-xs text-[#7D6442]">Chân ngôn uy lực mầu nhiệm</p>
+                    <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
+                      Chân ngôn uy lực mầu nhiệm
+                    </p>
                   </div>
                 </div>
 
                 <button
                   type="button"
                   onClick={handleCopyMantra}
-                  className="text-[#8C5500] hover:text-[#2E1E0F] p-2 rounded-xl border border-[#ECD9A8] bg-[#FFFDF7] text-xs font-medium flex items-center gap-1 active:scale-95 transition-all shadow-xs"
+                  className="p-2 rounded-xl border border-[#EAD7A7] bg-[#FFFBF2] text-[#8A5400] cursor-pointer shrink-0"
                   title="Sao chép thần chú"
                 >
-                  {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
+                  {isCopied ? (
+                    <Check className="w-4 h-4 text-emerald-600" />
+                  ) : (
+                    <Share2 className="w-4 h-4" />
+                  )}
                 </button>
               </div>
 
-              {/* Sanskrit Mantra Box */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFDF5] border border-[#E5C158] text-center space-y-2 shadow-xs">
-                <span className="text-[10px] uppercase font-mono font-bold text-[#8C5500] tracking-widest block">
+              <div className="p-3.5 rounded-xl bg-[#FFF9EB] border border-[#E2C275] text-center space-y-1.5">
+                <span className="text-[10px] uppercase font-mono font-bold text-[#8A5400] tracking-widest block">
                   Phạn Văn (Sanskrit Mantra)
                 </span>
-                <p className="font-heading font-serif text-sm sm:text-lg font-bold text-[#8C5500] leading-relaxed select-all">
+                <p className="text-sm sm:text-base font-serif font-bold text-[#6E4200] leading-relaxed select-all">
                   {selectedBuddha.thanChu.sanskrit}
                 </p>
               </div>
 
-              {/* Vietnamese Phonetic Box */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#F2E5C7] text-center space-y-2">
+              <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] text-center space-y-1.5">
                 <span className="text-[10px] uppercase font-mono font-bold text-[#7D6442] tracking-widest block">
                   Phiên Âm Tụng Đọc
                 </span>
-                <p className="font-mono text-xs sm:text-sm font-semibold text-[#2E1E0F] leading-relaxed select-all">
+                <p className="font-mono text-xs sm:text-sm font-bold text-[#2C1E10] leading-relaxed select-all">
                   {selectedBuddha.thanChu.vietnamese}
                 </p>
               </div>
 
-              {/* Meaning & Benefits */}
-              <div className="space-y-3 text-xs sm:text-[13px]">
-                <div className="p-4 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7] space-y-1">
-                  <span className="font-bold text-[#8C5500] block">Ý Nghĩa Chân Ngôn:</span>
-                  <p className="text-[#5A4329] leading-relaxed">{selectedBuddha.thanChu.meaning}</p>
+              <div className="space-y-2.5 text-xs sm:text-sm">
+                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
+                  <span className="font-bold text-[#8A5400] block">Ý Nghĩa Chân Ngôn:</span>
+                  <p className="text-[#4A3620] leading-relaxed">
+                    {selectedBuddha.thanChu.meaning}
+                  </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-gradient-to-r from-[#FFFDF2] to-[#FFF9E6] border border-[#ECD9A8] space-y-1">
-                  <span className="font-bold text-[#8C5500] block">Công Đức &amp; Lợi Ích Trì Tụng:</span>
-                  <p className="text-[#5A4329] leading-relaxed">{selectedBuddha.thanChu.benefits}</p>
+                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
+                  <span className="font-bold text-[#8A5400] block">
+                    Công Đức &amp; Lợi Ích Trì Tụng:
+                  </span>
+                  <p className="text-[#4A3620] leading-relaxed">
+                    {selectedBuddha.thanChu.benefits}
+                  </p>
                 </div>
               </div>
 
-              {/* Interactive Button */}
               <button
                 type="button"
                 onClick={handleChantMantra}
-                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all cursor-pointer"
+                className="w-full py-3 rounded-xl bg-[#C58C1B] text-white hover:bg-[#A6730E] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-all cursor-pointer whitespace-nowrap"
               >
                 <TempleBellIcon className="w-4 h-4 shrink-0" />
                 <span>Thỉnh Chuông &amp; Trì Niệm (+10 Công Đức)</span>
@@ -387,5 +422,19 @@ export default function ThuVienBonTonPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ThuVienBonTonPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#FAF7F0] flex items-center justify-center text-sm font-bold text-[#8A5400]">
+          Đang khai mở Liên Hoa Bảo Điện...
+        </div>
+      }
+    >
+      <BonTonLibraryInner />
+    </Suspense>
   );
 }

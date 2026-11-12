@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, RotateCcw, Volume2, VolumeX, CheckCircle, Award } from 'lucide-react';
 import { playWoodenFishSound, playBellSound } from '@/lib/buddhistSounds';
 import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
-import { RealisticMalaWheel } from '@/components/om-mani/RealisticMalaWheel';
+import { RealisticMalaWheel } from '@/components/dharma/RealisticMalaWheel';
 import { cn } from '@/lib/utils';
 
 interface DigitalMalaProps {
@@ -16,7 +16,7 @@ const MANTRAS = [
   { id: 'quanam', name: 'Nam Mô Quán Thế Âm Bồ Tát', short: 'Quán Thế Âm' },
   { id: 'thichca', name: 'Nam Mô Bổn Sư Thích Ca Mâu Ni Phật', short: 'Thích Ca Mâu Ni' },
   { id: 'duocsu', name: 'Nam Mô Dược Sư Lưu Ly Quang Vương Phật', short: 'Phật Dược Sư' },
-  { id: 'ommani', name: 'Án Ma Ni Bát Mê Hồng (Om Mani Padme Hum)', short: 'Om Mani' },
+  { id: 'luctu', name: 'Án Ma Ni Bát Mê Hồng (Om Mani Padme Hum)', short: 'Lục Tự Đại Minh' },
 ];
 
 const BEAD_SIZES = [
@@ -57,7 +57,7 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
       playWoodenFishSound(0.35);
     }
 
-    incrementDailyPractice(selectedMantra === 'ommani' ? 'tri-chu' : 'niem-phat', 1);
+    incrementDailyPractice(selectedMantra === 'luctu' ? 'tri-chu' : 'niem-phat', 1);
 
     setCurrentBead((prev) => {
       const next = prev + 1;
@@ -96,16 +96,16 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
   const mantraObj = MANTRAS.find((m) => m.id === selectedMantra) || MANTRAS[0];
 
   return (
-    <div className="w-full max-w-xl mx-auto bg-gradient-to-b from-[#24130A] via-[#1B0C06] to-[#140804] text-[#FDFBF7] rounded-3xl border-2 border-[#D4AF37]/50 shadow-2xl p-5 sm:p-7 space-y-6 select-none">
+    <div className="w-full max-w-xl mx-auto bg-gradient-to-b from-[#FFFFFF] via-[#FFFDF8] to-[#FFF9EB] text-[#2C1E10] rounded-3xl border border-[#DFC27D] shadow-md p-5 sm:p-7 space-y-6 select-none">
       {/* Title Header */}
-      <div className="flex items-center justify-between border-b border-[#D4AF37]/30 pb-3">
+      <div className="flex items-center justify-between border-b border-[#EAD7A7] pb-3">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-[#FFE082]" />
+          <Sparkles className="w-5 h-5 text-[#8C5500]" />
           <div>
-            <h3 className="font-heading font-bold text-lg sm:text-xl text-[#FFE082]">
+            <h3 className="font-heading font-bold text-lg sm:text-xl text-[#2C1E10]">
               Tràng Hạt Số &amp; Niệm Phật
             </h3>
-            <p className="text-xs text-stone-300">
+            <p className="text-xs text-[#6B533B]">
               Chạm hoặc vuốt để lần hạt • Phản hồi rung haptic an tịnh
             </p>
           </div>
@@ -117,8 +117,8 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
             className={cn(
               'p-2 rounded-xl border transition-all text-xs font-bold active:scale-95',
               soundEnabled
-                ? 'bg-[#854D0E] border-[#FFE082] text-white'
-                : 'bg-black/40 border-stone-700 text-stone-500'
+                ? 'bg-[#FFF6DF] border-[#C68B19] text-[#8C5500]'
+                : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B]'
             )}
             title={soundEnabled ? 'Đang bật tiếng mõ' : 'Đang tắt tiếng mõ'}
           >
@@ -127,7 +127,7 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
 
           <button
             onClick={resetCounter}
-            className="p-2 rounded-xl bg-black/40 border border-[#D4AF37]/40 text-stone-300 hover:text-white active:scale-95 transition-all"
+            className="p-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] text-[#6B533B] hover:text-[#2C1E10] active:scale-95 transition-all"
             title="Đặt lại bộ đếm"
           >
             <RotateCcw className="w-4 h-4" />
@@ -138,13 +138,13 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
       {/* Select Mantra & Bead Size */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-bold text-[#FFE082] mb-1">
+          <label className="block text-xs font-bold text-[#8C5500] mb-1">
             Danh Hiệu Niệm:
           </label>
           <select
             value={selectedMantra}
             onChange={(e) => setSelectedMantra(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl bg-black/40 border border-[#D4AF37]/50 text-xs sm:text-sm text-[#FFE082] focus:outline-none focus:ring-1 focus:ring-[#D4AF37]"
+            className="w-full px-3 py-2 rounded-xl bg-[#FFFFFF] border border-[#DFC27D] text-xs sm:text-sm font-bold text-[#2C1E10] focus:outline-none focus:ring-1 focus:ring-[#C68B19]"
           >
             {MANTRAS.map((m) => (
               <option key={m.id} value={m.id} className="bg-white text-[#2E1E0F]">
@@ -155,7 +155,7 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-[#FFE082] mb-1">
+          <label className="block text-xs font-bold text-[#8C5500] mb-1">
             Loại Tràng Hạt:
           </label>
           <select
@@ -164,7 +164,7 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
               setBeadSize(Number(e.target.value));
               setCurrentBead(0);
             }}
-            className="w-full px-3 py-2 rounded-xl bg-black/40 border border-[#D4AF37]/50 text-xs sm:text-sm text-[#FFE082] focus:outline-none focus:ring-1 focus:ring-[#D4AF37]"
+            className="w-full px-3 py-2 rounded-xl bg-[#FFFFFF] border border-[#DFC27D] text-xs sm:text-sm font-bold text-[#2C1E10] focus:outline-none focus:ring-1 focus:ring-[#C68B19]"
           >
             {BEAD_SIZES.map((b) => (
               <option key={b.size} value={b.size} className="bg-white text-[#2E1E0F]">
@@ -184,9 +184,9 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
           chantLabel={mantraObj.name}
         />
 
-        <p className="text-xs text-amber-200/80 font-semibold mt-3 text-center">
+        <p className="text-xs text-[#6B533B] font-semibold mt-3 text-center">
           {completedRounds > 0 ? (
-            <span className="inline-flex items-center gap-1 text-emerald-400">
+            <span className="inline-flex items-center gap-1 text-emerald-700 font-bold">
               <CheckCircle className="w-3.5 h-3.5" /> Đã xong {completedRounds} chuỗi ({completedRounds * beadSize} biến)
             </span>
           ) : (
@@ -197,18 +197,18 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
 
       {/* Toast Feedback */}
       {toastFeedback && (
-        <div className="p-3 rounded-2xl bg-emerald-950/90 border border-emerald-500 text-center text-emerald-200 text-xs sm:text-sm font-bold animate-fade-in">
+        <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-300 text-center text-emerald-800 text-xs sm:text-sm font-bold animate-fade-in">
           {toastFeedback}
         </div>
       )}
 
       {/* Bottom Summary & Pro-Tip */}
-      <div className="pt-2 border-t border-[#D4AF37]/30 flex items-center justify-between text-xs text-stone-400">
+      <div className="pt-2 border-t border-[#EAD7A7] flex items-center justify-between text-xs text-[#6B533B]">
         <span className="flex items-center gap-1">
-          <Award className="w-4 h-4 text-[#D4AF37]" />
-          <span>Tổng số biến niệm: <strong>{completedRounds * beadSize + currentBead}</strong></span>
+          <Award className="w-4 h-4 text-[#8C5500]" />
+          <span>Tổng số biến niệm: <strong className="text-[#2C1E10]">{completedRounds * beadSize + currentBead}</strong></span>
         </span>
-        <span className="italic text-[11px] text-amber-300/80">
+        <span className="italic text-[11px] font-semibold text-[#8C5500]">
           Tâm tịnh chí thành, vạn đức viên mãn
         </span>
       </div>

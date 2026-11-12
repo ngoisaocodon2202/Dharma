@@ -29,7 +29,7 @@ export function AuthModal() {
       setMounted(false);
       if (user) {
         setDharmaName(user.dharma_name || user.full_name || '');
-        setGender(user.gender || 'Nam');
+        setGender(user.gender === 'Nữ' || user.gender === 'female' ? 'Nữ' : 'Nam');
       }
       const t = setTimeout(() => setMounted(true), 10);
       return () => clearTimeout(t);

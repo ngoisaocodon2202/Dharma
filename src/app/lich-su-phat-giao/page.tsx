@@ -83,7 +83,7 @@ const BUDDHIST_HISTORY_ERAS: EraItem[] = [
     title: 'Các Kỳ Kết Tập Kinh Điển & Đại Đế A-Dục (Ashoka) Hoằng Pháp',
     subtitle: 'Từ lưu truyền khẩu tụng Tam Tạng đến tôn giáo mang tầm vóc thế giới',
     location: 'Thành Vương Xá • Thành Tỳ-xá-ly • Thành Hoa Thị (Pataliputra)',
-    image: '/images/om_mani_hero.jpg',
+    image: '/images/dharma_hero.jpg',
     summary:
       'Sau khi Đức Phật nhập diệt, chư Đại đệ tử A-la-hán đã tổ chức các kỳ Kết tập Kinh điển để trùng tuyên và hệ thống hóa lời Phật dạy thành Tam Tạng (Kinh – Luật – Luận). Đến thế kỷ III TCN, Đại đế A-dục (Ashoka) đã đưa Phật giáo vượt khỏi biên giới Ấn Độ vươn ra toàn cầu.',
     keyMilestones: [

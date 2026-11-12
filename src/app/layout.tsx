@@ -4,12 +4,12 @@ import { AuthProvider } from '@/components/auth/AuthContext';
 import { AudioProvider } from '@/components/audio/AudioContext';
 import { LanguageProvider } from '@/components/i18n/LanguageContext';
 import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { GlobalAudioPlayer } from '@/components/audio/GlobalAudioPlayer';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { MindfulnessProvider } from '@/components/mindfulness/MindfulnessContext';
 import { MindfulnessModal } from '@/components/mindfulness/MindfulnessModal';
+import { DharmaMixerProvider, FloatingDharmaAudioPlayer } from '@/components/audio/DharmaAudioPlayer';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +17,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#FFF8E7',
+  themeColor: '#FAF7F0',
 };
 
 export const metadata: Metadata = {
@@ -66,7 +66,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `try { document.documentElement.classList.remove('dark'); localStorage.removeItem('theme'); } catch(e) {}`,
+            __html: `try { document.documentElement.classList.add('light'); document.documentElement.classList.remove('dark'); } catch(e) {}`,
           }}
         />
         <link rel="icon" href="/dharma-logo.png?v=2" type="image/png" />
@@ -74,7 +74,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -82,19 +82,21 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-ivory-50 text-charcoal-900 overflow-x-hidden selection:bg-saffron-500/20 selection:text-saffron-800">
+      <body className="min-h-screen flex flex-col bg-[#FAF7F0] text-[#2C1E10] overflow-x-hidden selection:bg-[#D9A02E]/25 selection:text-[#2C1E10]">
         <LanguageProvider>
           <AuthProvider>
             <AudioProvider>
-              <MindfulnessProvider>
-                <Header />
-                <main className="flex-1 w-full min-w-0">{children}</main>
-                <Footer />
-                <MobileBottomNav />
-                <GlobalAudioPlayer />
-                <AuthModal />
-                <MindfulnessModal />
-              </MindfulnessProvider>
+              <DharmaMixerProvider>
+                <MindfulnessProvider>
+                  <Header />
+                  <main className="flex-1 w-full min-w-0 pb-[72px]">{children}</main>
+                  <MobileBottomNav />
+                  <FloatingDharmaAudioPlayer />
+                  <GlobalAudioPlayer />
+                  <AuthModal />
+                  <MindfulnessModal />
+                </MindfulnessProvider>
+              </DharmaMixerProvider>
             </AudioProvider>
           </AuthProvider>
         </LanguageProvider>

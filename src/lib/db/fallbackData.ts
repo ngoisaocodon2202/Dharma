@@ -445,7 +445,7 @@ const AUTHENTIC_BUDDHIST_IMAGES = [
   '/images/tripitaka_koreana.jpg',
   '/images/golden_buddha_altar.jpg',
   '/images/quan_am_altar.jpg',
-  '/images/om_mani_hero.jpg',
+  '/images/dharma_hero.jpg',
   '/images/mindfulness_peace.jpg',
   '/images/buddha_temple.jpg',
   '/images/bo_tat_thich_quang_duc.jpg',

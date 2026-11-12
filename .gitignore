@@ -22,6 +22,7 @@ out/
 .agents/
 scripts/
 public/uploads/
+database/pgdata/
 
 # Logs
 logs

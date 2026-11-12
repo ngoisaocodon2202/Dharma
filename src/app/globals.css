@@ -3,26 +3,102 @@
 @tailwind utilities;
 
 :root {
-  --bg-app: #FFF8E7;
-  --bg-surface: #FFFDF5;
-  --bg-surface-soft: #FFF3D0;
-  --border-subtle: #FAEFD5;
-  --border-strong: #F0DFB8;
+  --bg-app: #FAF7F0;
+  --bg-surface: #FFFFFF;
+  --bg-surface-soft: #FFF9EB;
+  --border-subtle: #EAD7A7;
+  --border-strong: rgba(198, 139, 25, 0.42);
 
-  --text-main: #2C1A0E;
-  --text-muted: #6B4F2A;
-  --text-subtle: #9A7A4A;
+  --text-main: #2C1E10;
+  --text-muted: #6B533B;
+  --text-subtle: #8E775B;
 
-  --color-primary: #C8780A;
-  --color-primary-hover: #A05E08;
-  --color-primary-soft: #FFF3D0;
-  --color-primary-text: #ffffff;
+  --color-primary: #C68B19;
+  --color-primary-hover: #D9A02E;
+  --color-primary-soft: rgba(217, 160, 46, 0.16);
+  --color-primary-text: #2C1E10;
 
-  --color-secondary: #2d6a4f;
-  --color-secondary-soft: #f2f8f5;
+  --color-secondary: #15803D;
+  --color-secondary-soft: rgba(21, 128, 61, 0.12);
 
-  --color-accent: #c86d7a;
-  --color-accent-soft: #fdf5f6;
+  --color-accent: #B91C1C;
+  --color-accent-soft: rgba(185, 28, 28, 0.12);
+}
+
+/* Light Warm Gold & White Theme Harmonization across all cards & panels */
+html.light .bg-\[\#14100C\],
+html.light .bg-\[\#14100C\]\/92,
+html.light .bg-\[\#14100C\]\/95,
+html.light .bg-\[\#18130E\],
+html.light .bg-\[\#16120D\],
+html.light .bg-\[\#19140F\],
+html.light .bg-\[\#1A140D\],
+html.light .bg-\[\#1B1611\],
+html.light .bg-\[\#1B140C\],
+html.light .bg-\[\#1C150E\],
+html.light .bg-\[\#1D1610\],
+html.light .bg-\[\#1E1812\],
+html.light .bg-\[\#1E1812\]\/95 {
+  background-color: #FAF7F0 !important;
+  border-color: #EAD7A7 !important;
+}
+
+html.light .bg-\[\#1F1913\],
+html.light .bg-\[\#1F1913\]\/95,
+html.light .bg-\[\#221C16\],
+html.light .bg-\[\#211B14\],
+html.light .bg-\[\#201811\],
+html.light .bg-\[\#231B13\] {
+  background-color: #FFFFFF !important;
+  border-color: #EAD7A7 !important;
+}
+
+html.light .bg-\[\#241E17\],
+html.light .bg-\[\#272018\],
+html.light .bg-\[\#272018\]\/90,
+html.light .bg-\[\#2A221A\],
+html.light .bg-\[\#2C2214\],
+html.light .bg-\[\#292118\],
+html.light .bg-\[\#2E2417\],
+html.light .bg-\[\#2A2219\],
+html.light .bg-\[\#2C2318\],
+html.light .bg-\[\#2A1E13\] {
+  background-color: #FFF9EB !important;
+  border-color: #EAD7A7 !important;
+}
+
+html.light .text-\[\#F7EFE2\],
+html.light .text-\[\#EFE6D5\],
+html.light .text-\[\#F5ECD7\],
+html.light .text-\[\#FDFBF7\],
+html.light .text-\[\#EAE0CE\] {
+  color: #2C1E10 !important;
+}
+
+html.light .text-\[\#F5DFA8\],
+html.light .text-\[\#E8BF6A\],
+html.light .text-\[\#F9D783\],
+html.light .text-\[\#FFE082\] {
+  color: #8C5500 !important;
+}
+
+html.light .text-\[\#D8CBB8\],
+html.light .text-\[\#C8BCA8\],
+html.light .text-\[\#B8A890\],
+html.light .text-\[\#A6967E\],
+html.light .text-\[\#9E8F78\],
+html.light .text-\[\#8E7F6B\] {
+  color: #6B533B !important;
+}
+
+html.light .border-white\/8,
+html.light .border-white\/10,
+html.light .border-white\/12,
+html.light .border-white\/15,
+html.light .border-\[\#342A1F\],
+html.light .border-\[\#31271D\],
+html.light .border-\[\#3A2E22\] {
+  border-color: #EAD7A7 !important;
 }
 
 body {
@@ -77,20 +153,27 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 ::selection {
-  background-color: rgba(200, 120, 10, 0.2);
-  color: #7A4606;
+  background-color: rgba(217, 160, 46, 0.25);
+  color: #2C1E10;
 }
 
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FFF3D0;
+  background: #FAF7F0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #F0DFB8;
+  background: #DFC27D;
   border-radius: 4px;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .editorial-content p {
@@ -587,10 +670,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   hyphens: none;
 }
 
-/* Global safeguard: prevent inline buttons, filter pills, and tab chips from breaking onto 2 lines */
-button:not(.flex-col):not(.items-start):not(.text-left):not(.whitespace-normal) {
-  white-space: nowrap;
-}
+/* Note: apply Tailwind `whitespace-nowrap` explicitly only where single-line labels are needed */
 
 /* Fluid responsive labels for tabs and control bars */
 .tab-label-fluid {
@@ -654,6 +734,56 @@ button:not(.flex-col):not(.items-start):not(.text-left):not(.whitespace-normal) 
 .animate-float-up-fade {
   animation: floatUpFade 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+@keyframes incenseSmokeRise {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) translateX(0) scaleX(0.8);
+  }
+  25% {
+    opacity: 0.72;
+  }
+  60% {
+    opacity: 0.45;
+    transform: translateY(-48px) translateX(8px) scaleX(1.3);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-96px) translateX(-6px) scaleX(1.65);
+  }
+}
+
+.animate-incense-smoke {
+  animation: incenseSmokeRise 3.2s ease-out infinite;
+}
+
+@keyframes soundWaveExpand {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
+}
+
+.animate-sound-wave {
+  animation: soundWaveExpand 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fortuneShake {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-10deg) translateY(-3px); }
+  40% { transform: rotate(10deg) translateY(-4px); }
+  60% { transform: rotate(-8deg) translateY(-2px); }
+  80% { transform: rotate(7deg); }
+}
+
+.animate-fortune-shake {
+  animation: fortuneShake 0.45s ease-in-out infinite;
+}
+
 
 
 
