@@ -352,77 +352,92 @@ export function SanctuaryWorkspace({
       aria-label={`Đạo Tràng Hành Trì - ${activeMeta.label}`}
       className="fixed inset-0 z-[9990] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden animate-fade-in"
     >
-      {/* Clean Dharma Single Top Header */}
-      <header className="shrink-0 bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3 relative">
-          <button
-            type="button"
-            onClick={handleCloseWorkspace}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] transition-colors cursor-pointer shrink-0 whitespace-nowrap"
-            aria-label="Quay lại"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Quay lại</span>
-          </button>
-
-          <div className="min-w-0 text-center">
-            <h2 className="text-[16px] sm:text-lg font-bold text-[#2C1E10] truncate">
-              {activeMeta.label}
-            </h2>
-            <p className="text-[11px] text-[#6B533B] truncate hidden sm:block">
-              {activeMeta.subtitle}
-            </p>
-          </div>
-
-          <div className="relative shrink-0">
+      {/* Clean Dharma Single Top Header (Hidden for may-niem-phat as it provides its own native Om Mani app header with (X) close) */}
+      {activeTool !== 'may-niem-phat' && (
+        <header className="shrink-0 bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs">
+          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3 relative">
             <button
               type="button"
-              onClick={() => setShowQuickSwitcher((v) => !v)}
-              className="w-10 h-10 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#8C5500] hover:bg-[#FCECC2] flex items-center justify-center transition-colors cursor-pointer"
-              aria-label="Chuyển đổi phương tiện tu tập"
-              title="Chuyển nhanh phương tiện khác"
+              onClick={handleCloseWorkspace}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] transition-colors cursor-pointer shrink-0 whitespace-nowrap"
+              aria-label="Quay lại"
             >
-              <Grid className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4" />
+              <span>Quay lại</span>
             </button>
 
-            {showQuickSwitcher && (
-              <>
-                <div
-                  className="fixed inset-0 z-30"
-                  onClick={() => setShowQuickSwitcher(false)}
-                />
-                <div className="absolute right-0 mt-2 w-64 max-h-[75vh] overflow-y-auto rounded-2xl bg-[#FFFFFF] border border-[#DFC27D] shadow-xl p-1.5 z-40 space-y-0.5">
-                  {WORKSPACE_SWITCHER_ITEMS.map((item) => {
-                    const Icon = item.Icon;
-                    const isActive = item.id === activeTool;
-                    return (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => handleSwitchNav(item)}
-                        className={cn(
-                          'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs transition-colors cursor-pointer',
-                          isActive
-                            ? 'bg-[#FFF6DF] text-[#8C5500] font-bold border border-[#EAD7A7]'
-                            : 'text-[#2C1E10] hover:bg-[#FAF7F0]'
-                        )}
-                      >
-                        <Icon className="w-4 h-4 shrink-0" />
-                        <span className="flex-1 truncate">{item.label}</span>
-                        <ChevronRight className="w-3.5 h-3.5 opacity-50 shrink-0" />
-                      </button>
-                    );
-                  })}
-                </div>
-              </>
-            )}
+            <div className="min-w-0 text-center">
+              <h2 className="text-[16px] sm:text-lg font-bold text-[#2C1E10] truncate">
+                {activeMeta.label}
+              </h2>
+              <p className="text-[11px] text-[#6B533B] truncate hidden sm:block">
+                {activeMeta.subtitle}
+              </p>
+            </div>
+
+            <div className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => setShowQuickSwitcher((v) => !v)}
+                className="w-10 h-10 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#8C5500] hover:bg-[#FCECC2] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Chuyển đổi phương tiện tu tập"
+                title="Chuyển nhanh phương tiện khác"
+              >
+                <Grid className="w-4 h-4" />
+              </button>
+
+              {showQuickSwitcher && (
+                <>
+                  <div
+                    className="fixed inset-0 z-30"
+                    onClick={() => setShowQuickSwitcher(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-64 max-h-[75vh] overflow-y-auto rounded-2xl bg-[#FFFFFF] border border-[#DFC27D] shadow-xl p-1.5 z-40 space-y-0.5">
+                    {WORKSPACE_SWITCHER_ITEMS.map((item) => {
+                      const Icon = item.Icon;
+                      const isActive = item.id === activeTool;
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => handleSwitchNav(item)}
+                          className={cn(
+                            'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs transition-colors cursor-pointer',
+                            isActive
+                              ? 'bg-[#FFF6DF] text-[#8C5500] font-bold border border-[#EAD7A7]'
+                              : 'text-[#2C1E10] hover:bg-[#FAF7F0]'
+                          )}
+                        >
+                          <Icon className="w-4 h-4 shrink-0" />
+                          <span className="flex-1 truncate">{item.label}</span>
+                          <ChevronRight className="w-3.5 h-3.5 opacity-50 shrink-0" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Main Active Sanctuary Scroll Area */}
-      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto px-3.5 sm:px-6 py-4 sm:py-6">
-        <div className="max-w-6xl mx-auto pb-16">
+      <div
+        ref={scrollAreaRef}
+        className={cn(
+          'flex-1 overflow-y-auto',
+          activeTool === 'may-niem-phat' ? 'p-0 flex flex-col items-center bg-[#FDF8EC]' : 'px-3.5 sm:px-6 py-4 sm:py-6'
+        )}
+      >
+        <div
+          className={cn(
+            'w-full mx-auto',
+            activeTool === 'may-niem-phat'
+              ? 'max-w-md min-h-full flex flex-col justify-between shadow-2xl rounded-none sm:rounded-[36px] overflow-hidden sm:my-3 border-0 sm:border-2 border-[#EAD7A7]'
+              : 'max-w-6xl pb-16'
+          )}
+        >
           {activeTool === 'di-chua' && <Tool02DiChua showToast={showToast} />}
 
           {activeTool === 'cau-sieu' && (
@@ -432,7 +447,9 @@ export function SanctuaryWorkspace({
             />
           )}
 
-          {activeTool === 'may-niem-phat' && <Tool04MayNiemPhat showToast={showToast} />}
+          {activeTool === 'may-niem-phat' && (
+            <Tool04MayNiemPhat onClose={handleCloseWorkspace} showToast={showToast} />
+          )}
 
           {activeTool === 'nghe-kinh' && <Tool05NgheKinh showToast={showToast} />}
 
