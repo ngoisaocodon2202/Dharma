@@ -23,7 +23,6 @@ import {
   playOmTempleBellSound,
   playWoodenFishSound,
   playBeadTickSound,
-  startHealingDrone,
   stopHealingDrone,
 } from '@/lib/buddhistSounds';
 import { useDharmaStore } from '@/store/useDharmaStore';
@@ -166,43 +165,81 @@ export function DharmaSutraReader({
     return () => cancelAnimationFrame(rafId);
   }, [isAutoScrolling, scrollSpeed]);
 
-  // Gentle Voice & 432Hz Healing Sound accompaniment
+  // Pure soothing voice reading (no Hz drone buzz underneath speech)
   useEffect(() => {
+    stopHealingDrone();
     if (!isVoiceChanting) {
-      stopHealingDrone();
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
       return;
     }
 
-    startHealingDrone('432', 0.18);
-
+    let cancelled = false;
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
-        const allLines = [
+        const rawSegments = [
           sutra.title,
           ...sutra.khaiKinh.paragraphs,
           ...sutra.toanVan.flatMap((c) => [c.title, ...c.paragraphs]),
           ...sutra.hoiHuong.paragraphs,
-        ].join('. ');
+        ];
 
-        const utter = new SpeechSynthesisUtterance(allLines);
-        utter.lang = 'vi-VN';
-        utter.rate = 0.82;
-        utter.pitch = 0.95;
-        utter.onend = () => {
-          setIsVoiceChanting(false);
-          stopHealingDrone();
+        // Split into smooth sentence-sized chunks so browser speech synthesis never cuts off
+        const chunks: string[] = [];
+        for (const seg of rawSegments) {
+          const clean = seg.replace(/\s+/g, ' ').trim();
+          if (!clean) continue;
+          if (clean.length <= 220) {
+            chunks.push(clean);
+          } else {
+            const parts = clean.split(/(?<=[.!?…。])\s+/);
+            let buf = '';
+            for (const part of parts) {
+              if ((buf + ' ' + part).trim().length > 220 && buf) {
+                chunks.push(buf.trim());
+                buf = part;
+              } else {
+                buf = buf ? `${buf} ${part}` : part;
+              }
+            }
+            if (buf.trim()) chunks.push(buf.trim());
+          }
+        }
+
+        const voices = window.speechSynthesis.getVoices();
+        const viVoice = voices.find((v) => v.lang.toLowerCase().startsWith('vi'));
+
+        let idx = 0;
+        const speakNext = () => {
+          if (cancelled || idx >= chunks.length) {
+            if (!cancelled) setIsVoiceChanting(false);
+            return;
+          }
+          const utter = new SpeechSynthesisUtterance(chunks[idx]);
+          utter.lang = 'vi-VN';
+          if (viVoice) utter.voice = viVoice;
+          utter.rate = 0.85;
+          utter.pitch = 1.0;
+          utter.onend = () => {
+            idx += 1;
+            speakNext();
+          };
+          utter.onerror = () => {
+            if (!cancelled) setIsVoiceChanting(false);
+          };
+          window.speechSynthesis.speak(utter);
         };
-        window.speechSynthesis.speak(utter);
+
+        speakNext();
       } catch {
-        // fallback to 432Hz drone only
+        setIsVoiceChanting(false);
       }
     }
 
     return () => {
+      cancelled = true;
       stopHealingDrone();
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -359,10 +396,10 @@ export function DharmaSutraReader({
                   ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                   : 'bg-[#FFF6DF] border-[#E5C67E] text-[#7A5000]'
               )}
-              title="Bật giọng đọc kinh nhẹ nhàng & sóng âm 432Hz"
+              title="Bật giọng đọc kinh nhẹ nhàng"
             >
               {isVoiceChanting ? <Volume2 className="w-3.5 h-3.5 animate-pulse" /> : <VolumeX className="w-3.5 h-3.5" />}
-              <span className="hidden sm:inline">{isVoiceChanting ? 'Đang Tụng 432Hz' : 'Giọng Đọc + 432Hz'}</span>
+              <span className="hidden sm:inline">{isVoiceChanting ? 'Đang Đọc Kinh' : 'Giọng Đọc Kinh'}</span>
             </button>
 
             <button
@@ -386,7 +423,7 @@ export function DharmaSutraReader({
         </div>
 
         {/* Teleprompter Auto-Scroll Bar + Font Controls */}
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-2 overflow-x-auto no-scrollbar text-xs pt-0.5">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-1.5 text-xs pt-0.5">
           {/* Auto-Scroll Teleprompter Primary Controls */}
           <div className="flex items-center gap-1.5 shrink-0">
             <button

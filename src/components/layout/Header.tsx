@@ -103,21 +103,21 @@ export function Header() {
       )}
 
       {/* 2. UNIFIED DESKTOP DHARMA HEADER (>= lg) */}
-      <header className="hidden lg:block sticky top-0 z-40 w-full bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs">
-        <div className="w-full max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#D9A02E] bg-[#FFF6DF] shadow-2xs">
+      <header className="hidden lg:block sticky top-0 z-40 w-full bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs overflow-x-clip">
+        <div className="w-full max-w-7xl mx-auto px-4 xl:px-6 h-16 flex items-center justify-between gap-2 xl:gap-4 min-w-0">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+            <div className="w-9 h-9 xl:w-10 xl:h-10 rounded-full overflow-hidden border-2 border-[#D9A02E] bg-[#FFF6DF] shadow-2xs shrink-0">
               <img
                 src="/dharma-logo.png"
                 alt="DHARMA"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform"
               />
             </div>
-            <div>
-              <span className="font-serif font-bold text-base tracking-wider text-[#2C1E10] group-hover:text-[#8C5500] transition-colors block leading-tight whitespace-nowrap">
+            <div className="min-w-0">
+              <span className="font-serif font-bold text-sm xl:text-base tracking-wider text-[#2C1E10] group-hover:text-[#8C5500] transition-colors block leading-tight whitespace-nowrap">
                 DHARMA
               </span>
-              <span className="text-[11px] text-[#6B533B] block leading-tight whitespace-nowrap">
+              <span className="hidden xl:block text-[10px] text-[#6B533B] leading-tight whitespace-nowrap">
                 Liên Hoa Đài Chánh Niệm
               </span>
             </div>
@@ -126,7 +126,7 @@ export function Header() {
           {/* Center: Clean 5-Tab Dharma Navigation */}
           <nav
             aria-label="Điều hướng chính DHARMA"
-            className="flex items-center gap-1 bg-[#FAF7F0] border border-[#EAD7A7] rounded-full p-1"
+            className="flex items-center gap-0.5 xl:gap-1 bg-[#FAF7F0] border border-[#EAD7A7] rounded-full p-1 min-w-0 shrink"
           >
             {DESKTOP_TABS.map(({ name, href, Icon }) => {
               const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
@@ -135,13 +135,13 @@ export function Header() {
                   key={href}
                   href={href}
                   className={cn(
-                    'px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold flex items-center gap-2 transition-all whitespace-nowrap',
+                    'px-2.5 xl:px-3.5 py-1.5 rounded-full text-xs xl:text-[13px] font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap shrink-0',
                     isActive
                       ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#3D2505] font-bold shadow-2xs border border-[#D9A02E]'
                       : 'text-[#6B533B] hover:text-[#2C1E10] hover:bg-[#FFF6DF]/60'
                   )}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
+                  <Icon className="w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0" />
                   <span>{name}</span>
                 </Link>
               );
@@ -149,12 +149,12 @@ export function Header() {
           </nav>
 
           {/* Right: Bell, Search & Practitioner Chip */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 xl:gap-2 shrink-0">
             <button
               type="button"
               onClick={handleStrikeBell}
               title="Thỉnh Chuông Chánh Niệm"
-              className="w-9 h-9 rounded-full bg-[#FFF6DF] border border-[#E5C67E] text-[#8C5500] hover:bg-[#FCECC2] flex items-center justify-center cursor-pointer transition-colors"
+              className="w-8 h-8 xl:w-9 xl:h-9 rounded-full bg-[#FFF6DF] border border-[#E5C67E] text-[#8C5500] hover:bg-[#FCECC2] flex items-center justify-center cursor-pointer transition-colors shrink-0"
               aria-label="Thỉnh Chuông Chánh Niệm"
             >
               <Bell className="w-4 h-4" />
@@ -164,7 +164,7 @@ export function Header() {
               type="button"
               onClick={() => setIsSearchOpen(true)}
               title="Tìm kiếm kinh điển, chùa, bổn tôn"
-              className="w-9 h-9 rounded-full bg-[#FFF6DF] border border-[#E5C67E] text-[#2C1E10] hover:bg-[#FCECC2] flex items-center justify-center cursor-pointer transition-colors"
+              className="w-8 h-8 xl:w-9 xl:h-9 rounded-full bg-[#FFF6DF] border border-[#E5C67E] text-[#2C1E10] hover:bg-[#FCECC2] flex items-center justify-center cursor-pointer transition-colors shrink-0"
               aria-label="Tìm kiếm"
             >
               <Search className="w-4 h-4" />
@@ -172,12 +172,13 @@ export function Header() {
 
             <Link
               href="/ho-so"
-              className="flex items-center gap-2 pl-1.5 pr-3 py-1 rounded-full bg-[#FFF6DF] border border-[#E5C67E] hover:bg-[#FCECC2] transition-colors"
+              className="flex items-center gap-1.5 pl-1 pr-1 xl:pr-2.5 py-1 rounded-full bg-[#FFF6DF] border border-[#E5C67E] hover:bg-[#FCECC2] transition-colors shrink-0"
+              title={profile.dharmaName || 'Phật tử'}
             >
-              <div className="w-7 h-7 rounded-full bg-[#FFE07D] border border-[#D9A02E] flex items-center justify-center text-xs font-bold text-[#3D2505]">
+              <div className="w-7 h-7 rounded-full bg-[#FFE07D] border border-[#D9A02E] flex items-center justify-center text-xs font-bold text-[#3D2505] shrink-0">
                 {(profile.dharmaName || 'P').charAt(0).toUpperCase()}
               </div>
-              <span className="text-xs font-bold text-[#7A5000] max-w-[110px] whitespace-nowrap truncate">
+              <span className="hidden xl:inline text-xs font-bold text-[#7A5000] max-w-[92px] whitespace-nowrap truncate">
                 {profile.dharmaName || 'Phật tử'}
               </span>
             </Link>
