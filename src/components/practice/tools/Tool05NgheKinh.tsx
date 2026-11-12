@@ -76,10 +76,10 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
         audioRef.current.pause();
         audioRef.current.src = '';
       }
-      if (currentBlobUrlRef.current) {
+      if (currentBlobUrlRef.current && currentBlobUrlRef.current.startsWith('blob:')) {
         URL.revokeObjectURL(currentBlobUrlRef.current);
-        currentBlobUrlRef.current = null;
       }
+      currentBlobUrlRef.current = null;
     };
   }, []);
 
@@ -106,7 +106,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
         saveAudioPosition(selectedTrack.id, audioRef.current.currentTime || 0);
         audioRef.current.pause();
       }
-      if (currentBlobUrlRef.current) {
+      if (currentBlobUrlRef.current && currentBlobUrlRef.current.startsWith('blob:')) {
         URL.revokeObjectURL(currentBlobUrlRef.current);
       }
 
@@ -116,6 +116,8 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
         durationSec: track.durationSec,
         baseFreq: track.baseFreq,
         cadenceNotes: track.cadenceNotes,
+        mp3Url: track.mp3Url,
+        fallbackMp3Url: track.fallbackMp3Url,
         transcriptText: track.transcriptParagraphs.join('\n'),
       });
       currentBlobUrlRef.current = blobUrl;
@@ -197,6 +199,8 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
           durationSec: track.durationSec,
           baseFreq: track.baseFreq,
           cadenceNotes: track.cadenceNotes,
+          mp3Url: track.mp3Url,
+          fallbackMp3Url: track.fallbackMp3Url,
           transcriptText: track.transcriptParagraphs.join('\n'),
         },
         (pct) => {
@@ -258,6 +262,18 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
           });
           playBellSound(0.45);
           showToast(`Hoàn mãn nghe bài: ${selectedTrack.title} (+1 Công Đức)`);
+        }}
+        onError={() => {
+          const el = audioRef.current;
+          if (el && selectedTrack.fallbackMp3Url && !el.src.includes(selectedTrack.fallbackMp3Url)) {
+            el.src = selectedTrack.fallbackMp3Url;
+            el.playbackRate = playbackSpeed;
+            el.loop = loopEnabled;
+            void el.play().catch(() => setIsPlaying(false));
+            return;
+          }
+          setIsPlaying(false);
+          setLoadingTrackId(null);
         }}
         className="hidden"
       />

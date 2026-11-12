@@ -13,6 +13,8 @@ export interface OfflineTrackPayload {
   baseFreq: number;
   cadenceNotes: number[];
   transcriptText: string;
+  mp3Url?: string;
+  fallbackMp3Url?: string;
 }
 
 interface StoredOfflineRecord {
@@ -21,6 +23,7 @@ interface StoredOfflineRecord {
   durationSec: number;
   sizeBytes: number;
   transcriptText: string;
+  mimeType?: string;
   savedAt: string;
   blob: Blob;
 }
@@ -130,12 +133,73 @@ export async function synthesizeMeditationWavBlob(
   return new Blob([buffer], { type: 'audio/wav' });
 }
 
+async function fetchRealAudioBlob(
+  url: string,
+  fallbackUrl?: string,
+  onProgress?: (pct: number) => void
+): Promise<{ blob: Blob; mimeType: string } | null> {
+  const candidates = [url, fallbackUrl].filter((u): u is string => Boolean(u));
+  for (const targetUrl of candidates) {
+    try {
+      const res = await fetch(targetUrl, { mode: 'cors' });
+      if (!res.ok) continue;
+
+      const contentType = res.headers.get('content-type') || 'audio/mpeg';
+      const contentLength = Number(res.headers.get('content-length') || 0);
+
+      if (res.body && contentLength > 0) {
+        const reader = res.body.getReader();
+        const chunks: Uint8Array[] = [];
+        let received = 0;
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          if (value) {
+            chunks.push(value);
+            received += value.byteLength;
+            onProgress?.(Math.min(92, Math.max(8, Math.round((received / contentLength) * 90))));
+          }
+        }
+        const merged = new Uint8Array(received);
+        let offset = 0;
+        for (const chunk of chunks) {
+          merged.set(chunk, offset);
+          offset += chunk.byteLength;
+        }
+        const blob = new Blob([merged], { type: contentType });
+        if (blob.size > 4000) return { blob, mimeType: contentType };
+      } else {
+        const blob = await res.blob();
+        if (blob.size > 4000) return { blob, mimeType: blob.type || contentType };
+      }
+    } catch {
+      // Thử URL dự phòng nếu CORS hoặc mạng gián đoạn
+    }
+  }
+  return null;
+}
+
 export async function downloadTrackOffline(
   payload: OfflineTrackPayload,
   onProgress?: (pct: number) => void
 ): Promise<{ sizeBytes: number }> {
   onProgress?.(5);
-  const blob = await synthesizeMeditationWavBlob(payload, onProgress);
+
+  let blob: Blob | null = null;
+  let mimeType = 'audio/wav';
+
+  if (payload.mp3Url) {
+    const fetched = await fetchRealAudioBlob(payload.mp3Url, payload.fallbackMp3Url, onProgress);
+    if (fetched) {
+      blob = fetched.blob;
+      mimeType = fetched.mimeType;
+    }
+  }
+
+  if (!blob) {
+    blob = await synthesizeMeditationWavBlob(payload, onProgress);
+    mimeType = 'audio/wav';
+  }
 
   const record: StoredOfflineRecord = {
     id: payload.id,
@@ -143,6 +207,7 @@ export async function downloadTrackOffline(
     durationSec: payload.durationSec,
     sizeBytes: blob.size,
     transcriptText: payload.transcriptText,
+    mimeType,
     savedAt: new Date().toISOString(),
     blob,
   };
@@ -168,11 +233,11 @@ export async function downloadTrackOffline(
       const response = new Response(blob, {
         status: 200,
         headers: {
-          'Content-Type': 'audio/wav',
+          'Content-Type': mimeType,
           'Content-Length': String(blob.size),
         },
       });
-      await cache.put(`/offline-audio/${payload.id}.wav`, response);
+      await cache.put(`/offline-audio/${payload.id}`, response);
     }
   } catch {
     // Non-fatal if Cache API disabled
@@ -185,11 +250,13 @@ export async function downloadTrackOffline(
 export async function getOfflineTrackBlobUrl(
   payload: OfflineTrackPayload
 ): Promise<string> {
-  // 1. Check Cache API first
+  // 1. Check Cache API first (supporting both real MP3 and legacy WAV cache keys)
   try {
     if (typeof window !== 'undefined' && 'caches' in window) {
       const cache = await caches.open(CACHE_NAME);
-      const matched = await cache.match(`/offline-audio/${payload.id}.wav`);
+      const matched =
+        (await cache.match(`/offline-audio/${payload.id}`)) ||
+        (await cache.match(`/offline-audio/${payload.id}.wav`));
       if (matched) {
         const cachedBlob = await matched.blob();
         return URL.createObjectURL(cachedBlob);
@@ -212,7 +279,12 @@ export async function getOfflineTrackBlobUrl(
     }
   } catch {}
 
-  // 3. Stream-generate transient WAV on the fly if user plays online before downloading
+  // 3. Stream genuine continuous MP3 directly when available online
+  if (payload.mp3Url) {
+    return payload.mp3Url;
+  }
+
+  // 4. Synthesize meditation sound bed for frequency meditation tracks (432Hz / 136.1Hz)
   const tempBlob = await synthesizeMeditationWavBlob({
     ...payload,
     durationSec: Math.min(payload.durationSec, 90),
@@ -235,6 +307,7 @@ export async function removeOfflineTrack(trackId: string): Promise<void> {
   try {
     if (typeof window !== 'undefined' && 'caches' in window) {
       const cache = await caches.open(CACHE_NAME);
+      await cache.delete(`/offline-audio/${trackId}`);
       await cache.delete(`/offline-audio/${trackId}.wav`);
     }
   } catch {}

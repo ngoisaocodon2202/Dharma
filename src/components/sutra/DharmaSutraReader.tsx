@@ -12,8 +12,13 @@ import {
   Volume2,
   VolumeX,
   RotateCcw,
+  RotateCw,
+  Video,
+  Music2,
+  X,
 } from 'lucide-react';
 import { SutraText, SutraSection } from '@/data/sutras';
+import { resolveSutraAudio } from '@/data/sutraAudioMap';
 import {
   LotusMinimalIcon,
   WoodenFishMinimalIcon,
@@ -28,6 +33,14 @@ import {
 import { useDharmaStore } from '@/store/useDharmaStore';
 import { recordDharmaMerit } from '@/components/dharma/DharmaInteractiveTools';
 import { cn } from '@/lib/utils';
+
+function formatMediaClock(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds < 0) return '00:00';
+  const total = Math.floor(seconds);
+  const mins = Math.floor(total / 60);
+  const secs = total % 60;
+  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
 
 export type SutraPaperTheme = 'warm-parchment' | 'pure-white' | 'soft-gold';
 
@@ -121,13 +134,130 @@ export function DharmaSutraReader({
   const scrollRemainderRef = useRef<number>(0);
   const manualPauseUntilRef = useRef<number>(0);
 
-  // Soothing Voice Recitation with Karaoke Highlight & Persistent Resume
+  // Continuous MP3 & MP4 Sutra Chanting Player
+  const sutraAudio = useMemo(() => resolveSutraAudio(sutra), [sutra]);
+  const mp3AudioRef = useRef<HTMLAudioElement | null>(null);
+  const lastSavedMp3TimeRef = useRef<number>(0);
+  const triedFallbackMp3Ref = useRef<boolean>(false);
+  const [showMp3Bar, setShowMp3Bar] = useState(false);
+  const [isMp3Playing, setIsMp3Playing] = useState(false);
+  const [mp3CurrentTime, setMp3CurrentTime] = useState(0);
+  const [mp3Duration, setMp3Duration] = useState(0);
+  const [mp3Rate, setMp3Rate] = useState<number>(1.0);
+  const [activeMp3Url, setActiveMp3Url] = useState<string>(sutraAudio.mp3Url);
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
+
+  // Paragraph bookmark + optional browser voice fallback
   const [isVoiceChanting, setIsVoiceChanting] = useState(false);
   const [activeParaKey, setActiveParaKey] = useState<string | null>(null);
   const [voiceSeekNonce, setVoiceSeekNonce] = useState(0);
   const voiceChunkIdxRef = useRef<number>(0);
   const paraElementsRef = useRef<Record<string, HTMLElement | null>>({});
   const lastScrolledParaRef = useRef<string | null>(null);
+
+  // Reset & restore MP3 position when switching sutra
+  useEffect(() => {
+    setIsMp3Playing(false);
+    setShowVideoPlayer(false);
+    triedFallbackMp3Ref.current = false;
+    setActiveMp3Url(sutraAudio.mp3Url);
+
+    if (mp3AudioRef.current) {
+      mp3AudioRef.current.pause();
+    }
+
+    let restored = 0;
+    try {
+      const raw = localStorage.getItem('dharma_sutra_mp3_pos');
+      const map = raw ? JSON.parse(raw) : {};
+      if (typeof map?.[sutra.id] === 'number' && map[sutra.id] > 2) {
+        restored = map[sutra.id];
+      }
+    } catch {}
+    setMp3CurrentTime(restored);
+    lastSavedMp3TimeRef.current = restored;
+    setMp3Duration(0);
+  }, [sutra.id, sutraAudio.mp3Url]);
+
+  // Cleanup MP3 audio on unmount
+  useEffect(() => {
+    return () => {
+      if (mp3AudioRef.current) {
+        mp3AudioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const saveMp3Position = (sec: number) => {
+    try {
+      const raw = localStorage.getItem('dharma_sutra_mp3_pos');
+      const map = raw ? JSON.parse(raw) : {};
+      map[sutra.id] = sec;
+      localStorage.setItem('dharma_sutra_mp3_pos', JSON.stringify(map));
+    } catch {}
+  };
+
+  const handleToggleMp3 = () => {
+    const audio = mp3AudioRef.current;
+    if (!audio) return;
+
+    setShowMp3Bar(true);
+    setIsVoiceChanting(false);
+    setShowVideoPlayer(false);
+
+    if (isMp3Playing) {
+      audio.pause();
+      setIsMp3Playing(false);
+      saveMp3Position(audio.currentTime);
+      return;
+    }
+
+    if (mp3CurrentTime > 2 && Math.abs(audio.currentTime - mp3CurrentTime) > 1.5 && Number.isFinite(audio.duration)) {
+      audio.currentTime = Math.min(mp3CurrentTime, audio.duration);
+    }
+    audio.playbackRate = mp3Rate;
+    setIsAutoScrolling(true);
+    audio
+      .play()
+      .then(() => {
+        setIsMp3Playing(true);
+      })
+      .catch(() => {
+        setIsMp3Playing(false);
+        showToast('Nhấn biểu tượng Phát trên thanh Pháp âm để bắt đầu');
+      });
+  };
+
+  const handleSeekMp3Offset = (deltaSec: number) => {
+    const audio = mp3AudioRef.current;
+    if (!audio || !Number.isFinite(audio.duration)) return;
+    const next = Math.max(0, Math.min(audio.duration, audio.currentTime + deltaSec));
+    audio.currentTime = next;
+    setMp3CurrentTime(next);
+    saveMp3Position(next);
+  };
+
+  const handleCycleMp3Rate = () => {
+    const rates = [0.85, 1.0, 1.15, 1.3];
+    const next = rates[(rates.indexOf(mp3Rate) + 1) % rates.length] ?? 1.0;
+    setMp3Rate(next);
+    if (mp3AudioRef.current) {
+      mp3AudioRef.current.playbackRate = next;
+    }
+    showToast(`Tốc độ pháp âm: ${next.toFixed(next === 1 ? 1 : 2)}x`);
+  };
+
+  const handleToggleVideo = () => {
+    setShowVideoPlayer((prev) => {
+      const opening = !prev;
+      if (opening && mp3AudioRef.current) {
+        mp3AudioRef.current.pause();
+        setIsMp3Playing(false);
+        setIsVoiceChanting(false);
+      }
+      return opening;
+    });
+  };
 
   const orderedSections = useMemo(
     () => [
@@ -162,13 +292,13 @@ export function DharmaSutraReader({
         const clean = section.paragraphs[pIdx].replace(/\s+/g, ' ').trim();
         if (!clean) continue;
 
-        if (clean.length <= 220) {
+        if (clean.length <= 900) {
           chunks.push({ text: clean, paraKey, paraOrder: currentOrder });
         } else {
           const parts = clean.split(/(?<=[.!?…。])\s+/);
           let buf = '';
           for (const part of parts) {
-            if ((buf + ' ' + part).trim().length > 220 && buf) {
+            if ((buf + ' ' + part).trim().length > 900 && buf) {
               chunks.push({ text: buf.trim(), paraKey, paraOrder: currentOrder });
               buf = part;
             } else {
@@ -346,7 +476,7 @@ export function DharmaSutraReader({
     if (isVoiceChanting) {
       setVoiceSeekNonce((n) => n + 1);
     } else {
-      showToast('Đã đánh dấu đoạn kinh — bấm "Giọng Đọc Kinh" để đọc tiếp từ đây');
+      showToast('Đã đánh dấu đoạn kinh — bấm "Nghe Kinh .MP3" để nghe liền mạch');
     }
   };
 
@@ -394,6 +524,8 @@ export function DharmaSutraReader({
     setIsAutoScrolling(false);
     setIsAutoFishOn(false);
     setIsVoiceChanting(false);
+    if (mp3AudioRef.current) mp3AudioRef.current.pause();
+    setIsMp3Playing(false);
     setIsCompleted(true);
     recordSutraCompletion(
       sutra.title,
@@ -543,18 +675,36 @@ export function DharmaSutraReader({
           <div className="flex items-center gap-1.5 shrink-0">
             <button
               type="button"
-              onClick={() => setIsVoiceChanting((v) => !v)}
+              onClick={handleToggleMp3}
               className={cn(
                 'px-2.5 py-1.5 rounded-xl border text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer whitespace-nowrap',
-                isVoiceChanting
+                isMp3Playing
                   ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
-                  : 'bg-[#FFF6DF] border-[#E5C67E] text-[#7A5000]'
+                  : 'bg-[#FFF6DF] border-[#E5C67E] text-[#7A5000] hover:bg-[#FCECC2]'
               )}
-              title="Bật giọng đọc kinh nhẹ nhàng"
+              title={sutraAudio.sourceLabel}
             >
-              {isVoiceChanting ? <Volume2 className="w-3.5 h-3.5 animate-pulse" /> : <VolumeX className="w-3.5 h-3.5" />}
-              <span className="hidden sm:inline">{isVoiceChanting ? 'Đang Đọc Kinh' : 'Giọng Đọc Kinh'}</span>
+              <Music2 className={cn('w-3.5 h-3.5', isMp3Playing && 'animate-pulse')} />
+              <span className="hidden sm:inline">{isMp3Playing ? 'Đang Phát .MP3' : 'Nghe Kinh .MP3'}</span>
+              <span className="sm:hidden">.MP3</span>
             </button>
+
+            {sutraAudio.youtubeId && (
+              <button
+                type="button"
+                onClick={handleToggleVideo}
+                className={cn(
+                  'px-2.5 py-1.5 rounded-xl border text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer whitespace-nowrap',
+                  showVideoPlayer
+                    ? 'bg-[#C8780A] text-white border-[#9A4200] shadow-xs'
+                    : 'bg-[#FFF6DF] border-[#E5C67E] text-[#7A5000] hover:bg-[#FCECC2]'
+                )}
+                title="Mở video trì tụng liền mạch (.MP4)"
+              >
+                <Video className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Video .MP4</span>
+              </button>
+            )}
 
             <button
               type="button"
@@ -682,6 +832,172 @@ export function DharmaSutraReader({
           </div>
         </div>
 
+        {/* Compact Continuous MP3 Player Bar */}
+        {(showMp3Bar || isMp3Playing) && (
+          <div className={cn('max-w-4xl mx-auto px-3 py-2 rounded-2xl border flex flex-col sm:flex-row sm:items-center gap-2', theme.cardBg, theme.border)}>
+            <div className="flex items-center justify-between gap-2 min-w-0 sm:w-56 shrink-0">
+              <div className="min-w-0">
+                <p className={cn('text-[11px] font-bold truncate flex items-center gap-1', theme.text)}>
+                  <Music2 className={cn('w-3 h-3 shrink-0', theme.accent)} />
+                  <span>{sutraAudio.sourceLabel}</span>
+                </p>
+                <p className={cn('text-[10px] truncate', theme.subtext)}>
+                  {sutraAudio.readerName} {sutraAudio.isExactMatch ? '' : '• Pháp âm trợ niệm'}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  if (mp3AudioRef.current) mp3AudioRef.current.pause();
+                  setIsMp3Playing(false);
+                  setShowMp3Bar(false);
+                }}
+                className={cn('p-1 rounded-lg sm:hidden cursor-pointer', theme.subtext)}
+                title="Thu gọn thanh pháp âm"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1.5 flex-1 min-w-0">
+              <button
+                type="button"
+                onClick={handleToggleMp3}
+                className="w-8 h-8 rounded-full bg-[#C8780A] text-white flex items-center justify-center shrink-0 cursor-pointer active:scale-95"
+                title={isMp3Playing ? 'Tạm dừng MP3' : 'Phát MP3 liền mạch'}
+              >
+                {isMp3Playing ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current ml-0.5" />}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleSeekMp3Offset(-15)}
+                className={cn('px-1.5 py-1 rounded-lg border text-[10px] font-bold cursor-pointer shrink-0', theme.cardBg, theme.border, theme.subtext)}
+                title="Tua lùi 15 giây"
+              >
+                -15s
+              </button>
+
+              <span className={cn('font-mono text-[10px] font-bold shrink-0', theme.subtext)}>
+                {formatMediaClock(mp3CurrentTime)}
+              </span>
+
+              <input
+                type="range"
+                min={0}
+                max={mp3Duration > 0 ? mp3Duration : 180}
+                step={1}
+                value={Math.min(mp3CurrentTime, mp3Duration > 0 ? mp3Duration : 180)}
+                onChange={(e) => {
+                  const next = Number(e.target.value);
+                  setMp3CurrentTime(next);
+                  if (mp3AudioRef.current) mp3AudioRef.current.currentTime = next;
+                  saveMp3Position(next);
+                }}
+                className="flex-1 min-w-[70px] h-1.5 accent-[#C8780A] cursor-pointer"
+                aria-label="Tua tiến độ file kinh MP3"
+              />
+
+              <span className={cn('font-mono text-[10px] font-bold shrink-0', theme.subtext)}>
+                {mp3Duration > 0 ? formatMediaClock(mp3Duration) : '--:--'}
+              </span>
+
+              <button
+                type="button"
+                onClick={() => handleSeekMp3Offset(15)}
+                className={cn('px-1.5 py-1 rounded-lg border text-[10px] font-bold cursor-pointer shrink-0 inline-flex items-center gap-0.5', theme.cardBg, theme.border, theme.subtext)}
+                title="Tua tới 15 giây"
+              >
+                +15s <RotateCw className="w-2.5 h-2.5" />
+              </button>
+
+              <button
+                type="button"
+                onClick={handleCycleMp3Rate}
+                className={cn('px-1.5 py-1 rounded-lg border text-[10px] font-mono font-bold cursor-pointer shrink-0', theme.cardBg, theme.border, theme.accent)}
+                title="Đổi tốc độ đọc"
+              >
+                {mp3Rate.toFixed(mp3Rate === 1 ? 1 : 2)}x
+              </button>
+
+              {!sutraAudio.isExactMatch && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (mp3AudioRef.current) mp3AudioRef.current.pause();
+                    setIsMp3Playing(false);
+                    setIsVoiceChanting((v) => !v);
+                  }}
+                  className={cn(
+                    'px-2 py-1 rounded-lg border text-[10px] font-bold cursor-pointer shrink-0 inline-flex items-center gap-1',
+                    isVoiceChanting
+                      ? 'bg-emerald-600 text-white border-emerald-600'
+                      : cn(theme.cardBg, theme.border, theme.subtext)
+                  )}
+                  title="Đọc toàn văn đoạn kinh bằng giọng đọc AI"
+                >
+                  {isVoiceChanting ? <Volume2 className="w-3 h-3 animate-pulse" /> : <VolumeX className="w-3 h-3" />}
+                  <span className="hidden md:inline">Đọc chữ</span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (mp3AudioRef.current) mp3AudioRef.current.pause();
+                  setIsMp3Playing(false);
+                  setShowMp3Bar(false);
+                }}
+                className={cn('p-1 rounded-lg hidden sm:inline-flex cursor-pointer', theme.subtext)}
+                title="Thu gọn thanh pháp âm"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Hidden HTML5 MP3 Player */}
+        <audio
+          ref={mp3AudioRef}
+          src={activeMp3Url}
+          preload="metadata"
+          onLoadedMetadata={(e) => {
+            const el = e.currentTarget;
+            if (Number.isFinite(el.duration)) setMp3Duration(el.duration);
+            if (mp3CurrentTime > 2 && Number.isFinite(el.duration)) {
+              el.currentTime = Math.min(mp3CurrentTime, Math.max(0, el.duration - 2));
+            }
+          }}
+          onTimeUpdate={(e) => {
+            const cur = e.currentTarget.currentTime;
+            setMp3CurrentTime(cur);
+            if (Number.isFinite(e.currentTarget.duration)) {
+              setMp3Duration(e.currentTarget.duration);
+            }
+            if (Math.abs(cur - lastSavedMp3TimeRef.current) >= 3) {
+              lastSavedMp3TimeRef.current = cur;
+              saveMp3Position(cur);
+            }
+          }}
+          onEnded={() => {
+            setIsMp3Playing(false);
+            setMp3CurrentTime(0);
+            saveMp3Position(0);
+            playOmTempleBellSound(0.5);
+            showToast(`Hoàn mãn pháp âm: ${sutra.title}`);
+          }}
+          onError={() => {
+            if (!triedFallbackMp3Ref.current && sutraAudio.fallbackMp3Url && activeMp3Url !== sutraAudio.fallbackMp3Url) {
+              triedFallbackMp3Ref.current = true;
+              setActiveMp3Url(sutraAudio.fallbackMp3Url);
+              return;
+            }
+            setIsMp3Playing(false);
+          }}
+          className="hidden"
+        />
+
         {/* Thin Visual Progress Bar */}
         <div className="w-full h-1 bg-[#EAD7A7]/50 rounded-full overflow-hidden">
           <div
@@ -710,6 +1026,34 @@ export function DharmaSutraReader({
         className="flex-1 overflow-y-auto px-3.5 sm:px-6 py-5 sm:py-7"
       >
         <div className="max-w-3xl mx-auto space-y-5 pb-36">
+          {/* Optional Collapsible Video (.MP4) Player */}
+          {showVideoPlayer && sutraAudio.youtubeId && (
+            <div className={cn('rounded-2xl border overflow-hidden shadow-sm', theme.cardBg, theme.border)}>
+              <div className="px-4 py-2 flex items-center justify-between border-b border-[#EAD7A7]/60">
+                <span className={cn('text-xs font-bold flex items-center gap-1.5', theme.text)}>
+                  <Video className={cn('w-3.5 h-3.5', theme.accent)} />
+                  Video Trì Tụng Liền Mạch (.MP4) • {sutraAudio.readerName}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowVideoPlayer(false)}
+                  className={cn('text-[11px] font-bold flex items-center gap-1 cursor-pointer', theme.subtext)}
+                >
+                  <X className="w-3.5 h-3.5" /> Đóng Video
+                </button>
+              </div>
+              <div className="aspect-video w-full bg-black">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${sutraAudio.youtubeId}?autoplay=1&rel=0`}
+                  title={sutra.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full border-0"
+                />
+              </div>
+            </div>
+          )}
+
           {/* Sutra Title Plaque */}
           <div className={cn('p-5 rounded-2xl border text-center space-y-2 shadow-2xs', theme.cardBg, theme.border)}>
             <LotusMinimalIcon className={cn('w-7 h-7 mx-auto', theme.accent)} />

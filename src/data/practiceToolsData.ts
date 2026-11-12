@@ -295,6 +295,8 @@ export interface OfflineAudioTrack {
   summary: string;
   baseFreq: number;
   cadenceNotes: number[];
+  mp3Url?: string;
+  fallbackMp3Url?: string;
   transcriptParagraphs: string[];
 }
 
@@ -321,6 +323,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: '260 chữ cốt tủy Bát Nhã giúp soi rọi năm uẩn đều không, độ thoát khổ ách.',
     baseFreq: 136.1,
     cadenceNotes: [261.63, 293.66, 329.63, 392, 329.63],
+    mp3Url: '/audio/sutras/bat-nha-tam-kinh.mp3',
+    fallbackMp3Url: '/audio/chant/quan-am-real.mp3',
     transcriptParagraphs: getSutraParagraphs('bat-nha'),
   },
   {
@@ -332,6 +336,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: 'Lời dạy mộc mạc nguyên thủy của Đức Phật Thích Ca về làm chủ tâm ý.',
     baseFreq: 144,
     cadenceNotes: [220, 261.63, 293.66, 329.63, 261.63],
+    mp3Url: '/audio/chant/om-muni-real.mp3',
+    fallbackMp3Url: '/audio/chant/thich-ca-real.mp3',
     transcriptParagraphs: getSutraParagraphs('phap-cu'),
   },
   {
@@ -343,6 +349,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: 'Khai thị cõi Tịnh Độ trang nghiêm, nuôi dưỡng tín - nguyện - hạnh kiên cố.',
     baseFreq: 136.1,
     cadenceNotes: [261.63, 293.66, 329.63, 392, 440, 392],
+    mp3Url: 'https://archive.org/download/09.-thich-tri-thoat/01.%20Kinh%20A%20Di%20Da%20_%20Thich%20Tri%20Thoat%20%20.mp3',
+    fallbackMp3Url: '/audio/chant/a-di-da-6-real.mp3',
     transcriptParagraphs: getSutraParagraphs('a-di-da'),
   },
   {
@@ -354,6 +362,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: 'Thiên Thủ Thiên Nhãn Vô Ngại Đại Bi Tâm Đà La Ni gia trì bình an.',
     baseFreq: 174,
     cadenceNotes: [246.94, 293.66, 329.63, 392, 329.63, 293.66],
+    mp3Url: 'https://archive.org/download/Chu-Dai-Bi/ChuDaiBi-Thay-ThichTriThoat.mp3',
+    fallbackMp3Url: '/audio/chant/namo-ratna-real.mp3',
     transcriptParagraphs: getSutraParagraphs('dai-bi'),
   },
   {
@@ -365,6 +375,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: 'Ánh sáng Lưu Ly thanh tịnh cầu an khang, tiêu trừ tật bệnh thân tâm.',
     baseFreq: 174,
     cadenceNotes: [261.63, 329.63, 392, 440, 392, 329.63],
+    mp3Url: 'https://archive.org/download/kinh-duoc-su/Kinh%20D%C6%B0%E1%BB%A3c%20S%C6%B0.mp3',
+    fallbackMp3Url: '/audio/chant/duoc-su-real.mp3',
     transcriptParagraphs: getSutraParagraphs('duoc-su'),
   },
   {
@@ -376,6 +388,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: 'Sáu âm tiết thanh tịnh chuyển hóa tham sân si thành trí tuệ từ bi.',
     baseFreq: 136.1,
     cadenceNotes: [220, 261.63, 293.66, 329.63, 293.66, 220],
+    mp3Url: '/audio/chant/om-mani-real.mp3',
+    fallbackMp3Url: '/audio/chant/quan-am-real.mp3',
     transcriptParagraphs: [
       'Om (Án): Thanh tịnh hóa thân khẩu ý kiêu mạn, mở đầu con đường Bồ Đề.',
       'Ma (Ma): Tiêu trừ tâm ghen tị và hiếu thắng, nuôi dưỡng lòng tùy hỷ.',
@@ -394,6 +408,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: 'Hướng dẫn nhận diện cơn lo âu bằng hơi thở có ý thức trong công việc hằng ngày.',
     baseFreq: 162,
     cadenceNotes: [261.63, 293.66, 329.63, 293.66],
+    mp3Url: 'https://archive.org/download/Adidaphat_ThichTriTinh/A%20DI%20%C4%90%C3%80%20PH%E1%BA%ACT%20-%20H%C3%B2a%20th%C6%B0%E1%BB%A3ng%20Th%C3%ADch%20Tr%C3%AD%20T%E1%BB%8Bnh.mp3',
+    fallbackMp3Url: '/audio/chant/a-di-da-4-real.mp3',
     transcriptParagraphs: [
       'Phần 1 — Nỗi khổ không nằm ở hoàn cảnh, mà nằm ở tâm kháng cự hoàn cảnh.',
       'Khi một việc bất như ý xảy ra, mũi tên thứ nhất là sự việc khách quan; mũi tên thứ hai do chính ta tự bắn vào mình bằng sự oán trách và lo sợ tương lai.',
@@ -410,6 +426,8 @@ export const OFFLINE_SUTRA_AUDIO_TRACKS: OfflineAudioTrack[] = [
     summary: 'Cha mẹ hiện tiền chính là hai vị Phật sống trong ngôi nhà mỗi người.',
     baseFreq: 162,
     cadenceNotes: [220, 261.63, 329.63, 293.66],
+    mp3Url: 'https://archive.org/download/KinhVuLanmoi_201711/Kinh%20Vu%20Lan%20%28moi%29.mp3',
+    fallbackMp3Url: '/audio/sutras/bat-nha-tam-kinh.mp3',
     transcriptParagraphs: [
       'Kinh Tăng Chi Bộ dạy rằng: Cha mẹ chính là Phạm Thiên, là bậc Đạo Sư đầu tiên và xứng đáng nhận sự phụng dưỡng tối thắng của con cái.',
       'Báo hiếu không phải đợi đến ngày giỗ chạp mới làm mâm cao cỗ đầy, mà là lời nói dịu dàng hôm nay khi cha mẹ vẫn còn nghe thấy.',
