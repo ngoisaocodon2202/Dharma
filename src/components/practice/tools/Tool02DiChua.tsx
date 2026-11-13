@@ -110,7 +110,7 @@ export function Tool02DiChua({ showToast }: Tool02DiChuaProps) {
   }, []);
 
   const pushUserFeed = (actionText: string) => {
-    const name = profile.dharmaName || 'Đạo hữu';
+    const name = profile.dharmaName || 'Dharma';
     setFeedItems((prev) => [`${name} vừa ${actionText}`, ...prev.slice(0, 6)]);
     setFeedIdx(0);
   };

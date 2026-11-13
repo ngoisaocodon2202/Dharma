@@ -141,15 +141,15 @@ export function SanctuaryWorkspace({
 
   // Hoa Đăng state
   const [lampType, setLampType] = useState<'CAU_AN' | 'CAU_SIEU'>('CAU_AN');
-  const [lampSender, setLampSender] = useState(profile.dharmaName || 'Cư sĩ Tâm An');
+  const [lampSender, setLampSender] = useState(profile.dharmaName || 'Dharma');
   const [lampRecipient, setLampRecipient] = useState('');
   const [lampWish, setLampWish] = useState('');
 
   useEffect(() => {
-    if (!lampSender && profile.dharmaName) {
+    if (profile.dharmaName) {
       setLampSender(profile.dharmaName);
     }
-  }, [profile.dharmaName, lampSender]);
+  }, [profile.dharmaName]);
 
   const activePreset = useMemo(
     () => BREATHING_PRESETS.find((p) => p.id === breathPresetId) || BREATHING_PRESETS[0],
@@ -282,7 +282,7 @@ export function SanctuaryWorkspace({
     playOmTempleBellSound(0.55);
     addPrayerLamp({
       type: lampType,
-      senderName: lampSender.trim() || profile.dharmaName || 'Phật tử hữu duyên',
+      senderName: lampSender.trim() || profile.dharmaName || 'Dharma',
       recipientName:
         lampRecipient.trim() ||
         (lampType === 'CAU_AN' ? 'Gia đạo bình an' : 'Cửu huyền thất tổ'),

@@ -31,7 +31,7 @@ interface Ancestor {
 
 export default function DedicationParchmentPage() {
   const [hostName, setHostName] = useState('Nguyễn Văn An');
-  const [dharmaName, setDharmaName] = useState('Thiện Tâm');
+  const [dharmaName, setDharmaName] = useState('Dharma');
   const [address, setAddress] = useState('Việt Nam');
 
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([

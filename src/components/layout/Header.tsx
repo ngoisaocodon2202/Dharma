@@ -174,13 +174,17 @@ export function Header() {
             <Link
               href="/ho-so"
               className="flex items-center gap-1.5 pl-1 pr-1 xl:pr-2.5 py-1 rounded-full bg-[#FFF6DF] border border-[#E5C67E] hover:bg-[#FCECC2] transition-colors shrink-0"
-              title={profile.dharmaName || 'Phật tử'}
+              title={profile.dharmaName || 'Dharma'}
             >
-              <div className="w-7 h-7 rounded-full bg-[#FFE07D] border border-[#D9A02E] flex items-center justify-center text-xs font-bold text-[#3D2505] shrink-0">
-                {(profile.dharmaName || 'P').charAt(0).toUpperCase()}
+              <div className="w-7 h-7 rounded-full overflow-hidden bg-[#FFE07D] border border-[#D9A02E] flex items-center justify-center shrink-0">
+                <img
+                  src={profile.avatarUrl || '/images/dharma-logo.png'}
+                  alt={profile.dharmaName || 'Dharma'}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="hidden xl:inline text-xs font-bold text-[#7A5000] max-w-[92px] whitespace-nowrap truncate">
-                {profile.dharmaName || 'Phật tử'}
+                {profile.dharmaName || 'Dharma'}
               </span>
             </Link>
           </div>

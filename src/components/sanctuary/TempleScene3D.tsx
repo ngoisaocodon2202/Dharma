@@ -1419,7 +1419,7 @@ function PlayerAvatarController({ hideHtmlBadges }: { hideHtmlBadges: boolean })
     }
   });
 
-  const displayName = `${name.trim() || 'Diệu Tâm'} (Bạn)`;
+  const displayName = `${name.trim() || 'Dharma'} (Bạn)`;
 
   return (
     <group ref={groupRef} position={[avatarPos[0], avatarPos[1], avatarPos[2]]} rotation={[0, Math.PI, 0]}>

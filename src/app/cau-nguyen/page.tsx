@@ -67,8 +67,14 @@ export default function CauNguyenPage() {
   const [prayers, setPrayers] = useState<CauAnPrayerItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [inputText, setInputText] = useState('');
-  const [dharmaName, setDharmaName] = useState(profile.dharmaName || 'Phật tử Thiện Tâm');
+  const [dharmaName, setDharmaName] = useState(profile.dharmaName || 'Dharma');
   const [targetName, setTargetName] = useState('Song thân phụ mẫu & Gia quyến');
+
+  useEffect(() => {
+    if (profile.dharmaName) {
+      setDharmaName(profile.dharmaName);
+    }
+  }, [profile.dharmaName]);
   const [selectedCategory, setSelectedCategory] = useState(CAU_AN_CATEGORIES[0]);
   const [showDetailInputs, setShowDetailInputs] = useState(false);
 
@@ -157,8 +163,8 @@ export default function CauNguyenPage() {
         body: JSON.stringify({
           room_type: 'cau_an',
           user_id: 'phat-tu-local',
-          dharma_name: dharmaName.trim() || 'Phật tử Thiện Tâm',
-          sender_name: dharmaName.trim() || 'Phật tử Thiện Tâm',
+          dharma_name: dharmaName.trim() || 'Dharma',
+          sender_name: dharmaName.trim() || 'Dharma',
           target_name: targetName.trim() || 'Gia đạo bình an',
           target_info: selectedCategory,
           category: selectedCategory,
@@ -181,7 +187,7 @@ export default function CauNguyenPage() {
     });
     addPrayerLamp({
       type: 'CAU_AN',
-      senderName: dharmaName || 'Phật tử Thiện Tâm',
+      senderName: dharmaName || 'Dharma',
       recipientName: targetName || 'Gia đạo bình an',
       wishContent: trimmed,
     });

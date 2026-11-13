@@ -152,7 +152,7 @@ const initialLanternSeed: FloatingLanternItem[] = [
 ];
 
 export const useTempleStore = create<TempleState>((set, get) => ({
-  name: 'Diệu Tâm',
+  name: 'Dharma',
   gender: 'male',
   robe: 'lam',
   serverId: 'main-hall',
@@ -262,7 +262,7 @@ export const useTempleStore = create<TempleState>((set, get) => ({
   triggerBell: () =>
     set((s) => ({
       bellSwingNonce: s.bellSwingNonce + 1,
-      toastText: `Tiếng Đại Hồng Chung ngân vang · ${s.name.trim() || 'Diệu Tâm'} kính lễ`,
+      toastText: `Tiếng Đại Hồng Chung ngân vang · ${s.name.trim() || 'Dharma'} kính lễ`,
       toastNonce: s.toastNonce + 1,
     })),
 
@@ -299,7 +299,7 @@ export const useTempleStore = create<TempleState>((set, get) => ({
     set((s) => {
       const item: FloatingLanternItem = {
         id: `lantern-${Date.now()}`,
-        author: s.name.trim() || 'Diệu Tâm',
+        author: s.name.trim() || 'Dharma',
         wish,
         color,
         x: 14.8 + (Math.random() - 0.5) * 3.0,
@@ -332,7 +332,7 @@ export const useTempleStore = create<TempleState>((set, get) => ({
       if (!clean) return {};
       const item: PrayerWallEntry = {
         id: `pw-${Date.now()}`,
-        author: s.name.trim() || 'Diệu Tâm',
+        author: s.name.trim() || 'Dharma',
         timeLabel: 'Vừa xong',
         content: clean.startsWith('"') ? clean : `"${clean}"`,
         blessings: 1,

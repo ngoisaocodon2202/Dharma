@@ -76,8 +76,14 @@ export default function CauSieuPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [inputText, setInputText] = useState('');
   const [targetName, setTargetName] = useState('Cửu Huyền Thất Tổ & Chư Hương Linh');
-  const [dharmaName, setDharmaName] = useState(profile.dharmaName || 'Phật tử Thiện Tâm');
+  const [dharmaName, setDharmaName] = useState(profile.dharmaName || 'Dharma');
   const [showDetailInputs, setShowDetailInputs] = useState(false);
+
+  useEffect(() => {
+    if (profile.dharmaName) {
+      setDharmaName(profile.dharmaName);
+    }
+  }, [profile.dharmaName]);
 
   // Full-screen sub-views (Requirement #9)
   const [isHistoryPageOpen, setIsHistoryPageOpen] = useState(false);
@@ -165,8 +171,8 @@ export default function CauSieuPage() {
         body: JSON.stringify({
           room_type: 'cau_sieu',
           user_id: 'phat-tu-local',
-          dharma_name: dharmaName.trim() || 'Phật tử Thiện Tâm',
-          sender_name: dharmaName.trim() || 'Phật tử Thiện Tâm',
+          dharma_name: dharmaName.trim() || 'Dharma',
+          sender_name: dharmaName.trim() || 'Dharma',
           target_name: targetName.trim() || 'Cửu Huyền Thất Tổ',
           target_info: 'Hồi hướng siêu sinh Tịnh Độ',
           category: 'Siêu độ gia tiên',
@@ -189,7 +195,7 @@ export default function CauSieuPage() {
     });
     addPrayerLamp({
       type: 'CAU_SIEU',
-      senderName: dharmaName || 'Phật tử Thiện Tâm',
+      senderName: dharmaName || 'Dharma',
       recipientName: targetName || 'Cửu Huyền Thất Tổ',
       wishContent: trimmed,
     });

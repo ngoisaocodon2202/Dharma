@@ -10,6 +10,7 @@ import { AuthModal } from '@/components/auth/AuthModal';
 import { MindfulnessProvider } from '@/components/mindfulness/MindfulnessContext';
 import { MindfulnessModal } from '@/components/mindfulness/MindfulnessModal';
 import { DharmaMixerProvider, FloatingDharmaAudioPlayer } from '@/components/audio/DharmaAudioPlayer';
+import DharmaWelcomeOnboarding from '@/components/onboarding/DharmaWelcomeOnboarding';
 
 export const dynamic = 'force-dynamic';
 
@@ -99,6 +100,7 @@ export default function RootLayout({
                   <GlobalAudioPlayer />
                   <AuthModal />
                   <MindfulnessModal />
+                  <DharmaWelcomeOnboarding />
                 </MindfulnessProvider>
               </DharmaMixerProvider>
             </AudioProvider>

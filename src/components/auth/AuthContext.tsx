@@ -1,6 +1,12 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import {
+  DEFAULT_DHARMA_NAME,
+  readDeviceAuthCookie,
+  writeDeviceAuthCookie,
+  type DeviceAuthState,
+} from '@/lib/deviceAuthCookie';
 
 export interface User {
   id: string;
@@ -36,25 +42,72 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register'>('login');
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed && (parsed.dharma_name || parsed.full_name)) {
-          setUser(parsed);
+    const hydrateFromDevice = () => {
+      try {
+        const cookieState = readDeviceAuthCookie();
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && (parsed.dharma_name || parsed.full_name)) {
+            setUser(
+              cookieState
+                ? {
+                    ...parsed,
+                    full_name: cookieState.dharmaName,
+                    dharma_name: cookieState.dharmaName,
+                    avatar_url: cookieState.avatarUrl,
+                  }
+                : parsed
+            );
+            return;
+          }
         }
+        if (cookieState) {
+          setUser({
+            id: `phattu-${cookieState.dharmaName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'dharma'}`,
+            email: '',
+            role_id: 'PHAT_TU',
+            full_name: cookieState.dharmaName,
+            dharma_name: cookieState.dharmaName,
+            avatar_url: cookieState.avatarUrl,
+          });
+        }
+      } catch (err) {
+        console.warn('Không thể đọc hồ sơ Pháp danh:', err);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.warn('Không thể đọc hồ sơ Pháp danh:', err);
-    } finally {
-      setIsLoading(false);
-    }
+    };
+
+    hydrateFromDevice();
+
+    const handleCookieEvent = (evt: Event) => {
+      const detail = (evt as CustomEvent<DeviceAuthState>).detail;
+      if (!detail) return;
+      setUser((prev) => ({
+        id: prev?.id || `phattu-${detail.dharmaName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'dharma'}`,
+        email: prev?.email || '',
+        role_id: prev?.role_id || 'PHAT_TU',
+        gender: prev?.gender,
+        full_name: detail.dharmaName,
+        dharma_name: detail.dharmaName,
+        avatar_url: detail.avatarUrl,
+      }));
+    };
+
+    window.addEventListener('dharma-device-auth-changed', handleCookieEvent);
+    return () => window.removeEventListener('dharma-device-auth-changed', handleCookieEvent);
   }, []);
 
   const login = (userData: User) => {
     setUser(userData);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+      writeDeviceAuthCookie({
+        dharmaName: userData.dharma_name || userData.full_name || DEFAULT_DHARMA_NAME,
+        avatarUrl: userData.avatar_url,
+        onboarded: true,
+      });
     } catch {}
     setIsAuthModalOpen(false);
   };
@@ -62,14 +115,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const setDharmaProfile = (dharmaName: string, gender: 'Nam' | 'Nữ' | 'male' | 'female') => {
     const normalizedGender: 'Nam' | 'Nữ' =
       gender === 'female' || gender === 'Nữ' ? 'Nữ' : 'Nam';
-    const userId = `phattu-${dharmaName.toLowerCase().replace(/\s+/g, '-')}`;
+    const finalName = dharmaName.trim() || DEFAULT_DHARMA_NAME;
+    const userId = `phattu-${finalName.toLowerCase().replace(/\s+/g, '-')}`;
     login({
       id: userId,
       email: '',
       role_id: 'PHAT_TU',
-      full_name: dharmaName,
-      dharma_name: dharmaName,
+      full_name: finalName,
+      dharma_name: finalName,
       gender: normalizedGender,
+      avatar_url: user?.avatar_url,
     });
   };
 
@@ -79,6 +134,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (next) {
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+          writeDeviceAuthCookie({
+            dharmaName: next.dharma_name || next.full_name || DEFAULT_DHARMA_NAME,
+            avatarUrl: next.avatar_url,
+            onboarded: true,
+          });
         } catch {}
       }
       return next;

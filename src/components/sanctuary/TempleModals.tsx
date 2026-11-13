@@ -86,9 +86,13 @@ function OnboardingModal() {
   const [draftRobe, setDraftRobe] = useState(robe);
   const [draftServer, setDraftServer] = useState<HallId>(serverId);
 
+  React.useEffect(() => {
+    setDraftName(name);
+  }, [name]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const finalName = draftName.trim() || 'Diệu Tâm';
+    const finalName = draftName.trim() || 'Dharma';
     setProfile({
       name: finalName,
       gender: draftGender,
@@ -524,7 +528,7 @@ function LeaderboardModal() {
   const sortedRanks = useMemo(() => {
     const selfRow = {
       id: 'self',
-      name: name.trim() || 'Diệu Tâm',
+      name: name.trim() || 'Dharma',
       robe,
       minutes: selfMinutes,
       beads: totalMalaBeads,
@@ -631,7 +635,7 @@ function LeaderboardModal() {
                   </span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-xs font-bold text-[#FFF4D2] truncate">{name || 'Diệu Tâm'}</span>
+                      <span className="text-xs font-bold text-[#FFF4D2] truncate">{name || 'Dharma'}</span>
                       <span className="px-2 py-0.5 rounded-full bg-[#24160F]/80 border border-[#A97B4F]/35 text-[10px] text-[#DBC09B]">
                         {levelTitle}
                       </span>

@@ -41,6 +41,13 @@ import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 import { PRECEPTS_CONFIG } from '@/components/profile/ProfileSections';
 import { CenterToast } from '@/components/ui/CenterToast';
 import {
+  DEFAULT_DHARMA_AVATAR,
+  DEFAULT_DHARMA_NAME,
+  readDeviceAuthCookie,
+  resizeAvatarToDataUrl,
+  writeDeviceAuthCookie,
+} from '@/lib/deviceAuthCookie';
+import {
   useDharmaStore,
   computePracticeStreak,
   getTodayDateKey,
@@ -94,14 +101,23 @@ function ProfileContent() {
     importBackupJson,
   } = useDharmaStore();
 
-  // Custom avatar state (localStorage)
-  const [avatarUrl, setAvatarUrl] = useState<string>('/images/dharma-logo.png');
+  // Custom avatar state (synced with device cookie + store + localStorage)
+  const [avatarUrl, setAvatarUrl] = useState<string>(DEFAULT_DHARMA_AVATAR);
   useEffect(() => {
+    const cookieState = readDeviceAuthCookie();
+    if (profile.avatarUrl) {
+      setAvatarUrl(profile.avatarUrl);
+      return;
+    }
+    if (cookieState?.avatarUrl) {
+      setAvatarUrl(cookieState.avatarUrl);
+      return;
+    }
     try {
       const saved = localStorage.getItem(CUSTOM_AVATAR_KEY);
       if (saved) setAvatarUrl(saved);
     } catch {}
-  }, []);
+  }, [profile.avatarUrl]);
 
   // Streak Calendar month navigation
   const [calYear, setCalYear] = useState<number>(() => new Date().getFullYear());
@@ -253,24 +269,26 @@ function ProfileContent() {
     return { cells, activeDaysCount };
   }, [calYear, calMonth, dailyLogs, todayKey]);
 
-  const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 1024 * 1024 * 2) {
-      showToast('Vui lòng chọn ảnh nhỏ hơn 2MB');
+    if (file.size > 1024 * 1024 * 5) {
+      showToast('Vui lòng chọn ảnh nhỏ hơn 5MB');
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') {
-        setAvatarUrl(reader.result);
-        try {
-          localStorage.setItem(CUSTOM_AVATAR_KEY, reader.result);
-        } catch {}
-        showToast('Đã cập nhật ảnh đại diện cư sĩ!');
-      }
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressed = await resizeAvatarToDataUrl(file);
+      setAvatarUrl(compressed);
+      updateProfile({ avatarUrl: compressed });
+      writeDeviceAuthCookie({
+        dharmaName: profile.dharmaName || DEFAULT_DHARMA_NAME,
+        avatarUrl: compressed,
+        onboarded: true,
+      });
+      showToast('Đã cập nhật ảnh đại diện & lưu trên thiết bị!');
+    } catch {
+      showToast('Không thể xử lý tệp ảnh đã chọn.');
+    }
   };
 
   const openEditProfileModal = () => {
@@ -286,23 +304,28 @@ function ProfileContent() {
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
-    const cleaned = formDharmaName.trim();
-    if (!cleaned) return;
+    const cleaned = formDharmaName.trim() || DEFAULT_DHARMA_NAME;
     updateProfile({
       dharmaName: cleaned,
-      fullName: formFullName.trim() || profile.fullName,
+      fullName: formFullName.trim() || cleaned,
+      avatarUrl,
       refugeTemple: formRefugeTemple.trim() || undefined,
       refugeDate: formRefugeDate.trim() || undefined,
       masterName: formMasterName.trim() || undefined,
       vowText: formVowText.trim() || profile.vowText,
       vegetarianMode: formVegetarianMode,
     });
+    writeDeviceAuthCookie({
+      dharmaName: cleaned,
+      avatarUrl,
+      onboarded: true,
+    });
     if (user) {
       setDharmaProfile(cleaned, user.gender || 'Nam');
     }
     playBellSound(0.4);
     setIsEditProfileOpen(false);
-    showToast('Đã cập nhật Hồ Sơ Phật Tử!');
+    showToast('Đã cập nhật Hồ Sơ Phật Tử & Cookie thiết bị!');
   };
 
   const handleAddMemorial = (e: React.FormEvent) => {
@@ -451,10 +474,13 @@ function ProfileContent() {
                       type="button"
                       onClick={() => {
                         setIsMoreMenuOpen(false);
-                        setAvatarUrl('/images/dharma-logo.png');
-                        try {
-                          localStorage.removeItem(CUSTOM_AVATAR_KEY);
-                        } catch {}
+                        setAvatarUrl(DEFAULT_DHARMA_AVATAR);
+                        updateProfile({ avatarUrl: DEFAULT_DHARMA_AVATAR });
+                        writeDeviceAuthCookie({
+                          dharmaName: profile.dharmaName || DEFAULT_DHARMA_NAME,
+                          avatarUrl: DEFAULT_DHARMA_AVATAR,
+                          onboarded: true,
+                        });
                         showToast('Đã khôi phục ấn hiệu mặc định DHARMA');
                       }}
                       className="w-full text-left px-3 py-2 rounded-xl hover:bg-[#FFF9EB] text-[#6B533B] cursor-pointer"
@@ -500,7 +526,7 @@ function ProfileContent() {
           </div>
 
           <h1 className="text-xl font-bold text-[#2C1E10] mt-3">
-            {profile.dharmaName || 'Phật tử'}
+            {profile.dharmaName || DEFAULT_DHARMA_NAME}
           </h1>
           <p className="text-xs text-[#6B533B] italic mt-1 max-w-md leading-relaxed">
             &ldquo;{profile.vowText || 'Thiền là trở về sống trọn vẹn với hiện tại.'}&rdquo;

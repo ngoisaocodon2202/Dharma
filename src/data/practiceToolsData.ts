@@ -765,7 +765,7 @@ export function generateMemorialPrayer(
     `Hôm nay là ngày ${String(memorial.lunarDeathDay).padStart(2, '0')} tháng ${String(memorial.lunarDeathMonth).padStart(2, '0')} Âm lịch (Dương lịch: ${solarDateLabel}), nhân ngày ${milestoneLabel ? milestoneLabel.toLowerCase() : 'kỵ nhật tưởng niệm'} của:`,
     `• ${memorial.relationship}: ${memorial.fullName}${dharmaTitle}.`,
     '',
-    `Đệ tử con pháp danh ${practitionerDharmaName || 'Thiện Tâm'} cùng toàn thể con cháu trong gia đình thành tâm sắm sửa hương hoa, trà quả, mâm cơm chay thanh tịnh dâng lên án thờ, trước lễ Tam Bảo, sau kính mời hương linh ${memorial.relationship} cùng liệt vị gia tiên về thụ hưởng hương vị thanh tịnh.`,
+    `Đệ tử con pháp danh ${practitionerDharmaName || 'Dharma'} cùng toàn thể con cháu trong gia đình thành tâm sắm sửa hương hoa, trà quả, mâm cơm chay thanh tịnh dâng lên án thờ, trước lễ Tam Bảo, sau kính mời hương linh ${memorial.relationship} cùng liệt vị gia tiên về thụ hưởng hương vị thanh tịnh.`,
     '',
     'Ngưỡng nguyện hồng ân Tam Bảo tiếp dẫn hương linh sớm tiêu trừ trần cấu, tâm không còn vướng bận, nương ánh sáng từ bi sinh về cõi Cực Lạc an lành. Xin gia tiên phù hộ độ trì cho con cháu đời nay biết hiếu thuận, giữ năm giới thanh tịnh, làm nhiều việc thiện lành để báo đáp thâm ân.',
     '',

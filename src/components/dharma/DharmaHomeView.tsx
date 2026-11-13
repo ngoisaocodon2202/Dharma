@@ -473,8 +473,13 @@ export function DharmaHomeView() {
           <Link
             href="/ho-so"
             className="w-9 h-9 rounded-2xl overflow-hidden border border-[#DFC27D] bg-[#FFFDF8] shrink-0 shadow-xs"
+            title={profile.dharmaName || 'Dharma'}
           >
-            <img src="/dharma-logo.png" alt="DHARMA" className="w-full h-full object-cover" />
+            <img
+              src={profile.avatarUrl || '/images/dharma-logo.png'}
+              alt={profile.dharmaName || 'Dharma'}
+              className="w-full h-full object-cover"
+            />
           </Link>
 
           <div className="min-w-0 flex-1 text-center">
@@ -482,7 +487,7 @@ export function DharmaHomeView() {
               LIÊN HOA ĐÀI • DHARMA
             </p>
             <p className="text-sm font-bold text-[#2C1E10] truncate">
-              An lạc, <span className="text-[#8C5500]">{profile.dharmaName || 'Phật tử'}</span>
+              An lạc, <span className="text-[#8C5500]">{profile.dharmaName || 'Dharma'}</span>
             </p>
           </div>
 

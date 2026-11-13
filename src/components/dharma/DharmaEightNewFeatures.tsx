@@ -518,7 +518,7 @@ export function DharmaEightNewFeatures({
   const [dictQuery, setDictQuery] = useState('');
 
   // 8. Vườn Sen Đồng Tu state
-  const [postAuthor, setPostAuthor] = useState('Phật tử Thiện Tâm');
+  const [postAuthor, setPostAuthor] = useState('Dharma');
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
 
@@ -605,7 +605,7 @@ export function DharmaEightNewFeatures({
         body: JSON.stringify({
           resource: 'features',
           feature_slug: activeTool,
-          author_name: payload.author_name || 'Phật tử Thiện Tâm',
+          author_name: payload.author_name || 'Dharma',
           title: payload.title,
           subtitle: payload.subtitle,
           content: payload.content,
@@ -1313,7 +1313,7 @@ export function DharmaEightNewFeatures({
                   if (!postContent.trim()) return;
                   playBellSound(0.4);
                   saveRecordToPostgres({
-                    author_name: postAuthor || 'Phật tử Thiện Tâm',
+                    author_name: postAuthor || 'Dharma',
                     title: postTitle || 'Tâm sự đồng tu & Xin hộ niệm',
                     subtitle: 'Vườn Sen Đồng Tu DHARMA',
                     content: postContent,

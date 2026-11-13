@@ -212,7 +212,7 @@ export function TempleHUD() {
               className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full border border-[#FFF5D2]/70 shrink-0"
               style={{ backgroundColor: activeRobe.hex }}
             />
-            <span className="font-semibold truncate">{name || 'Diệu Tâm'}</span>
+            <span className="font-semibold truncate">{name || 'Dharma'}</span>
             <span className="hidden xl:inline text-[10px] text-[#F7EBD5]/65 shrink-0">
               ({gender === 'male' ? 'Nam' : 'Nữ'})
             </span>
@@ -456,7 +456,7 @@ export function TempleHUD() {
                   style={{ backgroundColor: activeRobe.hex }}
                 />
                 <span className="text-xs font-semibold truncate">
-                  {activeRobe.fullName} · {name || 'Diệu Tâm'}
+                  {activeRobe.fullName} · {name || 'Dharma'}
                 </span>
               </div>
               <span className="px-2 py-0.5 rounded-full bg-[#3A2817] border border-[#A97B4F]/40 text-[10px] font-bold text-[#DBC09B]">

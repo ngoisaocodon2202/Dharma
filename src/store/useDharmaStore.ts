@@ -2,6 +2,11 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import {
+  DEFAULT_DHARMA_AVATAR,
+  DEFAULT_DHARMA_NAME,
+  readDeviceAuthCookie,
+} from '@/lib/deviceAuthCookie';
 
 export type VegetarianMode = 'LUC_TRAI' | 'THAP_TRAI' | 'TRUONG_CHAY';
 export type MeritCategory = 'HUONG_DANG' | 'TUNG_KINH' | 'NIEM_PHAT' | 'TOA_THIEN' | 'PHONG_SINH';
@@ -17,6 +22,7 @@ export interface UserProfile {
   id: string;
   fullName: string;
   dharmaName: string;
+  avatarUrl?: string;
   refugeDate?: string;
   refugeTemple?: string;
   masterName?: string;
@@ -144,8 +150,9 @@ export function computePracticeStreak(
 
 const DEFAULT_PROFILE: UserProfile = {
   id: 'default-profile',
-  fullName: 'Cư sĩ Tâm An',
-  dharmaName: 'Thiện Tâm',
+  fullName: 'Dharma',
+  dharmaName: 'Dharma',
+  avatarUrl: '/images/dharma-logo.png',
   refugeDate: '15/04/2023',
   refugeTemple: 'Chùa Hoằng Pháp',
   masterName: 'Thượng Tọa Thích Chân Tính',
@@ -1121,7 +1128,26 @@ export const useDharmaStore = create<DharmaState>()(
             if (res.ok) {
               const data = await res.json();
               if (data.ok && data.payload && Object.keys(data.payload).length > 0) {
-                return JSON.stringify(data.payload);
+                const payload = data.payload as { state?: { profile?: Record<string, unknown> } };
+                const cookieState = readDeviceAuthCookie();
+                if (payload?.state?.profile) {
+                  if (cookieState?.onboarded) {
+                    payload.state.profile = {
+                      ...payload.state.profile,
+                      dharmaName: cookieState.dharmaName,
+                      fullName: cookieState.dharmaName,
+                      avatarUrl: cookieState.avatarUrl,
+                    };
+                  } else {
+                    payload.state.profile = {
+                      ...payload.state.profile,
+                      dharmaName: DEFAULT_DHARMA_NAME,
+                      fullName: DEFAULT_DHARMA_NAME,
+                      avatarUrl: DEFAULT_DHARMA_AVATAR,
+                    };
+                  }
+                }
+                return JSON.stringify(payload);
               }
             }
           } catch {
