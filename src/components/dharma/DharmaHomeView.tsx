@@ -25,7 +25,6 @@ import {
 } from 'lucide-react';
 import { LotusMinimalIcon } from '@/components/icons/DharmaMinimalIcons';
 import { SearchModal } from '@/components/layout/SearchModal';
-import { DharmaAudioPlayerPanel } from '@/components/audio/DharmaAudioPlayer';
 import { getDailyDhammapadaVerse, DHAMMAPADA_VERSES, type DhammapadaVerse } from '@/data/dhammapada';
 import { BUDDHAS_DATA } from '@/data/buddhasData';
 import { PAGODAS_DATA } from '@/data/pagodas';
@@ -1056,12 +1055,7 @@ export function DharmaHomeView() {
           </section>
         </div>
 
-        {/* 8. ĐÀI PHÁP ÂM ĐA TẦNG & MÁY NIỆM PHẬT */}
-        <section className="space-y-3">
-          <DharmaAudioPlayerPanel />
-        </section>
-
-        {/* 9. SỰ KIỆN PHẬT GIÁO SẮP TỚI */}
+        {/* 8. SỰ KIỆN PHẬT GIÁO SẮP TỚI */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
             <Link
