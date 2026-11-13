@@ -166,7 +166,7 @@ export default function DedicationParchmentPage() {
                     updated[idx].name = e.target.value;
                     setFamilyMembers(updated);
                   }}
-                  className="col-span-4 px-3 py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-xs sm:text-sm bg-white dark:bg-charcoal-900"
+                  className="col-span-4 px-3 py-2 sm:py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-base sm:text-sm bg-white dark:bg-charcoal-900"
                 />
                 <input
                   type="text"
@@ -177,7 +177,7 @@ export default function DedicationParchmentPage() {
                     updated[idx].birthYear = e.target.value;
                     setFamilyMembers(updated);
                   }}
-                  className="col-span-3 px-3 py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-xs sm:text-sm bg-white dark:bg-charcoal-900"
+                  className="col-span-3 px-3 py-2 sm:py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-base sm:text-sm bg-white dark:bg-charcoal-900"
                 />
                 <input
                   type="text"
@@ -188,7 +188,7 @@ export default function DedicationParchmentPage() {
                     updated[idx].wish = e.target.value;
                     setFamilyMembers(updated);
                   }}
-                  className="col-span-4 px-3 py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-xs sm:text-sm bg-white dark:bg-charcoal-900"
+                  className="col-span-4 px-3 py-2 sm:py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-base sm:text-sm bg-white dark:bg-charcoal-900"
                 />
                 <button
                   onClick={() => removeFamilyMember(item.id)}
@@ -227,7 +227,7 @@ export default function DedicationParchmentPage() {
                     updated[idx].name = e.target.value;
                     setAncestors(updated);
                   }}
-                  className="col-span-5 px-3 py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-xs sm:text-sm bg-white dark:bg-charcoal-900"
+                  className="col-span-5 px-3 py-2 sm:py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-base sm:text-sm bg-white dark:bg-charcoal-900"
                 />
                 <input
                   type="text"
@@ -238,7 +238,7 @@ export default function DedicationParchmentPage() {
                     updated[idx].relation = e.target.value;
                     setAncestors(updated);
                   }}
-                  className="col-span-3 px-3 py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-xs sm:text-sm bg-white dark:bg-charcoal-900"
+                  className="col-span-3 px-3 py-2 sm:py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-base sm:text-sm bg-white dark:bg-charcoal-900"
                 />
                 <input
                   type="text"
@@ -249,7 +249,7 @@ export default function DedicationParchmentPage() {
                     updated[idx].passedYear = e.target.value;
                     setAncestors(updated);
                   }}
-                  className="col-span-3 px-3 py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-xs sm:text-sm bg-white dark:bg-charcoal-900"
+                  className="col-span-3 px-3 py-2 sm:py-1.5 rounded-xl border border-ivory-300 dark:border-charcoal-600 text-base sm:text-sm bg-white dark:bg-charcoal-900"
                 />
                 <button
                   onClick={() => removeAncestor(item.id)}

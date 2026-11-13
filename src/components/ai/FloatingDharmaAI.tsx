@@ -127,7 +127,7 @@ export default function FloatingDharmaAI() {
 
       {/* Chat Popup Window */}
       {open && (
-        <div className="fixed bottom-20 lg:bottom-6 right-3 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[380px] max-h-[75vh] bg-white rounded-2xl border-2 border-[#C68B19] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed bottom-20 lg:bottom-6 right-3 sm:right-6 z-50 w-[calc(100vw-24px)] sm:w-[380px] max-h-[75dvh] sm:max-h-[75vh] dharma-input-panel-lock bg-white rounded-2xl border-2 border-[#C68B19] shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200">
           {/* Header */}
           <div className="bg-gradient-to-r from-[#FFFDF8] via-[#FFF9EB] to-[#FCECC2] px-4 py-3 text-[#2C1E10] flex items-center justify-between border-b border-[#EAD7A7] shrink-0">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -218,7 +218,7 @@ export default function FloatingDharmaAI() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Đặt câu hỏi về Phật Pháp..."
-              className="flex-1 px-3 py-2 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm text-stone-800 focus:outline-none focus:border-[#b5892e]"
+              className="flex-1 px-3 py-2 rounded-xl bg-stone-50 border border-stone-200 text-base sm:text-sm text-stone-800 focus:outline-none focus:border-[#b5892e]"
             />
             <button
               type="submit"

@@ -303,7 +303,7 @@ export function DharmaAssistantView() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Nhập câu hỏi về Phật Pháp, kinh kệ, thiền định, ngày giỗ..."
             disabled={isLoading}
-            className="flex-1 px-4 py-3 rounded-2xl text-xs sm:text-sm bg-white dark:bg-charcoal-800 border border-ivory-300 dark:border-charcoal-600 text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:border-saffron-500 focus:ring-2 focus:ring-saffron-400/20"
+            className="flex-1 px-4 py-3 rounded-2xl text-base sm:text-sm bg-white dark:bg-charcoal-800 border border-ivory-300 dark:border-charcoal-600 text-charcoal-900 dark:text-charcoal-100 focus:outline-none focus:border-saffron-500 focus:ring-2 focus:ring-saffron-400/20"
           />
           <Button
             type="submit"

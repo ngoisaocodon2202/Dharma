@@ -751,7 +751,7 @@ export function DharmaSutraReader({
               value={scrollSpeed}
               onChange={(e) => setScrollSpeed(Number(e.target.value))}
               className={cn(
-                'px-2 py-1 rounded-xl border font-bold text-[11px] cursor-pointer whitespace-nowrap',
+                'px-2.5 py-1.5 sm:px-2 sm:py-1 rounded-xl border font-bold text-base sm:text-[11px] cursor-pointer whitespace-nowrap',
                 theme.cardBg,
                 theme.border,
                 theme.text

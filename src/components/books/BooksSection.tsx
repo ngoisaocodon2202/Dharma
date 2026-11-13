@@ -87,7 +87,7 @@ export function BooksSection({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Tìm tên kinh sách, tác giả..."
-              className="w-full pl-8 sm:pl-9 pr-3 py-1.5 rounded-xl text-xs bg-white dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-600 focus:outline-none focus:ring-2 focus:ring-saffron-500/50 text-charcoal-900 dark:text-charcoal-100"
+              className="w-full pl-8 sm:pl-9 pr-3 py-2 sm:py-1.5 rounded-xl text-base sm:text-xs bg-white dark:bg-charcoal-900 border border-ivory-200 dark:border-charcoal-600 focus:outline-none focus:ring-2 focus:ring-saffron-500/50 text-charcoal-900 dark:text-charcoal-100"
             />
           </div>
         </div>

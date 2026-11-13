@@ -149,7 +149,7 @@ function OnboardingModal() {
         <form
           onSubmit={handleSubmit}
           style={CARD_STYLE}
-          className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#A97B4F]/60 shadow-[0_24px_70px_rgba(0,0,0,0.9)] p-5 sm:p-7 text-[#F7EBD5]"
+          className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#A97B4F]/60 shadow-[0_24px_70px_rgba(0,0,0,0.9)] p-5 sm:p-7 text-[#F7EBD5] dharma-input-panel-lock"
         >
           <OrnateCardCorners />
 
@@ -171,7 +171,7 @@ function OnboardingModal() {
                 value={draftName}
                 onChange={(e) => setDraftName(e.target.value)}
                 placeholder="Nhập Pháp danh / Tên của bạn"
-                className="w-full h-11 px-4 rounded-xl bg-[#251B14]/90 border border-[#A97B4F]/45 focus:border-[#DBC09B] outline-none text-center text-sm sm:text-base font-semibold text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 transition"
+                className="w-full h-11 px-4 rounded-xl bg-[#251B14]/90 border border-[#A97B4F]/45 focus:border-[#DBC09B] outline-none text-center text-base font-semibold text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 transition"
               />
               <div className="flex flex-wrap items-center justify-center gap-1.5">
                 {QUICK_NAMES.map((preset) => {
@@ -394,7 +394,7 @@ function ServerModal() {
                   type="text"
                   value={urlInput}
                   onChange={(e) => setUrlInput(e.target.value)}
-                  className="flex-1 h-8 px-2.5 rounded-lg bg-[#1A0E09] border border-[#A97B4F]/40 text-xs text-[#FFF4D2] outline-none"
+                  className="flex-1 h-10 sm:h-8 px-2.5 rounded-lg bg-[#1A0E09] border border-[#A97B4F]/40 text-base sm:text-xs text-[#FFF4D2] outline-none"
                 />
                 <button
                   type="button"
@@ -402,7 +402,7 @@ function ServerModal() {
                     setColyseusUrl(urlInput);
                     showToast(`Đã lưu cấu hình máy chủ: ${urlInput}`);
                   }}
-                  className="px-3 h-8 rounded-lg bg-[#A97B4F] text-[#1B0D09] font-bold cursor-pointer"
+                  className="px-3 h-10 sm:h-8 rounded-lg bg-[#A97B4F] text-[#1B0D09] font-bold cursor-pointer"
                 >
                   Lưu & Nối
                 </button>
@@ -770,7 +770,7 @@ function LeaderboardModal() {
                   value={noteInput}
                   onChange={(e) => setNoteInput(e.target.value)}
                   placeholder="Gửi lời nguyện cầu an cho cha mẹ, gia đình..."
-                  className="flex-1 h-10 px-3.5 rounded-xl bg-[#20140D] border border-[#A97B4F]/35 text-xs text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 outline-none focus:border-[#DBC09B]"
+                  className="flex-1 h-10 px-3.5 rounded-xl bg-[#20140D] border border-[#A97B4F]/35 text-base sm:text-xs text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 outline-none focus:border-[#DBC09B]"
                 />
                 <button
                   type="submit"
@@ -1177,7 +1177,7 @@ function PrayerModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-[70] bg-[rgba(10,5,2,0.84)] backdrop-blur-xl flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div className="fixed inset-0 z-[70] bg-[rgba(10,5,2,0.84)] backdrop-blur-xl flex items-center justify-center p-3 sm:p-5 overflow-y-auto overscroll-contain dharma-input-panel-lock">
       <form
         onSubmit={handleRelease}
         style={CARD_STYLE}
@@ -1208,7 +1208,7 @@ function PrayerModal() {
               }
             }}
             placeholder="Nhập lời cầu nguyện bình an, sức khỏe, hạnh phúc..."
-            className="w-full p-3.5 rounded-2xl bg-[#261B14]/90 border border-[#A97B4F]/40 focus:border-[#DBC09B] outline-none text-sm text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 resize-none"
+            className="w-full p-3.5 rounded-2xl bg-[#261B14]/90 border border-[#A97B4F]/40 focus:border-[#DBC09B] outline-none text-base text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 resize-none"
           />
           <div className="text-right font-mono text-[11px] text-[#F7EBD5]/65">
             {wish.length} / 140 ký tự

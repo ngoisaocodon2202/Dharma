@@ -431,7 +431,7 @@ export default function CauSieuPage() {
       {/* ========================================================================= */}
       {/* 4. BOTTOM INPUT BAR: VIẾT LỜI HỒI HƯỚNG & GỬI                             */}
       {/* ========================================================================= */}
-      <footer className="relative z-20 pb-3 pt-2 px-3.5 sm:px-6 bg-[#FFFDF8]/90 backdrop-blur-md border-t border-[#EAD7A7]/85 space-y-2">
+      <footer className="relative z-20 shrink-0 dharma-input-panel-lock pb-3 pt-2 px-3.5 sm:px-6 bg-[#FFFDF8]/90 backdrop-blur-md border-t border-[#EAD7A7]/85 space-y-2">
         {showDetailInputs && (
           <div className="max-w-lg mx-auto grid grid-cols-2 gap-2 animate-fade-in">
             <input
@@ -439,14 +439,14 @@ export default function CauSieuPage() {
               value={dharmaName}
               onChange={(e) => setDharmaName(e.target.value)}
               placeholder="Pháp danh / Tên bạn"
-              className="px-3 py-1.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-xs text-[#2C1E10] focus:outline-none focus:border-[#C68B19]"
+              className="px-3 py-2 min-h-[40px] rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-base sm:text-xs text-[#2C1E10] focus:outline-none focus:border-[#C68B19]"
             />
             <input
               type="text"
               value={targetName}
               onChange={(e) => setTargetName(e.target.value)}
               placeholder="Tên hương linh / người mất"
-              className="px-3 py-1.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-xs text-[#2C1E10] focus:outline-none focus:border-[#C68B19]"
+              className="px-3 py-2 min-h-[40px] rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-base sm:text-xs text-[#2C1E10] focus:outline-none focus:border-[#C68B19]"
             />
           </div>
         )}
@@ -466,7 +466,7 @@ export default function CauSieuPage() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Viết lời hồi hướng cầu siêu..."
-            className="flex-1 bg-[#FAF7F0] text-[#2C1E10] placeholder:text-[#8E775B] text-xs sm:text-sm px-4 py-2.5 rounded-full border border-[#EAD7A7] outline-none focus:border-[#C68B19] transition-all min-w-0"
+            className="flex-1 bg-[#FAF7F0] text-[#2C1E10] placeholder:text-[#8E775B] text-base sm:text-sm px-4 py-2.5 rounded-full border border-[#EAD7A7] outline-none focus:border-[#C68B19] transition-all min-w-0"
           />
 
           <button
@@ -537,12 +537,12 @@ export default function CauSieuPage() {
                         value={editingTarget}
                         onChange={(e) => setEditingTarget(e.target.value)}
                         placeholder="Hương linh được hồi hướng"
-                        className="w-full text-xs p-2.5 rounded-xl border border-[#D9A02E] outline-none bg-[#FAF7F0] text-[#2C1E10]"
+                        className="w-full text-base sm:text-xs p-2.5 rounded-xl border border-[#D9A02E] outline-none bg-[#FAF7F0] text-[#2C1E10]"
                       />
                       <textarea
                         value={editingText}
                         onChange={(e) => setEditingText(e.target.value)}
-                        className="w-full text-xs p-2.5 rounded-xl border border-[#D9A02E] outline-none bg-[#FAF7F0] text-[#2C1E10] resize-none"
+                        className="w-full text-base sm:text-xs p-2.5 rounded-xl border border-[#D9A02E] outline-none bg-[#FAF7F0] text-[#2C1E10] resize-none"
                         rows={3}
                       />
                       <div className="flex justify-end gap-2">

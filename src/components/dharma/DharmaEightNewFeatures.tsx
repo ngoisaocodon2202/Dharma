@@ -906,7 +906,7 @@ export function DharmaEightNewFeatures({
                 <select
                   value={scrollSpeed108}
                   onChange={(e) => setScrollSpeed108(Number(e.target.value))}
-                  className="px-2 py-1.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-xs font-bold"
+                  className="px-2 py-2 sm:py-1.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-base sm:text-xs font-bold"
                 >
                   <option value={0.5}>0.5x Chậm</option>
                   <option value={0.8}>0.8x Chuẩn</option>

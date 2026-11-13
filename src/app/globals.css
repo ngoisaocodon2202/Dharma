@@ -824,6 +824,43 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   border-color: rgba(197, 140, 27, 0.65);
 }
 
+/* =========================================================
+   MOBILE ANTI-ZOOM & FIXED INPUT PANELS (GLOBAL)
+   ========================================================= */
+html,
+body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent iOS Safari / Android WebView auto-zoom on form focus (< 16px triggers zoom).
+   Kept outside @layer so it overrides Tailwind utility text sizes (.text-xs / .text-sm) on mobile/touch. */
+@media screen and (max-width: 1024px), (hover: none) and (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="hidden"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]),
+  textarea,
+  select {
+    font-size: 16px !important;
+    line-height: 1.4;
+    touch-action: manipulation;
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="hidden"]):not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"]),
+textarea,
+select {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Keep fixed/sticky text input panels stable against overscroll bounce & GPU jitter */
+.dharma-input-panel-lock {
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+}
+
 
 
 
