@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { recordDharmaMerit } from '@/components/dharma/DharmaInteractiveTools';
+import { SanctuaryFullscreenBackdrop } from '@/components/dharma/SanctuaryFullscreenBackdrop';
 import { useDharmaStore } from '@/store/useDharmaStore';
 import { LotusMinimalIcon } from '@/components/icons/DharmaMinimalIcons';
 import { cn } from '@/lib/utils';
@@ -265,19 +266,12 @@ export default function CauNguyenPage() {
 
   return (
     <div className="fixed inset-0 w-screen h-[100dvh] z-[90] bg-[#FAF6E8] text-[#2C1E10] flex flex-col justify-between overflow-hidden select-none">
-      {/* Sacred Avalokiteshvara & Medicine Buddha Golden Halo Backdrop */}
-      <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-start pt-12 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FCECC2] via-[#FFF9EB] to-[#FAF6E8]" />
-        <div className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full flex items-center justify-center mt-2">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-b from-[#FFE07D]/70 via-[#F5C542]/30 to-transparent blur-2xl" />
-          <img
-            src="/images/buddhas/quan-the-am-bo-tat.png"
-            alt="Đức Bồ Tát Quán Thế Âm"
-            className="relative w-64 h-64 sm:w-80 sm:h-80 object-contain drop-shadow-[0_10px_28px_rgba(184,134,11,0.35)]"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#FAF6E8]/25 to-[#FAF6E8]/95" />
-      </div>
+      {/* Full-Screen Sacred Avalokiteshvara Bodhisattva Silk Painting Backdrop */}
+      <SanctuaryFullscreenBackdrop
+        mobileSrc="/images/cau-an-fullscreen-mobile.jpg"
+        desktopSrc="/images/cau-an-fullscreen-desktop.jpg"
+        alt="Đức Bồ Tát Quán Thế Âm"
+      />
 
       {/* Toast Notification */}
       {toastMessage && (
@@ -292,7 +286,7 @@ export default function CauNguyenPage() {
       {/* ========================================================================= */}
       {/* 1. TOP HEADER BAR                                                         */}
       {/* ========================================================================= */}
-      <header className="relative z-30 h-14 px-3.5 sm:px-6 bg-[#FFFDF8]/90 backdrop-blur-md border-b border-[#EAD7A7] flex items-center justify-between shrink-0">
+      <header className="relative z-30 h-14 px-3.5 sm:px-6 bg-[#FFFDF8]/85 backdrop-blur-md border-b border-[#EAD7A7]/80 flex items-center justify-between shrink-0">
         <button
           type="button"
           onClick={() => router.push('/thuc-hanh')}
@@ -358,73 +352,75 @@ export default function CauNguyenPage() {
       {/* ========================================================================= */}
       {/* 3. REAL-TIME PRAYER STREAM                                                */}
       {/* ========================================================================= */}
-      <main className="relative z-10 flex-1 flex flex-col justify-end px-3.5 sm:px-6 pb-2 pt-36 space-y-2.5 overflow-y-auto no-scrollbar max-w-lg mx-auto w-full">
-        {isLoading ? (
-          <div className="p-4 rounded-2xl bg-[#FFFFFF]/90 border border-[#EAD7A7] text-center text-xs text-[#6B533B]">
-            Đang tải lời cầu an...
-          </div>
-        ) : (
-          prayers.slice(0, 25).map((p) => {
-            const isLiked = likedMap[p.id];
-            const isMine = p.user_id === 'phat-tu-local' || p.dharma_name === dharmaName;
-            return (
-              <div
-                key={p.id}
-                className={cn(
-                  'rounded-2xl p-3 sm:p-3.5 backdrop-blur-md border shadow-xs transition-all',
-                  isMine
-                    ? 'bg-[#FFF9EB]/95 border-[#D9A02E] text-[#2C1E10]'
-                    : 'bg-[#FFFFFF]/92 border-[#EAD7A7] text-[#2C1E10]'
-                )}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#FFE07D] to-[#F5C542] text-[#3D2505] border border-[#D9A02E] flex items-center justify-center text-xs shrink-0">
-                      <LotusMinimalIcon className="w-3.5 h-3.5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <h2 className="text-xs font-bold text-[#8C5500] whitespace-nowrap truncate">
-                          {p.dharma_name}
-                        </h2>
-                        <span className="text-[9.5px] px-1.5 py-0.2 rounded-full bg-[#FFF6DF] border border-[#EAD7A7] text-[#7A5000] font-semibold whitespace-nowrap shrink-0">
-                          {p.category || 'Cầu an'}
+      <div className="relative z-10 flex-1 min-h-0 flex flex-col justify-end">
+        <main className="max-h-[38dvh] overflow-y-auto no-scrollbar pl-3.5 pr-16 sm:px-6 pb-2 pt-3 space-y-2.5 max-w-lg mx-auto w-full">
+          {isLoading ? (
+            <div className="p-4 rounded-2xl bg-[#FFFFFF]/90 border border-[#EAD7A7] text-center text-xs text-[#6B533B]">
+              Đang tải lời cầu an...
+            </div>
+          ) : (
+            prayers.slice(0, 25).map((p) => {
+              const isLiked = likedMap[p.id];
+              const isMine = p.user_id === 'phat-tu-local' || p.dharma_name === dharmaName;
+              return (
+                <div
+                  key={p.id}
+                  className={cn(
+                    'rounded-2xl p-3 sm:p-3.5 backdrop-blur-md border shadow-xs transition-all',
+                    isMine
+                      ? 'bg-[#FFF9EB]/95 border-[#D9A02E] text-[#2C1E10]'
+                      : 'bg-[#FFFFFF]/90 border-[#EAD7A7] text-[#2C1E10]'
+                  )}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#FFE07D] to-[#F5C542] text-[#3D2505] border border-[#D9A02E] flex items-center justify-center text-xs shrink-0">
+                        <LotusMinimalIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <h2 className="text-xs font-bold text-[#8C5500] whitespace-nowrap truncate">
+                            {p.dharma_name}
+                          </h2>
+                          <span className="text-[9.5px] px-1.5 py-0.2 rounded-full bg-[#FFF6DF] border border-[#EAD7A7] text-[#7A5000] font-semibold whitespace-nowrap shrink-0">
+                            {p.category || 'Cầu an'}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-[#6B533B] block whitespace-nowrap truncate">
+                          Cầu an: {p.target_name || 'Gia đạo'} • {formatRelativeTimeVi(p.created_at)}
                         </span>
                       </div>
-                      <span className="text-[10px] text-[#6B533B] block whitespace-nowrap truncate">
-                        Cầu an: {p.target_name || 'Gia đạo'} • {formatRelativeTimeVi(p.created_at)}
-                      </span>
                     </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleCoPray(p.id)}
+                      className={cn(
+                        'px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1 transition-all active:scale-95 cursor-pointer shrink-0 whitespace-nowrap border',
+                        isLiked
+                          ? 'bg-[#FFE07D] text-[#3D2505] border-[#D9A02E]'
+                          : 'bg-[#FFF6DF] text-[#7A5000] border-[#EAD7A7] hover:bg-[#FCECC2]'
+                      )}
+                    >
+                      <Heart className={cn('w-3 h-3', isLiked && 'fill-current text-[#B45309]')} />
+                      <span>Cùng cầu an ({p.co_pray_count})</span>
+                    </button>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleCoPray(p.id)}
-                    className={cn(
-                      'px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1 transition-all active:scale-95 cursor-pointer shrink-0 whitespace-nowrap border',
-                      isLiked
-                        ? 'bg-[#FFE07D] text-[#3D2505] border-[#D9A02E]'
-                        : 'bg-[#FFF6DF] text-[#7A5000] border-[#EAD7A7] hover:bg-[#FCECC2]'
-                    )}
-                  >
-                    <Heart className={cn('w-3 h-3', isLiked && 'fill-current text-[#B45309]')} />
-                    <span>Cùng cầu an ({p.co_pray_count})</span>
-                  </button>
+                  <p className="text-xs sm:text-[13px] text-[#2C1E10] leading-relaxed mt-1.5">
+                    {p.content}
+                  </p>
                 </div>
-
-                <p className="text-xs sm:text-[13px] text-[#2C1E10] leading-relaxed mt-1.5">
-                  {p.content}
-                </p>
-              </div>
-            );
-          })
-        )}
-      </main>
+              );
+            })
+          )}
+        </main>
+      </div>
 
       {/* ========================================================================= */}
       {/* 4. BOTTOM INPUT BAR                                                       */}
       {/* ========================================================================= */}
-      <footer className="relative z-20 pb-3 pt-2 px-3.5 sm:px-6 bg-[#FFFDF8]/95 border-t border-[#EAD7A7] space-y-2">
+      <footer className="relative z-20 pb-3 pt-2 px-3.5 sm:px-6 bg-[#FFFDF8]/90 backdrop-blur-md border-t border-[#EAD7A7]/85 space-y-2">
         <div className="max-w-lg mx-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar">
           {CAU_AN_CATEGORIES.map((cat) => (
             <button
