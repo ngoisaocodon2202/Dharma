@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
+  ArrowLeft,
   RotateCcw,
   Sparkles,
   Check,
@@ -523,32 +524,57 @@ export function Tool06TrangHat({ bonTonParam, showToast }: Tool06TrangHatProps) 
       {/* 3. ROUND COMPLETION DEDICATION MODAL (NGHI THỨC HỒI HƯỚNG CÔNG ĐỨC) */}
       {dedicationModalOpen && (
         <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setDedicationModalOpen(false);
-          }}
-          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm"
+          className="fixed inset-0 w-screen h-[100dvh] z-[100001] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden"
+          role="dialog"
+          aria-modal="true"
         >
-          <div className="w-full max-w-md rounded-3xl bg-[#FFFFFF] border-2 border-[#D9A02E] p-5 sm:p-6 shadow-2xl space-y-4">
-            <div className="text-center space-y-1">
-              <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF6DF] border border-[#EAD7A7] flex items-center justify-center text-[#8C5500]">
-                <Sparkles className="w-6 h-6" />
+          <header className="px-4 sm:px-6 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
+            <button
+              type="button"
+              onClick={() => setDedicationModalOpen(false)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span>Quay lại</span>
+            </button>
+            <h3 className="font-serif font-bold text-sm sm:text-base text-[#8C5500] truncate">
+              Hồi Hướng Công Đức • {malaSize} Biến
+            </h3>
+            <div className="w-20 shrink-0 hidden sm:block" />
+          </header>
+
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 flex flex-col">
+            <div className="my-auto w-full max-w-lg mx-auto rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] p-5 sm:p-7 shadow-xs space-y-5 dharma-input-panel-lock">
+              <div className="text-center space-y-1.5">
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-[#FFF6DF] border border-[#EAD7A7] flex items-center justify-center text-[#8C5500]">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <h4 className="font-serif font-bold text-lg text-[#8C5500]">
+                  Viên Mãn Trọn Vẹn {malaSize} Biến Trì Niệm
+                </h4>
+                <p className="text-xs text-[#6B533B]">
+                  Công đức đã tự động ghi nhận • Hãy gửi lời hồi hướng thanh tịnh
+                </p>
               </div>
-              <h3 className="font-serif font-bold text-lg text-[#8C5500]">
-                Viên Mãn Trọn Vẹn {malaSize} Biến Trì Niệm
-              </h3>
-              <p className="text-xs text-[#6B533B]">
-                Công đức đã tự động ghi nhận • Hãy gửi lời hồi hướng thanh tịnh
-              </p>
+
+              <textarea
+                rows={4}
+                value={dedicationText}
+                onChange={(e) => setDedicationText(e.target.value)}
+                className="w-full p-3.5 rounded-2xl bg-[#FAF7F0] border border-[#EAD7A7] text-base sm:text-sm text-[#2C1E10] focus:outline-none focus:border-[#C8780A]"
+              />
             </div>
+          </div>
 
-            <textarea
-              rows={3}
-              value={dedicationText}
-              onChange={(e) => setDedicationText(e.target.value)}
-              className="w-full p-3 rounded-2xl bg-[#FAF7F0] border border-[#EAD7A7] text-xs text-[#2C1E10] focus:outline-none focus:border-[#C8780A]"
-            />
-
-            <div className="flex gap-2">
+          <footer className="px-4 sm:px-6 py-3.5 bg-[#FFFDF8] border-t border-[#EAD7A7] shrink-0">
+            <div className="max-w-lg mx-auto w-full flex gap-2.5">
+              <button
+                type="button"
+                onClick={() => setDedicationModalOpen(false)}
+                className="px-4 py-2.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-[#6B533B] font-bold text-xs cursor-pointer whitespace-nowrap shrink-0"
+              >
+                Đóng
+              </button>
               <button
                 type="button"
                 onClick={() => {
@@ -561,19 +587,12 @@ export function Tool06TrangHat({ bonTonParam, showToast }: Tool06TrangHatProps) 
                   setDedicationModalOpen(false);
                   showToast('Đã lưu lời Hồi Hướng Công Đức vào Sổ Công Đức!');
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs shadow-sm cursor-pointer"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs shadow-sm cursor-pointer whitespace-nowrap"
               >
-                Lưu Hồi Hướng &amp; Lần Chuỗi Mới
-              </button>
-              <button
-                type="button"
-                onClick={() => setDedicationModalOpen(false)}
-                className="px-4 py-2.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-[#6B533B] font-bold text-xs cursor-pointer"
-              >
-                Đóng
+                Lưu Hồi Hướng &amp; Lần Mới
               </button>
             </div>
-          </div>
+          </footer>
         </div>
       )}
     </div>

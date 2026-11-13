@@ -123,7 +123,7 @@ function OnboardingModal() {
                 setDraftRobe('lam');
               }}
               className={cn(
-                'px-3 py-1.5 rounded-full text-[11px] font-bold transition cursor-pointer',
+                'px-3 py-1.5 rounded-full text-[11px] font-bold transition cursor-pointer whitespace-nowrap shrink-0',
                 draftGender === 'male' && draftRobe === 'lam'
                   ? 'bg-gradient-to-r from-[#B38452] to-[#875D34] border border-[#DCBA90]/60 text-[#FFF5E8] shadow-md'
                   : 'bg-[#1B0D09]/85 border border-[#A97B4F]/45 text-[#F7EBD5]'
@@ -138,7 +138,7 @@ function OnboardingModal() {
                 setDraftRobe('song');
               }}
               className={cn(
-                'px-3 py-1.5 rounded-full text-[11px] font-bold transition cursor-pointer',
+                'px-3 py-1.5 rounded-full text-[11px] font-bold transition cursor-pointer whitespace-nowrap shrink-0',
                 draftGender === 'female' && draftRobe === 'song'
                   ? 'bg-gradient-to-r from-[#B38452] to-[#875D34] border border-[#DCBA90]/60 text-[#FFF5E8] shadow-md'
                   : 'bg-[#1B0D09]/85 border border-[#A97B4F]/45 text-[#F7EBD5]'
@@ -211,7 +211,7 @@ function OnboardingModal() {
                     type="button"
                     onClick={() => setDraftGender('male')}
                     className={cn(
-                      'h-10 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition cursor-pointer',
+                      'h-10 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition cursor-pointer whitespace-nowrap',
                       draftGender === 'male'
                         ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] border-[#E0C097] text-[#FFF5E8]'
                         : 'bg-[#251B14]/85 border-[#A97B4F]/35 text-[#F7EBD5]'
@@ -224,7 +224,7 @@ function OnboardingModal() {
                     type="button"
                     onClick={() => setDraftGender('female')}
                     className={cn(
-                      'h-10 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition cursor-pointer',
+                      'h-10 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition cursor-pointer whitespace-nowrap',
                       draftGender === 'female'
                         ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] border-[#E0C097] text-[#FFF5E8]'
                         : 'bg-[#251B14]/85 border-[#A97B4F]/35 text-[#F7EBD5]'
@@ -257,7 +257,7 @@ function OnboardingModal() {
                           className="w-3.5 h-3.5 rounded-full border border-[#FFF5D2]/60"
                           style={{ backgroundColor: r.hex }}
                         />
-                        <span className="text-[10px] font-semibold text-[#F7EBD5]">{r.label}</span>
+                        <span className="text-[10px] font-semibold text-[#F7EBD5] whitespace-nowrap">{r.label}</span>
                       </button>
                     );
                   })}
@@ -311,7 +311,7 @@ function OnboardingModal() {
               style={{
                 background: 'linear-gradient(to right, #BD8F5E, #996A3D, #734C27)',
               }}
-              className="w-full h-11 rounded-2xl border-2 border-[#DCBA90] text-[#FFF5E8] font-serif font-bold text-sm sm:text-base shadow-[0_8px_24px_rgba(169,123,79,0.3)] hover:brightness-105 active:scale-[0.98] transition cursor-pointer mt-2"
+              className="w-full h-11 rounded-2xl border-2 border-[#DCBA90] text-[#FFF5E8] font-serif font-bold text-sm sm:text-base shadow-[0_8px_24px_rgba(169,123,79,0.3)] hover:brightness-105 active:scale-[0.98] transition cursor-pointer mt-2 whitespace-nowrap"
             >
               Bước Vào Chánh Điện
             </button>

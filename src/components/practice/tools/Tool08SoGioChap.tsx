@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import {
+  ArrowLeft,
   Plus,
   Edit3,
   Trash2,
@@ -448,26 +449,27 @@ export function Tool08SoGioChap({
       {/* MODAL A: VĂN KHẤN CÚNG GIỖ CHAY TẠI GIA */}
       {prayerModalTarget && (
         <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setPrayerModalTarget(null);
-          }}
-          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm"
+          className="fixed inset-0 w-screen h-[100dvh] z-[100001] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden"
+          role="dialog"
+          aria-modal="true"
         >
-          <div className="w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-3xl bg-[#FFFFFF] border-2 border-[#D9A02E] p-5 sm:p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-[#EAD7A7]">
-              <h3 className="font-serif font-bold text-base text-[#8C5500]">
-                Văn Khấn Cúng Giỗ Chay • {prayerModalTarget.memorial.fullName}
-              </h3>
-              <button
-                type="button"
-                onClick={() => setPrayerModalTarget(null)}
-                className="p-1 text-[#6B533B] hover:text-[#2C1E10] cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+          <header className="px-4 sm:px-6 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
+            <button
+              type="button"
+              onClick={() => setPrayerModalTarget(null)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span>Quay lại</span>
+            </button>
+            <h3 className="font-serif font-bold text-sm sm:text-base text-[#8C5500] truncate">
+              Văn Khấn Cúng Giỗ Chay • {prayerModalTarget.memorial.fullName}
+            </h3>
+            <div className="w-20 shrink-0 hidden sm:block" />
+          </header>
 
-            <div className="p-4 rounded-2xl bg-[#FFF9EB] border border-[#EAD7A7] font-serif text-xs sm:text-sm leading-relaxed text-[#2C1E10] whitespace-pre-line">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div className="max-w-3xl mx-auto w-full p-4 sm:p-6 rounded-3xl bg-[#FFFDF8] border border-[#EAD7A7] font-serif text-xs sm:text-sm leading-relaxed text-[#2C1E10] whitespace-pre-line shadow-xs">
               {generateMemorialPrayer(
                 prayerModalTarget.memorial,
                 prayerModalTarget.solarDateLabel,
@@ -475,8 +477,10 @@ export function Tool08SoGioChap({
                 profile.dharmaName
               )}
             </div>
+          </div>
 
-            <div className="flex gap-2">
+          <footer className="px-4 sm:px-6 py-3.5 bg-[#FFFDF8] border-t border-[#EAD7A7] shrink-0">
+            <div className="max-w-3xl mx-auto w-full flex gap-2.5">
               <button
                 type="button"
                 onClick={async () => {
@@ -491,86 +495,100 @@ export function Tool08SoGioChap({
                   setTimeout(() => setCopiedPrayer(false), 2000);
                   showToast('Đã sao chép bài Văn Khấn Cúng Giỗ Chay');
                 }}
-                className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#FFE79A] to-[#FAD02C] text-[#3D2505] font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
               >
-                {copiedPrayer ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                {copiedPrayer ? <Check className="w-4 h-4 shrink-0" /> : <Copy className="w-4 h-4 shrink-0" />}
                 <span>{copiedPrayer ? 'Đã Sao Chép' : 'Sao Chép Văn Khấn'}</span>
               </button>
               <button
                 type="button"
                 onClick={() => setPrayerModalTarget(null)}
-                className="px-4 py-2.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-[#6B533B] font-bold text-xs cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] text-[#6B533B] font-bold text-xs cursor-pointer whitespace-nowrap shrink-0"
               >
                 Đóng
               </button>
             </div>
-          </div>
+          </footer>
         </div>
       )}
 
       {/* MODAL B: 3 GỢI Ý MÂM CỖ CHAY & KINH ĐỊA TẠNG PHẨM THỨ BẢY */}
       {isMenusModalOpen && (
         <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsMenusModalOpen(false);
-          }}
-          className="fixed inset-0 z-[100001] flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm"
+          className="fixed inset-0 w-screen h-[100dvh] z-[100001] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden"
+          role="dialog"
+          aria-modal="true"
         >
-          <div className="w-full max-w-2xl max-h-[86vh] overflow-y-auto rounded-3xl bg-[#FFFFFF] border-2 border-[#D9A02E] p-5 sm:p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-[#EAD7A7]">
-              <div>
-                <h3 className="font-serif font-bold text-base sm:text-lg text-[#8C5500]">
-                  Gợi Ý 3 Mâm Cỗ Chay Cúng Giỗ Thanh Tịnh
-                </h3>
-                <p className="text-xs text-[#6B533B]">
-                  Dùng thực phẩm thuần chay tăng trưởng phước báu cho người mất và gia quyến
+          <header className="px-4 sm:px-6 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
+            <button
+              type="button"
+              onClick={() => setIsMenusModalOpen(false)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span>Quay lại</span>
+            </button>
+            <h3 className="font-serif font-bold text-sm sm:text-base text-[#8C5500] truncate">
+              Gợi Ý 3 Mâm Cỗ Chay Cúng Giỗ Thanh Tịnh
+            </h3>
+            <div className="w-20 shrink-0 hidden sm:block" />
+          </header>
+
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div className="max-w-4xl mx-auto w-full space-y-4">
+              <p className="text-xs sm:text-sm text-[#6B533B]">
+                Dùng thực phẩm thuần chay tăng trưởng phước báu cho người mất và gia quyến
+              </p>
+
+              {/* Scripture Reference: Kinh Địa Tạng Phẩm Thứ Bảy */}
+              <div className="p-4 rounded-2xl bg-[#FFF9EB] border border-[#D9A02E] text-xs text-[#5C442C] leading-relaxed">
+                <p className="font-bold text-[#8C5500] mb-1">
+                  Vì Sao Nên Cúng Giỗ Thuần Chay? (Kinh Địa Tạng — Phẩm Thứ Bảy)
                 </p>
+                <p>{KISITIGARBHA_VEGETARIAN_TEACHING}</p>
               </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                {VEGETARIAN_MEMORIAL_MENUS.map((menu) => (
+                  <div
+                    key={menu.id}
+                    className="p-3.5 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] space-y-2 flex flex-col justify-between"
+                  >
+                    <div className="space-y-1.5">
+                      <h4 className="font-serif font-bold text-sm text-[#8C5500]">
+                        {menu.title}
+                      </h4>
+                      <p className="text-[11px] font-semibold text-[#6B533B]">{menu.style}</p>
+                      <ul className="space-y-1 text-[#2C1E10] list-disc pl-4">
+                        {menu.dishes.map((dish, i) => (
+                          <li key={i}>{dish}</li>
+                        ))}
+                      </ul>
+                      <p className="text-[11px] text-[#5C442C] pt-1 border-t border-[#EAD7A7]">
+                        <strong>Canh &amp; Tráng miệng:</strong> {menu.soupAndDessert}
+                      </p>
+                      <p className="text-[11px] text-[#8C5500]">
+                        <strong>Hương trà:</strong> {menu.teaOffering}
+                      </p>
+                    </div>
+                    <p className="text-[10px] italic text-[#6B533B] pt-1">{menu.meaningNote}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <footer className="px-4 sm:px-6 py-3.5 bg-[#FFFDF8] border-t border-[#EAD7A7] shrink-0">
+            <div className="max-w-4xl mx-auto w-full flex justify-end">
               <button
                 type="button"
                 onClick={() => setIsMenusModalOpen(false)}
-                className="p-1 text-[#6B533B] hover:text-[#2C1E10] cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#C68B19] to-[#A66E08] text-white font-bold text-xs cursor-pointer whitespace-nowrap shrink-0"
               >
-                <X className="w-5 h-5" />
+                Đóng
               </button>
             </div>
-
-            {/* Scripture Reference: Kinh Địa Tạng Phẩm Thứ Bảy */}
-            <div className="p-4 rounded-2xl bg-[#FFF9EB] border border-[#D9A02E] text-xs text-[#5C442C] leading-relaxed">
-              <p className="font-bold text-[#8C5500] mb-1">
-                Vì Sao Nên Cúng Giỗ Thuần Chay? (Kinh Địa Tạng — Phẩm Thứ Bảy)
-              </p>
-              <p>{KISITIGARBHA_VEGETARIAN_TEACHING}</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-              {VEGETARIAN_MEMORIAL_MENUS.map((menu) => (
-                <div
-                  key={menu.id}
-                  className="p-3.5 rounded-2xl bg-[#FAF7F0] border border-[#EAD7A7] space-y-2 flex flex-col justify-between"
-                >
-                  <div className="space-y-1.5">
-                    <h4 className="font-serif font-bold text-sm text-[#8C5500]">
-                      {menu.title}
-                    </h4>
-                    <p className="text-[11px] font-semibold text-[#6B533B]">{menu.style}</p>
-                    <ul className="space-y-1 text-[#2C1E10] list-disc pl-4">
-                      {menu.dishes.map((dish, i) => (
-                        <li key={i}>{dish}</li>
-                      ))}
-                    </ul>
-                    <p className="text-[11px] text-[#5C442C] pt-1 border-t border-[#EAD7A7]">
-                      <strong>Canh &amp; Tráng miệng:</strong> {menu.soupAndDessert}
-                    </p>
-                    <p className="text-[11px] text-[#8C5500]">
-                      <strong>Hương trà:</strong> {menu.teaOffering}
-                    </p>
-                  </div>
-                  <p className="text-[10px] italic text-[#6B533B] pt-1">{menu.meaningNote}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          </footer>
         </div>
       )}
     </div>

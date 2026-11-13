@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
+  ArrowLeft,
   MapPin,
   Search,
   Check,
@@ -331,36 +332,43 @@ export default function PagodasDirectoryPage() {
       {/* ===================================================================== */}
       {selectedPagoda && (
         <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setSelectedPagoda(null);
-          }}
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-3.5 sm:p-5 bg-black/50 backdrop-blur-xs animate-fade-in"
+          className="fixed inset-0 w-screen h-[100dvh] z-[99999] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden animate-fade-in"
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-3xl bg-[#FFFDF8] border-2 border-[#C68B19] overflow-hidden shadow-2xl text-[#2C1E10]">
+          {/* Full-screen Sticky Header */}
+          <header className="px-4 sm:px-6 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
             <button
               type="button"
               onClick={() => setSelectedPagoda(null)}
-              className="absolute top-3.5 right-3.5 z-20 p-2 rounded-full bg-[#FFFFFF]/90 border border-[#DFC27D] text-[#2C1E10] shadow-xs cursor-pointer"
-              aria-label="Đóng chi tiết"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+              aria-label="Quay lại"
             >
-              <X className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4 shrink-0" />
+              <span>Quay lại</span>
             </button>
 
-            <div className="flex-1 overflow-y-auto no-scrollbar">
+            <h2 className="font-heading font-serif text-sm sm:text-base font-bold text-[#2C1E10] truncate">
+              {selectedPagoda.name}
+            </h2>
+
+            <div className="w-20 shrink-0 hidden sm:block" />
+          </header>
+
+          <div className="flex-1 overflow-y-auto no-scrollbar">
+            <div className="max-w-3xl mx-auto w-full pb-6">
               {/* Hero Image */}
-              <div className="relative aspect-[16/9] bg-[#FFF9EB] border-b border-[#EAD7A7]">
+              <div className="relative aspect-[16/9] sm:rounded-b-3xl overflow-hidden bg-[#FFF9EB] border-b border-[#EAD7A7]">
                 <img
                   src={selectedPagoda.image}
                   alt={selectedPagoda.name}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-3 left-4 flex flex-wrap gap-2">
-                  <span className="px-3 py-1 rounded-full bg-[#FFFFFF]/95 border border-[#DFC27D] text-[11px] font-bold text-[#8C5500] shadow-2xs">
+                  <span className="px-3 py-1 rounded-full bg-[#FFFFFF]/95 border border-[#DFC27D] text-[11px] font-bold text-[#8C5500] shadow-2xs whitespace-nowrap">
                     {selectedPagoda.region} • {selectedPagoda.province}
                   </span>
-                  <span className="px-3 py-1 rounded-full bg-[#FFF9EB]/95 border border-[#EAD7A7] text-[#2C1E10] text-[11px] font-bold shadow-2xs">
+                  <span className="px-3 py-1 rounded-full bg-[#FFF9EB]/95 border border-[#EAD7A7] text-[#2C1E10] text-[11px] font-bold shadow-2xs whitespace-nowrap">
                     Hệ phái: {selectedPagoda.sect}
                   </span>
                 </div>
@@ -396,10 +404,10 @@ export default function PagodasDirectoryPage() {
                 </div>
 
                 {/* Address */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF6DF] border border-[#DFC27D] flex items-start justify-between gap-3 text-xs">
-                  <div className="space-y-1">
+                <div className="p-3.5 rounded-2xl bg-[#FFF6DF] border border-[#DFC27D] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                  <div className="space-y-1 min-w-0">
                     <span className="font-bold text-[#8C5500] flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5" /> Địa Chỉ Cổ Tự ({selectedPagoda.coordinates.lat.toFixed(4)},{' '}
+                      <MapPin className="w-3.5 h-3.5 shrink-0" /> Địa Chỉ Cổ Tự ({selectedPagoda.coordinates.lat.toFixed(4)},{' '}
                       {selectedPagoda.coordinates.lng.toFixed(4)})
                     </span>
                     <p className="text-[#2C1E10] font-medium">{selectedPagoda.address}</p>
@@ -408,9 +416,9 @@ export default function PagodasDirectoryPage() {
                     href={selectedPagoda.mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-2 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#2C1E10] border border-[#C68B19] font-bold flex items-center gap-1.5 shrink-0"
+                    className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#2C1E10] border border-[#C68B19] font-bold inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
                   >
-                    <Navigation className="w-3.5 h-3.5" />
+                    <Navigation className="w-3.5 h-3.5 shrink-0" />
                     <span>Google Maps</span>
                   </a>
                 </div>
@@ -440,12 +448,14 @@ export default function PagodasDirectoryPage() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Footer CTAs */}
-            <div className="p-4 border-t border-[#EAD7A7] bg-[#FFFDF8] flex flex-wrap items-center justify-between gap-2.5 shrink-0">
+          {/* Footer CTAs */}
+          <footer className="px-4 sm:px-6 py-3.5 border-t border-[#EAD7A7] bg-[#FFFDF8] shrink-0">
+            <div className="max-w-3xl mx-auto w-full flex items-center justify-between gap-2.5">
               <Link
                 href={`/chua-dia-danh/${selectedPagoda.slug}`}
-                className="px-4 py-2.5 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] hover:bg-[#FFF6DF]"
+                className="px-3.5 sm:px-4 py-2.5 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] hover:bg-[#FFF6DF] whitespace-nowrap shrink-0"
               >
                 Mở Trang Riêng ↗
               </Link>
@@ -454,21 +464,21 @@ export default function PagodasDirectoryPage() {
                 type="button"
                 onClick={() => handleToggleCheckin(selectedPagoda)}
                 className={cn(
-                  'flex-1 sm:flex-initial px-6 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs',
+                  'flex-1 sm:flex-initial px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-xs whitespace-nowrap shrink-0',
                   visitedPagodaSlugs.includes(selectedPagoda.slug)
                     ? 'bg-emerald-600 text-white'
                     : 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#2C1E10] border border-[#C68B19]'
                 )}
               >
-                <Check className="w-4 h-4 stroke-[2.5]" />
+                <Check className="w-4 h-4 stroke-[2.5] shrink-0" />
                 <span>
                   {visitedPagodaSlugs.includes(selectedPagoda.slug)
                     ? 'Đã Ghi Dấu Chiêm Bái'
-                    : 'Đảnh Lễ & Ghi Dấu Hành Hương'}
+                    : 'Ghi Dấu Hành Hương'}
                 </span>
               </button>
             </div>
-          </div>
+          </footer>
         </div>
       )}
 

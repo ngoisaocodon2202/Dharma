@@ -269,29 +269,29 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
             <button
               type="button"
               onClick={() => handleStepVideo(-1)}
-              className="px-3 py-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] text-xs font-bold text-[#8C5500] inline-flex items-center gap-1 cursor-pointer active:scale-95"
+              className="px-3 py-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] text-xs font-bold text-[#8C5500] inline-flex items-center gap-1 cursor-pointer active:scale-95 whitespace-nowrap shrink-0"
               title="Bài trước"
             >
-              <SkipBack className="w-3.5 h-3.5" />
+              <SkipBack className="w-3.5 h-3.5 shrink-0" />
               <span>Trước</span>
             </button>
 
             <button
               type="button"
               onClick={() => handleStepVideo(1)}
-              className="px-3 py-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] text-xs font-bold text-[#8C5500] inline-flex items-center gap-1 cursor-pointer active:scale-95"
+              className="px-3 py-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] text-xs font-bold text-[#8C5500] inline-flex items-center gap-1 cursor-pointer active:scale-95 whitespace-nowrap shrink-0"
               title="Bài tiếp theo"
             >
               <span>Tiếp</span>
-              <SkipForward className="w-3.5 h-3.5" />
+              <SkipForward className="w-3.5 h-3.5 shrink-0" />
             </button>
 
             <button
               type="button"
               onClick={() => handleMarkCompleted(activeVideo)}
-              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] text-xs font-bold inline-flex items-center gap-1.5 shadow-sm cursor-pointer active:scale-95"
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] text-xs font-bold inline-flex items-center gap-1.5 shadow-sm cursor-pointer active:scale-95 whitespace-nowrap shrink-0"
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
               <span>Hoàn mãn (+1 Công Đức)</span>
             </button>
           </div>
@@ -367,7 +367,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
                   setVisibleCount(PAGE_SIZE);
                 }}
                 className={cn(
-                  'px-2.5 py-1 rounded-xl border text-[11px] font-bold cursor-pointer transition-colors',
+                  'px-2.5 py-1 rounded-xl border text-[11px] font-bold cursor-pointer transition-colors whitespace-nowrap shrink-0',
                   libraryFilter === tab.id
                     ? 'bg-[#FFF6DF] border-[#C68B19] text-[#8C5500]'
                     : 'bg-[#FAF7F0] border-[#EAD7A7] text-[#6B533B] hover:border-[#C68B19]'
@@ -571,7 +571,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
               <button
                 type="button"
                 onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
-                className="px-5 py-2.5 rounded-2xl bg-[#FFF6DF] hover:bg-[#FCECC2] border border-[#D9A02E] text-xs font-bold text-[#7A5000] inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                className="px-5 py-2.5 rounded-2xl bg-[#FFF6DF] hover:bg-[#FCECC2] border border-[#D9A02E] text-xs font-bold text-[#7A5000] inline-flex items-center gap-1.5 shadow-2xs cursor-pointer whitespace-nowrap shrink-0"
               >
                 <ChevronDown className="w-4 h-4" />
                 <span>
@@ -586,7 +586,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
                 <button
                   type="button"
                   onClick={() => setVisibleCount(PAGE_SIZE)}
-                  className="px-4 py-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] text-xs font-bold text-[#6B533B] hover:border-[#C68B19] inline-flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-[#FFFFFF] border border-[#EAD7A7] text-xs font-bold text-[#6B533B] hover:border-[#C68B19] inline-flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0"
                 >
                   <ChevronUp className="w-4 h-4" />
                   <span>Thu gọn danh sách</span>
