@@ -14,6 +14,7 @@ import { BUDDHAS_DATA, type BuddhaItem } from '@/data/buddhasData';
 import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { useDharmaStore } from '@/store/useDharmaStore';
 import { TempleBellIcon } from '@/components/icons/DharmaMinimalIcons';
+import { MantraKineticPlayer } from '@/components/buddhas/MantraKineticPlayer';
 import { cn } from '@/lib/utils';
 
 type DetailTab = 'tieu_su' | 'dai_nguyen' | 'than_chu';
@@ -27,6 +28,7 @@ function BonTonLibraryInner() {
 
   const [selectedBuddha, setSelectedBuddha] = useState<BuddhaItem | null>(null);
   const [activeTab, setActiveTab] = useState<DetailTab>('tieu_su');
+  const [mantraPlayTrigger, setMantraPlayTrigger] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -41,6 +43,7 @@ function BonTonLibraryInner() {
     if (found) {
       setSelectedBuddha(found);
       setActiveTab('tieu_su');
+      setMantraPlayTrigger(0);
     }
   }, [idParam]);
 
@@ -48,14 +51,26 @@ function BonTonLibraryInner() {
     playBellSound(0.25);
     setSelectedBuddha(buddha);
     setActiveTab('tieu_su');
+    setMantraPlayTrigger(0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToGrid = () => {
+    setMantraPlayTrigger(0);
     setSelectedBuddha(null);
     if (idParam) {
       router.replace('/thu-vien-bon-ton', { scroll: false });
     }
+  };
+
+  const handleMantraCompleted = () => {
+    if (!selectedBuddha) return;
+    addMeritEntry({
+      category: 'NIEM_PHAT',
+      title: `Hoàn tất 1 biến Trì Chú ${selectedBuddha.name}`,
+      dedicationText: `Nhất tâm trì tụng trọn biến: ${selectedBuddha.thanChu.name}. Nguyện hồi hướng bình an & trí tuệ.`,
+    });
+    showToast(`Hoan hỷ viên mãn 1 biến ${selectedBuddha.thanChu.name} • Đã ghi Sổ Công Đức`);
   };
 
   const handleChantMantra = () => {
@@ -245,8 +260,13 @@ function BonTonLibraryInner() {
                   key={tab.id}
                   type="button"
                   onClick={() => {
-                    playBellSound(0.2);
-                    setActiveTab(tab.id as DetailTab);
+                    if (tab.id === 'than_chu') {
+                      setActiveTab('than_chu');
+                      setMantraPlayTrigger((n) => n + 1);
+                    } else {
+                      playBellSound(0.2);
+                      setActiveTab(tab.id as DetailTab);
+                    }
                   }}
                   className={cn(
                     'py-2 px-1.5 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer whitespace-nowrap',
@@ -373,50 +393,15 @@ function BonTonLibraryInner() {
                 </button>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#FFF9EB] border border-[#E2C275] text-center space-y-1.5">
-                <span className="text-[10px] uppercase font-mono font-bold text-[#8A5400] tracking-widest block">
-                  Phạn Văn (Sanskrit Mantra)
-                </span>
-                <p className="text-sm sm:text-base font-serif font-bold text-[#6E4200] leading-relaxed select-all">
-                  {selectedBuddha.thanChu.sanskrit}
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] text-center space-y-1.5">
-                <span className="text-[10px] uppercase font-mono font-bold text-[#7D6442] tracking-widest block">
-                  Phiên Âm Tụng Đọc
-                </span>
-                <p className="font-mono text-xs sm:text-sm font-bold text-[#2C1E10] leading-relaxed select-all">
-                  {selectedBuddha.thanChu.vietnamese}
-                </p>
-              </div>
-
-              <div className="space-y-2.5 text-xs sm:text-sm">
-                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
-                  <span className="font-bold text-[#8A5400] block">Ý Nghĩa Chân Ngôn:</span>
-                  <p className="text-[#4A3620] leading-relaxed">
-                    {selectedBuddha.thanChu.meaning}
-                  </p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
-                  <span className="font-bold text-[#8A5400] block">
-                    Công Đức &amp; Lợi Ích Trì Tụng:
-                  </span>
-                  <p className="text-[#4A3620] leading-relaxed">
-                    {selectedBuddha.thanChu.benefits}
-                  </p>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleChantMantra}
-                className="w-full py-3 rounded-xl bg-[#C58C1B] text-white hover:bg-[#A6730E] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm active:scale-95 transition-all cursor-pointer whitespace-nowrap"
-              >
-                <TempleBellIcon className="w-4 h-4 shrink-0" />
-                <span>Thỉnh Chuông &amp; Trì Niệm (+10 Công Đức)</span>
-              </button>
+              <MantraKineticPlayer
+                buddhaId={selectedBuddha.id}
+                sanskritDefault={selectedBuddha.thanChu.sanskrit}
+                vietnameseDefault={selectedBuddha.thanChu.vietnamese}
+                meaningDefault={selectedBuddha.thanChu.meaning}
+                benefitsDefault={selectedBuddha.thanChu.benefits}
+                playTrigger={mantraPlayTrigger}
+                onCompleted={handleMantraCompleted}
+              />
             </div>
           )}
         </div>

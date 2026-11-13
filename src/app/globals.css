@@ -784,6 +784,46 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   animation: fortuneShake 0.45s ease-in-out infinite;
 }
 
+@keyframes mantraSyllableFloat {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 16px) scale(0.76);
+    filter: blur(2px);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -18px) scale(1.08);
+    filter: blur(0px);
+  }
+  58% {
+    opacity: 0.92;
+    transform: translate(calc(-50% + var(--drift-x, 0px)), -76px) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--drift-x, 0px) * 1.45), -140px) scale(0.9);
+    filter: blur(1.5px);
+  }
+}
+
+.mantra-floating-syllable {
+  animation: mantraSyllableFloat 1.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  color: #B87400;
+  text-shadow:
+    0 0 10px rgba(255, 214, 108, 0.92),
+    0 0 22px rgba(217, 147, 22, 0.55),
+    0 2px 6px rgba(138, 84, 0, 0.28);
+  will-change: transform, opacity;
+}
+
+.mantra-cue-active {
+  color: #8A5000;
+  background: rgba(245, 196, 81, 0.32);
+  box-shadow: 0 0 12px rgba(217, 147, 22, 0.32);
+  border-color: rgba(197, 140, 27, 0.65);
+}
+
 
 
 
