@@ -639,7 +639,7 @@ export function FloatingDharmaAudioPlayer() {
   const [expanded, setExpanded] = useState(false);
 
   // Chỉ hiển thị khi có ít nhất 1 kênh đang phát để không che khuất giao diện thanh tịnh
-  const hiddenRoutes = ['/thu-vien-bon-ton', '/cau-sieu', '/cau-nguyen', '/di-chua-online'];
+  const hiddenRoutes = ['/thu-vien-bon-ton', '/cau-sieu', '/cau-nguyen', '/di-chua', '/di-chua-online'];
   if (!mixer.isAnyActive || hiddenRoutes.some((r) => pathname.startsWith(r))) {
     return null;
   }

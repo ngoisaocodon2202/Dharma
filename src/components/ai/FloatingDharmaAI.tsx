@@ -50,6 +50,7 @@ export default function FloatingDharmaAI() {
     pathname === "/hoi-dap-ai" ||
     pathname?.startsWith("/cong-dong") ||
     pathname === "/cau-nguyen" ||
+    pathname === "/di-chua" ||
     pathname === "/di-chua-online"
   ) {
     return null;
