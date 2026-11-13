@@ -211,8 +211,8 @@ export function DharmaSutraReader({
   const [showSettings, setShowSettings] = useState(false);
   const [activeSectionIdx, setActiveSectionIdx] = useState(0);
 
-  // Optional Reading Utilities (tucked neatly inside Settings panel so main UI stays distraction-free)
-  const [isAutoScrolling, setIsAutoScrolling] = useState(false);
+  // Hands-free Teleprompter Auto-Scroll (starts automatically upon opening a sutra)
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [scrollSpeed, setScrollSpeed] = useState<number>(0.8);
   const [scrollProgressPct, setScrollProgressPct] = useState<number>(0);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -322,6 +322,9 @@ export function DharmaSutraReader({
     setShowSectionToc(false);
     setActiveSectionIdx(0);
     setIsCompleted(false);
+    scrollRemainderRef.current = 0;
+    manualPauseUntilRef.current = 0;
+    setIsAutoScrolling(true);
     triedFallbackMp3Ref.current = false;
     setActiveMp3Url(sutraAudio.mp3Url);
 
@@ -430,9 +433,9 @@ export function DharmaSutraReader({
     showToast(`Tốc độ pháp âm: ${next.toFixed(next === 1 ? 1 : 2)}x`);
   };
 
-  // Continuous sub-pixel requestAnimationFrame teleprompter when enabled in Settings
+  // Continuous sub-pixel requestAnimationFrame teleprompter (active automatically once mounted)
   useEffect(() => {
-    if (!isAutoScrolling) return;
+    if (!mounted || !isAutoScrolling) return;
     let rafId: number;
     let lastTime = performance.now();
 
@@ -459,7 +462,7 @@ export function DharmaSutraReader({
 
     rafId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(rafId);
-  }, [isAutoScrolling, scrollSpeed]);
+  }, [mounted, isAutoScrolling, scrollSpeed]);
 
   // Optional Auto-BPM Woodfish interval
   useEffect(() => {
@@ -607,10 +610,10 @@ export function DharmaSutraReader({
       {/* ===================================================================== */}
       <header className="absolute inset-x-0 top-0 z-30 pointer-events-none">
         <div
-          className={cn(
-            'bg-gradient-to-b via-transparent to-transparent px-3.5 sm:px-6 pt-3 pb-3',
-            theme.fadeFrom
-          )}
+          className="px-3.5 sm:px-6 pt-3 pb-4"
+          style={{
+            background: `linear-gradient(to bottom, ${theme.swatchHex} 0%, ${theme.swatchHex}F5 54%, ${theme.swatchHex}D9 78%, ${theme.swatchHex}00 100%)`,
+          }}
         >
           <div className="max-w-2xl mx-auto space-y-2">
             {/* Row 1: Circle X Close • Single-Line Title • Paired Bookmark & Settings Pill */}
@@ -1156,6 +1159,9 @@ export function DharmaSutraReader({
                       setActiveSectionIdx(0);
                       setScrollProgressPct(0);
                     }
+                    scrollRemainderRef.current = 0;
+                    manualPauseUntilRef.current = 0;
+                    setIsAutoScrolling(true);
                     setShowSettings(false);
                     showToast('Đã cuộn về đầu bản kinh');
                   }}
