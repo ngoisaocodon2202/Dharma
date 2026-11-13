@@ -172,7 +172,7 @@ export function TempleHUD() {
           <Link
             href="/thuc-hanh"
             title="Quay lại Đạo Tràng DHARMA"
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#24130D]/85 border border-[#D9A441]/35 text-[#F6D58A] hover:bg-[#3A2016] flex items-center justify-center shrink-0 transition"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#24130D]/85 border border-[#A97B4F]/35 text-[#DBC09B] hover:bg-[#3A2016] flex items-center justify-center shrink-0 transition"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
           </Link>
@@ -186,7 +186,7 @@ export function TempleHUD() {
             className="flex items-center gap-1 sm:gap-1.5 pr-0.5 sm:pr-1 shrink-0 cursor-pointer group"
             title="Đặt lại góc nhìn Chánh Điện"
           >
-            <HeaderLotusGlyph className="w-4 h-4 sm:w-5 sm:h-5 text-[#F6D58A] drop-shadow-[0_0_8px_rgba(246,213,138,0.65)] group-hover:scale-105 transition" />
+            <HeaderLotusGlyph className="w-4 h-4 sm:w-5 sm:h-5 text-[#DBC09B] drop-shadow-[0_0_8px_rgba(246,213,138,0.65)] group-hover:scale-105 transition" />
             <div className="text-left leading-tight">
               <div className="font-serif font-bold text-[13px] sm:text-base text-[#FFF4D2] tracking-wide">
                 Sansa
@@ -204,7 +204,7 @@ export function TempleHUD() {
               closeAllMenus();
               setOnboardingOpen(true);
             }}
-            className="h-7 sm:h-8 px-1.5 sm:px-2.5 rounded-full bg-[#23150F]/90 border border-[#D9A441]/40 hover:border-[#F6D58A] flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs text-[#F7EBD5] max-w-[78px] sm:max-w-[155px] transition cursor-pointer shrink-0"
+            className="h-7 sm:h-8 px-1.5 sm:px-2.5 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/40 hover:border-[#DBC09B] flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs text-[#F7EBD5] max-w-[78px] sm:max-w-[155px] transition cursor-pointer shrink-0"
             title="Chỉnh sửa Pháp danh, Áo tràng & Chánh điện"
           >
             <span
@@ -225,7 +225,7 @@ export function TempleHUD() {
               closeAllMenus();
               setPresenceOpen(next);
             }}
-            className="hidden lg:inline-flex h-8 px-2.5 rounded-full bg-[#23150F]/90 border border-[#D9A441]/35 hover:border-[#F6D58A] items-center gap-1.5 text-[11px] font-semibold text-[#F7EBD5] cursor-pointer shrink-0 whitespace-nowrap"
+            className="hidden lg:inline-flex h-8 px-2.5 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/35 hover:border-[#DBC09B] items-center gap-1.5 text-[11px] font-semibold text-[#F7EBD5] cursor-pointer shrink-0 whitespace-nowrap"
           >
             <span className="w-2 h-2 rounded-full bg-[#FBBF24]" />
             <span>{onlineHere} Phật tử</span>
@@ -238,13 +238,13 @@ export function TempleHUD() {
               closeAllMenus();
               setActiveModal('server');
             }}
-            className="h-7 sm:h-8 px-1.5 sm:px-2.5 rounded-full bg-[#23150F]/90 border border-[#D9A441]/40 hover:border-[#F6D58A] flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-[11px] font-semibold text-[#F7EBD5] cursor-pointer shrink-0 whitespace-nowrap"
+            className="h-7 sm:h-8 px-1.5 sm:px-2.5 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/40 hover:border-[#DBC09B] flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-[11px] font-semibold text-[#F7EBD5] cursor-pointer shrink-0 whitespace-nowrap"
             title="Chọn Chánh Điện (Server)"
           >
-            <Building2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D9A441] shrink-0" />
+            <Building2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#A97B4F] shrink-0" />
             <span className="sm:hidden">C.{activeServer.code.replace(/^0/, '')}</span>
             <span className="hidden sm:inline">{activeServer.shortName}</span>
-            <span className="hidden sm:inline px-1.5 py-0.2 rounded-full bg-[#3A2518] text-[#F6D58A] text-[10px]">
+            <span className="hidden sm:inline px-1.5 py-0.2 rounded-full bg-[#3A2518] text-[#DBC09B] text-[10px]">
               {onlineHere}/{activeServer.capacity}
             </span>
           </button>
@@ -259,10 +259,10 @@ export function TempleHUD() {
               closeAllMenus();
               setActiveModal('leaderboard');
             }}
-            className="h-7 w-7 sm:h-8 sm:w-8 lg:w-auto lg:px-2.5 rounded-full bg-[#23150F]/90 border border-[#D9A441]/40 hover:border-[#F6D58A] flex items-center justify-center gap-1.5 text-[11px] font-semibold text-[#F6D58A] cursor-pointer shrink-0 whitespace-nowrap"
+            className="h-7 w-7 sm:h-8 sm:w-8 lg:w-auto lg:px-2.5 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/40 hover:border-[#DBC09B] flex items-center justify-center gap-1.5 text-[11px] font-semibold text-[#DBC09B] cursor-pointer shrink-0 whitespace-nowrap"
             title="Bảng Tinh Tấn & Tường Cầu An"
           >
-            <Trophy className="w-3.5 h-3.5 text-[#F6D58A]" />
+            <Trophy className="w-3.5 h-3.5 text-[#DBC09B]" />
             <span className="hidden lg:inline">Bảng Tinh Tấn</span>
           </button>
 
@@ -274,16 +274,16 @@ export function TempleHUD() {
               templeAudio.playGreatBell();
               triggerBell();
             }}
-            className="h-7 w-7 sm:h-8 sm:w-8 xl:w-auto xl:px-2.5 rounded-full bg-[#23150F]/90 border border-[#D9A441]/40 hover:border-[#F6D58A] flex items-center justify-center gap-1.5 text-[11px] font-semibold text-[#F7EBD5] cursor-pointer shrink-0 whitespace-nowrap"
+            className="h-7 w-7 sm:h-8 sm:w-8 xl:w-auto xl:px-2.5 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/40 hover:border-[#DBC09B] flex items-center justify-center gap-1.5 text-[11px] font-semibold text-[#F7EBD5] cursor-pointer shrink-0 whitespace-nowrap"
             title="Thỉnh Đại Hồng Chung"
           >
-            <Bell className="w-3.5 h-3.5 text-[#F6D58A]" />
+            <Bell className="w-3.5 h-3.5 text-[#DBC09B]" />
             <span className="hidden xl:inline">Thỉnh Chuông</span>
           </button>
 
           {/* Audio Toggle + Desktop Track Selector */}
           <div className="relative flex items-center">
-            <div className="flex items-center h-7 sm:h-8 rounded-full bg-[#23150F]/90 border border-[#D9A441]/40 overflow-hidden">
+            <div className="flex items-center h-7 sm:h-8 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/40 overflow-hidden">
               <button
                 type="button"
                 onClick={() => {
@@ -291,7 +291,7 @@ export function TempleHUD() {
                   setSoundEnabled(next);
                   templeAudio.setEnabled(next, ambientMode);
                 }}
-                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#F6D58A] hover:bg-[#3A2518] cursor-pointer"
+                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#DBC09B] hover:bg-[#3A2518] cursor-pointer"
                 title={soundEnabled ? 'Tắt âm thanh' : 'Bật âm thanh'}
               >
                 {soundEnabled && ambientMode !== 'silent' ? (
@@ -308,19 +308,19 @@ export function TempleHUD() {
                   closeAllMenus();
                   setAudioDropdownOpen(next);
                 }}
-                className="hidden md:flex items-center gap-1 pr-2.5 pl-1 h-8 text-[11px] font-medium text-[#F7EBD5] border-l border-[#D9A441]/25 hover:bg-[#3A2518] max-w-[125px] xl:max-w-[140px] 2xl:max-w-[175px] cursor-pointer"
+                className="hidden md:flex items-center gap-1 pr-2.5 pl-1 h-8 text-[11px] font-medium text-[#F7EBD5] border-l border-[#A97B4F]/25 hover:bg-[#3A2518] max-w-[125px] xl:max-w-[140px] 2xl:max-w-[175px] cursor-pointer"
               >
                 <span className="truncate">{activeTrack.label}</span>
                 {audioDropdownOpen ? (
-                  <ChevronUp className="w-3 h-3 text-[#D9A441] shrink-0" />
+                  <ChevronUp className="w-3 h-3 text-[#A97B4F] shrink-0" />
                 ) : (
-                  <ChevronDown className="w-3 h-3 text-[#D9A441] shrink-0" />
+                  <ChevronDown className="w-3 h-3 text-[#A97B4F] shrink-0" />
                 )}
               </button>
             </div>
 
             {audioDropdownOpen && (
-              <div className="absolute right-0 top-10 w-64 rounded-2xl bg-[#1B0D09]/95 border border-[#D9A441]/45 shadow-2xl p-1.5 space-y-1 backdrop-blur-xl z-40">
+              <div className="absolute right-0 top-10 w-64 rounded-2xl bg-[#1B0D09]/95 border border-[#A97B4F]/45 shadow-2xl p-1.5 space-y-1 backdrop-blur-xl z-40">
                 {AMBIENT_TRACKS.map((track) => {
                   const active = ambientMode === track.id;
                   return (
@@ -335,7 +335,7 @@ export function TempleHUD() {
                       className={cn(
                         'w-full text-left px-3 py-2 rounded-xl border transition flex items-center justify-between gap-2 cursor-pointer',
                         active
-                          ? 'bg-[#3A2616] border-[#D9A441]/70 text-[#FFF4D2]'
+                          ? 'bg-[#3A2616] border-[#A97B4F]/70 text-[#FFF4D2]'
                           : 'bg-transparent border-transparent text-[#F7EBD5]/85 hover:bg-[#2B1911]'
                       )}
                     >
@@ -345,7 +345,7 @@ export function TempleHUD() {
                           {track.description}
                         </div>
                       </div>
-                      {active && <span className="text-[#F6D58A] text-xs font-bold">✓</span>}
+                      {active && <span className="text-[#DBC09B] text-xs font-bold">✓</span>}
                     </button>
                   );
                 })}
@@ -358,7 +358,7 @@ export function TempleHUD() {
             <button
               type="button"
               onClick={cycleWeatherMode}
-              className="md:hidden w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#23150F]/90 border border-[#D9A441]/40 flex items-center justify-center text-xs sm:text-sm cursor-pointer"
+              className="md:hidden w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/40 flex items-center justify-center text-xs sm:text-sm cursor-pointer"
               title="Đổi thời tiết / ánh sáng Chánh Điện"
             >
               <span>{activeWeatherOpt.emoji}</span>
@@ -371,16 +371,16 @@ export function TempleHUD() {
                 closeAllMenus();
                 setWeatherDropdownOpen(next);
               }}
-              className="hidden md:flex items-center gap-1.5 h-8 px-2.5 rounded-full bg-[#23150F]/90 border border-[#D9A441]/40 hover:border-[#F6D58A] text-[11px] font-medium text-[#F7EBD5] max-w-[140px] xl:max-w-[155px] 2xl:max-w-[185px] cursor-pointer"
+              className="hidden md:flex items-center gap-1.5 h-8 px-2.5 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/40 hover:border-[#DBC09B] text-[11px] font-medium text-[#F7EBD5] max-w-[140px] xl:max-w-[155px] 2xl:max-w-[185px] cursor-pointer"
               title="Đổi thời tiết & khung giờ"
             >
               <span>{activeWeatherOpt.emoji}</span>
               <span className="truncate">{weatherShortText}</span>
-              <ChevronDown className="w-3 h-3 text-[#D9A441] shrink-0" />
+              <ChevronDown className="w-3 h-3 text-[#A97B4F] shrink-0" />
             </button>
 
             {weatherDropdownOpen && (
-              <div className="absolute right-0 top-10 w-64 rounded-2xl bg-[#1B0D09]/95 border border-[#D9A441]/45 shadow-2xl p-1.5 space-y-1 backdrop-blur-xl z-40">
+              <div className="absolute right-0 top-10 w-64 rounded-2xl bg-[#1B0D09]/95 border border-[#A97B4F]/45 shadow-2xl p-1.5 space-y-1 backdrop-blur-xl z-40">
                 {WEATHER_OPTIONS.map((w) => {
                   const active = weatherMode === w.id;
                   const label =
@@ -398,7 +398,7 @@ export function TempleHUD() {
                       className={cn(
                         'w-full text-left px-3 py-2 rounded-xl border transition flex items-center justify-between gap-2 cursor-pointer',
                         active
-                          ? 'bg-[#3A2616] border-[#D9A441]/70 text-[#FFF4D2]'
+                          ? 'bg-[#3A2616] border-[#A97B4F]/70 text-[#FFF4D2]'
                           : 'bg-transparent border-transparent text-[#F7EBD5]/85 hover:bg-[#2B1911]'
                       )}
                     >
@@ -410,7 +410,7 @@ export function TempleHUD() {
                           {w.description}
                         </div>
                       </div>
-                      {active && <span className="text-[#F6D58A] text-xs font-bold">✓</span>}
+                      {active && <span className="text-[#DBC09B] text-xs font-bold">✓</span>}
                     </button>
                   );
                 })}
@@ -422,7 +422,7 @@ export function TempleHUD() {
           <button
             type="button"
             onClick={cycleGraphicsQuality}
-            className="hidden xl:inline-flex h-8 px-2.5 rounded-full bg-[#23150F]/90 border border-[#D9A441]/35 hover:border-[#F6D58A] items-center text-[11px] font-medium text-[#F7EBD5] whitespace-nowrap cursor-pointer shrink-0"
+            className="hidden xl:inline-flex h-8 px-2.5 rounded-full bg-[#23150F]/90 border border-[#A97B4F]/35 hover:border-[#DBC09B] items-center text-[11px] font-medium text-[#F7EBD5] whitespace-nowrap cursor-pointer shrink-0"
             title="Chỉnh chất lượng đồ họa 3D"
           >
             Đồ họa: {qualityLabel}
@@ -434,9 +434,9 @@ export function TempleHUD() {
       {/* PRESENCE DRAWER (Desktop top-right)                                       */}
       {/* ========================================================================= */}
       {presenceOpen && (
-        <div className="fixed top-14 right-3 sm:right-6 z-40 pointer-events-auto w-72 rounded-2xl bg-[#1B0D09]/95 border border-[#D9A441]/45 shadow-2xl p-3.5 backdrop-blur-xl text-[#F7EBD5]">
-          <div className="flex items-center justify-between pb-2 border-b border-[#D9A441]/20">
-            <span className="text-xs font-bold text-[#F6D58A]">
+        <div className="fixed top-14 right-3 sm:right-6 z-40 pointer-events-auto w-72 rounded-2xl bg-[#1B0D09]/95 border border-[#A97B4F]/45 shadow-2xl p-3.5 backdrop-blur-xl text-[#F7EBD5]">
+          <div className="flex items-center justify-between pb-2 border-b border-[#A97B4F]/20">
+            <span className="text-xs font-bold text-[#DBC09B]">
               🪷 Đồng đạo trong Chánh điện ({onlineHere})
             </span>
             <button
@@ -448,7 +448,7 @@ export function TempleHUD() {
             </button>
           </div>
           <div className="py-2.5 space-y-2">
-            <div className="px-2.5 py-2 rounded-xl bg-[#2B1A12]/90 border border-[#D9A441]/30 flex items-center justify-between gap-2">
+            <div className="px-2.5 py-2 rounded-xl bg-[#2B1A12]/90 border border-[#A97B4F]/30 flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 min-w-0">
                 <span
                   className="w-2.5 h-2.5 rounded-full shrink-0"
@@ -458,12 +458,12 @@ export function TempleHUD() {
                   {activeRobe.fullName} · {name || 'Diệu Tâm'}
                 </span>
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-[#3A2817] border border-[#D9A441]/40 text-[10px] font-bold text-[#F6D58A]">
+              <span className="px-2 py-0.5 rounded-full bg-[#3A2817] border border-[#A97B4F]/40 text-[10px] font-bold text-[#DBC09B]">
                 Bạn
               </span>
             </div>
           </div>
-          <p className="text-[10.5px] italic text-center text-[#F7EBD5]/65 pt-1 border-t border-[#D9A441]/15">
+          <p className="text-[10.5px] italic text-center text-[#F7EBD5]/65 pt-1 border-t border-[#A97B4F]/15">
             Lặng lẽ cùng nhau sẻ chia sự bình an trong tâm hồn
           </p>
         </div>
@@ -474,7 +474,7 @@ export function TempleHUD() {
       {/* ========================================================================= */}
       {visibleToast && (
         <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-40 pointer-events-none flex justify-center">
-          <div className="max-w-md px-5 py-2.5 rounded-full bg-[#1B0D09]/90 border border-[#D9A441]/70 text-[#FFF4D2] text-xs sm:text-sm font-medium shadow-[0_8px_30px_rgba(0,0,0,0.65)] backdrop-blur-md text-center truncate">
+          <div className="max-w-md px-5 py-2.5 rounded-full bg-[#1B0D09]/90 border border-[#A97B4F]/70 text-[#FFF4D2] text-xs sm:text-sm font-medium shadow-[0_8px_30px_rgba(0,0,0,0.65)] backdrop-blur-md text-center truncate">
             {visibleToast}
           </div>
         </div>
@@ -500,10 +500,10 @@ export function TempleHUD() {
               }}
               onPointerUp={resetJoystick}
               onPointerCancel={resetJoystick}
-              className="relative w-[104px] h-[104px] rounded-full bg-[#1B0D09]/70 border border-[#D9A441]/55 backdrop-blur-md flex items-center justify-center touch-none shadow-lg"
+              className="relative w-[104px] h-[104px] rounded-full bg-[#1B0D09]/70 border border-[#A97B4F]/55 backdrop-blur-md flex items-center justify-center touch-none shadow-lg"
             >
-              <span className="absolute top-1.5 text-[9px] text-[#F6D58A]/80">▲</span>
-              <span className="absolute bottom-1.5 text-[9px] text-[#F6D58A]/80">▼</span>
+              <span className="absolute top-1.5 text-[9px] text-[#DBC09B]/80">▲</span>
+              <span className="absolute bottom-1.5 text-[9px] text-[#DBC09B]/80">▼</span>
               <span className="absolute left-2 text-[9px] text-[#60A5FA]">◀</span>
               <span className="absolute right-2 text-[9px] text-[#60A5FA]">▶</span>
 
@@ -511,7 +511,7 @@ export function TempleHUD() {
                 style={{
                   transform: `translate(${knobOffset.x}px, ${knobOffset.y}px)`,
                 }}
-                className="w-11 h-11 rounded-full bg-gradient-to-br from-[#F9E4A8] via-[#DFAD4B] to-[#9C6B19] border-2 border-[#FFF5D2] shadow-[0_0_16px_rgba(246,213,138,0.65)] flex items-center justify-center pointer-events-none"
+                className="w-11 h-11 rounded-full bg-gradient-to-br from-[#C89F72] via-[#9C6F43] to-[#6E4925] border-2 border-[#E6C7A0] shadow-[0_0_12px_rgba(169,123,79,0.5)] flex items-center justify-center pointer-events-none"
               >
                 <span className="w-2.5 h-2.5 rounded-full bg-[#1B0D09]" />
               </div>
@@ -520,9 +520,9 @@ export function TempleHUD() {
             <button
               type="button"
               onClick={triggerJump}
-              className="w-12 h-12 rounded-full bg-[#1B0D09]/80 border border-[#D9A441]/55 text-[#F7EBD5] text-[10px] font-bold flex flex-col items-center justify-center active:scale-95 shadow-lg cursor-pointer"
+              className="w-12 h-12 rounded-full bg-[#1B0D09]/80 border border-[#A97B4F]/55 text-[#F7EBD5] text-[10px] font-bold flex flex-col items-center justify-center active:scale-95 shadow-lg cursor-pointer"
             >
-              <span className="text-xs text-[#F6D58A] leading-none">⤒</span>
+              <span className="text-xs text-[#DBC09B] leading-none">⤒</span>
               <span>Nhảy</span>
             </button>
           </div>
@@ -534,7 +534,7 @@ export function TempleHUD() {
             <button
               type="button"
               onClick={() => issueCameraCommand('zoom_in')}
-              className="w-9 h-9 rounded-full bg-[#1B0D09]/85 border border-[#D9A441]/45 text-[#FFF4D2] hover:bg-[#32190F] flex items-center justify-center shadow-lg cursor-pointer"
+              className="w-9 h-9 rounded-full bg-[#1B0D09]/85 border border-[#A97B4F]/45 text-[#FFF4D2] hover:bg-[#32190F] flex items-center justify-center shadow-lg cursor-pointer"
               title="Phóng to"
             >
               <Plus className="w-4 h-4" />
@@ -542,7 +542,7 @@ export function TempleHUD() {
             <button
               type="button"
               onClick={() => issueCameraCommand('zoom_out')}
-              className="w-9 h-9 rounded-full bg-[#1B0D09]/85 border border-[#D9A441]/45 text-[#FFF4D2] hover:bg-[#32190F] flex items-center justify-center shadow-lg cursor-pointer"
+              className="w-9 h-9 rounded-full bg-[#1B0D09]/85 border border-[#A97B4F]/45 text-[#FFF4D2] hover:bg-[#32190F] flex items-center justify-center shadow-lg cursor-pointer"
               title="Thu nhỏ"
             >
               <Minus className="w-4 h-4" />
@@ -553,8 +553,8 @@ export function TempleHUD() {
               className={cn(
                 'w-9 h-9 rounded-full border flex items-center justify-center shadow-lg cursor-pointer transition',
                 overviewActive
-                  ? 'bg-[#D9A441] border-[#FFF4D2] text-[#1B0D09]'
-                  : 'bg-[#1B0D09]/85 border-[#D9A441]/45 text-[#FFF4D2] hover:bg-[#32190F]'
+                  ? 'bg-[#9E7145] border-[#E0C097] text-[#FFF5E8]'
+                  : 'bg-[#1B0D09]/85 border-[#A97B4F]/45 text-[#FFF4D2] hover:bg-[#32190F]'
               )}
               title="Xem toàn cảnh 100 bồ đoàn"
             >
@@ -567,7 +567,7 @@ export function TempleHUD() {
             <button
               type="button"
               onClick={() => issueCameraCommand('reset')}
-              className="w-9 h-9 rounded-full bg-[#1B0D09]/85 border border-[#D9A441]/45 text-[#FFF4D2] hover:bg-[#32190F] flex items-center justify-center shadow-lg cursor-pointer"
+              className="w-9 h-9 rounded-full bg-[#1B0D09]/85 border border-[#A97B4F]/45 text-[#FFF4D2] hover:bg-[#32190F] flex items-center justify-center shadow-lg cursor-pointer"
               title="Đặt lại góc nhìn"
             >
               <Crosshair className="w-4 h-4" />
@@ -587,7 +587,7 @@ export function TempleHUD() {
                 triggerBell();
               }
             }}
-            className="pointer-events-auto px-4 py-1.5 rounded-full bg-gradient-to-r from-[#8C5815]/95 via-[#B88022]/95 to-[#8C5815]/95 border border-[#F6D58A]/70 text-[#FFF8EC] text-xs font-semibold flex items-center gap-1.5 shadow-[0_6px_22px_rgba(0,0,0,0.55)] hover:brightness-110 active:scale-95 transition cursor-pointer"
+            className="pointer-events-auto px-4 py-1.5 rounded-full bg-gradient-to-r from-[#5E3B1F]/95 via-[#7F542E]/95 to-[#5E3B1F]/95 border border-[#DCBA90]/55 text-[#F9EFE0] text-xs font-semibold flex items-center gap-1.5 shadow-[0_6px_22px_rgba(0,0,0,0.55)] hover:brightness-110 active:scale-95 transition cursor-pointer"
           >
             {worldPromptAction === 'sutra' ? (
               <BookOpen className="w-3.5 h-3.5 text-[#FFF4D2]" />
@@ -604,7 +604,7 @@ export function TempleHUD() {
         )}
 
         {/* Main 4-Button Bottom Practice Dock */}
-        <div className="pointer-events-auto rounded-full p-1.5 bg-[#1B0D09]/92 border border-[#D9A441]/55 shadow-[0_10px_32px_rgba(0,0,0,0.75)] backdrop-blur-xl flex items-center gap-1.5 max-w-[calc(100vw-20px)]">
+        <div className="pointer-events-auto rounded-full p-1.5 bg-[#1B0D09]/92 border border-[#A97B4F]/55 shadow-[0_10px_32px_rgba(0,0,0,0.75)] backdrop-blur-xl flex items-center gap-1.5 max-w-[calc(100vw-20px)]">
           <button
             type="button"
             onClick={() => {
@@ -612,7 +612,7 @@ export function TempleHUD() {
               templeAudio.playGreatBell(0.28);
               performBow();
             }}
-            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#D9A441]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer"
+            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#A97B4F]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer"
           >
             {bowCount > 0 ? `Lạy (${bowCount})` : 'Lạy Phật'}
           </button>
@@ -623,7 +623,7 @@ export function TempleHUD() {
               closeAllMenus();
               setActiveModal('sutra');
             }}
-            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#D9A441]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer"
+            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#A97B4F]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer"
           >
             Đọc Kinh
           </button>
@@ -634,7 +634,7 @@ export function TempleHUD() {
               closeAllMenus();
               setActiveModal('mala');
             }}
-            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#D9A441]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer"
+            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#A97B4F]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer"
           >
             <span className="md:hidden">
               {totalMalaBeads > 0 ? `Chuỗi (${totalMalaBeads})` : 'Chuỗi Hạt'}
@@ -651,9 +651,9 @@ export function TempleHUD() {
               prepareLanternWalk();
               setActiveModal('prayer');
             }}
-            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#D9A441]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer flex items-center gap-1.5"
+            className="px-3.5 sm:px-5 py-2 rounded-full bg-[#2A1710] hover:bg-[#3A2116] border border-[#A97B4F]/55 text-[#FFF4D2] text-xs sm:text-sm font-bold whitespace-nowrap active:scale-95 transition cursor-pointer flex items-center gap-1.5"
           >
-            <Flame className="w-3.5 h-3.5 text-[#F6D58A] hidden sm:inline" />
+            <Flame className="w-3.5 h-3.5 text-[#DBC09B] hidden sm:inline" />
             <span className="md:hidden">Hoa Đăng</span>
             <span className="hidden md:inline">Dâng Hoa Đăng</span>
           </button>

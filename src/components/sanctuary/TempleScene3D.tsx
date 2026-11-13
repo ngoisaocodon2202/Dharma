@@ -30,52 +30,52 @@ interface SkyThemeConfig {
 
 const SKY_THEMES: Record<EffectiveTimeMode, SkyThemeConfig> = {
   morning: {
-    bg: '#38221A',
-    fog: '#331E16',
+    bg: '#2E1C16',
+    fog: '#291813',
     fogNear: 20,
     fogFar: 62,
-    ambientColor: '#FFE5C4',
-    ambientIntensity: 0.98,
-    keyColor: '#FFCE8A',
-    keyIntensity: 1.85,
+    ambientColor: '#EBD3BC',
+    ambientIntensity: 0.92,
+    keyColor: '#DFB68D',
+    keyIntensity: 1.55,
     keyPos: [18, 16, 14],
-    altarLightColor: '#FFD57A',
-    altarLightIntensity: 2.8,
-    lanternEmissiveIntensity: 1.35,
+    altarLightColor: '#D9A773',
+    altarLightIntensity: 2.0,
+    lanternEmissiveIntensity: 0.95,
     showStars: false,
     showMoon: false,
     isRain: false,
   },
   noon: {
-    bg: '#364A5E',
-    fog: '#3B4854',
+    bg: '#324150',
+    fog: '#35404A',
     fogNear: 22,
     fogFar: 66,
-    ambientColor: '#FFF7E8',
-    ambientIntensity: 1.15,
-    keyColor: '#FFF1CF',
-    keyIntensity: 2.15,
+    ambientColor: '#EFE4D8',
+    ambientIntensity: 1.05,
+    keyColor: '#E8D5C0',
+    keyIntensity: 1.8,
     keyPos: [6, 26, 12],
-    altarLightColor: '#FFE090',
-    altarLightIntensity: 2.5,
-    lanternEmissiveIntensity: 1.05,
+    altarLightColor: '#DEC098',
+    altarLightIntensity: 1.85,
+    lanternEmissiveIntensity: 0.8,
     showStars: false,
     showMoon: false,
     isRain: false,
   },
   afternoon: {
-    bg: '#4A2418',
-    fog: '#3A1C13',
+    bg: '#381C14',
+    fog: '#2E1610',
     fogNear: 19,
     fogFar: 60,
-    ambientColor: '#FFC996',
-    ambientIntensity: 0.88,
-    keyColor: '#FF9A4D',
-    keyIntensity: 1.95,
+    ambientColor: '#E5BEA0',
+    ambientIntensity: 0.85,
+    keyColor: '#D69468',
+    keyIntensity: 1.65,
     keyPos: [-20, 10, 14],
-    altarLightColor: '#FFD074',
-    altarLightIntensity: 3.1,
-    lanternEmissiveIntensity: 1.75,
+    altarLightColor: '#D49E6A',
+    altarLightIntensity: 2.2,
+    lanternEmissiveIntensity: 1.25,
     showStars: false,
     showMoon: false,
     isRain: false,
@@ -88,11 +88,11 @@ const SKY_THEMES: Record<EffectiveTimeMode, SkyThemeConfig> = {
     ambientColor: '#B5A1D6',
     ambientIntensity: 0.56,
     keyColor: '#A1BAFF',
-    keyIntensity: 0.95,
+    keyIntensity: 0.9,
     keyPos: [-14, 22, -16],
-    altarLightColor: '#FFC959',
-    altarLightIntensity: 3.6,
-    lanternEmissiveIntensity: 2.35,
+    altarLightColor: '#D6A16B',
+    altarLightIntensity: 2.5,
+    lanternEmissiveIntensity: 1.55,
     showStars: true,
     showMoon: true,
     isRain: false,
@@ -105,11 +105,11 @@ const SKY_THEMES: Record<EffectiveTimeMode, SkyThemeConfig> = {
     ambientColor: '#A7BCCB',
     ambientIntensity: 0.78,
     keyColor: '#B8D0E4',
-    keyIntensity: 1.15,
+    keyIntensity: 1.1,
     keyPos: [8, 22, 12],
-    altarLightColor: '#FFCC62',
-    altarLightIntensity: 3.3,
-    lanternEmissiveIntensity: 2.1,
+    altarLightColor: '#D6A16B',
+    altarLightIntensity: 2.35,
+    lanternEmissiveIntensity: 1.45,
     showStars: false,
     showMoon: false,
     isRain: true,
@@ -299,10 +299,10 @@ function makeMandalaHaloTexture(): THREE.CanvasTexture {
   const c = size / 2;
 
   const grad = ctx.createRadialGradient(c, c, 12, c, c, c - 10);
-  grad.addColorStop(0, 'rgba(255, 240, 175, 0.95)');
-  grad.addColorStop(0.32, 'rgba(246, 203, 98, 0.65)');
-  grad.addColorStop(0.65, 'rgba(217, 164, 65, 0.25)');
-  grad.addColorStop(1, 'rgba(217, 164, 65, 0)');
+  grad.addColorStop(0, 'rgba(222, 182, 134, 0.56)');
+  grad.addColorStop(0.35, 'rgba(178, 128, 80, 0.30)');
+  grad.addColorStop(0.68, 'rgba(136, 90, 52, 0.12)');
+  grad.addColorStop(1, 'rgba(120, 76, 42, 0)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, size, size);
 
@@ -312,18 +312,18 @@ function makeMandalaHaloTexture(): THREE.CanvasTexture {
     ctx.rotate((Math.PI * 2) / 24);
     ctx.beginPath();
     ctx.moveTo(0, 48);
-    ctx.lineTo(-4, 215);
-    ctx.lineTo(4, 215);
+    ctx.lineTo(-3.5, 215);
+    ctx.lineTo(3.5, 215);
     ctx.closePath();
-    ctx.fillStyle = i % 2 === 0 ? 'rgba(255, 232, 148, 0.35)' : 'rgba(246, 200, 90, 0.18)';
+    ctx.fillStyle = i % 2 === 0 ? 'rgba(218, 174, 122, 0.22)' : 'rgba(180, 132, 84, 0.11)';
     ctx.fill();
   }
-  ctx.strokeStyle = 'rgba(255, 232, 152, 0.65)';
-  ctx.lineWidth = 3;
+  ctx.strokeStyle = 'rgba(214, 168, 118, 0.42)';
+  ctx.lineWidth = 2.5;
   ctx.beginPath();
   ctx.arc(0, 0, 155, 0, Math.PI * 2);
   ctx.stroke();
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1.8;
   ctx.beginPath();
   ctx.arc(0, 0, 198, 0, Math.PI * 2);
   ctx.stroke();
@@ -343,20 +343,20 @@ function makeCarpetRunnerTexture(): THREE.CanvasTexture {
   canvas.height = h;
   const ctx = canvas.getContext('2d')!;
 
-  ctx.fillStyle = '#751515';
+  ctx.fillStyle = '#5E1513';
   ctx.fillRect(0, 0, w, h);
 
-  // Outer gold trimming bands
-  ctx.fillStyle = '#D9A441';
+  // Subtle burnished antique bronze border trims
+  ctx.fillStyle = '#9A6E44';
   ctx.fillRect(8, 0, 10, h);
   ctx.fillRect(w - 18, 0, 10, h);
-  ctx.fillStyle = '#F6D58A';
+  ctx.fillStyle = '#B88B5D';
   ctx.fillRect(24, 0, 3, h);
   ctx.fillRect(w - 27, 0, 3, h);
 
-  // Repeating embossed gold lotus medallions down the center
-  ctx.strokeStyle = 'rgba(246, 213, 138, 0.42)';
-  ctx.lineWidth = 2.5;
+  // Repeating embossed bronze lotus medallions down the center
+  ctx.strokeStyle = 'rgba(205, 162, 112, 0.28)';
+  ctx.lineWidth = 2.2;
   for (let y = 64; y < h; y += 128) {
     ctx.beginPath();
     ctx.arc(w / 2, y, 28, 0, Math.PI * 2);
@@ -429,8 +429,8 @@ function AtmosphereAndSky({ theme }: { theme: SkyThemeConfig }) {
         distance={22}
         decay={1.4}
       />
-      <pointLight position={[-6.5, 4.4, 2]} color="#FFBA66" intensity={0.9} distance={15} decay={1.6} />
-      <pointLight position={[6.5, 4.4, 2]} color="#FFBA66" intensity={0.9} distance={15} decay={1.6} />
+      <pointLight position={[-6.5, 4.4, 2]} color="#D69F6A" intensity={0.78} distance={15} decay={1.6} />
+      <pointLight position={[6.5, 4.4, 2]} color="#D69F6A" intensity={0.78} distance={15} decay={1.6} />
 
       {theme.showStars && <Stars radius={42} depth={20} count={900} factor={2.6} fade speed={0.4} />}
       {theme.showMoon && (
@@ -600,9 +600,9 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
       makeCalligraphyPlaqueTexture(['ĐẠI HÙNG BẢO ĐIỆN'], {
         width: 1024,
         height: 220,
-        bgColor: '#3A0F0E',
-        borderColor: '#D9A441',
-        textColor: '#F6D58A',
+        bgColor: '#2B100E',
+        borderColor: '#9C7146',
+        textColor: '#DFBE93',
         fontSize: 64,
       }),
     []
@@ -612,9 +612,9 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
       makeCalligraphyPlaqueTexture(['TỪ', 'BI'], {
         width: 240,
         height: 640,
-        bgColor: '#5B1111',
-        borderColor: '#D9A441',
-        textColor: '#F6D58A',
+        bgColor: '#481312',
+        borderColor: '#9C7146',
+        textColor: '#DFBE93',
         fontSize: 82,
         vertical: true,
       }),
@@ -625,9 +625,9 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
       makeCalligraphyPlaqueTexture(['HỶ', 'XẢ'], {
         width: 240,
         height: 640,
-        bgColor: '#5B1111',
-        borderColor: '#D9A441',
-        textColor: '#F6D58A',
+        bgColor: '#481312',
+        borderColor: '#9C7146',
+        textColor: '#DFBE93',
         fontSize: 82,
         vertical: true,
       }),
@@ -638,9 +638,9 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
       makeCalligraphyPlaqueTexture(['PHẬT', 'NHẬT', 'TĂNG', 'HUY'], {
         width: 220,
         height: 820,
-        bgColor: '#2B100D',
-        borderColor: '#D9A441',
-        textColor: '#F6D58A',
+        bgColor: '#24100D',
+        borderColor: '#9C7146',
+        textColor: '#DFBE93',
         fontSize: 52,
         vertical: true,
       }),
@@ -651,9 +651,9 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
       makeCalligraphyPlaqueTexture(['PHÁP', 'LUÂN', 'THƯỜNG', 'CHUYỂN'], {
         width: 220,
         height: 820,
-        bgColor: '#2B100D',
-        borderColor: '#D9A441',
-        textColor: '#F6D58A',
+        bgColor: '#24100D',
+        borderColor: '#9C7146',
+        textColor: '#DFBE93',
         fontSize: 48,
         vertical: true,
       }),
@@ -737,17 +737,17 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
           </mesh>
           <mesh position={[0, 0.34, 0]}>
             <torusGeometry args={[0.32, 0.04, 8, 24]} />
-            <meshStandardMaterial color="#D9A441" roughness={0.35} metalness={0.75} />
+            <meshStandardMaterial color="#9E7346" roughness={0.38} metalness={0.78} />
           </mesh>
           {/* Crimson Lacquer Column */}
           <mesh position={[0, 4.35, 0]} castShadow receiveShadow>
             <cylinderGeometry args={[0.25, 0.28, 8.0, 18]} />
-            <meshStandardMaterial color="#671814" roughness={0.42} metalness={0.12} />
+            <meshStandardMaterial color="#581613" roughness={0.44} metalness={0.1} />
           </mesh>
-          {/* Gold Capital Collar */}
+          {/* Burnished Bronze Capital Collar */}
           <mesh position={[0, 8.2, 0]}>
             <cylinderGeometry args={[0.31, 0.26, 0.22, 16]} />
-            <meshStandardMaterial color="#D9A441" roughness={0.32} metalness={0.78} />
+            <meshStandardMaterial color="#9E7346" roughness={0.36} metalness={0.78} />
           </mesh>
         </group>
       ))}
@@ -780,20 +780,20 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
         <group key={`hall-lantern-${i}`} position={[lx, ly, lz]}>
           <mesh position={[0, 0.42, 0]}>
             <cylinderGeometry args={[0.02, 0.02, 0.65, 6]} />
-            <meshStandardMaterial color="#D9A441" metalness={0.6} />
+            <meshStandardMaterial color="#9E7346" metalness={0.65} />
           </mesh>
           <mesh>
             <sphereGeometry args={[0.28, 16, 14]} />
             <meshStandardMaterial
-              color="#E87D2E"
-              emissive="#FF9E3B"
+              color="#CC7D44"
+              emissive="#D98344"
               emissiveIntensity={lanternIntensity}
-              roughness={0.4}
+              roughness={0.44}
             />
           </mesh>
           <mesh position={[0, -0.34, 0]}>
             <cylinderGeometry args={[0.04, 0.08, 0.25, 8]} />
-            <meshStandardMaterial color="#B51E1E" />
+            <meshStandardMaterial color="#8E1C1A" />
           </mesh>
         </group>
       ))}
@@ -803,36 +803,36 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
         {/* Sanctuary Rear Backdrop Screen (Hậu Chẩm) */}
         <mesh position={[0, 3.7, -1.25]} receiveShadow>
           <boxGeometry args={[10.8, 7.2, 0.32]} />
-          <meshStandardMaterial color="#260F0B" roughness={0.7} />
+          <meshStandardMaterial color="#230E0A" roughness={0.72} />
         </mesh>
-        {/* Gold Frame around Backdrop */}
+        {/* Inner Panel */}
         <mesh position={[0, 3.7, -1.07]}>
           <boxGeometry args={[10.2, 6.6, 0.04]} />
-          <meshStandardMaterial color="#3A1710" roughness={0.55} />
+          <meshStandardMaterial color="#32140E" roughness={0.58} />
         </mesh>
 
         {/* Tiered Altar Dais (Tam Bảo) */}
         <mesh position={[0, 0.26, 0.2]} castShadow receiveShadow>
           <boxGeometry args={[9.8, 0.45, 2.7]} />
-          <meshStandardMaterial color="#421A11" roughness={0.5} />
+          <meshStandardMaterial color="#3D1810" roughness={0.52} />
         </mesh>
         <mesh position={[0, 0.72, 0.15]} castShadow receiveShadow>
           <boxGeometry args={[7.4, 0.48, 2.15]} />
-          <meshStandardMaterial color="#4F2014" roughness={0.45} />
+          <meshStandardMaterial color="#491E13" roughness={0.48} />
         </mesh>
         <mesh position={[0, 1.22, 0.08]} castShadow receiveShadow>
           <boxGeometry args={[4.4, 0.54, 1.65]} />
-          <meshStandardMaterial color="#5E2717" roughness={0.42} />
+          <meshStandardMaterial color="#552416" roughness={0.44} />
         </mesh>
 
-        {/* Gold Trim Band on Main Dais */}
+        {/* Antiqued Bronze Trim Band on Main Dais */}
         <mesh position={[0, 0.49, 1.56]}>
           <boxGeometry args={[9.86, 0.08, 0.06]} />
-          <meshStandardMaterial color="#D9A441" roughness={0.3} metalness={0.75} />
+          <meshStandardMaterial color="#9E7346" roughness={0.34} metalness={0.78} />
         </mesh>
         <mesh position={[0, 0.96, 1.24]}>
           <boxGeometry args={[7.46, 0.08, 0.06]} />
-          <meshStandardMaterial color="#D9A441" roughness={0.3} metalness={0.75} />
+          <meshStandardMaterial color="#9E7346" roughness={0.34} metalness={0.78} />
         </mesh>
 
         {/* Top Plaque: ĐẠI HÙNG BẢO ĐIỆN */}
@@ -851,19 +851,19 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
           <meshBasicMaterial map={rightBannerTex} toneMapped={false} />
         </mesh>
 
-        {/* Rotating Mandala Halo Behind Buddha */}
+        {/* Rotating Mandala Halo Behind Buddha (Soft Subtle Bronze Radiance) */}
         <mesh ref={haloRef} position={[0, 3.65, -0.62]}>
           <planeGeometry args={[4.75, 4.75]} />
           <meshBasicMaterial
             map={mandalaTex}
             transparent
-            opacity={0.85}
+            opacity={0.62}
             blending={THREE.AdditiveBlending}
             depthWrite={false}
           />
         </mesh>
 
-        {/* Keyed Transparent Golden Buddha Statue Plane */}
+        {/* Keyed Transparent Golden-Bronze Buddha Statue Plane */}
         {buddhaTex ? (
           <mesh position={[0, 3.05, -0.06]}>
             <planeGeometry args={[3.65, 3.65]} />
@@ -872,32 +872,32 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
               transparent
               alphaTest={0.08}
               toneMapped={false}
-              color="#FFF6E5"
+              color="#EAD2B5"
             />
           </mesh>
         ) : (
-          /* Clean golden silhouette fallback while texture loads */
+          /* Clean bronze silhouette fallback while texture loads */
           <mesh position={[0, 2.7, 0]}>
             <capsuleGeometry args={[0.62, 1.35, 8, 16]} />
-            <meshStandardMaterial color="#D9A441" metalness={0.72} roughness={0.28} />
+            <meshStandardMaterial color="#A87A48" metalness={0.76} roughness={0.32} />
           </mesh>
         )}
 
         {/* Front Altar Table (Hương Án) */}
         <mesh position={[0, 0.62, 1.98]} castShadow receiveShadow>
           <boxGeometry args={[4.2, 1.15, 0.92]} />
-          <meshStandardMaterial color="#4A1D12" roughness={0.44} />
+          <meshStandardMaterial color="#421910" roughness={0.46} />
         </mesh>
         <mesh position={[0, 1.2, 2.45]}>
           <boxGeometry args={[4.26, 0.06, 0.06]} />
-          <meshStandardMaterial color="#D9A441" metalness={0.75} roughness={0.3} />
+          <meshStandardMaterial color="#9E7346" metalness={0.78} roughness={0.34} />
         </mesh>
 
         {/* Brass Tripod Incense Censer (Lư Hương Đồng) */}
         <group position={[0, 1.48, 1.98]}>
           <mesh castShadow>
             <cylinderGeometry args={[0.3, 0.22, 0.42, 18]} />
-            <meshStandardMaterial color="#B58435" metalness={0.76} roughness={0.28} />
+            <meshStandardMaterial color="#8F6338" metalness={0.78} roughness={0.32} />
           </mesh>
           <mesh position={[0, 0.22, 0]}>
             <cylinderGeometry args={[0.25, 0.25, 0.04, 18]} />
@@ -927,7 +927,7 @@ function TempleHallArchitecture({ lanternIntensity }: { lanternIntensity: number
             </mesh>
             <mesh position={[0, 0.24, 0]}>
               <coneGeometry args={[0.04, 0.14, 8]} />
-              <meshBasicMaterial color="#FFB938" />
+              <meshBasicMaterial color="#E69E58" />
             </mesh>
           </group>
         ))}
@@ -985,8 +985,8 @@ function HundredMatsInstanced() {
       dummy.updateMatrix();
       cushionRef.current?.setMatrixAt(idx, dummy.matrix);
 
-      // Highlight player's default mat (#16) with deep saffron-gold rim tone
-      cushionColor.set(slot.id === 16 ? '#A64622' : '#7E2B1E');
+      // Highlight player's default mat (#16) with warm burnished bronze-chestnut trim
+      cushionColor.set(slot.id === 16 ? '#7D3E24' : '#532016');
       cushionRef.current?.setColorAt(idx, cushionColor);
 
       // Round Meditation Pad
@@ -1023,15 +1023,15 @@ function HundredMatsInstanced() {
       </instancedMesh>
       <instancedMesh ref={padRef} args={[undefined, undefined, matCount]} receiveShadow>
         <cylinderGeometry args={[0.3, 0.32, 0.045, 16]} />
-        <meshStandardMaterial color="#C88B38" roughness={0.65} />
+        <meshStandardMaterial color="#7C5634" roughness={0.72} metalness={0.14} />
       </instancedMesh>
       <instancedMesh ref={deskTopRef} args={[undefined, undefined, matCount]} castShadow receiveShadow>
         <boxGeometry args={[0.68, 0.22, 0.34]} />
-        <meshStandardMaterial color="#3F1E12" roughness={0.52} />
+        <meshStandardMaterial color="#35190F" roughness={0.54} />
       </instancedMesh>
       <instancedMesh ref={bookRef} args={[undefined, undefined, matCount]}>
         <boxGeometry args={[0.38, 0.025, 0.24]} />
-        <meshStandardMaterial color="#F2E2BA" roughness={0.75} />
+        <meshStandardMaterial color="#CEB999" roughness={0.78} />
       </instancedMesh>
     </group>
   );
@@ -1173,7 +1173,7 @@ function ChibiPractitionerMesh({
         {/* Floating Nameplate */}
         {showBadge && badgeText && (
           <Html position={[0, 1.24, 0]} center distanceFactor={13} zIndexRange={[10, 0]}>
-            <div className="pointer-events-none select-none whitespace-nowrap rounded-full border border-[#D9A441]/55 bg-[#1B0D09]/85 px-2.5 py-0.5 text-[11px] font-medium text-[#FFF4D2] shadow-[0_4px_12px_rgba(0,0,0,0.45)] backdrop-blur-sm">
+            <div className="pointer-events-none select-none whitespace-nowrap rounded-full border border-[#A97B4F]/55 bg-[#1B0D09]/85 px-2.5 py-0.5 text-[11px] font-medium text-[#F5E7D3] shadow-[0_4px_12px_rgba(0,0,0,0.45)] backdrop-blur-sm">
               {badgeText}
             </div>
           </Html>
@@ -1515,32 +1515,32 @@ function GreatBellPavilion({ onRingBell }: { onRingBell: () => void }) {
         <meshStandardMaterial color="#671814" roughness={0.55} />
       </mesh>
 
-      {/* Suspended Swinging Brass Great Bell */}
+      {/* Suspended Swinging Burnished Bronze Great Bell */}
       <group ref={bellGroupRef} position={[0, 3.12, 0]}>
         <mesh position={[0, -0.35, 0]}>
           <cylinderGeometry args={[0.04, 0.04, 0.7, 8]} />
-          <meshStandardMaterial color="#D9A441" metalness={0.8} roughness={0.25} />
+          <meshStandardMaterial color="#9E7346" metalness={0.82} roughness={0.3} />
         </mesh>
         <mesh position={[0, -1.05, 0]} castShadow>
           <cylinderGeometry args={[0.36, 0.56, 1.18, 22]} />
           <meshStandardMaterial
-            color={hovered ? '#E2AF4A' : '#B58332'}
-            metalness={0.78}
-            roughness={0.28}
-            emissive={hovered ? '#7A5214' : '#2E1E08'}
-            emissiveIntensity={0.45}
+            color={hovered ? '#B3804B' : '#8A5E34'}
+            metalness={0.8}
+            roughness={0.32}
+            emissive={hovered ? '#4E3114' : '#261708'}
+            emissiveIntensity={0.4}
           />
         </mesh>
         <mesh position={[0, -1.62, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[0.56, 0.055, 10, 24]} />
-          <meshStandardMaterial color="#D9A441" metalness={0.8} roughness={0.25} />
+          <meshStandardMaterial color="#9E7346" metalness={0.82} roughness={0.3} />
         </mesh>
       </group>
 
-      {/* Expanding Gold Resonance Halo on Strike */}
+      {/* Expanding Bronze Resonance Halo on Strike */}
       <mesh ref={ringWaveRef} position={[0, 1.45, 0]} rotation={[-Math.PI / 2, 0, 0]} visible={false}>
         <ringGeometry args={[0.7, 0.9, 32]} />
-        <meshBasicMaterial color="#F6D58A" transparent opacity={0.5} side={THREE.DoubleSide} />
+        <meshBasicMaterial color="#D6B083" transparent opacity={0.48} side={THREE.DoubleSide} />
       </mesh>
     </group>
   );
@@ -1686,13 +1686,13 @@ function LotusPondsAndCourtyardTrees({ lanternIntensity }: { lanternIntensity: n
             <sphereGeometry args={[1.38, 12, 10]} />
             <meshStandardMaterial color="#22522C" roughness={0.84} />
           </mesh>
-          {/* Hanging Warm Lantern under Canopy */}
+          {/* Hanging Warm Bronze Lantern under Canopy */}
           <mesh position={[tx < 0 ? 1.1 : -1.1, 2.75, 0.4]}>
             <sphereGeometry args={[0.2, 10, 10]} />
             <meshStandardMaterial
-              color="#E88B2E"
-              emissive="#FFAD3B"
-              emissiveIntensity={lanternIntensity * 0.9}
+              color="#CC7D42"
+              emissive="#D98344"
+              emissiveIntensity={lanternIntensity * 0.85}
             />
           </mesh>
         </group>

@@ -22,24 +22,24 @@ const CARD_STYLE: React.CSSProperties = {
 
 function OrnateCardCorners() {
   return (
-    <div className="pointer-events-none absolute inset-2.5 rounded-[18px] border border-[#D9A441]/35">
+    <div className="pointer-events-none absolute inset-2.5 rounded-[18px] border border-[#A97B4F]/35">
       {/* Top-Left Corner */}
-      <svg viewBox="0 0 24 24" className="absolute -top-0.5 -left-0.5 w-5 h-5 text-[#F6D58A]" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg viewBox="0 0 24 24" className="absolute -top-0.5 -left-0.5 w-5 h-5 text-[#DBC09B]" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M2 12V4a2 2 0 0 1 2-2h8" />
         <path d="M5 9V5h4" opacity="0.7" />
       </svg>
       {/* Top-Right Corner */}
-      <svg viewBox="0 0 24 24" className="absolute -top-0.5 -right-0.5 w-5 h-5 text-[#F6D58A]" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg viewBox="0 0 24 24" className="absolute -top-0.5 -right-0.5 w-5 h-5 text-[#DBC09B]" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M22 12V4a2 2 0 0 0-2-2h-8" />
         <path d="M19 9V5h-4" opacity="0.7" />
       </svg>
       {/* Bottom-Left Corner */}
-      <svg viewBox="0 0 24 24" className="absolute -bottom-0.5 -left-0.5 w-5 h-5 text-[#F6D58A]" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg viewBox="0 0 24 24" className="absolute -bottom-0.5 -left-0.5 w-5 h-5 text-[#DBC09B]" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M2 12v8a2 2 0 0 0 2 2h8" />
         <path d="M5 15v4h4" opacity="0.7" />
       </svg>
       {/* Bottom-Right Corner */}
-      <svg viewBox="0 0 24 24" className="absolute -bottom-0.5 -right-0.5 w-5 h-5 text-[#F6D58A]" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg viewBox="0 0 24 24" className="absolute -bottom-0.5 -right-0.5 w-5 h-5 text-[#DBC09B]" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M22 12v8a2 2 0 0 1-2 2h-8" />
         <path d="M19 15v4h-4" opacity="0.7" />
       </svg>
@@ -105,7 +105,7 @@ function OnboardingModal() {
     <div className="fixed inset-0 z-[70] bg-[rgba(10,5,2,0.84)] backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
       <div className="w-full max-w-[440px] md:max-w-[920px] flex flex-col md:flex-row items-center justify-center gap-5 my-auto">
         {/* Desktop Left 3D Chibi Mascot Showcase */}
-        <div className="hidden md:flex relative w-[360px] h-[360px] rounded-3xl overflow-hidden border-2 border-[#D9A441]/55 shadow-[0_20px_60px_rgba(0,0,0,0.85)] shrink-0">
+        <div className="hidden md:flex relative w-[360px] h-[360px] rounded-3xl overflow-hidden border-2 border-[#A97B4F]/55 shadow-[0_20px_60px_rgba(0,0,0,0.85)] shrink-0">
           <img
             src="/textures/mascot_onboarding_preview.jpg"
             alt="Nam Nữ Phật Tử Chắp Tay Niệm Phật"
@@ -121,8 +121,8 @@ function OnboardingModal() {
               className={cn(
                 'px-3 py-1.5 rounded-full text-[11px] font-bold transition cursor-pointer',
                 draftGender === 'male' && draftRobe === 'lam'
-                  ? 'bg-gradient-to-r from-[#F9E4A8] to-[#DFAD4B] text-[#1B0D09] shadow-md'
-                  : 'bg-[#1B0D09]/85 border border-[#D9A441]/45 text-[#F7EBD5]'
+                  ? 'bg-gradient-to-r from-[#B38452] to-[#875D34] border border-[#DCBA90]/60 text-[#FFF5E8] shadow-md'
+                  : 'bg-[#1B0D09]/85 border border-[#A97B4F]/45 text-[#F7EBD5]'
               )}
             >
               Nam Phật Tử · Áo Lam
@@ -136,8 +136,8 @@ function OnboardingModal() {
               className={cn(
                 'px-3 py-1.5 rounded-full text-[11px] font-bold transition cursor-pointer',
                 draftGender === 'female' && draftRobe === 'song'
-                  ? 'bg-gradient-to-r from-[#F9E4A8] to-[#DFAD4B] text-[#1B0D09] shadow-md'
-                  : 'bg-[#1B0D09]/85 border border-[#D9A441]/45 text-[#F7EBD5]'
+                  ? 'bg-gradient-to-r from-[#B38452] to-[#875D34] border border-[#DCBA90]/60 text-[#FFF5E8] shadow-md'
+                  : 'bg-[#1B0D09]/85 border border-[#A97B4F]/45 text-[#F7EBD5]'
               )}
             >
               Nữ Phật Tử · Nâu Sồng
@@ -149,16 +149,16 @@ function OnboardingModal() {
         <form
           onSubmit={handleSubmit}
           style={CARD_STYLE}
-          className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#D9A441]/60 shadow-[0_24px_70px_rgba(0,0,0,0.9)] p-5 sm:p-7 text-[#F7EBD5]"
+          className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#A97B4F]/60 shadow-[0_24px_70px_rgba(0,0,0,0.9)] p-5 sm:p-7 text-[#F7EBD5]"
         >
           <OrnateCardCorners />
 
           <div className="relative z-10 space-y-3.5">
             <div className="flex flex-col items-center text-center gap-1.5">
-              <div className="w-10 h-10 rounded-full bg-[#3A2718] border border-[#D9A441]/55 flex items-center justify-center text-lg shadow-inner">
+              <div className="w-10 h-10 rounded-full bg-[#3A2718] border border-[#A97B4F]/55 flex items-center justify-center text-lg shadow-inner">
                 🪷
               </div>
-              <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#F6D58A] tracking-wide">
+              <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#DBC09B] tracking-wide">
                 Bước Vào Chánh Điện
               </h2>
             </div>
@@ -171,7 +171,7 @@ function OnboardingModal() {
                 value={draftName}
                 onChange={(e) => setDraftName(e.target.value)}
                 placeholder="Nhập Pháp danh / Tên của bạn"
-                className="w-full h-11 px-4 rounded-xl bg-[#251B14]/90 border border-[#D9A441]/45 focus:border-[#F6D58A] outline-none text-center text-sm sm:text-base font-semibold text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 transition"
+                className="w-full h-11 px-4 rounded-xl bg-[#251B14]/90 border border-[#A97B4F]/45 focus:border-[#DBC09B] outline-none text-center text-sm sm:text-base font-semibold text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 transition"
               />
               <div className="flex flex-wrap items-center justify-center gap-1.5">
                 {QUICK_NAMES.map((preset) => {
@@ -187,8 +187,8 @@ function OnboardingModal() {
                       className={cn(
                         'px-2.5 py-1 rounded-full text-[11px] font-semibold border transition cursor-pointer',
                         selected
-                          ? 'bg-[#D9A441]/35 border-[#F6D58A] text-[#FFF4D2]'
-                          : 'bg-[#251B14]/80 border-[#D9A441]/30 text-[#F7EBD5]/80 hover:border-[#D9A441]'
+                          ? 'bg-[#A97B4F]/35 border-[#DBC09B] text-[#FFF4D2]'
+                          : 'bg-[#251B14]/80 border-[#A97B4F]/30 text-[#F7EBD5]/80 hover:border-[#A97B4F]'
                       )}
                     >
                       {preset.name}
@@ -209,8 +209,8 @@ function OnboardingModal() {
                     className={cn(
                       'h-10 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition cursor-pointer',
                       draftGender === 'male'
-                        ? 'bg-gradient-to-b from-[#F9E4A8] to-[#DFAD4B] border-[#FFF5D2] text-[#1B0D09]'
-                        : 'bg-[#251B14]/85 border-[#D9A441]/35 text-[#F7EBD5]'
+                        ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] border-[#E0C097] text-[#FFF5E8]'
+                        : 'bg-[#251B14]/85 border-[#A97B4F]/35 text-[#F7EBD5]'
                     )}
                   >
                     <span>👨</span>
@@ -222,8 +222,8 @@ function OnboardingModal() {
                     className={cn(
                       'h-10 rounded-xl border text-xs font-bold flex items-center justify-center gap-1 transition cursor-pointer',
                       draftGender === 'female'
-                        ? 'bg-gradient-to-b from-[#F9E4A8] to-[#DFAD4B] border-[#FFF5D2] text-[#1B0D09]'
-                        : 'bg-[#251B14]/85 border-[#D9A441]/35 text-[#F7EBD5]'
+                        ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] border-[#E0C097] text-[#FFF5E8]'
+                        : 'bg-[#251B14]/85 border-[#A97B4F]/35 text-[#F7EBD5]'
                     )}
                   >
                     <span>👩</span>
@@ -245,8 +245,8 @@ function OnboardingModal() {
                         className={cn(
                           'h-10 rounded-xl border flex flex-col items-center justify-center gap-0.5 transition cursor-pointer',
                           selected
-                            ? 'bg-[#3C2918] border-[#F6D58A] shadow-[0_0_10px_rgba(246,213,138,0.25)]'
-                            : 'bg-[#251B14]/85 border-[#D9A441]/30 hover:border-[#D9A441]/70'
+                            ? 'bg-[#3C2918] border-[#DBC09B] shadow-[0_0_10px_rgba(246,213,138,0.25)]'
+                            : 'bg-[#251B14]/85 border-[#A97B4F]/30 hover:border-[#A97B4F]/70'
                         )}
                       >
                         <span
@@ -264,7 +264,7 @@ function OnboardingModal() {
             {/* Hall Selector */}
             <div className="space-y-2 pt-1">
               <div className="flex items-center justify-between text-[11px]">
-                <span className="font-bold text-[#F6D58A] uppercase tracking-wider">
+                <span className="font-bold text-[#DBC09B] uppercase tracking-wider">
                   🏛️ CHỌN CHÁNH ĐIỆN
                 </span>
                 <span className="text-[#F7EBD5]/60">Tối đa 100 người / server</span>
@@ -281,8 +281,8 @@ function OnboardingModal() {
                       className={cn(
                         'w-full px-3 py-2 rounded-xl border text-left flex items-center justify-between gap-2 transition cursor-pointer',
                         active
-                          ? 'bg-[#382718] border-[#F6D58A] shadow-[0_0_12px_rgba(246,213,138,0.2)]'
-                          : 'bg-[#251B14]/75 border-[#D9A441]/25 hover:border-[#D9A441]/60'
+                          ? 'bg-[#382718] border-[#DBC09B] shadow-[0_0_12px_rgba(246,213,138,0.2)]'
+                          : 'bg-[#251B14]/75 border-[#A97B4F]/25 hover:border-[#A97B4F]/60'
                       )}
                     >
                       <div className="flex items-center gap-2 min-w-0">
@@ -292,7 +292,7 @@ function OnboardingModal() {
                           <div className="text-[10px] text-[#F7EBD5]/60 truncate">{hall.subtitle}</div>
                         </div>
                       </div>
-                      <span className="px-2 py-0.5 rounded-full bg-[#24160F] border border-[#D9A441]/40 text-[10px] font-bold text-[#F6D58A] shrink-0">
+                      <span className="px-2 py-0.5 rounded-full bg-[#24160F] border border-[#A97B4F]/40 text-[10px] font-bold text-[#DBC09B] shrink-0">
                         {count}/{hall.capacity}
                       </span>
                     </button>
@@ -305,9 +305,9 @@ function OnboardingModal() {
             <button
               type="submit"
               style={{
-                background: 'linear-gradient(to right, #F9E4A8, #DFAD4B, #B88022)',
+                background: 'linear-gradient(to right, #BD8F5E, #996A3D, #734C27)',
               }}
-              className="w-full h-11 rounded-2xl border-2 border-[#FFF5D2] text-[#1B0D09] font-serif font-bold text-sm sm:text-base shadow-[0_8px_24px_rgba(246,213,138,0.45)] hover:brightness-105 active:scale-[0.98] transition cursor-pointer mt-2"
+              className="w-full h-11 rounded-2xl border-2 border-[#DCBA90] text-[#FFF5E8] font-serif font-bold text-sm sm:text-base shadow-[0_8px_24px_rgba(169,123,79,0.3)] hover:brightness-105 active:scale-[0.98] transition cursor-pointer mt-2"
             >
               Bước Vào Chánh Điện
             </button>
@@ -337,30 +337,30 @@ function ServerModal() {
     <div className="fixed inset-0 z-[70] bg-[rgba(10,5,2,0.82)] backdrop-blur-xl flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
       <div
         style={CARD_STYLE}
-        className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#D9A441]/60 shadow-2xl p-5 sm:p-6 text-[#F7EBD5] space-y-4 my-auto"
+        className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#A97B4F]/60 shadow-2xl p-5 sm:p-6 text-[#F7EBD5] space-y-4 my-auto"
       >
         <button
           type="button"
           onClick={() => setActiveModal(null)}
-          className="absolute right-4 top-4 w-8 h-8 rounded-full bg-[#2A1B12] border border-[#D9A441]/45 text-[#F6D58A] flex items-center justify-center cursor-pointer"
+          className="absolute right-4 top-4 w-8 h-8 rounded-full bg-[#2A1B12] border border-[#A97B4F]/45 text-[#DBC09B] flex items-center justify-center cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
         <div className="text-center space-y-1.5 pt-1">
-          <div className="w-10 h-10 rounded-full bg-[#2E1E14] border border-[#D9A441]/55 mx-auto flex items-center justify-center text-lg">
+          <div className="w-10 h-10 rounded-full bg-[#2E1E14] border border-[#A97B4F]/55 mx-auto flex items-center justify-center text-lg">
             🏛️
           </div>
-          <h3 className="font-serif text-lg font-bold text-[#F6D58A]">
+          <h3 className="font-serif text-lg font-bold text-[#DBC09B]">
             CHỌN CHÁNH ĐIỆN (SERVER)
           </h3>
           <p className="text-xs text-[#F7EBD5]/75 leading-relaxed">
-            Mỗi Chánh Điện giới hạn đúng <strong className="text-[#F6D58A]">100 bồ đoàn</strong>. Khi đủ 100 người sẽ tự động khóa người thứ 101.
+            Mỗi Chánh Điện giới hạn đúng <strong className="text-[#DBC09B]">100 bồ đoàn</strong>. Khi đủ 100 người sẽ tự động khóa người thứ 101.
           </p>
         </div>
 
         {/* Colyseus connection status + Expandable IP config */}
-        <div className="rounded-xl bg-[#251B14]/85 border border-[#D9A441]/30 p-3 space-y-2.5">
+        <div className="rounded-xl bg-[#251B14]/85 border border-[#A97B4F]/30 p-3 space-y-2.5">
           <div className="flex items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-2 min-w-0">
               <span
@@ -378,14 +378,14 @@ function ServerModal() {
             <button
               type="button"
               onClick={() => setIpExpanded((v) => !v)}
-              className="text-[11px] font-bold text-[#F6D58A] underline shrink-0 cursor-pointer"
+              className="text-[11px] font-bold text-[#DBC09B] underline shrink-0 cursor-pointer"
             >
               Cấu hình IP
             </button>
           </div>
 
           {ipExpanded && (
-            <div className="pt-2 border-t border-[#D9A441]/20 space-y-2 text-[11px]">
+            <div className="pt-2 border-t border-[#A97B4F]/20 space-y-2 text-[11px]">
               <p className="text-[#F7EBD5]/70">
                 Chạy máy chủ cục bộ LAN Wi-Fi (`http://192.168.1.18:3000/temple`) hoặc điền WebSocket Colyseus:
               </p>
@@ -394,7 +394,7 @@ function ServerModal() {
                   type="text"
                   value={urlInput}
                   onChange={(e) => setUrlInput(e.target.value)}
-                  className="flex-1 h-8 px-2.5 rounded-lg bg-[#1A0E09] border border-[#D9A441]/40 text-xs text-[#FFF4D2] outline-none"
+                  className="flex-1 h-8 px-2.5 rounded-lg bg-[#1A0E09] border border-[#A97B4F]/40 text-xs text-[#FFF4D2] outline-none"
                 />
                 <button
                   type="button"
@@ -402,7 +402,7 @@ function ServerModal() {
                     setColyseusUrl(urlInput);
                     showToast(`Đã lưu cấu hình máy chủ: ${urlInput}`);
                   }}
-                  className="px-3 h-8 rounded-lg bg-[#D9A441] text-[#1B0D09] font-bold cursor-pointer"
+                  className="px-3 h-8 rounded-lg bg-[#A97B4F] text-[#1B0D09] font-bold cursor-pointer"
                 >
                   Lưu & Nối
                 </button>
@@ -411,14 +411,14 @@ function ServerModal() {
                 <button
                   type="button"
                   onClick={() => setUrlInput('ws://192.168.1.18:2567')}
-                  className="px-2 py-1 rounded-lg bg-[#322116] border border-[#D9A441]/30 text-[#F6D58A] cursor-pointer"
+                  className="px-2 py-1 rounded-lg bg-[#322116] border border-[#A97B4F]/30 text-[#DBC09B] cursor-pointer"
                 >
                   ⚡ Nối LAN Wi-Fi (192.168.1.18:2567)
                 </button>
                 <button
                   type="button"
                   onClick={() => setUrlInput('ws://localhost:2567')}
-                  className="px-2 py-1 rounded-lg bg-[#322116] border border-[#D9A441]/30 text-[#F7EBD5]/80 cursor-pointer"
+                  className="px-2 py-1 rounded-lg bg-[#322116] border border-[#A97B4F]/30 text-[#F7EBD5]/80 cursor-pointer"
                 >
                   Mặc định localhost
                 </button>
@@ -438,8 +438,8 @@ function ServerModal() {
                 className={cn(
                   'px-3 py-2.5 rounded-2xl border flex items-center justify-between gap-2',
                   current
-                    ? 'bg-[#382718] border-[#F6D58A]'
-                    : 'bg-[#251B14]/75 border-[#D9A441]/30'
+                    ? 'bg-[#382718] border-[#DBC09B]'
+                    : 'bg-[#251B14]/75 border-[#A97B4F]/30'
                 )}
               >
                 <div className="flex items-center gap-2 min-w-0">
@@ -450,7 +450,7 @@ function ServerModal() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="px-2 py-0.5 rounded-full bg-[#24160F] border border-[#D9A441]/35 text-[10px] font-bold text-[#F6D58A]">
+                  <span className="px-2 py-0.5 rounded-full bg-[#24160F] border border-[#A97B4F]/35 text-[10px] font-bold text-[#DBC09B]">
                     {count}/{hall.capacity}
                   </span>
                   {current ? (
@@ -465,7 +465,7 @@ function ServerModal() {
                         setActiveModal(null);
                         showToast(`Đã chuyển sang ${hall.name} (${count + 1}/${hall.capacity})`);
                       }}
-                      className="px-2.5 py-1 rounded-lg bg-[#D9A441] text-[#1B0D09] text-[11px] font-bold hover:brightness-105 cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-[#A97B4F] text-[#FFF5E8] text-[11px] font-bold hover:brightness-105 cursor-pointer"
                     >
                       Chuyển Vào
                     </button>
@@ -479,7 +479,7 @@ function ServerModal() {
         <button
           type="button"
           onClick={() => setActiveModal(null)}
-          className="w-full h-10 rounded-xl bg-[#251B14] border border-[#D9A441]/40 text-xs font-bold text-[#F7EBD5] hover:bg-[#322217] cursor-pointer"
+          className="w-full h-10 rounded-xl bg-[#251B14] border border-[#A97B4F]/40 text-xs font-bold text-[#F7EBD5] hover:bg-[#322217] cursor-pointer"
         >
           Đóng
         </button>
@@ -556,22 +556,22 @@ function LeaderboardModal() {
     <div className="fixed inset-0 z-[70] bg-[rgba(10,5,2,0.84)] backdrop-blur-xl flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
       <div
         style={CARD_STYLE}
-        className="relative w-full max-w-[460px] max-h-[88dvh] flex flex-col rounded-3xl border-2 border-[#D9A441]/60 shadow-2xl p-4 sm:p-6 text-[#F7EBD5] my-auto"
+        className="relative w-full max-w-[460px] max-h-[88dvh] flex flex-col rounded-3xl border-2 border-[#A97B4F]/60 shadow-2xl p-4 sm:p-6 text-[#F7EBD5] my-auto"
       >
         <button
           type="button"
           onClick={() => setActiveModal(null)}
-          className="absolute right-4 top-4 w-8 h-8 rounded-full bg-[#2A1B12] border border-[#D9A441]/45 text-[#F6D58A] flex items-center justify-center cursor-pointer z-10"
+          className="absolute right-4 top-4 w-8 h-8 rounded-full bg-[#2A1B12] border border-[#A97B4F]/45 text-[#DBC09B] flex items-center justify-center cursor-pointer z-10"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Title Header */}
         <div className="text-center space-y-1 shrink-0 pb-3">
-          <div className="w-10 h-10 rounded-full bg-[#3A2718] border border-[#D9A441]/55 mx-auto flex items-center justify-center text-lg">
+          <div className="w-10 h-10 rounded-full bg-[#3A2718] border border-[#A97B4F]/55 mx-auto flex items-center justify-center text-lg">
             🏆
           </div>
-          <h3 className="font-serif text-lg sm:text-xl font-bold text-[#F6D58A]">
+          <h3 className="font-serif text-lg sm:text-xl font-bold text-[#DBC09B]">
             ĐẠO TRÀNG TINH TẤN
           </h3>
           <p className="text-[11px] text-[#F7EBD5]/70">
@@ -580,14 +580,14 @@ function LeaderboardModal() {
         </div>
 
         {/* 3 Sub-Tabs */}
-        <div className="grid grid-cols-3 gap-1.5 p-1 rounded-2xl bg-[#20140D] border border-[#D9A441]/25 shrink-0 mb-3">
+        <div className="grid grid-cols-3 gap-1.5 p-1 rounded-2xl bg-[#20140D] border border-[#A97B4F]/25 shrink-0 mb-3">
           <button
             type="button"
             onClick={() => setTab('rank')}
             className={cn(
               'py-2 px-1 rounded-xl text-[11px] font-bold transition cursor-pointer truncate',
               tab === 'rank'
-                ? 'bg-gradient-to-b from-[#F9E4A8] to-[#DFAD4B] text-[#1B0D09]'
+                ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] text-[#FFF5E8]'
                 : 'text-[#F7EBD5]/80 hover:text-[#FFF4D2]'
             )}
           >
@@ -599,7 +599,7 @@ function LeaderboardModal() {
             className={cn(
               'py-2 px-1 rounded-xl text-[11px] font-bold transition cursor-pointer truncate',
               tab === 'log'
-                ? 'bg-gradient-to-b from-[#F9E4A8] to-[#DFAD4B] text-[#1B0D09]'
+                ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] text-[#FFF5E8]'
                 : 'text-[#F7EBD5]/80 hover:text-[#FFF4D2]'
             )}
           >
@@ -611,7 +611,7 @@ function LeaderboardModal() {
             className={cn(
               'py-2 px-1 rounded-xl text-[11px] font-bold transition cursor-pointer truncate',
               tab === 'wall'
-                ? 'bg-gradient-to-b from-[#F9E4A8] to-[#DFAD4B] text-[#1B0D09]'
+                ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] text-[#FFF5E8]'
                 : 'text-[#F7EBD5]/80 hover:text-[#FFF4D2]'
             )}
           >
@@ -624,15 +624,15 @@ function LeaderboardModal() {
           {tab === 'rank' && (
             <>
               {/* Highlighted Self Rank Card */}
-              <div className="p-3 rounded-2xl bg-gradient-to-r from-[#5A4223]/90 to-[#3D2B16]/95 border border-[#F6D58A]/70 flex items-center justify-between gap-2">
+              <div className="p-3 rounded-2xl bg-gradient-to-r from-[#5A4223]/90 to-[#3D2B16]/95 border border-[#DBC09B]/70 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <span className="w-8 h-8 rounded-full bg-[#24160F] border border-[#F6D58A] text-xs font-bold text-[#F6D58A] flex items-center justify-center shrink-0">
+                  <span className="w-8 h-8 rounded-full bg-[#24160F] border border-[#DBC09B] text-xs font-bold text-[#DBC09B] flex items-center justify-center shrink-0">
                     #{selfRankNum}
                   </span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="text-xs font-bold text-[#FFF4D2] truncate">{name || 'Diệu Tâm'}</span>
-                      <span className="px-2 py-0.5 rounded-full bg-[#24160F]/80 border border-[#D9A441]/35 text-[10px] text-[#F6D58A]">
+                      <span className="px-2 py-0.5 rounded-full bg-[#24160F]/80 border border-[#A97B4F]/35 text-[10px] text-[#DBC09B]">
                         {levelTitle}
                       </span>
                     </div>
@@ -642,7 +642,7 @@ function LeaderboardModal() {
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-sm font-bold text-[#F6D58A]">{selfPoints} điểm</div>
+                  <div className="text-sm font-bold text-[#DBC09B]">{selfPoints} điểm</div>
                   <div className="text-[10.5px] text-[#34D399] font-semibold">{rejoiceGiven} tùy hỷ 🙏</div>
                 </div>
               </div>
@@ -658,8 +658,8 @@ function LeaderboardModal() {
                       className={cn(
                         'px-3 py-2.5 rounded-2xl border flex items-center justify-between gap-2',
                         row.isSelf
-                          ? 'bg-[#362415] border-[#F6D58A]/75'
-                          : 'bg-[#251B14]/80 border-[#D9A441]/25'
+                          ? 'bg-[#362415] border-[#DBC09B]/75'
+                          : 'bg-[#251B14]/80 border-[#A97B4F]/25'
                       )}
                     >
                       <div className="flex items-center gap-2 min-w-0">
@@ -674,7 +674,7 @@ function LeaderboardModal() {
                           <div className="flex items-center gap-1.5">
                             <span className="text-xs font-bold text-[#FFF4D2] truncate">{row.name}</span>
                             {row.isSelf && (
-                              <span className="px-1.5 py-0.2 rounded bg-[#F6D58A] text-[#1B0D09] text-[9px] font-extrabold">
+                              <span className="px-1.5 py-0.2 rounded bg-[#DBC09B] text-[#1B0D09] text-[9px] font-extrabold">
                                 BẠN
                               </span>
                             )}
@@ -686,7 +686,7 @@ function LeaderboardModal() {
                       </div>
 
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-xs font-bold text-[#F6D58A]">{row.points}đ</span>
+                        <span className="text-xs font-bold text-[#DBC09B]">{row.points}đ</span>
                         <button
                           type="button"
                           disabled={row.isSelf || hasRejoiced}
@@ -698,10 +698,10 @@ function LeaderboardModal() {
                           className={cn(
                             'px-2.5 py-1 rounded-full border text-[11px] font-bold flex items-center gap-1 transition',
                             row.isSelf
-                              ? 'bg-[#22160F] border-[#D9A441]/20 text-[#F7EBD5]/50 cursor-default'
+                              ? 'bg-[#22160F] border-[#A97B4F]/20 text-[#F7EBD5]/50 cursor-default'
                               : hasRejoiced
-                                ? 'bg-[#3C2A17] border-[#F6D58A] text-[#F6D58A] cursor-default'
-                                : 'bg-[#2C1E14] border-[#D9A441]/45 text-[#FFF4D2] hover:bg-[#3E2A1A] cursor-pointer'
+                                ? 'bg-[#3C2A17] border-[#DBC09B] text-[#DBC09B] cursor-default'
+                                : 'bg-[#2C1E14] border-[#A97B4F]/45 text-[#FFF4D2] hover:bg-[#3E2A1A] cursor-pointer'
                           )}
                         >
                           <span>{hasRejoiced ? '🪷' : '🙏'}</span>
@@ -717,13 +717,13 @@ function LeaderboardModal() {
 
           {tab === 'log' && (
             <div className="space-y-3">
-              <div className="p-4 rounded-2xl bg-[#251B14]/85 border border-[#D9A441]/30 text-center space-y-2">
+              <div className="p-4 rounded-2xl bg-[#251B14]/85 border border-[#A97B4F]/30 text-center space-y-2">
                 <div className="text-2xl">🌱</div>
                 <div className="text-[11px] text-[#F7EBD5]/70">Cấp độ tu học hiện tại:</div>
                 <div className="text-base font-bold text-[#34D399]">{levelTitle}</div>
-                <div className="w-full h-2 rounded-full bg-[#170E09] border border-[#D9A441]/25 overflow-hidden">
+                <div className="w-full h-2 rounded-full bg-[#170E09] border border-[#A97B4F]/25 overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#DFAD4B] to-[#F9E4A8] rounded-full transition-all"
+                    className="h-full bg-gradient-to-r from-[#875D34] to-[#C89B67] rounded-full transition-all"
                     style={{ width: `${progressPct}%` }}
                   />
                 </div>
@@ -734,29 +734,29 @@ function LeaderboardModal() {
               </div>
 
               <div className="grid grid-cols-2 gap-2.5">
-                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#D9A441]/25 text-center space-y-0.5">
+                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#A97B4F]/25 text-center space-y-0.5">
                   <div className="text-lg">⏱️</div>
                   <div className="text-sm font-bold text-[#FFF4D2]">{selfMinutes} phút</div>
                   <div className="text-[10.5px] text-[#F7EBD5]/65">Tĩnh tâm trong chùa</div>
                 </div>
-                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#D9A441]/25 text-center space-y-0.5">
+                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#A97B4F]/25 text-center space-y-0.5">
                   <div className="text-lg">📿</div>
                   <div className="text-sm font-bold text-[#FFF4D2]">{totalMalaBeads} hạt</div>
                   <div className="text-[10.5px] text-[#F7EBD5]/65">Lần tràng hạt 108</div>
                 </div>
-                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#D9A441]/25 text-center space-y-0.5">
+                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#A97B4F]/25 text-center space-y-0.5">
                   <div className="text-lg">🙏</div>
                   <div className="text-sm font-bold text-[#FFF4D2]">{bowCount} lạy</div>
                   <div className="text-[10.5px] text-[#F7EBD5]/65">Đảnh lễ Tam Bảo</div>
                 </div>
-                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#D9A441]/25 text-center space-y-0.5">
+                <div className="p-3 rounded-2xl bg-[#251B14]/80 border border-[#A97B4F]/25 text-center space-y-0.5">
                   <div className="text-lg">🏮</div>
                   <div className="text-sm font-bold text-[#FFF4D2]">{lanternIncenseCount} lần</div>
                   <div className="text-[10.5px] text-[#F7EBD5]/65">Thắp hương & Hoa đăng</div>
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#20140D] border border-[#D9A441]/25 text-center italic text-xs text-[#F7EBD5]/80">
+              <div className="p-3 rounded-2xl bg-[#20140D] border border-[#A97B4F]/25 text-center italic text-xs text-[#F7EBD5]/80">
                 ✨ &quot;Mỗi phút giây an trú trong hiện tại là một đóa hoa sen nở trong tâm.&quot;
               </div>
             </div>
@@ -770,11 +770,11 @@ function LeaderboardModal() {
                   value={noteInput}
                   onChange={(e) => setNoteInput(e.target.value)}
                   placeholder="Gửi lời nguyện cầu an cho cha mẹ, gia đình..."
-                  className="flex-1 h-10 px-3.5 rounded-xl bg-[#20140D] border border-[#D9A441]/35 text-xs text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 outline-none focus:border-[#F6D58A]"
+                  className="flex-1 h-10 px-3.5 rounded-xl bg-[#20140D] border border-[#A97B4F]/35 text-xs text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 outline-none focus:border-[#DBC09B]"
                 />
                 <button
                   type="submit"
-                  className="h-10 px-3.5 rounded-xl bg-[#5D4424] hover:bg-[#7A592F] border border-[#D9A441]/55 text-xs font-bold text-[#FFF4D2] shrink-0 cursor-pointer"
+                  className="h-10 px-3.5 rounded-xl bg-[#5D4424] hover:bg-[#7A592F] border border-[#A97B4F]/55 text-xs font-bold text-[#FFF4D2] shrink-0 cursor-pointer"
                 >
                   Gửi 🪷
                 </button>
@@ -784,10 +784,10 @@ function LeaderboardModal() {
                 {prayerWall.map((p) => (
                   <div
                     key={p.id}
-                    className="p-3.5 rounded-2xl bg-[#251B14]/85 border border-[#D9A441]/25 space-y-2"
+                    className="p-3.5 rounded-2xl bg-[#251B14]/85 border border-[#A97B4F]/25 space-y-2"
                   >
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-[#F6D58A]">🙏 {p.author}</span>
+                      <span className="font-bold text-[#DBC09B]">🙏 {p.author}</span>
                       <span className="text-[10.5px] text-[#F7EBD5]/55">{p.timeLabel}</span>
                     </div>
                     <p className="text-xs sm:text-[13px] text-[#F7EBD5] leading-relaxed">
@@ -803,8 +803,8 @@ function LeaderboardModal() {
                         className={cn(
                           'px-3 py-1 rounded-full border text-[11px] font-bold transition cursor-pointer',
                           p.blessedByMe
-                            ? 'bg-[#3D2B17] border-[#F6D58A] text-[#F6D58A]'
-                            : 'bg-[#1D120D] border-[#D9A441]/40 text-[#FFF4D2] hover:bg-[#322116]'
+                            ? 'bg-[#3D2B17] border-[#DBC09B] text-[#DBC09B]'
+                            : 'bg-[#1D120D] border-[#A97B4F]/40 text-[#FFF4D2] hover:bg-[#322116]'
                         )}
                       >
                         {p.blessedByMe ? `🪷 Đã Niệm Lành (${p.blessings})` : `🙏 Niệm Lành (${p.blessings})`}
@@ -842,7 +842,7 @@ function SutraModal() {
     <div className="fixed inset-0 z-[70] bg-[rgba(10,5,2,0.84)] backdrop-blur-xl flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
       <div
         style={CARD_STYLE}
-        className="relative w-full max-w-[500px] max-h-[86dvh] flex flex-col rounded-3xl border-2 border-[#D9A441]/60 shadow-2xl p-5 sm:p-6 text-[#F7EBD5] my-auto space-y-3"
+        className="relative w-full max-w-[500px] max-h-[86dvh] flex flex-col rounded-3xl border-2 border-[#A97B4F]/60 shadow-2xl p-5 sm:p-6 text-[#F7EBD5] my-auto space-y-3"
       >
         <button
           type="button"
@@ -850,13 +850,13 @@ function SutraModal() {
             setAutoMoktak(false);
             setActiveModal(null);
           }}
-          className="absolute right-4 top-4 w-8 h-8 rounded-full bg-[#2A1B12] border border-[#D9A441]/45 text-[#F6D58A] flex items-center justify-center cursor-pointer"
+          className="absolute right-4 top-4 w-8 h-8 rounded-full bg-[#2A1B12] border border-[#A97B4F]/45 text-[#DBC09B] flex items-center justify-center cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
         <div className="pr-10">
-          <h3 className="font-serif text-lg font-bold text-[#F6D58A] tracking-wide">
+          <h3 className="font-serif text-lg font-bold text-[#DBC09B] tracking-wide">
             KINH PHẬT NHẬT TỤNG
           </h3>
           <p className="text-xs text-[#F7EBD5]/70">{chapter.subtitle}</p>
@@ -875,8 +875,8 @@ function SutraModal() {
               className={cn(
                 'py-2 px-2 rounded-full text-xs font-bold border transition truncate cursor-pointer',
                 chapterIdx === idx
-                  ? 'bg-gradient-to-b from-[#F9E4A8] to-[#DFAD4B] border-[#FFF5D2] text-[#1B0D09]'
-                  : 'bg-[#251B14]/85 border-[#D9A441]/30 text-[#F7EBD5]/85 hover:border-[#D9A441]'
+                  ? 'bg-gradient-to-b from-[#B38452] to-[#875D34] border-[#DCBA90] text-[#FFF5E8]'
+                  : 'bg-[#251B14]/85 border-[#A97B4F]/30 text-[#F7EBD5]/85 hover:border-[#A97B4F]'
               )}
             >
               {s.title}
@@ -885,7 +885,7 @@ function SutraModal() {
         </div>
 
         {/* Verses Scroll Area */}
-        <div className="flex-1 overflow-y-auto rounded-2xl bg-[#20140D]/80 border border-[#D9A441]/25 p-3 space-y-2">
+        <div className="flex-1 overflow-y-auto rounded-2xl bg-[#20140D]/80 border border-[#A97B4F]/25 p-3 space-y-2">
           {chapter.verses.map((v, i) => {
             const active = activeVerseIdx === i;
             return (
@@ -899,7 +899,7 @@ function SutraModal() {
                 className={cn(
                   'w-full text-left p-3 rounded-xl border transition text-xs sm:text-sm leading-relaxed cursor-pointer',
                   active
-                    ? 'bg-[#3C2B19] border-l-4 border-l-[#F6D58A] border-[#D9A441]/45 text-[#FFF8EC]'
+                    ? 'bg-[#3C2B19] border-l-4 border-l-[#DBC09B] border-[#A97B4F]/45 text-[#FFF8EC]'
                     : 'bg-transparent border-transparent text-[#F7EBD5]/80 hover:bg-[#2A1B12]/70'
                 )}
               >
@@ -914,7 +914,7 @@ function SutraModal() {
           <button
             type="button"
             onClick={() => templeAudio.playMoktak()}
-            className="px-4 h-10 rounded-full bg-[#2A1B12] border border-[#D9A441]/45 text-xs font-bold text-[#F7EBD5] hover:bg-[#3A2518] cursor-pointer"
+            className="px-4 h-10 rounded-full bg-[#2A1B12] border border-[#A97B4F]/45 text-xs font-bold text-[#F7EBD5] hover:bg-[#3A2518] cursor-pointer"
           >
             Gõ Mõ
           </button>
@@ -926,7 +926,7 @@ function SutraModal() {
               'px-4 h-10 rounded-full border text-xs font-bold transition cursor-pointer',
               autoMoktak
                 ? 'bg-[#123D28] border-[#4ADE80] text-[#86EFAC]'
-                : 'bg-[#2A1B12] border-[#D9A441]/45 text-[#F7EBD5] hover:bg-[#3A2518]'
+                : 'bg-[#2A1B12] border-[#A97B4F]/45 text-[#F7EBD5] hover:bg-[#3A2518]'
             )}
           >
             {autoMoktak ? 'Đang nhịp mõ...' : 'Tự động mõ'}
@@ -941,7 +941,7 @@ function SutraModal() {
               setActiveModal(null);
             }}
             style={{
-              background: 'linear-gradient(to right, #F9E4A8, #DFAD4B, #B88022)',
+              background: 'linear-gradient(to right, #BD8F5E, #996A3D, #734C27)',
             }}
             className="flex-1 min-w-[160px] h-10 px-4 rounded-full border border-[#FFF5D2] text-xs font-bold text-[#1B0D09] shadow-md hover:brightness-105 cursor-pointer whitespace-nowrap"
           >
@@ -1018,27 +1018,27 @@ function MalaModal() {
     <div className="fixed inset-0 z-[70] bg-[rgba(10,5,2,0.84)] backdrop-blur-xl flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
       <div
         style={CARD_STYLE}
-        className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#D9A441]/60 shadow-2xl p-4 sm:p-6 text-[#F7EBD5] my-auto space-y-3"
+        className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#A97B4F]/60 shadow-2xl p-4 sm:p-6 text-[#F7EBD5] my-auto space-y-3"
       >
         {/* Clean 3-part Header (Never overlaps title even on 390px mobile) */}
         <div className="flex items-center justify-between gap-2">
           <button
             type="button"
             onClick={() => setBeadSound((s) => !s)}
-            className="h-8 px-2.5 rounded-full bg-[#2A1B12] border border-[#D9A441]/45 text-[11px] font-bold text-[#F6D58A] flex items-center gap-1 shrink-0 cursor-pointer"
+            className="h-8 px-2.5 rounded-full bg-[#2A1B12] border border-[#A97B4F]/45 text-[11px] font-bold text-[#DBC09B] flex items-center gap-1 shrink-0 cursor-pointer"
           >
             {beadSound ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
             <span>Âm thanh</span>
           </button>
 
-          <h3 className="font-serif text-sm sm:text-base font-bold text-[#F6D58A] text-center truncate">
+          <h3 className="font-serif text-sm sm:text-base font-bold text-[#DBC09B] text-center truncate">
             📿 CHUỖI 108 HẠT BỒ ĐỀ
           </h3>
 
           <button
             type="button"
             onClick={() => setActiveModal(null)}
-            className="w-8 h-8 rounded-full bg-[#2A1B12] border border-[#D9A441]/45 text-[#F6D58A] flex items-center justify-center shrink-0 cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#2A1B12] border border-[#A97B4F]/45 text-[#DBC09B] flex items-center justify-center shrink-0 cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -1056,7 +1056,7 @@ function MalaModal() {
               </linearGradient>
             </defs>
             <path d="M124 244 L136 244 L141 278 L119 278 Z" fill="url(#tasselGrad)" />
-            <circle cx="130" cy="236" r="6" fill="#9C6B19" stroke="#F6D58A" strokeWidth="1.2" />
+            <circle cx="130" cy="236" r="6" fill="#9C6B19" stroke="#DBC09B" strokeWidth="1.2" />
 
             {beads.map((b) => {
               const chanted = b.idx <= malaSessionCount;
@@ -1069,7 +1069,7 @@ function MalaModal() {
                       cy={b.cy}
                       r="6.2"
                       fill="none"
-                      stroke="#FDE047"
+                      stroke="#DFB98D"
                       strokeWidth="1.5"
                       opacity="0.8"
                     />
@@ -1078,7 +1078,7 @@ function MalaModal() {
                     cx={b.cx}
                     cy={b.cy}
                     r={isCurrent ? '3.5' : '2.7'}
-                    fill={chanted ? '#F6D58A' : '#6A4426'}
+                    fill={chanted ? '#DBC09B' : '#6A4426'}
                     stroke={chanted ? '#FFF5D2' : '#412512'}
                     strokeWidth="0.6"
                   />
@@ -1088,13 +1088,13 @@ function MalaModal() {
           </svg>
 
           {/* Clickable Center Meditation Hub */}
-          <div className="absolute top-[42px] inset-x-[44px] h-[176px] rounded-full bg-[radial-gradient(circle,rgba(56,39,24,0.95)_0%,rgba(27,13,9,0.92)_100%)] border border-[#D9A441]/30 flex flex-col items-center justify-center p-2 text-center gap-1.5">
+          <div className="absolute top-[42px] inset-x-[44px] h-[176px] rounded-full bg-[radial-gradient(circle,rgba(56,39,24,0.95)_0%,rgba(27,13,9,0.92)_100%)] border border-[#A97B4F]/30 flex flex-col items-center justify-center p-2 text-center gap-1.5">
             {/* Mantra Carousel */}
-            <div className="flex items-center justify-between w-full px-1.5 py-1 rounded-full bg-[#24160F] border border-[#D9A441]/35 text-[10.5px]">
+            <div className="flex items-center justify-between w-full px-1.5 py-1 rounded-full bg-[#24160F] border border-[#A97B4F]/35 text-[10.5px]">
               <button
                 type="button"
                 onClick={() => setMantraIdx((i) => (i - 1 + MALA_MANTRAS.length) % MALA_MANTRAS.length)}
-                className="text-[#F6D58A] px-1 font-bold cursor-pointer"
+                className="text-[#DBC09B] px-1 font-bold cursor-pointer"
               >
                 ◀
               </button>
@@ -1104,7 +1104,7 @@ function MalaModal() {
               <button
                 type="button"
                 onClick={() => setMantraIdx((i) => (i + 1) % MALA_MANTRAS.length)}
-                className="text-[#F6D58A] px-1 font-bold cursor-pointer"
+                className="text-[#DBC09B] px-1 font-bold cursor-pointer"
               >
                 ▶
               </button>
@@ -1121,7 +1121,7 @@ function MalaModal() {
               <div className="text-[10px] tracking-wider text-[#F7EBD5]/70 font-semibold">
                 / 108 HẠT BỒ ĐỀ
               </div>
-              <span className="mt-0.5 px-2.5 py-1 rounded-full bg-[#362415] border border-[#D9A441]/45 text-[9.5px] font-bold text-[#F6D58A]">
+              <span className="mt-0.5 px-2.5 py-1 rounded-full bg-[#362415] border border-[#A97B4F]/45 text-[9.5px] font-bold text-[#DBC09B]">
                 👆 CHẠM LẦN 1 HẠT
               </span>
             </button>
@@ -1134,7 +1134,7 @@ function MalaModal() {
             type="button"
             disabled={malaSessionCount <= 0}
             onClick={() => incrementMalaBead(-1)}
-            className="px-3 h-10 rounded-full bg-[#251B14] border border-[#D9A441]/30 text-xs font-bold text-[#F7EBD5]/80 disabled:opacity-40 cursor-pointer"
+            className="px-3 h-10 rounded-full bg-[#251B14] border border-[#A97B4F]/30 text-xs font-bold text-[#F7EBD5]/80 disabled:opacity-40 cursor-pointer"
           >
             ◀ Lùi
           </button>
@@ -1143,7 +1143,7 @@ function MalaModal() {
             type="button"
             onClick={countBead}
             style={{
-              background: 'linear-gradient(to right, #F9E4A8, #DFAD4B, #B88022)',
+              background: 'linear-gradient(to right, #BD8F5E, #996A3D, #734C27)',
             }}
             className="flex-1 h-10 px-3 rounded-full border border-[#FFF5D2] text-xs sm:text-sm font-bold text-[#1B0D09] shadow-md hover:brightness-105 active:scale-95 transition cursor-pointer"
           >
@@ -1153,7 +1153,7 @@ function MalaModal() {
           <button
             type="button"
             onClick={resetMalaSession}
-            className="px-3 h-10 rounded-full bg-[#251B14] border border-[#D9A441]/30 text-xs font-bold text-[#F7EBD5]/85 hover:bg-[#342319] cursor-pointer"
+            className="px-3 h-10 rounded-full bg-[#251B14] border border-[#A97B4F]/30 text-xs font-bold text-[#F7EBD5]/85 hover:bg-[#342319] cursor-pointer"
           >
             🔄 Đặt lại
           </button>
@@ -1181,13 +1181,13 @@ function PrayerModal() {
       <form
         onSubmit={handleRelease}
         style={CARD_STYLE}
-        className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#D9A441]/60 shadow-2xl p-5 sm:p-6 text-[#F7EBD5] my-auto space-y-4"
+        className="relative w-full max-w-[440px] rounded-3xl border-2 border-[#A97B4F]/60 shadow-2xl p-5 sm:p-6 text-[#F7EBD5] my-auto space-y-4"
       >
         <div className="text-center space-y-1.5">
-          <div className="w-10 h-10 rounded-full bg-[#3A2718] border border-[#D9A441]/55 mx-auto flex items-center justify-center text-lg">
+          <div className="w-10 h-10 rounded-full bg-[#3A2718] border border-[#A97B4F]/55 mx-auto flex items-center justify-center text-lg">
             🔥
           </div>
-          <h3 className="font-serif text-lg sm:text-xl font-bold text-[#F6D58A]">
+          <h3 className="font-serif text-lg sm:text-xl font-bold text-[#DBC09B]">
             Thả Hoa Đăng Cầu Nguyện
           </h3>
           <p className="text-xs text-[#F7EBD5]/70">
@@ -1208,7 +1208,7 @@ function PrayerModal() {
               }
             }}
             placeholder="Nhập lời cầu nguyện bình an, sức khỏe, hạnh phúc..."
-            className="w-full p-3.5 rounded-2xl bg-[#261B14]/90 border border-[#D9A441]/40 focus:border-[#F6D58A] outline-none text-sm text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 resize-none"
+            className="w-full p-3.5 rounded-2xl bg-[#261B14]/90 border border-[#A97B4F]/40 focus:border-[#DBC09B] outline-none text-sm text-[#FFF4D2] placeholder:text-[#F7EBD5]/40 resize-none"
           />
           <div className="text-right font-mono text-[11px] text-[#F7EBD5]/65">
             {wish.length} / 140 ký tự
@@ -1263,14 +1263,14 @@ function PrayerModal() {
           <button
             type="button"
             onClick={() => setActiveModal(null)}
-            className="h-10 rounded-xl bg-[#251B14] border border-[#D9A441]/35 text-xs font-bold text-[#F7EBD5] hover:bg-[#322116] cursor-pointer"
+            className="h-10 rounded-xl bg-[#251B14] border border-[#A97B4F]/35 text-xs font-bold text-[#F7EBD5] hover:bg-[#322116] cursor-pointer"
           >
             Hủy bỏ
           </button>
           <button
             type="submit"
             style={{
-              background: 'linear-gradient(to right, #F9E4A8, #DFAD4B, #B88022)',
+              background: 'linear-gradient(to right, #BD8F5E, #996A3D, #734C27)',
             }}
             className="h-10 rounded-xl border border-[#FFF5D2] text-xs font-bold text-[#1B0D09] shadow-md hover:brightness-105 cursor-pointer"
           >
