@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Sparkles, CheckCircle2, Award, Heart, Plus } from 'lucide-react';
 import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
 
 interface DayLog {
@@ -186,11 +187,7 @@ export function SadhanaTracker() {
             </div>
           </div>
 
-          {toast && (
-            <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 text-xs font-bold text-center animate-fade-in">
-              {toast}
-            </div>
-          )}
+          <CenterToast message={toast} icon="check" />
 
           <button
             type="submit"

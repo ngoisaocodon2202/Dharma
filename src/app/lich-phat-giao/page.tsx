@@ -18,6 +18,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { getLunarDate, type LunarDateInfo } from '@/lib/lunar-calendar';
 import { BUDDHA_ASSETS, PAGODA_ASSETS, ARTICLE_ASSETS, SACRED_MANDALA_FALLBACK } from '@/lib/assets';
 import { useDharmaStore, getTodayDateKey } from '@/store/useDharmaStore';
@@ -1238,13 +1239,7 @@ function BuddhistCalendarInner() {
       )}
 
       {/* FLOATING TOAST */}
-      {toastMessage && (
-        <div className="fixed top-16 inset-x-3 z-[999999] flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#FFF9EB] border border-[#DFC27D] text-center shadow-lg">
-            <p className="text-xs sm:text-sm font-bold text-[#8C5500]">{toastMessage}</p>
-          </div>
-        </div>
-      )}
+      <CenterToast message={toastMessage} icon="sparkles" />
     </div>
   );
 }

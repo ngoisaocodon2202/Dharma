@@ -354,7 +354,7 @@ export function SanctuaryWorkspace({
     >
       {/* Clean Dharma Single Top Header (Hidden for may-niem-phat as it provides its own native Om Mani app header with (X) close) */}
       {activeTool !== 'may-niem-phat' && (
-        <header className="shrink-0 bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs">
+        <header className="relative z-50 shrink-0 bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs">
           <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3 relative">
             <button
               type="button"
@@ -387,46 +387,49 @@ export function SanctuaryWorkspace({
               </button>
 
               {showQuickSwitcher && (
-                <>
-                  <div
-                    className="fixed inset-0 z-30"
-                    onClick={() => setShowQuickSwitcher(false)}
-                  />
-                  <div className="absolute right-0 mt-2 w-64 max-h-[75vh] overflow-y-auto rounded-2xl bg-[#FFFFFF] border border-[#DFC27D] shadow-xl p-1.5 z-40 space-y-0.5">
-                    {WORKSPACE_SWITCHER_ITEMS.map((item) => {
-                      const Icon = item.Icon;
-                      const isActive = item.id === activeTool;
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => handleSwitchNav(item)}
-                          className={cn(
-                            'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs transition-colors cursor-pointer',
-                            isActive
-                              ? 'bg-[#FFF6DF] text-[#8C5500] font-bold border border-[#EAD7A7]'
-                              : 'text-[#2C1E10] hover:bg-[#FAF7F0]'
-                          )}
-                        >
-                          <Icon className="w-4 h-4 shrink-0" />
-                          <span className="flex-1 truncate">{item.label}</span>
-                          <ChevronRight className="w-3.5 h-3.5 opacity-50 shrink-0" />
-                        </button>
-                      );
-                    })}
-                  </div>
-                </>
+                <div className="absolute right-0 mt-2 w-64 max-h-[75vh] overflow-y-auto rounded-2xl bg-[#FFFFFF] border border-[#DFC27D] shadow-xl p-1.5 z-50 space-y-0.5">
+                  {WORKSPACE_SWITCHER_ITEMS.map((item) => {
+                    const Icon = item.Icon;
+                    const isActive = item.id === activeTool;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => handleSwitchNav(item)}
+                        className={cn(
+                          'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs transition-colors cursor-pointer',
+                          isActive
+                            ? 'bg-[#FFF6DF] text-[#8C5500] font-bold border border-[#EAD7A7]'
+                            : 'text-[#2C1E10] hover:bg-[#FAF7F0]'
+                        )}
+                      >
+                        <Icon className="w-4 h-4 shrink-0" />
+                        <span className="flex-1 truncate">{item.label}</span>
+                        <ChevronRight className="w-3.5 h-3.5 opacity-50 shrink-0" />
+                      </button>
+                    );
+                  })}
+                </div>
               )}
             </div>
           </div>
         </header>
       )}
 
+      {/* Viewport-wide click-outside backdrop outside backdrop-blurred header */}
+      {showQuickSwitcher && activeTool !== 'may-niem-phat' && (
+        <div
+          className="fixed inset-0 z-40"
+          aria-hidden="true"
+          onClick={() => setShowQuickSwitcher(false)}
+        />
+      )}
+
       {/* Main Active Sanctuary Scroll Area */}
       <div
         ref={scrollAreaRef}
         className={cn(
-          'flex-1 overflow-y-auto',
+          'relative z-0 flex-1 overflow-y-auto',
           activeTool === 'may-niem-phat' ? 'p-0 flex flex-col items-center bg-[#FDF8EC]' : 'px-3.5 sm:px-6 py-4 sm:py-6'
         )}
       >

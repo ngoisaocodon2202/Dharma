@@ -39,6 +39,7 @@ import {
 import { useAuth } from '@/components/auth/AuthContext';
 import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 import { PRECEPTS_CONFIG } from '@/components/profile/ProfileSections';
+import { CenterToast } from '@/components/ui/CenterToast';
 import {
   useDharmaStore,
   computePracticeStreak,
@@ -1571,13 +1572,7 @@ function ProfileContent() {
       )}
 
       {/* FLOATING TOAST */}
-      {toastMessage && (
-        <div className="fixed top-16 inset-x-3 z-[999999] flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#FFF9EB] border border-[#DFC27D] text-center shadow-lg">
-            <p className="text-xs sm:text-sm font-bold text-[#8C5500]">{toastMessage}</p>
-          </div>
-        </div>
-      )}
+      <CenterToast message={toastMessage} icon="check" />
     </div>
   );
 }

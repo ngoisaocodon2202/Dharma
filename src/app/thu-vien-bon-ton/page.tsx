@@ -15,6 +15,7 @@ import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { useDharmaStore } from '@/store/useDharmaStore';
 import { TempleBellIcon } from '@/components/icons/DharmaMinimalIcons';
 import { MantraKineticPlayer } from '@/components/buddhas/MantraKineticPlayer';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
 
 type DetailTab = 'tieu_su' | 'dai_nguyen' | 'than_chu';
@@ -99,13 +100,7 @@ function BonTonLibraryInner() {
 
   return (
     <div className="min-h-screen bg-[#FAF7F0] text-[#2C1E10]">
-      {toastMessage && (
-        <div className="fixed top-14 inset-x-4 z-[999999] flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2 rounded-2xl bg-[#FFFDF8] border border-[#D4A024] text-center shadow-lg">
-            <p className="text-xs font-bold text-[#8A5400] whitespace-nowrap truncate">{toastMessage}</p>
-          </div>
-        </div>
-      )}
+      <CenterToast message={toastMessage} icon="sparkles" />
 
       {!selectedBuddha ? (
         /* =================================================================== */

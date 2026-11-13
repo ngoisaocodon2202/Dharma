@@ -6,12 +6,12 @@ import {
   ArrowLeft,
   Info,
   MessageSquare,
-  Sparkles,
   Trash2,
   Edit3,
   Heart,
   SlidersHorizontal,
 } from 'lucide-react';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { recordDharmaMerit } from '@/components/dharma/DharmaInteractiveTools';
 import { SanctuaryFullscreenBackdrop } from '@/components/dharma/SanctuaryFullscreenBackdrop';
@@ -274,14 +274,7 @@ export default function CauNguyenPage() {
       />
 
       {/* Toast Notification */}
-      {toastMessage && (
-        <div className="fixed top-16 inset-x-4 z-[999999] flex justify-center pointer-events-none animate-fade-in-down">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#FFFDF8] text-[#2C1E10] text-xs sm:text-sm font-bold shadow-lg border border-[#D9A02E] flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#C68B19] shrink-0" />
-            <span className="truncate">{toastMessage}</span>
-          </div>
-        </div>
-      )}
+      <CenterToast message={toastMessage} icon="sparkles" />
 
       {/* ========================================================================= */}
       {/* 1. TOP HEADER BAR                                                         */}

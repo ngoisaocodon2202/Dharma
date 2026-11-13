@@ -5,6 +5,7 @@ import { Sparkles, RotateCcw, Volume2, VolumeX, CheckCircle, Award } from 'lucid
 import { playWoodenFishSound, playBellSound } from '@/lib/buddhistSounds';
 import { incrementDailyPractice } from '@/lib/dailyPracticeProgress';
 import { RealisticMalaWheel } from '@/components/dharma/RealisticMalaWheel';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
 
 interface DigitalMalaProps {
@@ -196,11 +197,7 @@ export function DigitalMalaBeads({ onSessionComplete }: DigitalMalaProps) {
       </div>
 
       {/* Toast Feedback */}
-      {toastFeedback && (
-        <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-300 text-center text-emerald-800 text-xs sm:text-sm font-bold animate-fade-in">
-          {toastFeedback}
-        </div>
-      )}
+      <CenterToast message={toastFeedback} icon="check" />
 
       {/* Bottom Summary & Pro-Tip */}
       <div className="pt-2 border-t border-[#EAD7A7] flex items-center justify-between text-xs text-[#6B533B]">

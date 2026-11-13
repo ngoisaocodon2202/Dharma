@@ -3,8 +3,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
-  Sparkles,
-  Check,
   Headphones,
   Radio,
   Heart,
@@ -35,6 +33,7 @@ import {
 } from '@/components/dharma/DharmaEightNewFeatures';
 import { playBeadTickSound } from '@/lib/buddhistSounds';
 import { useDharmaPracticeStore, getTodayDateKey, computePracticeStreak } from '@/store/useDharmaPracticeStore';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
 
 const VALID_SANCTUARY_SLUGS: SanctuaryToolId[] = [
@@ -325,12 +324,7 @@ function ThucHanhInner() {
   return (
     <div className="min-h-screen bg-[#FAF7F0] text-[#2C1E10] pb-12">
       {/* Toast Notification */}
-      {toastMessage && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[10000] px-4 py-2.5 rounded-2xl bg-[#FFFDF8] border border-[#D9A02E] text-[#2C1E10] text-xs font-bold shadow-lg flex items-center gap-2 animate-fade-in">
-          <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span className="whitespace-nowrap">{toastMessage}</span>
-        </div>
-      )}
+      <CenterToast message={toastMessage} icon="check" />
 
       {/* ===================================================================== */}
       {/* 1. MOBILE APP TOP HEADER BAR (LIGHT WARM GOLD & WHITE)                */}

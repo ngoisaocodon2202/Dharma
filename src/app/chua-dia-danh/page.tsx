@@ -23,6 +23,7 @@ import {
 } from '@/data/pagodas';
 import { useDharmaStore } from '@/store/useDharmaStore';
 import { playOmTempleBellSound, playBeadTickSound } from '@/lib/buddhistSounds';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
 
 type RegionFilter = 'Tất cả' | PagodaRegion;
@@ -472,13 +473,7 @@ export default function PagodasDirectoryPage() {
       )}
 
       {/* TOAST */}
-      {toastMsg && (
-        <div className="fixed top-16 inset-x-3 z-[999999] flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#FFF9EB] border border-[#DFC27D] text-center shadow-lg">
-            <p className="font-heading text-xs sm:text-sm font-bold text-[#8C5500]">{toastMsg}</p>
-          </div>
-        </div>
-      )}
+      <CenterToast message={toastMsg} icon="sparkles" />
     </div>
   );
 }

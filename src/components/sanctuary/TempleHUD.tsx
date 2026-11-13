@@ -27,6 +27,7 @@ import {
 } from './templeData';
 import { templeAudio } from './templeAudio';
 import { useTempleStore } from './useTempleStore';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
 
 const HeaderLotusGlyph = ({ className }: { className?: string }) => (
@@ -472,13 +473,7 @@ export function TempleHUD() {
       {/* ========================================================================= */}
       {/* CENTER FLOATING TOAST NOTIFICATION                                        */}
       {/* ========================================================================= */}
-      {visibleToast && (
-        <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-40 pointer-events-none flex justify-center">
-          <div className="max-w-md px-5 py-2.5 rounded-full bg-[#1B0D09]/90 border border-[#A97B4F]/70 text-[#FFF4D2] text-xs sm:text-sm font-medium shadow-[0_8px_30px_rgba(0,0,0,0.65)] backdrop-blur-md text-center truncate">
-            {visibleToast}
-          </div>
-        </div>
-      )}
+      <CenterToast message={visibleToast} variant="dark" icon="sparkles" />
 
       {/* ========================================================================= */}
       {/* BOTTOM HUD CONTROLS, JOYSTICK, CAMERA STACK & PRACTICE DOCK               */}

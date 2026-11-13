@@ -16,6 +16,7 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CenterToast } from '@/components/ui/CenterToast';
 import {
   SUTRAS_DATA,
   SUTRA_CATEGORIES,
@@ -338,7 +339,7 @@ function BuddhistLibraryInner() {
         {/* ===================================================================== */}
         {/* DHARMA TOP BAR: Filter Pill | Centered Title | Bookmark Button        */}
         {/* ===================================================================== */}
-        <header className="relative flex items-center justify-between gap-3 pt-1">
+        <header className="relative z-40 flex items-center justify-between gap-3 pt-1">
           <div className="relative">
             <button
               type="button"
@@ -873,13 +874,7 @@ function BuddhistLibraryInner() {
       )}
 
       {/* FLOATING TOAST */}
-      {toastMessage && (
-        <div className="fixed top-16 inset-x-3 z-[999999] flex justify-center pointer-events-none animate-fadeInDown">
-          <div className="px-4 py-2.5 rounded-2xl bg-[#FFFDF8] border border-[#DFC27D] text-center shadow-xl">
-            <p className="text-xs sm:text-sm font-bold text-[#8C5500]">{toastMessage}</p>
-          </div>
-        </div>
-      )}
+      <CenterToast message={toastMessage} icon="check" />
     </div>
   );
 }

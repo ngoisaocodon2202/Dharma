@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { MeditatingMonkOutlineIcon } from '@/components/icons/DharmaMinimalIcons';
 import { SearchModal } from './SearchModal';
+import { CenterToast } from '@/components/ui/CenterToast';
 import { useDharmaPracticeStore } from '@/store/useDharmaPracticeStore';
 import { playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { cn } from '@/lib/utils';
@@ -186,11 +187,11 @@ export function Header() {
         </div>
       </header>
 
-      {bellToast && (
-        <div className="fixed top-20 right-4 z-[999] px-4 py-2 rounded-2xl bg-[#FFFDF8] border border-[#D9A02E] text-[#2C1E10] text-xs font-bold shadow-lg animate-fade-in">
-          🔔 Thở vào tâm tĩnh lặng • Thở ra miệng mỉm cười
-        </div>
-      )}
+      <CenterToast
+        message={bellToast ? 'Thở vào tâm tĩnh lặng • Thở ra miệng mỉm cười' : null}
+        icon="bell"
+        title="Tiếng Chuông Tỉnh Thức"
+      />
 
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
