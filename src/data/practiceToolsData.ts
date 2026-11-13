@@ -813,7 +813,7 @@ export const ORDERED_CORE_PRACTICE_TOOLS: DharmaPracticeCardSummary[] = [
   {
     id: 'nghe-kinh',
     title: 'Nghe kinh',
-    subtitle: 'Nghe kinh không cần mạng',
+    subtitle: '158 bài kinh 10–20p',
     image: '/images/dharma/tools/05-nghe-kinh.jpg',
     href: '/thuc-hanh?phap-khi=nghe-kinh',
   },

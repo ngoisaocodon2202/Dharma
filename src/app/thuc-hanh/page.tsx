@@ -123,7 +123,7 @@ const TOP_EIGHT_PRACTICE_CARDS: PracticeCardItem[] = [
     orderNum: 5,
     id: 'nghe-kinh',
     title: 'Nghe kinh',
-    subtitle: 'Nghe kinh không cần mạng',
+    subtitle: '158 bài kinh 10–20p',
     image: '/images/dharma/tools/05-nghe-kinh.jpg',
     Icon: Headphones,
     actionType: 'sanctuary',

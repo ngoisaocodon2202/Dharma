@@ -73,7 +73,7 @@ interface WorkspaceNavItem {
 const WORKSPACE_SWITCHER_ITEMS: WorkspaceNavItem[] = [
   { id: 'trang-hat', label: 'Tràng hạt', subtitle: 'Lần hạt 108 niệm Phật', Icon: MalaBeadsMinimalIcon },
   { id: 'chuong-mo', label: 'Chuông mõ', subtitle: 'Thỉnh chuông, gõ mõ Auto BPM', Icon: WoodenFishMinimalIcon },
-  { id: 'nghe-kinh', label: 'Nghe kinh', subtitle: 'Tải về, nghe không cần mạng', Icon: Headphones },
+  { id: 'nghe-kinh', label: 'Nghe kinh', subtitle: 'Hơn 150 bài kinh 10–20 phút', Icon: Headphones },
   { id: 'may-niem-phat', label: 'Máy niệm Phật', subtitle: 'Niệm danh hiệu, trì chú', Icon: Radio },
   { id: 'di-chua', label: 'Đi chùa', subtitle: 'Lễ Phật nơi chánh điện', Icon: PagodaMinimalIcon },
   { id: 'thien-hoi-tho', label: 'Thiền định', subtitle: 'Thiền hơi thở Anapanasati', Icon: MeditatingMonkOutlineIcon },
