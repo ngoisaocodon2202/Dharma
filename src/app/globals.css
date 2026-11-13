@@ -787,33 +787,39 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 @keyframes mantraSyllableFloat {
   0% {
     opacity: 0;
-    transform: translate(-50%, 16px) scale(0.76);
+    transform: translate(-50%, -28%) scale(0.38) rotate(var(--tilt, 0deg));
     filter: blur(2px);
   }
-  18% {
+  16% {
     opacity: 1;
-    transform: translate(-50%, -18px) scale(1.08);
+    transform: translate(calc(-50% + var(--drift-x, 0px) * 0.28), -72%) scale(1.2) rotate(calc(var(--tilt, 0deg) * -0.45));
     filter: blur(0px);
   }
-  58% {
-    opacity: 0.92;
-    transform: translate(calc(-50% + var(--drift-x, 0px)), -76px) scale(1);
+  32% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--drift-x, 0px) * 0.5), -54%) scale(0.98) rotate(calc(var(--tilt, 0deg) * 0.3));
+    filter: blur(0px);
+  }
+  65% {
+    opacity: 0.96;
+    transform: translate(calc(-50% + var(--drift-x, 0px) * 0.88), -96%) scale(1.06) rotate(0deg);
     filter: blur(0px);
   }
   100% {
     opacity: 0;
-    transform: translate(calc(-50% + var(--drift-x, 0px) * 1.45), -140px) scale(0.9);
+    transform: translate(calc(-50% + var(--drift-x, 0px) * 1.25), -148%) scale(0.86) rotate(calc(var(--tilt, 0deg) * 0.5));
     filter: blur(1.5px);
   }
 }
 
 .mantra-floating-syllable {
-  animation: mantraSyllableFloat 1.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  color: #B87400;
+  animation: mantraSyllableFloat 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  color: #A66000;
   text-shadow:
-    0 0 10px rgba(255, 214, 108, 0.92),
-    0 0 22px rgba(217, 147, 22, 0.55),
-    0 2px 6px rgba(138, 84, 0, 0.28);
+    0 0 8px rgba(255, 253, 245, 0.98),
+    0 0 14px rgba(255, 243, 204, 0.94),
+    0 0 24px rgba(235, 168, 36, 0.78),
+    0 2px 6px rgba(120, 70, 0, 0.34);
   will-change: transform, opacity;
 }
 

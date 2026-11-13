@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   ArrowLeft,
@@ -32,6 +32,10 @@ function BonTonLibraryInner() {
   const [mantraPlayTrigger, setMantraPlayTrigger] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [mantraStageEl, setMantraStageEl] = useState<HTMLDivElement | null>(null);
+  const handleMantraStageRef = useCallback((el: HTMLDivElement | null) => {
+    setMantraStageEl(el);
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -191,8 +195,17 @@ function BonTonLibraryInner() {
             </button>
           </header>
 
-          {/* Hero Sacred Plaque */}
-          <div className="rounded-2xl p-4 bg-white border border-[#EAD7A7] shadow-xs flex flex-col sm:flex-row gap-3.5 items-center">
+          {/* Deity Detail Cards Stack + Full-Card Kinetic Mantra Overlay */}
+          <div className="relative space-y-3.5">
+            <div
+              ref={handleMantraStageRef}
+              aria-hidden="true"
+              data-mantra-stage="true"
+              className="pointer-events-none absolute inset-0 overflow-x-clip z-20"
+            />
+
+            {/* Hero Sacred Plaque */}
+            <div className="rounded-2xl p-4 bg-white border border-[#EAD7A7] shadow-xs flex flex-col sm:flex-row gap-3.5 items-center">
             <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden border-2 border-[#D4A024] shadow-sm shrink-0 bg-[#FAF3E0]">
               <img
                 src={selectedBuddha.image}
@@ -395,10 +408,12 @@ function BonTonLibraryInner() {
                 meaningDefault={selectedBuddha.thanChu.meaning}
                 benefitsDefault={selectedBuddha.thanChu.benefits}
                 playTrigger={mantraPlayTrigger}
+                portalContainer={mantraStageEl}
                 onCompleted={handleMantraCompleted}
               />
             </div>
           )}
+          </div>
         </div>
       )}
     </div>

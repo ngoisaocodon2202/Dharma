@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronDown, ChevronUp, Play, Square, Volume2 } from 'lucide-react';
 import { BON_TON_MANTRA_CONFIG, type MantraCue } from '@/data/bonTonMantraAudio';
 import { cn } from '@/lib/utils';
@@ -12,6 +13,7 @@ export interface MantraKineticPlayerProps {
   meaningDefault: string;
   benefitsDefault: string;
   playTrigger: number;
+  portalContainer?: HTMLElement | null;
   onPlayStateChange?: (playing: boolean) => void;
   onCompleted: () => void;
 }
@@ -20,13 +22,35 @@ interface FloatingSyllable {
   uid: number;
   text: string;
   xPct: number;
+  yPct: number;
   driftX: number;
+  tiltDeg: number;
   sizeClass: string;
   createdAt: number;
 }
 
-const LANE_POSITIONS = [50, 32, 68, 41, 59, 25, 75, 46];
-const LANE_DRIFTS = [0, -14, 14, -9, 10, -16, 16, 6];
+interface ScatterSpot {
+  xPct: number;
+  yPct: number;
+  driftX: number;
+  tilt: number;
+}
+
+// Distributed across the whole deity detail card (Hero portrait top, middle tabs, and bottom mantra area)
+const SCATTER_SPOTS: ScatterSpot[] = [
+  { xPct: 20, yPct: 14, driftX: -12, tilt: -6 },
+  { xPct: 80, yPct: 62, driftX: 12, tilt: 5 },
+  { xPct: 18, yPct: 48, driftX: -10, tilt: -4 },
+  { xPct: 78, yPct: 18, driftX: 14, tilt: 6 },
+  { xPct: 48, yPct: 76, driftX: -8, tilt: -3 },
+  { xPct: 52, yPct: 8, driftX: 8, tilt: 4 },
+  { xPct: 22, yPct: 78, driftX: -14, tilt: -5 },
+  { xPct: 82, yPct: 38, driftX: 10, tilt: 5 },
+  { xPct: 32, yPct: 28, driftX: -8, tilt: 3 },
+  { xPct: 72, yPct: 82, driftX: 12, tilt: -6 },
+  { xPct: 15, yPct: 64, driftX: 10, tilt: 4 },
+  { xPct: 64, yPct: 44, driftX: -10, tilt: -4 },
+];
 
 export function MantraKineticPlayer({
   buddhaId,
@@ -35,6 +59,7 @@ export function MantraKineticPlayer({
   meaningDefault,
   benefitsDefault,
   playTrigger,
+  portalContainer,
   onPlayStateChange,
   onCompleted,
 }: MantraKineticPlayerProps) {
@@ -124,18 +149,24 @@ export function MantraKineticPlayer({
     ) {
       const cueIdx = nextCueIdxRef.current;
       const cue = cues[cueIdx];
-      const laneIdx = cueIdx % LANE_POSITIONS.length;
+      const spot = SCATTER_SPOTS[(cueIdx + playTrigger * 3) % SCATTER_SPOTS.length];
+      const xJitter = ((cueIdx * 11 + playTrigger * 7) % 11) - 5;
+      const yJitter = ((cueIdx * 7 + playTrigger * 5) % 7) - 3;
+      const xPct = Math.min(89, Math.max(11, spot.xPct + xJitter));
+      const yPct = Math.min(86, Math.max(7, spot.yPct + yJitter));
       const isStrong = cueIdx % 4 === 0 || cue.text === 'OM' || cue.text === 'HUM';
 
       uidCounterRef.current += 1;
       newlySpawned.push({
         uid: uidCounterRef.current,
         text: cue.text,
-        xPct: LANE_POSITIONS[laneIdx],
-        driftX: LANE_DRIFTS[laneIdx],
+        xPct,
+        yPct,
+        driftX: spot.driftX,
+        tiltDeg: spot.tilt,
         sizeClass: isStrong
-          ? 'text-xl sm:text-2xl font-extrabold'
-          : 'text-base sm:text-xl font-bold',
+          ? 'text-2xl sm:text-3xl font-extrabold'
+          : 'text-lg sm:text-2xl font-bold',
         createdAt: nowMs,
       });
 
@@ -147,19 +178,19 @@ export function MantraKineticPlayer({
     if (spawnedAny) {
       setActiveDisplayIdx(latestDisplay);
       setFloatingItems((prev) => {
-        const alive = prev.filter((item) => nowMs - item.createdAt < 2050);
-        return [...alive, ...newlySpawned].slice(-14);
+        const alive = prev.filter((item) => nowMs - item.createdAt < 2250);
+        return [...alive, ...newlySpawned].slice(-18);
       });
     } else {
       setFloatingItems((prev) => {
         if (!prev.length) return prev;
-        const alive = prev.filter((item) => nowMs - item.createdAt < 2050);
+        const alive = prev.filter((item) => nowMs - item.createdAt < 2250);
         return alive.length === prev.length ? prev : alive;
       });
     }
 
     rafRef.current = requestAnimationFrame(tickAnimation);
-  }, [cues]);
+  }, [cues, playTrigger]);
 
   const startPlayback = useCallback(async () => {
     const audio = audioRef.current;
@@ -238,6 +269,26 @@ export function MantraKineticPlayer({
 
   const progressPct = Math.min(100, Math.max(0, (currentTimeSec / durationSec) * 100));
 
+  const floatingSpans = floatingItems.map((item) => (
+    <span
+      key={item.uid}
+      style={
+        {
+          left: `${item.xPct}%`,
+          top: `${item.yPct}%`,
+          '--drift-x': `${item.driftX}px`,
+          '--tilt': `${item.tiltDeg}deg`,
+        } as React.CSSProperties
+      }
+      className={cn(
+        'mantra-floating-syllable absolute font-serif tracking-wider whitespace-nowrap select-none pointer-events-none',
+        item.sizeClass
+      )}
+    >
+      {item.text}
+    </span>
+  ));
+
   return (
     <div className="space-y-3.5 relative">
       {config?.audioUrl && (
@@ -250,32 +301,20 @@ export function MantraKineticPlayer({
         />
       )}
 
-      {/* Kinetic Mantra Sanctuary Box (light cream-gold + floating amber syllables) */}
+      {/* Render across entire deity detail card when portalContainer is mounted */}
+      {portalContainer && createPortal(floatingSpans, portalContainer)}
+
+      {/* Kinetic Mantra Sanctuary Box (light cream-gold) */}
       <div className="relative rounded-2xl border border-[#E2C275] bg-gradient-to-b from-[#FFF9EB] via-[#FFFBF2] to-[#FFF6E0] px-3.5 py-5 sm:px-5 sm:py-6 overflow-visible">
-        {/* Floating kinetic syllables layer — clipped horizontally to never cause page overflow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 -top-12 bottom-4 overflow-x-clip overflow-y-visible z-20"
-        >
-          {floatingItems.map((item) => (
-            <span
-              key={item.uid}
-              style={
-                {
-                  left: `${item.xPct}%`,
-                  bottom: '22%',
-                  '--drift-x': `${item.driftX}px`,
-                } as React.CSSProperties
-              }
-              className={cn(
-                'mantra-floating-syllable absolute font-serif tracking-wider whitespace-nowrap select-none',
-                item.sizeClass
-              )}
-            >
-              {item.text}
-            </span>
-          ))}
-        </div>
+        {/* Local fallback floating layer only when standalone without card-wide portalContainer */}
+        {!portalContainer && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -top-12 bottom-4 overflow-x-clip overflow-y-visible z-20"
+          >
+            {floatingSpans}
+          </div>
+        )}
 
         <div className="relative z-10 text-center space-y-3">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFF2CE] border border-[#E6C77E] text-[10px] font-bold uppercase tracking-widest text-[#8A5400]">
