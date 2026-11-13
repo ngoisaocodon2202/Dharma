@@ -84,10 +84,16 @@ export function MantraKineticPlayer({
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const rafRef = useRef<number | null>(null);
+  const fallbackStartedAtRef = useRef<number | null>(null);
   const nextCueIdxRef = useRef(0);
   const uidCounterRef = useRef(0);
+  const playTriggerRef = useRef(playTrigger);
   const onPlayStateChangeRef = useRef(onPlayStateChange);
   const onCompletedRef = useRef(onCompleted);
+
+  useEffect(() => {
+    playTriggerRef.current = playTrigger;
+  }, [playTrigger]);
 
   useEffect(() => {
     onPlayStateChangeRef.current = onPlayStateChange;
@@ -98,6 +104,7 @@ export function MantraKineticPlayer({
   }, [onCompleted]);
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [awaitingGestureUnlock, setAwaitingGestureUnlock] = useState(false);
   const [currentTimeSec, setCurrentTimeSec] = useState(0);
   const [activeDisplayIdx, setActiveDisplayIdx] = useState(-1);
   const [floatingItems, setFloatingItems] = useState<FloatingSyllable[]>([]);
@@ -108,6 +115,7 @@ export function MantraKineticPlayer({
       cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
     }
+    fallbackStartedAtRef.current = null;
   }, []);
 
   const stopPlayback = useCallback(() => {
@@ -123,74 +131,96 @@ export function MantraKineticPlayer({
     }
     nextCueIdxRef.current = 0;
     setIsPlaying(false);
+    setAwaitingGestureUnlock(false);
     setCurrentTimeSec(0);
     setActiveDisplayIdx(-1);
     setFloatingItems([]);
     onPlayStateChangeRef.current?.(false);
   }, [cancelLoop]);
 
+  const advanceCuesAtTime = useCallback(
+    (t: number, nowMs: number) => {
+      setCurrentTimeSec(t);
+
+      const triggerSeed = playTriggerRef.current;
+      let spawnedAny = false;
+      const newlySpawned: FloatingSyllable[] = [];
+      let latestDisplay = -1;
+
+      while (
+        nextCueIdxRef.current < cues.length &&
+        t >= cues[nextCueIdxRef.current].atSec
+      ) {
+        const cueIdx = nextCueIdxRef.current;
+        const cue = cues[cueIdx];
+        const spot = SCATTER_SPOTS[(cueIdx + triggerSeed * 3) % SCATTER_SPOTS.length];
+        const xJitter = ((cueIdx * 11 + triggerSeed * 7) % 11) - 5;
+        const yJitter = ((cueIdx * 7 + triggerSeed * 5) % 7) - 3;
+        const xPct = Math.min(89, Math.max(11, spot.xPct + xJitter));
+        const yPct = Math.min(86, Math.max(7, spot.yPct + yJitter));
+        const isStrong = cueIdx % 4 === 0 || cue.text === 'OM' || cue.text === 'HUM';
+
+        uidCounterRef.current += 1;
+        newlySpawned.push({
+          uid: uidCounterRef.current,
+          text: cue.text,
+          xPct,
+          yPct,
+          driftX: spot.driftX,
+          tiltDeg: spot.tilt,
+          sizeClass: isStrong
+            ? 'text-2xl sm:text-3xl font-extrabold'
+            : 'text-lg sm:text-2xl font-bold',
+          createdAt: nowMs,
+        });
+
+        latestDisplay = cue.displayIndex;
+        nextCueIdxRef.current += 1;
+        spawnedAny = true;
+      }
+
+      if (spawnedAny) {
+        setActiveDisplayIdx(latestDisplay);
+        setFloatingItems((prev) => {
+          const alive = prev.filter((item) => nowMs - item.createdAt < 2250);
+          return [...alive, ...newlySpawned].slice(-18);
+        });
+      } else {
+        setFloatingItems((prev) => {
+          if (!prev.length) return prev;
+          const alive = prev.filter((item) => nowMs - item.createdAt < 2250);
+          return alive.length === prev.length ? prev : alive;
+        });
+      }
+    },
+    [cues]
+  );
+
   const tickAnimation = useCallback(() => {
+    const nowMs = performance.now();
+
+    if (fallbackStartedAtRef.current !== null) {
+      const elapsedSec = (nowMs - fallbackStartedAtRef.current) / 1000;
+      if (elapsedSec >= durationSec) {
+        fallbackStartedAtRef.current = nowMs;
+        nextCueIdxRef.current = 0;
+        setActiveDisplayIdx(-1);
+        advanceCuesAtTime(0, nowMs);
+      } else {
+        advanceCuesAtTime(elapsedSec, nowMs);
+      }
+      rafRef.current = requestAnimationFrame(tickAnimation);
+      return;
+    }
+
     const audio = audioRef.current;
     if (!audio || audio.paused || audio.ended) {
       return;
     }
 
-    const nowMs = performance.now();
-    const t = audio.currentTime;
-    setCurrentTimeSec(t);
-
-    let spawnedAny = false;
-    const newlySpawned: FloatingSyllable[] = [];
-    let latestDisplay = -1;
-
-    while (
-      nextCueIdxRef.current < cues.length &&
-      t >= cues[nextCueIdxRef.current].atSec
-    ) {
-      const cueIdx = nextCueIdxRef.current;
-      const cue = cues[cueIdx];
-      const spot = SCATTER_SPOTS[(cueIdx + playTrigger * 3) % SCATTER_SPOTS.length];
-      const xJitter = ((cueIdx * 11 + playTrigger * 7) % 11) - 5;
-      const yJitter = ((cueIdx * 7 + playTrigger * 5) % 7) - 3;
-      const xPct = Math.min(89, Math.max(11, spot.xPct + xJitter));
-      const yPct = Math.min(86, Math.max(7, spot.yPct + yJitter));
-      const isStrong = cueIdx % 4 === 0 || cue.text === 'OM' || cue.text === 'HUM';
-
-      uidCounterRef.current += 1;
-      newlySpawned.push({
-        uid: uidCounterRef.current,
-        text: cue.text,
-        xPct,
-        yPct,
-        driftX: spot.driftX,
-        tiltDeg: spot.tilt,
-        sizeClass: isStrong
-          ? 'text-2xl sm:text-3xl font-extrabold'
-          : 'text-lg sm:text-2xl font-bold',
-        createdAt: nowMs,
-      });
-
-      latestDisplay = cue.displayIndex;
-      nextCueIdxRef.current += 1;
-      spawnedAny = true;
-    }
-
-    if (spawnedAny) {
-      setActiveDisplayIdx(latestDisplay);
-      setFloatingItems((prev) => {
-        const alive = prev.filter((item) => nowMs - item.createdAt < 2250);
-        return [...alive, ...newlySpawned].slice(-18);
-      });
-    } else {
-      setFloatingItems((prev) => {
-        if (!prev.length) return prev;
-        const alive = prev.filter((item) => nowMs - item.createdAt < 2250);
-        return alive.length === prev.length ? prev : alive;
-      });
-    }
-
+    advanceCuesAtTime(audio.currentTime, nowMs);
     rafRef.current = requestAnimationFrame(tickAnimation);
-  }, [cues, playTrigger]);
+  }, [advanceCuesAtTime, durationSec]);
 
   const startPlayback = useCallback(async () => {
     const audio = audioRef.current;
@@ -210,14 +240,38 @@ export function MantraKineticPlayer({
 
     try {
       await audio.play();
+      setAwaitingGestureUnlock(false);
       setIsPlaying(true);
       onPlayStateChangeRef.current?.(true);
       rafRef.current = requestAnimationFrame(tickAnimation);
     } catch {
-      setIsPlaying(false);
-      onPlayStateChangeRef.current?.(false);
+      // If browser blocks direct-URL autoplay before user gesture, keep kinetic mantra text flowing
+      // immediately and unlock real vocal audio on the first pointer/key interaction.
+      setAwaitingGestureUnlock(true);
+      setIsPlaying(true);
+      fallbackStartedAtRef.current = performance.now();
+      onPlayStateChangeRef.current?.(true);
+      rafRef.current = requestAnimationFrame(tickAnimation);
     }
   }, [cancelLoop, config?.audioUrl, tickAnimation]);
+
+  // If browser blocked initial cold-load audio, resume real vocal audio on very first gesture
+  useEffect(() => {
+    if (!awaitingGestureUnlock) return;
+    let handled = false;
+    const handleUnlock = () => {
+      if (handled) return;
+      handled = true;
+      setAwaitingGestureUnlock(false);
+      startPlayback();
+    };
+    window.addEventListener('pointerdown', handleUnlock, { once: true, passive: true });
+    window.addEventListener('keydown', handleUnlock, { once: true });
+    return () => {
+      window.removeEventListener('pointerdown', handleUnlock);
+      window.removeEventListener('keydown', handleUnlock);
+    };
+  }, [awaitingGestureUnlock, startPlayback]);
 
   const prevBuddhaIdRef = useRef(buddhaId);
 
@@ -230,8 +284,7 @@ export function MantraKineticPlayer({
     }
   }, [buddhaId, stopPlayback]);
 
-  // Auto-play once when Tab 3 ("3. Thần Chú") is clicked (playTrigger > 0),
-  // resilient to React StrictMode double mount/cleanup in dev mode.
+  // Auto-play immediately when deity opens or replay is triggered (playTrigger > 0)
   useEffect(() => {
     if (playTrigger <= 0) return;
     let active = true;
@@ -260,7 +313,7 @@ export function MantraKineticPlayer({
   }, [cancelLoop]);
 
   const handleToggle = () => {
-    if (isPlaying) {
+    if (isPlaying && !awaitingGestureUnlock) {
       stopPlayback();
     } else {
       startPlayback();
@@ -319,7 +372,13 @@ export function MantraKineticPlayer({
         <div className="relative z-10 text-center space-y-3">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFF2CE] border border-[#E6C77E] text-[10px] font-bold uppercase tracking-widest text-[#8A5400]">
             <Volume2 className={cn('w-3 h-3', isPlaying && 'animate-pulse text-[#C58C1B]')} />
-            <span>{isPlaying ? 'Đang Trì Tụng Trọn Biến' : 'Phạn Văn & Phiên Âm'}</span>
+            <span>
+              {isPlaying
+                ? awaitingGestureUnlock
+                  ? 'Đang Chạy Chữ • Chạm Để Mở Âm Thanh'
+                  : 'Đang Trì Tụng Trọn Biến'
+                : 'Phạn Văn & Phiên Âm'}
+            </span>
           </div>
 
           {/* Primary Sanskrit Line */}
@@ -408,9 +467,9 @@ export function MantraKineticPlayer({
         <button
           type="button"
           onClick={() => setShowFullDetails((v) => !v)}
-          className="w-full px-3.5 py-2.5 flex items-center justify-between text-xs font-bold text-[#8A5400] hover:bg-[#FFF8E6] transition-colors cursor-pointer"
+          className="w-full px-3.5 py-2.5 flex items-center justify-between gap-2 text-xs font-bold text-[#8A5400] hover:bg-[#FFF8E6] transition-colors cursor-pointer"
         >
-          <span>Xem đầy đủ phiên âm, ý nghĩa &amp; công đức trì tụng</span>
+          <span className="whitespace-nowrap truncate">Xem phiên âm &amp; công đức</span>
           {showFullDetails ? (
             <ChevronUp className="w-4 h-4 shrink-0" />
           ) : (

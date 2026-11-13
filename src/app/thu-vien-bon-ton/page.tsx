@@ -30,6 +30,7 @@ function BonTonLibraryInner() {
   const [selectedBuddha, setSelectedBuddha] = useState<BuddhaItem | null>(null);
   const [activeTab, setActiveTab] = useState<DetailTab>('tieu_su');
   const [mantraPlayTrigger, setMantraPlayTrigger] = useState(0);
+  const [isMantraPlaying, setIsMantraPlaying] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [mantraStageEl, setMantraStageEl] = useState<HTMLDivElement | null>(null);
@@ -48,7 +49,7 @@ function BonTonLibraryInner() {
     if (found) {
       setSelectedBuddha(found);
       setActiveTab('tieu_su');
-      setMantraPlayTrigger(0);
+      setMantraPlayTrigger((n) => n + 1);
     }
   }, [idParam]);
 
@@ -56,12 +57,13 @@ function BonTonLibraryInner() {
     playBellSound(0.25);
     setSelectedBuddha(buddha);
     setActiveTab('tieu_su');
-    setMantraPlayTrigger(0);
+    setMantraPlayTrigger((n) => n + 1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToGrid = () => {
     setMantraPlayTrigger(0);
+    setIsMantraPlaying(false);
     setSelectedBuddha(null);
     if (idParam) {
       router.replace('/thu-vien-bon-ton', { scroll: false });
@@ -270,7 +272,9 @@ function BonTonLibraryInner() {
                   onClick={() => {
                     if (tab.id === 'than_chu') {
                       setActiveTab('than_chu');
-                      setMantraPlayTrigger((n) => n + 1);
+                      if (!isMantraPlaying) {
+                        setMantraPlayTrigger((n) => n + 1);
+                      }
                     } else {
                       playBellSound(0.2);
                       setActiveTab(tab.id as DetailTab);
@@ -290,9 +294,10 @@ function BonTonLibraryInner() {
             })}
           </div>
 
-          {/* TAB 1: TIỂU SỬ */}
+          <div className="flex flex-col gap-3.5">
+          {/* TAB 1: TIỂU SỬ (renders directly alongside active Thần Chú above) */}
           {activeTab === 'tieu_su' && (
-            <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
+            <div className="order-2 rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
               <div className="flex items-center gap-2.5 pb-2.5 border-b border-[#F2E5C7]">
                 <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
                   <BookOpen className="w-4 h-4" />
@@ -334,7 +339,7 @@ function BonTonLibraryInner() {
 
           {/* TAB 2: ĐẠI NGUYỆN */}
           {activeTab === 'dai_nguyen' && (
-            <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
+            <div className="order-1 rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
               <div className="flex items-center gap-2.5 pb-2.5 border-b border-[#F2E5C7]">
                 <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
                   <Heart className="w-4 h-4" />
@@ -369,50 +374,55 @@ function BonTonLibraryInner() {
             </div>
           )}
 
-          {/* TAB 3: THẦN CHÚ */}
-          {activeTab === 'than_chu' && (
-            <div className="rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
-              <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#F2E5C7]">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
-                    <Sparkles className="w-4 h-4" />
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
-                      {selectedBuddha.thanChu.name}
-                    </h3>
-                    <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
-                      Chân ngôn uy lực mầu nhiệm
-                    </p>
-                  </div>
+          {/* THẦN CHÚ (Always mounted while deity is open; shown directly on Tiểu Sử & Thần Chú tabs so audio + floating syllables run automatically from open) */}
+          <div
+            className={cn(
+              'order-1 rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs',
+              activeTab === 'tieu_su' || activeTab === 'than_chu' ? 'block' : 'hidden'
+            )}
+          >
+            <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#F2E5C7]">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
+                  <Sparkles className="w-4 h-4" />
                 </div>
-
-                <button
-                  type="button"
-                  onClick={handleCopyMantra}
-                  className="p-2 rounded-xl border border-[#EAD7A7] bg-[#FFFBF2] text-[#8A5400] cursor-pointer shrink-0"
-                  title="Sao chép thần chú"
-                >
-                  {isCopied ? (
-                    <Check className="w-4 h-4 text-emerald-600" />
-                  ) : (
-                    <Share2 className="w-4 h-4" />
-                  )}
-                </button>
+                <div className="min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
+                    {selectedBuddha.thanChu.name}
+                  </h3>
+                  <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
+                    Chân ngôn uy lực mầu nhiệm
+                  </p>
+                </div>
               </div>
 
-              <MantraKineticPlayer
-                buddhaId={selectedBuddha.id}
-                sanskritDefault={selectedBuddha.thanChu.sanskrit}
-                vietnameseDefault={selectedBuddha.thanChu.vietnamese}
-                meaningDefault={selectedBuddha.thanChu.meaning}
-                benefitsDefault={selectedBuddha.thanChu.benefits}
-                playTrigger={mantraPlayTrigger}
-                portalContainer={mantraStageEl}
-                onCompleted={handleMantraCompleted}
-              />
+              <button
+                type="button"
+                onClick={handleCopyMantra}
+                className="p-2 rounded-xl border border-[#EAD7A7] bg-[#FFFBF2] text-[#8A5400] cursor-pointer shrink-0"
+                title="Sao chép thần chú"
+              >
+                {isCopied ? (
+                  <Check className="w-4 h-4 text-emerald-600" />
+                ) : (
+                  <Share2 className="w-4 h-4" />
+                )}
+              </button>
             </div>
-          )}
+
+            <MantraKineticPlayer
+              buddhaId={selectedBuddha.id}
+              sanskritDefault={selectedBuddha.thanChu.sanskrit}
+              vietnameseDefault={selectedBuddha.thanChu.vietnamese}
+              meaningDefault={selectedBuddha.thanChu.meaning}
+              benefitsDefault={selectedBuddha.thanChu.benefits}
+              playTrigger={mantraPlayTrigger}
+              portalContainer={mantraStageEl}
+              onPlayStateChange={setIsMantraPlaying}
+              onCompleted={handleMantraCompleted}
+            />
+          </div>
+          </div>
           </div>
         </div>
       )}
