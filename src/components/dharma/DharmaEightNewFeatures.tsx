@@ -11,15 +11,12 @@ import {
   Search,
   Plus,
   Trash2,
-  Volume2,
-  VolumeX,
   RotateCcw,
   BookOpen,
   Feather,
   Utensils,
   Compass,
   Award,
-  Radio,
 } from 'lucide-react';
 import {
   playBellSound,
@@ -29,6 +26,7 @@ import {
   stopHealingDrone,
 } from '@/lib/buddhistSounds';
 import { recordDharmaMerit } from '@/components/dharma/DharmaInteractiveTools';
+import MeditationMediaPlayer from '@/components/dharma/MeditationMediaPlayer';
 import { LotusMinimalIcon } from '@/components/icons/DharmaMinimalIcons';
 import { cn } from '@/lib/utils';
 
@@ -417,7 +415,6 @@ const HZ_HEALING_TRACKS = [
     title: 'Tần Số Vũ Trụ Tự Nhiên & Chuông Xoay Tây Tạng',
     subtitle: 'Làm dịu hệ thần kinh, giảm nhịp tim, đưa tâm về trạng thái tĩnh lặng sâu',
     droneMode: '432' as const,
-    youtubeId: '1ZYbU82GVz4',
   },
   {
     id: '528',
@@ -425,7 +422,6 @@ const HZ_HEALING_TRACKS = [
     title: 'Tần Số Từ Bi Chữa Lành (Solfeggio 528Hz)',
     subtitle: 'Khơi dậy năng lượng yêu thương, tái tạo sự cân bằng thân - tâm',
     droneMode: '528' as const,
-    youtubeId: 'UkM-FjfN6Mc',
   },
   {
     id: 'om-136',
@@ -433,34 +429,6 @@ const HZ_HEALING_TRACKS = [
     title: 'Sóng Âm Om Vũ Trụ & Tiếng Mưa Rừng Trúc',
     subtitle: 'Đồng điệu nhịp thở thiền định, giải tỏa căng thẳng mất ngủ',
     droneMode: 'om' as const,
-    youtubeId: 'hlWiI4xVXKY',
-  },
-];
-
-const GENTLE_CHANTING_VIDEOS = [
-  {
-    id: 'vid-bat-nha',
-    title: 'Tụng Bát Nhã Tâm Kinh — Giọng Đọc Trầm Ấm Dễ Chịu',
-    subtitle: 'Pháp âm thanh tịnh kèm tiếng chuông gia trì nhẹ nhàng',
-    youtubeId: '9uJkF_t4C1s',
-    chantText:
-      'Quán Tự Tại Bồ Tát hành thâm Bát Nhã Ba La Mật Đa thời, chiếu kiến ngũ uẩn giai không, độ nhất thiết khổ ách. Xá Lợi Tử! Sắc bất dị không, không bất dị sắc; sắc tức thị không, không tức thị sắc. Thọ, tưởng, hành, thức diệc phục như thị.',
-  },
-  {
-    id: 'vid-niem-phat',
-    title: 'Niệm Phật A Di Đà 6 Chữ — Nhịp Chậm Thư Giãn Tâm Thức',
-    subtitle: 'Nam Mô A Di Đà Phật — Giọng niệm êm dịu giúp tâm an định',
-    youtubeId: 'wR8f1I9yC1o',
-    chantText:
-      'Nam Mô A Di Đà Phật. Nguyện đem công đức niệm Phật thanh tịnh này trang nghiêm Phật Tịnh Độ, trên đền bốn ơn nặng, dưới cứu khổ ba đường, nếu có ai thấy nghe đều phát tâm Bồ Đề.',
-  },
-  {
-    id: 'vid-duoc-su',
-    title: 'Chú Dược Sư Lưu Ly — Cầu Bình An & Chữa Lành Thân Tâm',
-    subtitle: 'Nam Mô Bạc Già Phạt Đế Bệ Sát Xả Lũ Rô Bệ Lưu Ly Bát Lạt Bà',
-    youtubeId: 'k7N1g5t2H8E',
-    chantText:
-      'Nam mô bạc già phạt đế, bệ sát xả, lũ rô bệ lưu ly, bát lạt bà, hắt ra xà dã. Đát tha yết đa da, a ra hắt đế, tam miệu tam bột đà da. Đát điệt tha: Án, bệ sát thệ, bệ sát thệ, bệ sát xã, tam một yết đế toà ha.',
   },
 ];
 
@@ -522,11 +490,16 @@ export function DharmaEightNewFeatures({
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
 
-  // 9. Hz & Chanting Audio Studio state
+  // 9. Meditation Media (.mp3 / .mp4) & Hz Audio Studio state
   const [activeHzTrack, setActiveHzTrack] = useState(HZ_HEALING_TRACKS[0]);
   const [isHzPlaying, setIsHzPlaying] = useState(false);
-  const [activeChantVid, setActiveChantVid] = useState(GENTLE_CHANTING_VIDEOS[0]);
-  const [isSpeechPlaying, setIsSpeechPlaying] = useState(false);
+
+  useEffect(() => {
+    if (activeTool !== 'nhac-tu-tap') {
+      setIsHzPlaying(false);
+      stopHealingDrone();
+    }
+  }, [activeTool]);
 
   const loadPostgresRecords = useCallback(async () => {
     setIsLoadingRecords(true);
@@ -647,9 +620,9 @@ export function DharmaEightNewFeatures({
   const meta = EIGHT_NEW_FEATURES_LIST.find((f) => f.id === activeTool) || {
     id: activeTool,
     orderNumber: 10,
-    title: 'Âm Thanh Chữa Lành (Hz) & Tụng Kinh Êm Dịu',
-    subtitle: 'Tần số 432Hz / 528Hz & giọng đọc kinh nhẹ nhàng thư giãn',
-    badge: '432Hz • 528Hz',
+    title: 'Nhạc Thiền Thư Giãn & Không Lời',
+    subtitle: 'Nhạc thiền .MP3, video .MP4 & sóng âm 432Hz / 528Hz',
+    badge: '.MP3 • .MP4',
     image: '/images/dharma/tools/10-nhac-tu-tap-hz.jpg',
   };
 
@@ -1368,22 +1341,32 @@ export function DharmaEightNewFeatures({
         )}
 
         {/* ------------------------------------------------------------------- */}
-        {/* TOOL 10: ÂM THANH TẦN SỐ CHỮA LÀNH (HZ) & VIDEO GIỌNG ĐỌC KINH       */}
+        {/* TOOL 10: KHO NHẠC THIỀN THƯ GIÃN (.MP3 / .MP4) & SÓNG ÂM HZ         */}
         {/* ------------------------------------------------------------------- */}
         {activeTool === 'nhac-tu-tap' && (
-          <div className="space-y-5">
-            {/* Section A: Pure Hz Healing Frequency Synthesizer */}
-            <div className="p-5 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] space-y-4 shadow-2xs">
-              <div className="flex items-center justify-between gap-2">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C5500]">
-                    Sóng Âm Tần Số Chuẩn Hz (Thư Giãn Thần Kinh)
-                  </span>
-                  <h3 className="font-serif font-bold text-base sm:text-lg text-[#2C1E10]">
-                    {activeHzTrack.freqLabel} — {activeHzTrack.title}
-                  </h3>
-                  <p className="text-xs text-[#6B533B] mt-0.5">{activeHzTrack.subtitle}</p>
-                </div>
+          <div className="space-y-4">
+            {/* Section A: Real .MP3 & .MP4 Relaxing Meditation & Instrumental Music Player */}
+            <MeditationMediaPlayer
+              onRecommendedHz={(hzMode) => {
+                const matched = HZ_HEALING_TRACKS.find((t) => t.droneMode === hzMode);
+                if (!matched) return;
+                setActiveHzTrack(matched);
+                if (isHzPlaying) {
+                  startHealingDrone(matched.droneMode, 0.24);
+                }
+              }}
+            />
+
+            {/* Section B: Optional Hz Healing Frequency Synthesizer Layer */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7]/50 space-y-3.5 shadow-2xs">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C5500]">
+                  Sóng Âm Tần Số Chuẩn Hz (Lớp Âm Thanh Nền Bổ Trợ)
+                </span>
+                <h3 className="font-serif font-bold text-base sm:text-lg text-[#2C1E10] mt-0.5">
+                  {activeHzTrack.freqLabel} — {activeHzTrack.title}
+                </h3>
+                <p className="text-xs text-[#6B533B] mt-0.5">{activeHzTrack.subtitle}</p>
               </div>
 
               <div className="grid grid-cols-3 gap-2">
@@ -1394,14 +1377,14 @@ export function DharmaEightNewFeatures({
                     onClick={() => {
                       setActiveHzTrack(tr);
                       if (isHzPlaying) {
-                        startHealingDrone(tr.droneMode, 0.32);
+                        startHealingDrone(tr.droneMode, 0.24);
                       }
                     }}
                     className={cn(
-                      'p-3 rounded-xl border text-center cursor-pointer transition-all',
+                      'p-2.5 rounded-xl border text-center cursor-pointer transition-all',
                       activeHzTrack.id === tr.id
-                        ? 'bg-[#FFF6DF] border-[#D9A02E] text-[#2C1E10] font-bold shadow-2xs'
-                        : 'bg-[#FAF7F0] border-[#EAD7A7] text-[#6B533B]'
+                        ? 'bg-[#FFF6DF] border-[#D9A02E]/70 text-[#2C1E10] font-bold shadow-2xs'
+                        : 'bg-[#FAF7F0] border-[#EAD7A7]/40 text-[#6B533B]'
                     )}
                   >
                     <div className="font-serif font-bold text-sm text-[#8C5500]">{tr.freqLabel}</div>
@@ -1410,116 +1393,32 @@ export function DharmaEightNewFeatures({
                 ))}
               </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const next = !isHzPlaying;
-                    setIsHzPlaying(next);
-                    if (next) {
-                      startHealingDrone(activeHzTrack.droneMode, 0.32);
-                      playBellSound(0.4);
-                    } else {
-                      stopHealingDrone();
-                    }
-                  }}
-                  className={cn(
-                    'flex-1 py-3.5 px-5 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all whitespace-nowrap',
-                    isHzPlaying
-                      ? 'bg-emerald-600 text-white shadow-md'
-                      : 'bg-gradient-to-r from-[#FFE07D] via-[#F5C542] to-[#E5A91C] text-[#3D2505] shadow-sm'
-                  )}
-                >
-                  {isHzPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
-                  <span>
-                    {isHzPlaying
-                      ? `Đang Phát Sóng Âm ${activeHzTrack.freqLabel} Trực Tiếp`
-                      : `Bật Sóng Âm Chữa Lành ${activeHzTrack.freqLabel}`}
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            {/* Section B: Gentle Sutra Chanting Videos & Voice Recitation */}
-            <div className="p-5 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] space-y-4 shadow-2xs">
-              <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C5500]">
-                  Video &amp; Pháp Âm Giọng Đọc Kinh Nhẹ Nhàng
+              <button
+                type="button"
+                onClick={() => {
+                  const next = !isHzPlaying;
+                  setIsHzPlaying(next);
+                  if (next) {
+                    startHealingDrone(activeHzTrack.droneMode, 0.24);
+                    playBellSound(0.35);
+                  } else {
+                    stopHealingDrone();
+                  }
+                }}
+                className={cn(
+                  'w-full py-3 px-5 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-all whitespace-nowrap',
+                  isHzPlaying
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'bg-[#FAF7F0] hover:bg-[#FFF6DF] text-[#5C3A06]'
+                )}
+              >
+                {isHzPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+                <span>
+                  {isHzPlaying
+                    ? `Đang Hòa Âm Sóng Nền ${activeHzTrack.freqLabel}`
+                    : `Bật Thêm Sóng Nền Chữa Lành ${activeHzTrack.freqLabel}`}
                 </span>
-                <h3 className="font-serif font-bold text-base sm:text-lg text-[#2C1E10]">
-                  {activeChantVid.title}
-                </h3>
-                <p className="text-xs text-[#6B533B]">{activeChantVid.subtitle}</p>
-              </div>
-
-              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-                {GENTLE_CHANTING_VIDEOS.map((vid) => (
-                  <button
-                    key={vid.id}
-                    type="button"
-                    onClick={() => setActiveChantVid(vid)}
-                    className={cn(
-                      'px-3 py-1.5 rounded-xl border text-xs font-bold whitespace-nowrap shrink-0 cursor-pointer',
-                      activeChantVid.id === vid.id
-                        ? 'bg-[#FFE07D] border-[#D9A02E] text-[#3D2505]'
-                        : 'bg-[#FAF7F0] border-[#EAD7A7] text-[#6B533B]'
-                    )}
-                  >
-                    {vid.title.split('—')[0].trim()}
-                  </button>
-                ))}
-              </div>
-
-              {/* Embedded Calming Video Player */}
-              <div className="aspect-video w-full rounded-2xl overflow-hidden border border-[#EAD7A7] bg-[#FAF5E6]">
-                <iframe
-                  src={`https://www.youtube.com/embed/${activeChantVid.youtubeId}?rel=0`}
-                  title={activeChantVid.title}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-
-              {/* Built-in Gentle Voice Recitation + 432Hz Offline Option */}
-              <div className="p-4 rounded-xl bg-[#FAF7F0] border border-[#EAD7A7] space-y-2.5">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-bold text-[#8C5500]">
-                    Lời Kinh Trì Tụng (Có thể bật giọng đọc êm dịu trực tiếp):
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (isSpeechPlaying) {
-                        setIsSpeechPlaying(false);
-                        stopHealingDrone();
-                        window.speechSynthesis?.cancel();
-                        return;
-                      }
-                      setIsSpeechPlaying(true);
-                      startHealingDrone('432', 0.2);
-                      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-                        window.speechSynthesis.cancel();
-                        const u = new SpeechSynthesisUtterance(activeChantVid.chantText);
-                        u.lang = 'vi-VN';
-                        u.rate = 0.82;
-                        u.onend = () => {
-                          setIsSpeechPlaying(false);
-                          stopHealingDrone();
-                        };
-                        window.speechSynthesis.speak(u);
-                      }
-                    }}
-                    className="px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] text-xs font-bold flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
-                  >
-                    {isSpeechPlaying ? <Volume2 className="w-3.5 h-3.5 animate-pulse" /> : <Radio className="w-3.5 h-3.5" />}
-                    <span>{isSpeechPlaying ? 'Dừng Đọc Kinh' : 'Nghe Giọng Đọc + 432Hz'}</span>
-                  </button>
-                </div>
-                <p className="font-serif text-sm text-[#2C1E10] leading-relaxed">
-                  {activeChantVid.chantText}
-                </p>
-              </div>
+              </button>
             </div>
           </div>
         )}
