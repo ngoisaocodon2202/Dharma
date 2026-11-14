@@ -258,9 +258,9 @@ function BonTonLibraryInner() {
               })}
             </div>
 
-            {/* Clean Portrait & Quick Actions sitting openly on canvas (no enclosed box) */}
-            <div className="flex items-center gap-3.5">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shadow-sm shrink-0 bg-[#FAF3E0]">
+            {/* Prominent Borderless Buddha Portrait & Actions on Open Canvas */}
+            <div className="flex flex-col items-center text-center space-y-3 pt-1">
+              <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-3xl overflow-hidden shadow-[0_12px_32px_rgba(140,85,0,0.14)] bg-[#FAF3E0]">
                 <img
                   src={selectedBuddha.image}
                   alt={selectedBuddha.name}
@@ -268,15 +268,15 @@ function BonTonLibraryInner() {
                 />
               </div>
 
-              <div className="flex-1 min-w-0 space-y-2">
-                <p className="text-xs font-semibold text-[#78531E] truncate">
+              <div className="space-y-2.5 max-w-full">
+                <p className="text-xs sm:text-sm font-semibold text-[#78531E] px-2">
                   {selectedBuddha.title}
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2">
                   <button
                     type="button"
                     onClick={handleChantMantra}
-                    className="py-2 px-3 rounded-full bg-[#C58C1B] text-white hover:bg-[#A6730E] font-bold text-[11px] sm:text-xs inline-flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap shadow-xs"
+                    className="py-2 px-4 rounded-full bg-[#C58C1B] text-white hover:bg-[#A6730E] font-bold text-xs inline-flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap shadow-xs"
                   >
                     <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
                     <span className="whitespace-nowrap">Trì Niệm Công Đức</span>
@@ -285,14 +285,14 @@ function BonTonLibraryInner() {
                   <button
                     type="button"
                     onClick={handleCopyMantra}
-                    className="w-8 h-8 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#5C4428] flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0"
+                    className="w-9 h-9 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#5C4428] flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0"
                     title="Sao chép chân ngôn"
                     aria-label="Chép chân ngôn"
                   >
                     {isCopied ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <Check className="w-4 h-4 text-emerald-600" />
                     ) : (
-                      <Share2 className="w-3.5 h-3.5" />
+                      <Share2 className="w-4 h-4" />
                     )}
                   </button>
                 </div>

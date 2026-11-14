@@ -54,7 +54,7 @@ const SCATTER_SPOTS: ScatterSpot[] = [
 ];
 
 // Compensate slight PCM output / visual render lead so floating syllables land in lockstep with audible voice
-const AUDIO_SYNC_OFFSET_SEC = 0.12;
+const AUDIO_SYNC_OFFSET_SEC = 0;
 
 export function MantraKineticPlayer({
   buddhaId,
@@ -404,9 +404,11 @@ export function MantraKineticPlayer({
             <span>
               {awaitingGestureUnlock
                 ? 'Chạm Để Phát Thần Chú & Chữ'
-                : isPlaying
-                  ? 'Đang Trì Tụng Trọn Biến'
-                  : 'Thần Chú & Phiên Âm'}
+                : isPlaying && cues.length > 0 && currentTimeSec < cues[0].atSec
+                  ? 'Đang Dạo Khúc Thiền Âm...'
+                  : isPlaying
+                    ? 'Đang Trì Tụng Cùng Pháp Âm'
+                    : 'Thần Chú & Phiên Âm'}
             </span>
           </div>
 
@@ -513,7 +515,7 @@ export function MantraKineticPlayer({
                 Phiên âm kinh văn
               </h4>
               <p className="font-mono text-xs sm:text-sm text-[#2C1E10] leading-relaxed select-all">
-                {vietnameseDefault}
+                {config?.phoneticLine || vietnameseDefault}
               </p>
             </div>
             <div className="space-y-1">

@@ -190,7 +190,7 @@ export function BuddhasGalleryModal({
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 max-w-3xl mx-auto w-full space-y-5 custom-dropdown-scroll">
               {/* Buddha Hero Presentation Card */}
               <div className="rounded-3xl p-4 sm:p-5 bg-gradient-to-br from-[#FFFDF7] via-[#FFF9EA] to-[#FFF3D0] border border-[#ECD9A8] shadow-md flex flex-col sm:flex-row gap-4 items-center">
-                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[#E5C158] shadow-md shrink-0 bg-[#FAF3E0]">
+                <div className="w-40 h-40 sm:w-44 sm:h-44 rounded-3xl overflow-hidden border-2 border-[#E5C158] shadow-md shrink-0 bg-[#FAF3E0]">
                   <img
                     src={selectedBuddha.image}
                     alt={selectedBuddha.name}
