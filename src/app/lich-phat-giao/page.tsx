@@ -22,7 +22,7 @@ import { CenterToast } from '@/components/ui/CenterToast';
 import { getLunarDate, type LunarDateInfo } from '@/lib/lunar-calendar';
 import { BUDDHA_ASSETS, PAGODA_ASSETS, ARTICLE_ASSETS, SACRED_MANDALA_FALLBACK } from '@/lib/assets';
 import { useDharmaStore, getTodayDateKey } from '@/store/useDharmaStore';
-import { playBellSound, playWoodenFishSound, playPageTurnSound } from '@/lib/buddhistSounds';
+import { playBellSound, playSoftTabBellSound } from '@/lib/buddhistSounds';
 
 type CalendarFilterMode = 'all' | 'via_phat' | 'trai_gioi' | 'ca_nhan';
 type TraiRegimen = 'LUC_TRAI' | 'THAP_TRAI';
@@ -292,7 +292,7 @@ function BuddhistCalendarInner() {
   };
 
   const handleChangeTraiRegimen = (regimen: TraiRegimen) => {
-    playWoodenFishSound(0.25);
+    playSoftTabBellSound(0.2);
     setTraiRegimen(regimen);
     updateProfile({ vegetarianMode: regimen });
     showToast(
@@ -334,7 +334,7 @@ function BuddhistCalendarInner() {
   };
 
   const handleGoToday = () => {
-    playPageTurnSound(0.3);
+    playSoftTabBellSound(0.2);
     const now = new Date();
     setTodayDate(now);
     setViewYear(now.getFullYear());
@@ -344,7 +344,7 @@ function BuddhistCalendarInner() {
   };
 
   const handlePrevMonth = () => {
-    playPageTurnSound(0.25);
+    playSoftTabBellSound(0.18);
     if (viewMonth === 1) {
       setViewYear((y) => y - 1);
       setViewMonth(12);
@@ -355,7 +355,7 @@ function BuddhistCalendarInner() {
   };
 
   const handleNextMonth = () => {
-    playPageTurnSound(0.25);
+    playSoftTabBellSound(0.18);
     if (viewMonth === 12) {
       setViewYear((y) => y + 1);
       setViewMonth(1);
@@ -677,7 +677,7 @@ function BuddhistCalendarInner() {
                       key={cell.dateKey}
                       type="button"
                       onClick={() => {
-                        playWoodenFishSound(0.2);
+                        playSoftTabBellSound(0.18);
                         if (!cell.inCurrentMonth) {
                           setViewYear(cell.year);
                           setViewMonth(cell.month);
@@ -794,12 +794,15 @@ function BuddhistCalendarInner() {
                     <button
                       key={f.key}
                       type="button"
-                      onClick={() => setFilterMode(f.key)}
+                      onClick={() => {
+                        playSoftTabBellSound(0.18);
+                        setFilterMode(f.key);
+                      }}
                       className={cn(
-                        'px-3 py-1 rounded-full text-[11px] font-bold border transition-colors cursor-pointer shrink-0',
+                        'px-3 py-1 rounded-full text-[11px] font-bold transition-colors cursor-pointer shrink-0',
                         filterMode === f.key
-                          ? 'bg-[#FFF6DF] border-[#C68B19] text-[#8C5500]'
-                          : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B] hover:text-[#2C1E10]'
+                          ? 'bg-[#FFF6DF] text-[#8C5500]'
+                          : 'bg-[#FFFFFF] text-[#6B533B] hover:text-[#2C1E10]'
                       )}
                     >
                       {f.label}
@@ -1046,14 +1049,14 @@ function BuddhistCalendarInner() {
       {/* ===================================================================== */}
       {isYearEventsOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsYearEventsOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <div className="text-center min-w-0">
               <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
@@ -1093,14 +1096,14 @@ function BuddhistCalendarInner() {
       {/* ===================================================================== */}
       {isAddReminderOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsAddReminderOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
               Thêm Sự Kiện &amp; Nhắc Nhở Tu Tập
@@ -1174,14 +1177,14 @@ function BuddhistCalendarInner() {
       {/* ===================================================================== */}
       {selectedEvent && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setSelectedEvent(null)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
               Chi Tiết Sự Kiện Phật Giáo
@@ -1227,9 +1230,10 @@ function BuddhistCalendarInner() {
                   <button
                     type="button"
                     onClick={() => setSelectedEvent(null)}
-                    className="py-3 px-5 rounded-2xl bg-[#FFF9EB] border border-[#DFC27D] text-[#8C5500] text-xs sm:text-sm font-bold cursor-pointer"
+                    aria-label="Quay lại"
+                    className="w-10 h-10 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
                   >
-                    ← Quay lại lịch
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
                 </div>
               </div>

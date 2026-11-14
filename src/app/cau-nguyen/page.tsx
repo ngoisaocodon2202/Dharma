@@ -3,16 +3,24 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  ArrowLeft,
+  ChevronLeft,
   Info,
   MessageSquare,
   Trash2,
   Edit3,
   Heart,
   SlidersHorizontal,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 import { CenterToast } from '@/components/ui/CenterToast';
-import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import {
+  playBellSound,
+  playGrandTempleBellSound,
+  playSoftTabBellSound,
+  startZenChillAmbient,
+  stopZenChillAmbient,
+} from '@/lib/buddhistSounds';
 import { recordDharmaMerit } from '@/components/dharma/DharmaInteractiveTools';
 import { SanctuaryFullscreenBackdrop } from '@/components/dharma/SanctuaryFullscreenBackdrop';
 import { useDharmaStore } from '@/store/useDharmaStore';
@@ -270,6 +278,34 @@ export default function CauNguyenPage() {
 
   const totalCoPraySum = prayers.reduce((acc, p) => acc + Number(p.co_pray_count || 0), 0);
 
+  const [isAmbientMuted, setIsAmbientMuted] = useState(false);
+
+  // Continuous wordless relaxing chill meditation ambient music inside Phòng Cầu An
+  useEffect(() => {
+    const controller = startZenChillAmbient(0.16);
+    if (controller) {
+      controller.setMuted(isAmbientMuted);
+    }
+
+    const unlockOnInteract = () => {
+      const ctrl = startZenChillAmbient(0.16);
+      if (ctrl) ctrl.setMuted(isAmbientMuted);
+    };
+    window.addEventListener('pointerdown', unlockOnInteract, { passive: true });
+    window.addEventListener('keydown', unlockOnInteract, { passive: true });
+
+    return () => {
+      window.removeEventListener('pointerdown', unlockOnInteract);
+      window.removeEventListener('keydown', unlockOnInteract);
+    };
+  }, [isAmbientMuted]);
+
+  useEffect(() => {
+    return () => {
+      stopZenChillAmbient();
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 w-screen h-[100dvh] z-[90] bg-[#FAF6E8] text-[#2C1E10] flex flex-col justify-between overflow-hidden select-none">
       {/* Full-Screen Sacred Avalokiteshvara Bodhisattva Silk Painting Backdrop */}
@@ -285,14 +321,15 @@ export default function CauNguyenPage() {
       {/* ========================================================================= */}
       {/* 1. TOP HEADER BAR                                                         */}
       {/* ========================================================================= */}
-      <header className="relative z-30 h-14 px-3.5 sm:px-6 bg-[#FFFDF8]/85 backdrop-blur-md border-b border-[#EAD7A7]/80 flex items-center justify-between shrink-0">
+      <header className="relative z-30 h-14 px-3.5 sm:px-6 bg-[#FFFDF8]/85 backdrop-blur-md flex items-center justify-between shrink-0">
         <button
           type="button"
           onClick={() => router.push('/thuc-hanh')}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] active:scale-95 transition-all cursor-pointer shrink-0 whitespace-nowrap"
+          className="w-9 h-9 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#2C1E10] flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0"
+          aria-label="Quay lại"
+          title="Quay lại"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Quay lại</span>
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
         <div className="text-center min-w-0 px-2">
@@ -304,22 +341,41 @@ export default function CauNguyenPage() {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            playBellSound(0.3);
-            setIsHistoryPageOpen(true);
-          }}
-          className="relative w-10 h-10 rounded-xl bg-[#FFF6DF] hover:bg-[#FCECC2] text-[#7A5000] border border-[#E5C67E] flex items-center justify-center active:scale-95 transition-all shadow-2xs cursor-pointer shrink-0"
-          title="Quản lý lời cầu an của bạn"
-        >
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => {
+              const nextMuted = !isAmbientMuted;
+              setIsAmbientMuted(nextMuted);
+              if (!nextMuted) {
+                const ctrl = startZenChillAmbient(0.16);
+                ctrl?.setMuted(false);
+              }
+            }}
+            className="w-9 h-9 rounded-full bg-[#FFF6DF]/90 hover:bg-[#FCECC2] text-[#7A5000] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+            aria-label={isAmbientMuted ? 'Bật nhạc thiền thư giãn' : 'Tắt nhạc thiền thư giãn'}
+            title={isAmbientMuted ? 'Bật nhạc thiền thư giãn' : 'Tắt nhạc thiền thư giãn'}
+          >
+            {isAmbientMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              playSoftTabBellSound(0.2);
+              setIsHistoryPageOpen(true);
+            }}
+            className="relative w-9 h-9 rounded-full bg-[#FFF6DF]/90 hover:bg-[#FCECC2] text-[#7A5000] flex items-center justify-center active:scale-95 transition-all cursor-pointer"
+            title="Quản lý lời cầu an của bạn"
+          >
           <PrayingHandsIcon className="w-5 h-5 text-[#7A5000]" />
-          {myPrayers.length > 0 && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#D9A02E] text-[#2C1E10] text-[9.5px] font-bold flex items-center justify-center border border-white">
-              {myPrayers.length}
-            </span>
-          )}
-        </button>
+            {myPrayers.length > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#D9A02E] text-[#2C1E10] text-[9.5px] font-bold flex items-center justify-center border border-white">
+                {myPrayers.length}
+              </span>
+            )}
+          </button>
+        </div>
       </header>
 
       {/* ========================================================================= */}
@@ -338,10 +394,10 @@ export default function CauNguyenPage() {
         <button
           type="button"
           onClick={() => {
-            playBellSound(0.2);
+            playSoftTabBellSound(0.2);
             setIsInfoPageOpen(true);
           }}
-          className="w-10 h-10 rounded-full bg-[#FFFDF8]/95 border border-[#EAD7A7] flex items-center justify-center text-[#8C5500] hover:bg-[#FFF6DF] active:scale-95 transition-all shadow-md cursor-pointer"
+          className="w-10 h-10 rounded-full bg-[#FFFDF8]/95 flex items-center justify-center text-[#8C5500] hover:bg-[#FFF6DF] active:scale-95 transition-all shadow-md cursor-pointer"
           title="Thông tin Phòng Cầu An"
         >
           <Info className="w-5 h-5" />
@@ -425,12 +481,15 @@ export default function CauNguyenPage() {
             <button
               key={cat}
               type="button"
-              onClick={() => setSelectedCategory(cat)}
+              onClick={() => {
+                playSoftTabBellSound(0.18);
+                setSelectedCategory(cat);
+              }}
               className={cn(
-                'px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer border',
+                'px-2.5 py-1 rounded-full text-[10px] font-bold whitespace-nowrap shrink-0 transition-all cursor-pointer',
                 selectedCategory === cat
-                  ? 'bg-[#FFE07D] text-[#3D2505] border-[#D9A02E]'
-                  : 'bg-[#FAF7F0] text-[#6B533B] border-[#EAD7A7]'
+                  ? 'bg-[#FFE07D] text-[#3D2505] shadow-xs'
+                  : 'bg-[#FAF7F0] text-[#6B533B] hover:text-[#2C1E10]'
               )}
             >
               {cat}
@@ -494,10 +553,11 @@ export default function CauNguyenPage() {
             <button
               type="button"
               onClick={() => setIsHistoryPageOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] transition-colors shrink-0 cursor-pointer whitespace-nowrap"
+              className="w-9 h-9 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#2C1E10] flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+              aria-label="Quay lại"
+              title="Quay lại"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h3 className="font-serif font-bold text-sm sm:text-base text-[#2C1E10] whitespace-nowrap truncate">
               Quản Lý Cầu An Của Bạn ({myPrayers.length})
@@ -610,10 +670,11 @@ export default function CauNguyenPage() {
             <button
               type="button"
               onClick={() => setIsInfoPageOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] transition-colors shrink-0 cursor-pointer whitespace-nowrap"
+              className="w-9 h-9 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#2C1E10] flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+              aria-label="Quay lại"
+              title="Quay lại"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h3 className="font-serif font-bold text-sm sm:text-base text-[#2C1E10] whitespace-nowrap truncate">
               Giới Thiệu Phòng Cầu An DHARMA

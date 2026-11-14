@@ -31,7 +31,7 @@ import {
   EIGHT_NEW_FEATURES_LIST,
   NewFeatureToolId,
 } from '@/components/dharma/DharmaEightNewFeatures';
-import { playBeadTickSound } from '@/lib/buddhistSounds';
+import { playSoftTabBellSound } from '@/lib/buddhistSounds';
 import { useDharmaPracticeStore, getTodayDateKey, computePracticeStreak } from '@/store/useDharmaPracticeStore';
 import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
@@ -243,7 +243,7 @@ function ThucHanhInner() {
   }, [phapKhiParam]);
 
   const handleSelectSanctuaryTool = (toolId: SanctuaryToolId) => {
-    playBeadTickSound(0.35);
+    playSoftTabBellSound(0.2);
     setActiveSanctuaryTool(toolId);
     const params = new URLSearchParams(searchParams.toString());
     params.set('phap-khi', toolId);
@@ -251,7 +251,7 @@ function ThucHanhInner() {
   };
 
   const handleSelectNewFeature = (toolId: NewFeatureToolId) => {
-    playBeadTickSound(0.35);
+    playSoftTabBellSound(0.2);
     setActiveNewFeatureTool(toolId);
     const params = new URLSearchParams(searchParams.toString());
     params.set('phap-khi', toolId);
@@ -269,7 +269,7 @@ function ThucHanhInner() {
   };
 
   const handleCardPress = (card: PracticeCardItem) => {
-    playBeadTickSound(0.35);
+    playSoftTabBellSound(0.2);
     if (card.actionType === 'route' && card.routeHref) {
       router.push(card.routeHref);
       return;

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import {
   X,
-  ArrowLeft,
+  ChevronLeft,
   BookOpen,
   Heart,
   Sparkles,
@@ -12,7 +12,7 @@ import {
   Share2,
 } from 'lucide-react';
 import { BUDDHAS_DATA, BuddhaItem } from '@/data/buddhasData';
-import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import { playSoftTabBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { recordDharmaMerit } from '@/components/dharma/DharmaInteractiveTools';
 import { LotusMinimalIcon, DharmaWheelIcon, TempleBellIcon } from '@/components/icons/DharmaMinimalIcons';
 import { cn } from '@/lib/utils';
@@ -38,7 +38,7 @@ export function BuddhasGalleryModal({
   if (!isOpen) return null;
 
   const handleSelectBuddha = (buddha: BuddhaItem) => {
-    playBellSound(0.35);
+    playSoftTabBellSound(0.2);
     setSelectedBuddha(buddha);
     setActiveTab('tieu_su');
   };
@@ -88,11 +88,11 @@ export function BuddhasGalleryModal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] active:scale-95 transition-all cursor-pointer shadow-xs"
+                  className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] active:scale-95 transition-all cursor-pointer shrink-0"
                   title="Quay lại"
+                  aria-label="Quay lại"
                 >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Quay lại</span>
+                  <ChevronLeft className="w-5 h-5" />
                 </button>
                 <div>
                   <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#2E1E0F] leading-tight">
@@ -161,11 +161,11 @@ export function BuddhasGalleryModal({
                 <button
                   type="button"
                   onClick={handleBackToGrid}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] active:scale-95 transition-all cursor-pointer shadow-xs shrink-0"
+                  className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] active:scale-95 transition-all cursor-pointer shrink-0"
                   title="Quay lại danh sách Bổn Tôn"
+                  aria-label="Quay lại"
                 >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Quay lại</span>
+                  <ChevronLeft className="w-5 h-5" />
                 </button>
                 <div className="min-w-0">
                   <h3 className="font-heading font-serif text-base sm:text-lg font-bold text-[#8C5500] truncate">
@@ -232,11 +232,11 @@ export function BuddhasGalleryModal({
               </div>
 
               {/* 3 Pillar Tabs Switcher (1. Tiểu Sử, 2. Đại Nguyện, 3. Thần Chú) */}
-              <div className="grid grid-cols-3 gap-1 p-1 rounded-2xl bg-[#FFF4D0] border border-[#ECD9A8]">
+              <div className="grid grid-cols-3 gap-1 p-1 rounded-full bg-[#EFECE5]">
                 {[
-                  { id: 'tieu_su', label: '1. Tiểu Sử', icon: BookOpen },
-                  { id: 'dai_nguyen', label: '2. Đại Nguyện', icon: Heart },
-                  { id: 'than_chu', label: '3. Thần Chú', icon: Sparkles },
+                  { id: 'tieu_su', label: 'Tiểu sử', icon: BookOpen },
+                  { id: 'dai_nguyen', label: 'Đại nguyện', icon: Heart },
+                  { id: 'than_chu', label: 'Thần chú', icon: Sparkles },
                 ].map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeTab === tab.id;
@@ -245,14 +245,14 @@ export function BuddhasGalleryModal({
                       key={tab.id}
                       type="button"
                       onClick={() => {
-                        playBellSound(0.2);
+                        playSoftTabBellSound(0.2);
                         setActiveTab(tab.id as DetailTab);
                       }}
                       className={cn(
-                        'py-2 px-1.5 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer whitespace-nowrap',
+                        'py-2 px-1.5 rounded-full text-xs font-semibold flex items-center justify-center gap-1 transition-all cursor-pointer whitespace-nowrap',
                         isActive
-                          ? 'bg-gradient-to-r from-[#FFE79A] via-[#FAD02C] to-[#E6A917] text-[#3D2505] shadow-xs'
-                          : 'text-[#7D6442] hover:text-[#2E1E0F]'
+                          ? 'bg-white text-[#2C1E10] font-bold shadow-xs'
+                          : 'text-[#6B533B] hover:text-[#2E1E0F]'
                       )}
                     >
                       <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -262,133 +262,117 @@ export function BuddhasGalleryModal({
                 })}
               </div>
 
-              {/* Tab 1: TIỂU SỬ */}
+              {/* Tab 1: TIỂU SỬ (Open borderless canvas layout) */}
               {activeTab === 'tieu_su' && (
-                <div className="rounded-3xl p-5 bg-white border border-[#EEDBBA] shadow-sm space-y-4 animate-fade-in">
-                  <div className="flex items-center gap-2 pb-2 border-b border-[#F2E5C7]">
-                    <div className="w-8 h-8 rounded-xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500]">
-                      <BookOpen className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-heading font-serif text-sm font-bold text-[#8C5500]">
-                        Tiểu Sử &amp; Cội Nguồn Kinh Điển
-                      </h4>
-                      <p className="text-[11px] text-[#7D6442]">Hành trạng hóa độ &amp; xuất xứ chính thống</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 text-xs sm:text-[13px] leading-relaxed text-[#2E1E0F]">
-                    <div className="p-3 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7]">
-                      <span className="font-bold text-[#8C5500] block mb-1">Xuất Xứ &amp; Căn Bản Kinh Điển:</span>
-                      <p className="text-[#5A4329]">{selectedBuddha.tieuSu.origin}</p>
-                    </div>
-
-                    <div className="p-3 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7]">
-                      <span className="font-bold text-[#8C5500] block mb-1">Hành Trạng &amp; Tích Hóa Độ:</span>
-                      <p className="text-[#5A4329]">{selectedBuddha.tieuSu.story}</p>
-                    </div>
-
-                    <div className="p-3 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7]">
-                      <span className="font-bold text-[#8C5500] block mb-1">Ý Nghĩa Biểu Pháp:</span>
-                      <p className="text-[#5A4329]">{selectedBuddha.tieuSu.meaning}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Tab 2: ĐẠI NGUYỆN */}
-              {activeTab === 'dai_nguyen' && (
-                <div className="rounded-3xl p-5 bg-white border border-[#EEDBBA] shadow-sm space-y-4 animate-fade-in">
-                  <div className="flex items-center gap-2 pb-2 border-b border-[#F2E5C7]">
-                    <div className="w-8 h-8 rounded-xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500]">
-                      <Heart className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <h4 className="font-heading font-serif text-sm font-bold text-[#8C5500]">
-                        Bổn Nguyện &amp; Lời Thệ Nguyện
-                      </h4>
-                      <p className="text-[11px] text-[#7D6442]">Đại nguyện cứu độ muôn loài trong pháp giới</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2.5">
-                    <p className="text-xs font-semibold text-[#8C5500] italic">
-                      {selectedBuddha.daiNguyen.summary}
+                <div className="py-2 space-y-5 animate-fade-in">
+                  <div>
+                    <h4 className="text-[15px] font-bold text-[#78531E] mb-1.5">
+                      Xuất Xứ &amp; Căn Bản Kinh Điển
+                    </h4>
+                    <p className="text-[15px] leading-relaxed text-[#2E1E0F]">
+                      {selectedBuddha.tieuSu.origin}
                     </p>
+                  </div>
 
-                    <div className="space-y-2 max-h-80 overflow-y-auto no-scrollbar pr-1">
-                      {selectedBuddha.daiNguyen.vows.map((vow, idx) => (
-                        <div
-                          key={idx}
-                          className="p-3 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7] flex items-start gap-2.5 text-xs text-[#3D2505]"
-                        >
-                          <span className="w-5 h-5 rounded-full bg-[#FFF4D0] text-[#8C5500] font-mono font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-                            {idx + 1}
-                          </span>
-                          <p className="leading-relaxed flex-1">{vow}</p>
-                        </div>
-                      ))}
-                    </div>
+                  <div>
+                    <h4 className="text-[15px] font-bold text-[#78531E] mb-1.5">
+                      Hành Trạng &amp; Tích Hóa Độ
+                    </h4>
+                    <p className="text-[15px] leading-relaxed text-[#2E1E0F]">
+                      {selectedBuddha.tieuSu.story}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-[15px] font-bold text-[#78531E] mb-1.5">
+                      Ý Nghĩa Biểu Pháp
+                    </h4>
+                    <p className="text-[15px] leading-relaxed text-[#2E1E0F]">
+                      {selectedBuddha.tieuSu.meaning}
+                    </p>
                   </div>
                 </div>
               )}
 
-              {/* Tab 3: THẦN CHÚ */}
+              {/* Tab 2: ĐẠI NGUYỆN (Open borderless canvas layout) */}
+              {activeTab === 'dai_nguyen' && (
+                <div className="py-2 space-y-4 animate-fade-in">
+                  <p className="text-[15px] font-medium text-[#78531E] leading-relaxed">
+                    {selectedBuddha.daiNguyen.summary}
+                  </p>
+
+                  <ol className="space-y-3">
+                    {selectedBuddha.daiNguyen.vows.map((vow, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-[15px] text-[#2E1E0F]">
+                        <span className="font-bold text-[#78531E] shrink-0 min-w-[20px]">
+                          {idx + 1}.
+                        </span>
+                        <p className="leading-relaxed flex-1">{vow}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {/* Tab 3: THẦN CHÚ (Open borderless canvas layout) */}
               {activeTab === 'than_chu' && (
-                <div className="rounded-3xl p-5 bg-white border border-[#EEDBBA] shadow-sm space-y-4 animate-fade-in">
-                  <div className="flex items-center justify-between pb-2 border-b border-[#F2E5C7]">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-xl bg-[#FFF4D0] border border-[#ECD9A8] flex items-center justify-center text-[#8C5500]">
-                        <Sparkles className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="font-heading font-serif text-sm font-bold text-[#8C5500]">
-                          {selectedBuddha.thanChu.name}
-                        </h4>
-                        <p className="text-[11px] text-[#7D6442]">Chân ngôn uy lực mầu nhiệm</p>
-                      </div>
+                <div className="py-2 space-y-5 animate-fade-in">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-[15px] font-bold text-[#78531E]">
+                        {selectedBuddha.thanChu.name}
+                      </h4>
+                      <p className="text-xs text-[#6B533B]">Chân ngôn uy lực mầu nhiệm</p>
                     </div>
 
                     <button
                       type="button"
                       onClick={handleCopyMantra}
-                      className="text-[#8C5500] hover:text-[#2E1E0F] p-1.5 rounded-lg border border-[#ECD9A8] bg-[#FFFDF7] text-xs font-medium flex items-center gap-1 active:scale-95 transition-all"
+                      className="text-[#8C5500] hover:text-[#2E1E0F] p-2 rounded-full bg-[#EFECE5] text-xs font-medium flex items-center gap-1 active:scale-95 transition-all"
                       title="Sao chép thần chú"
                     >
                       {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5" />}
                     </button>
                   </div>
 
-                  {/* Sanskrit Mantra Box */}
-                  <div className="p-4 rounded-2xl bg-[#FFFDF5] border border-[#E5C158] text-center space-y-2 shadow-xs">
-                    <span className="text-[10px] uppercase font-mono font-bold text-[#8C5500] tracking-widest block">
+                  {/* Sanskrit Mantra */}
+                  <div className="text-center space-y-1.5 py-2">
+                    <span className="text-[11px] uppercase font-bold text-[#78531E] tracking-widest block">
                       Phạn Văn (Sanskrit Mantra)
                     </span>
-                    <p className="font-heading font-serif text-sm sm:text-base font-bold text-[#8C5500] leading-relaxed select-all">
+                    <p className="font-serif text-base sm:text-lg font-bold text-[#2E1E0F] leading-relaxed select-all">
                       {selectedBuddha.thanChu.sanskrit}
                     </p>
                   </div>
 
-                  {/* Vietnamese Phonetic Box */}
-                  <div className="p-4 rounded-2xl bg-white border border-[#F2E5C7] text-center space-y-2">
-                    <span className="text-[10px] uppercase font-mono font-bold text-[#7D6442] tracking-widest block">
+                  {/* Vietnamese Phonetic */}
+                  <div className="text-center space-y-1.5">
+                    <span className="text-[11px] uppercase font-bold text-[#6B533B] tracking-widest block">
                       Phiên Âm Tụng Đọc
                     </span>
-                    <p className="font-mono text-xs sm:text-sm font-semibold text-[#2E1E0F] leading-relaxed select-all">
+                    <p className="font-mono text-sm font-semibold text-[#2E1E0F] leading-relaxed select-all">
                       {selectedBuddha.thanChu.vietnamese}
                     </p>
                   </div>
 
                   {/* Meaning & Benefits */}
-                  <div className="space-y-2.5 text-xs">
-                    <div className="p-3 rounded-2xl bg-[#FFFDF7] border border-[#F2E5C7]">
-                      <span className="font-bold text-[#8C5500] block mb-1">Ý Nghĩa Chân Ngôn:</span>
-                      <p className="text-[#5A4329] leading-relaxed">{selectedBuddha.thanChu.meaning}</p>
+                  <div className="space-y-4 pt-1">
+                    <div>
+                      <h5 className="text-[15px] font-bold text-[#78531E] mb-1">
+                        Ý Nghĩa Chân Ngôn
+                      </h5>
+                      <p className="text-[15px] text-[#2E1E0F] leading-relaxed">
+                        {selectedBuddha.thanChu.meaning}
+                      </p>
                     </div>
 
-                    <div className="p-3 rounded-2xl bg-gradient-to-r from-[#FFFDF2] to-[#FFF9E6] border border-[#ECD9A8]">
-                      <span className="font-bold text-[#8C5500] block mb-1">Công Đức &amp; Lợi Ích Trì Tụng:</span>
-                      <p className="text-[#5A4329] leading-relaxed">{selectedBuddha.thanChu.benefits}</p>
+                    <div>
+                      <h5 className="text-[15px] font-bold text-[#78531E] mb-1">
+                        Công Đức &amp; Lợi Ích Trì Tụng
+                      </h5>
+                      <p className="text-[15px] text-[#2E1E0F] leading-relaxed">
+                        {selectedBuddha.thanChu.benefits}
+                      </p>
                     </div>
                   </div>
 

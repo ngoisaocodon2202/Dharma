@@ -5,7 +5,7 @@ import { query } from '@/lib/db';
 import { BookItem } from '@/components/books/types';
 import { DirectReaderLauncher } from '@/components/books/DirectReaderLauncher';
 import { DharmaBookIcon } from '@/components/icons/DharmaBookIcon';
-import { ArrowLeft, BookOpen, Layers, User, Calendar } from 'lucide-react';
+import { ChevronLeft, BookOpen, Layers, User, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 interface PageProps {
@@ -34,10 +34,10 @@ export default async function BookDetailPage({ params }: PageProps) {
       <div>
         <Link
           href="/thu-vien"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-charcoal-600 dark:text-charcoal-400 hover:text-saffron-600 transition-colors"
+          aria-label="Quay lại Tủ Kinh Sách"
+          className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] transition-colors"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Quay lại Tủ Kinh Sách</span>
+          <ChevronLeft className="w-5 h-5" />
         </Link>
       </div>
 

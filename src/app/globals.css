@@ -6,8 +6,8 @@
   --bg-app: #FAF7F0;
   --bg-surface: #FFFFFF;
   --bg-surface-soft: #FFF9EB;
-  --border-subtle: #EAD7A7;
-  --border-strong: rgba(198, 139, 25, 0.42);
+  --border-subtle: rgba(44, 30, 16, 0.06);
+  --border-strong: rgba(180, 130, 35, 0.16);
 
   --text-main: #2C1E10;
   --text-muted: #6B533B;
@@ -40,7 +40,7 @@ html.light .bg-\[\#1D1610\],
 html.light .bg-\[\#1E1812\],
 html.light .bg-\[\#1E1812\]\/95 {
   background-color: #FAF7F0 !important;
-  border-color: #EAD7A7 !important;
+  border-color: rgba(44, 30, 16, 0.055) !important;
 }
 
 html.light .bg-\[\#1F1913\],
@@ -50,7 +50,7 @@ html.light .bg-\[\#211B14\],
 html.light .bg-\[\#201811\],
 html.light .bg-\[\#231B13\] {
   background-color: #FFFFFF !important;
-  border-color: #EAD7A7 !important;
+  border-color: rgba(44, 30, 16, 0.055) !important;
 }
 
 html.light .bg-\[\#241E17\],
@@ -64,7 +64,22 @@ html.light .bg-\[\#2A2219\],
 html.light .bg-\[\#2C2318\],
 html.light .bg-\[\#2A1E13\] {
   background-color: #FFF9EB !important;
-  border-color: #EAD7A7 !important;
+  border-color: rgba(44, 30, 16, 0.055) !important;
+}
+
+/* Soften noisy high-contrast border colors globally so cards & UI feel calm and clean */
+.border-\[\#EAD7A7\],
+.border-\[\#DFC27D\],
+.border-\[\#E5C67E\],
+.border-\[\#E2C275\],
+.border-\[\#E6C77E\],
+.border-\[\#F0E2BE\],
+.border-\[\#F2E5C7\],
+.border-\[\#EEDBBA\],
+.border-\[\#ECD9A8\],
+.border-\[\#EAD7A7\]\/80,
+.border-\[\#EAD7A7\]\/85 {
+  border-color: rgba(44, 30, 16, 0.055) !important;
 }
 
 html.light .text-\[\#F7EFE2\],
@@ -98,7 +113,7 @@ html.light .border-white\/15,
 html.light .border-\[\#342A1F\],
 html.light .border-\[\#31271D\],
 html.light .border-\[\#3A2E22\] {
-  border-color: #EAD7A7 !important;
+  border-color: rgba(44, 30, 16, 0.055) !important;
 }
 
 body {

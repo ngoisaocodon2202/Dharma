@@ -18,7 +18,7 @@ import {
   RefreshCw,
   CheckCircle2,
   Clock,
-  ArrowLeft,
+  ChevronLeft,
   Sparkles,
   Copy,
   Check,
@@ -39,7 +39,7 @@ import { ORDERED_CORE_PRACTICE_TOOLS, NEW_DHARMA_PRACTICE_TOOLS } from '@/data/p
 import { BUDDHA_ASSETS } from '@/lib/assets';
 import { getLunarDate } from '@/lib/lunar-calendar';
 import {
-  playBellSound,
+  playSoftTabBellSound,
   playChantingPulse,
   startHealingDrone,
   stopHealingDrone,
@@ -442,7 +442,7 @@ export function DharmaHomeView() {
   const sessionProgressPct = completedSessionCount * 25;
 
   const rotateVerse = () => {
-    playBellSound(0.28);
+    playSoftTabBellSound(0.2);
     const nextIdx = Math.floor(Math.random() * DHAMMAPADA_VERSES.length);
     setCustomVerse(DHAMMAPADA_VERSES[nextIdx]);
   };
@@ -472,7 +472,7 @@ export function DharmaHomeView() {
         <header className="lg:hidden flex items-center justify-between gap-2.5 pt-0.5">
           <Link
             href="/ho-so"
-            className="w-9 h-9 rounded-2xl overflow-hidden border border-[#DFC27D] bg-[#FFFDF8] shrink-0 shadow-xs"
+            className="w-9 h-9 rounded-full overflow-hidden bg-[#FFFDF8] shrink-0 shadow-[0_2px_10px_rgba(44,30,16,0.06)]"
             title={profile.dharmaName || 'Dharma'}
           >
             <img
@@ -495,7 +495,7 @@ export function DharmaHomeView() {
             type="button"
             onClick={() => setIsSearchOpen(true)}
             aria-label="Tìm kiếm"
-            className="w-9 h-9 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] flex items-center justify-center text-[#5C3A08] cursor-pointer active:scale-95 shrink-0 shadow-xs"
+            className="w-9 h-9 rounded-full bg-[#FFFFFF] flex items-center justify-center text-[#5C3A08] cursor-pointer active:scale-95 shrink-0 shadow-[0_2px_10px_rgba(44,30,16,0.05)]"
           >
             <Search className="w-4 h-4" />
           </button>
@@ -506,7 +506,7 @@ export function DharmaHomeView() {
           {/* LEFT COLUMN (7 cols): 7-Day Week Strip + Golden Lunar Card + Dhammapada Verse */}
           <div className="lg:col-span-7 space-y-4">
             {/* 7-Day Week Strip — Compact Square Tiles */}
-            <div className="grid grid-cols-7 gap-1 text-center select-none bg-[#FFFFFF] p-1 rounded-2xl border border-[#EAD7A7] shadow-xs">
+            <div className="grid grid-cols-7 gap-1 text-center select-none bg-[#FFFFFF] p-1 rounded-2xl shadow-[0_2px_12px_rgba(44,30,16,0.04)]">
               {weekDays.map((d, idx) => {
                 const isSelected = idx === selectedDayIdx;
                 const isSunday = idx === 6;
@@ -569,7 +569,7 @@ export function DharmaHomeView() {
             </div>
 
             {/* Warm Golden Lunar Hero Card — Compact Square-Proportioned */}
-            <div className="relative rounded-2xl overflow-hidden border border-[#DFC27D] bg-gradient-to-br from-[#FFF9EB] via-[#FCECC9] to-[#F5DC9C] min-h-[176px] flex flex-col justify-between p-3.5 sm:p-4 shadow-sm">
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#FFF9EB] via-[#FCECC9] to-[#F5DC9C] min-h-[176px] flex flex-col justify-between p-3.5 sm:p-4 shadow-[0_4px_18px_rgba(140,85,0,0.07)]">
               <img
                 src="/images/buddhas/duc-phat-thich-ca.png"
                 alt="Đức Phật Từ Bi"
@@ -617,7 +617,7 @@ export function DharmaHomeView() {
 
               <Link
                 href="/lich-phat-giao"
-                className="relative z-10 mt-2.5 flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-[#FFFFFF]/90 backdrop-blur-md border border-[#DFC27D] hover:border-[#8C5500] transition-colors shadow-2xs"
+                className="relative z-10 mt-2.5 flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-[#FFFFFF]/90 backdrop-blur-md hover:bg-[#FFFFFF] transition-colors shadow-[0_2px_10px_rgba(44,30,16,0.05)]"
               >
                 <div className="flex items-center gap-1.5 min-w-0">
                   <span className="text-xs leading-none shrink-0">🪷</span>
@@ -637,7 +637,7 @@ export function DharmaHomeView() {
             </div>
 
             {/* Kệ Pháp Cú Hôm Nay */}
-            <div className="p-4 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] relative flex flex-col items-center text-center space-y-2.5 shadow-xs">
+            <div className="p-4 rounded-2xl bg-[#FFFFFF] relative flex flex-col items-center text-center space-y-2.5 shadow-[0_2px_12px_rgba(44,30,16,0.035)]">
               <LotusMinimalIcon className="w-24 h-24 text-[#C68B19]/10 absolute inset-0 m-auto pointer-events-none" />
               <span className="relative z-10 text-[10px] font-bold uppercase tracking-widest text-[#8C5500]">
                 Lời Phật Dạy Hôm Nay • {activeVerse.chapter} ({activeVerse.verseNumber})
@@ -650,7 +650,7 @@ export function DharmaHomeView() {
                 <button
                   type="button"
                   onClick={rotateVerse}
-                  className="px-3 py-1.5 rounded-xl bg-[#FFF9EB] hover:bg-[#FCECC9] border border-[#DFC27D] text-[11px] font-bold text-[#8C5500] inline-flex items-center gap-1.5 cursor-pointer active:scale-95 transition-all whitespace-nowrap"
+                  className="px-3 py-1.5 rounded-xl bg-[#FFF6DF] hover:bg-[#FCECC9] text-[11px] font-bold text-[#8C5500] inline-flex items-center gap-1.5 cursor-pointer active:scale-95 transition-all whitespace-nowrap"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Gieo Kệ Pháp Cú</span>
@@ -659,14 +659,14 @@ export function DharmaHomeView() {
                 <button
                   type="button"
                   onClick={() => {
-                    playBellSound(0.22);
+                    playSoftTabBellSound(0.2);
                     toggleVerseBookmark(activeVerse.id);
                   }}
                   className={cn(
-                    'px-3 py-1.5 rounded-xl border text-[11px] font-bold inline-flex items-center gap-1.5 cursor-pointer active:scale-95 transition-all whitespace-nowrap',
+                    'px-3 py-1.5 rounded-xl text-[11px] font-bold inline-flex items-center gap-1.5 cursor-pointer active:scale-95 transition-all whitespace-nowrap',
                     isVerseSaved
-                      ? 'bg-[#8C5500] text-white border-[#8C5500]'
-                      : 'bg-[#FFFFFF] hover:bg-[#FFF9EB] text-[#5C3A08] border-[#EAD7A7]'
+                      ? 'bg-[#8C5500] text-white'
+                      : 'bg-[#F5F1E8] hover:bg-[#EFE7D5] text-[#5C3A08]'
                   )}
                 >
                   {isVerseSaved ? (
@@ -681,14 +681,14 @@ export function DharmaHomeView() {
           </div>
 
           {/* RIGHT COLUMN (5 cols): PHƯƠNG TIỆN TU TẬP */}
-          <section className="lg:col-span-5 rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] p-4 space-y-3.5 shadow-xs">
+          <section className="lg:col-span-5 rounded-3xl bg-[#FFFFFF] p-4 space-y-3.5 shadow-[0_2px_14px_rgba(44,30,16,0.035)]">
             <div className="flex items-center justify-between gap-2">
               <h2 className="text-base sm:text-lg font-bold text-[#2C1E10] truncate">
                 Phương Tiện Tu Tập
               </h2>
               <Link
                 href="/thuc-hanh"
-                className="px-3 py-1.5 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-[11px] font-bold text-[#8C5500] whitespace-nowrap shrink-0"
+                className="px-3 py-1.5 rounded-xl bg-[#FFF6DF] text-[11px] font-bold text-[#8C5500] whitespace-nowrap shrink-0"
               >
                 Xem tất cả →
               </Link>
@@ -700,7 +700,7 @@ export function DharmaHomeView() {
                 <Link
                   key={tool.id}
                   href={tool.href}
-                  className="group relative aspect-[1.28/1] rounded-2xl overflow-hidden border border-[#DFC27D] bg-[#2C1E10] shadow-xs hover:shadow-md transition-all"
+                  className="group relative aspect-[1.28/1] rounded-2xl overflow-hidden bg-[#2C1E10] shadow-xs hover:shadow-md transition-all"
                 >
                   <img
                     src={tool.image}
@@ -721,7 +721,7 @@ export function DharmaHomeView() {
         </div>
 
         {/* 3. PHÁP MÔN ỨNG DỤNG & CHÁNH NIỆM */}
-        <section className="rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] p-4 sm:p-5 space-y-3.5 shadow-xs">
+        <section className="rounded-3xl bg-[#FFFFFF] p-4 sm:p-5 space-y-3.5 shadow-[0_2px_14px_rgba(44,30,16,0.035)]">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-base sm:text-lg font-bold text-[#2C1E10] truncate">
               Pháp Môn Ứng Dụng &amp; Chánh Niệm
@@ -739,9 +739,9 @@ export function DharmaHomeView() {
               <Link
                 key={tool.id}
                 href={tool.href}
-                className="group flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FFF9EB] hover:bg-[#FCECC9]/70 border border-[#EAD7A7] hover:border-[#C68B19] transition-all min-w-0"
+                className="group flex items-center gap-2.5 p-2.5 rounded-2xl bg-[#FAF7F0] hover:bg-[#FFF5DC] transition-all min-w-0"
               >
-                <div className="w-12 h-12 rounded-xl overflow-hidden border border-[#DFC27D] shrink-0 bg-[#2C1E10]">
+                <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-[#2C1E10]">
                   <img
                     src={tool.image}
                     alt={tool.title}
@@ -770,7 +770,7 @@ export function DharmaHomeView() {
               {/* Đàn Dược Sư Cầu An */}
               <Link
                 href="/cau-nguyen"
-                className="group relative rounded-2xl overflow-hidden aspect-[4/4.2] border border-[#DFC27D] shadow-sm bg-[#2C1E10]"
+                className="group relative rounded-2xl overflow-hidden aspect-[4/4.2] shadow-[0_3px_14px_rgba(44,30,16,0.08)] bg-[#2C1E10]"
               >
                 <img
                   src="/images/dharma/tools/09-cau-an.jpg"
@@ -793,7 +793,7 @@ export function DharmaHomeView() {
               {/* Đàn Địa Tạng Cầu Siêu */}
               <Link
                 href="/cau-sieu"
-                className="group relative rounded-2xl overflow-hidden aspect-[4/4.2] border border-[#DFC27D] shadow-sm bg-[#2C1E10]"
+                className="group relative rounded-2xl overflow-hidden aspect-[4/4.2] shadow-[0_3px_14px_rgba(44,30,16,0.08)] bg-[#2C1E10]"
               >
                 <img
                   src="/images/dharma/tools/03-cau-sieu.jpg"
@@ -823,7 +823,7 @@ export function DharmaHomeView() {
 
             <Link
               href="/di-chua-online"
-              className="group relative flex-1 min-h-[195px] rounded-2xl overflow-hidden border border-[#DFC27D] shadow-sm flex flex-col justify-end p-4 bg-[#2C1E10]"
+              className="group relative flex-1 min-h-[195px] rounded-2xl overflow-hidden shadow-[0_3px_14px_rgba(44,30,16,0.08)] flex flex-col justify-end p-4 bg-[#2C1E10]"
             >
               <img
                 src="/images/dharma/tools/02-di-chua.jpg"
@@ -852,7 +852,7 @@ export function DharmaHomeView() {
         </div>
 
         {/* 5. THỜI KHÓA TỨ THỜI CÔNG PHU HẰNG NGÀY */}
-        <section className="rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] p-4 sm:p-5 space-y-3.5 shadow-xs">
+        <section className="rounded-3xl bg-[#FFFFFF] p-4 sm:p-5 space-y-3.5 shadow-[0_2px_14px_rgba(44,30,16,0.035)]">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="min-w-0">
               <h2 className="text-base sm:text-lg font-bold text-[#2C1E10] truncate">
@@ -861,7 +861,7 @@ export function DharmaHomeView() {
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              <span className="px-3 py-1 rounded-full bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] whitespace-nowrap">
+              <span className="px-3 py-1 rounded-full bg-[#FFF6DF] text-xs font-bold text-[#8C5500] whitespace-nowrap">
                 {completedSessionCount}/4 Thời ({sessionProgressPct}%)
               </span>
               <Link
@@ -873,7 +873,7 @@ export function DharmaHomeView() {
             </div>
           </div>
 
-          <div className="h-2 w-full rounded-full bg-[#FAF3E3] overflow-hidden border border-[#EAD7A7]">
+          <div className="h-2 w-full rounded-full bg-[#F5F1E8] overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-[#8C5500] via-[#C68B19] to-[#E5A93B] transition-all duration-500"
               style={{ width: `${sessionProgressPct}%` }}
@@ -888,14 +888,14 @@ export function DharmaHomeView() {
                   key={sess.key}
                   type="button"
                   onClick={() => {
-                    playBellSound(0.32);
+                    playSoftTabBellSound(0.2);
                     toggleTimePeriod(sess.key);
                   }}
                   className={cn(
-                    'text-left p-3 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-1.5 active:scale-[0.99] min-w-0',
+                    'text-left p-3 rounded-2xl transition-all cursor-pointer flex flex-col justify-between gap-1.5 active:scale-[0.99] min-w-0',
                     isDone
-                      ? 'bg-[#FFF9EB] border-[#C68B19] shadow-xs'
-                      : 'bg-[#FFFFFF] border-[#EAD7A7] hover:border-[#C68B19]'
+                      ? 'bg-[#FFF5DC] shadow-[0_2px_10px_rgba(140,85,0,0.08)]'
+                      : 'bg-[#FAF7F0] hover:bg-[#FFF5DC]/60'
                   )}
                 >
                   <div className="flex items-center justify-between gap-1.5">
@@ -937,7 +937,7 @@ export function DharmaHomeView() {
 
             <Link
               href="/thu-vien-bon-ton"
-              className="px-3 py-1.5 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] whitespace-nowrap shrink-0"
+              className="px-3 py-1.5 rounded-xl bg-[#FFF6DF] text-xs font-bold text-[#8C5500] whitespace-nowrap shrink-0"
             >
               Trọn bộ 18 Vị →
             </Link>
@@ -949,10 +949,10 @@ export function DharmaHomeView() {
                 key={bt.slug}
                 type="button"
                 onClick={() => {
-                  playBellSound(0.28);
+                  playSoftTabBellSound(0.2);
                   setSelectedBonTon(bt);
                 }}
-                className="group rounded-2xl overflow-hidden bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] flex flex-col shadow-xs transition-all cursor-pointer text-left"
+                className="group rounded-2xl overflow-hidden bg-[#FFFFFF] flex flex-col shadow-[0_2px_12px_rgba(44,30,16,0.04)] hover:shadow-[0_4px_16px_rgba(140,85,0,0.1)] transition-all cursor-pointer text-left"
               >
                 <div className="aspect-square bg-[#FFF9EB] overflow-hidden relative">
                   <img
@@ -960,7 +960,7 @@ export function DharmaHomeView() {
                     alt={bt.name}
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-[#FFFFFF]/90 text-[#8C5500] border border-[#DFC27D] text-[10px] font-bold">
+                  <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-[#FFFFFF]/90 text-[#8C5500] text-[10px] font-bold">
                     Đại Nguyện
                   </span>
                 </div>
@@ -976,7 +976,7 @@ export function DharmaHomeView() {
 
         {/* 7. VĂN KHẤN CỔ TRUYỀN & THIỀN ÂM */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-          <section className="lg:col-span-6 rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] p-4 space-y-3 shadow-xs">
+          <section className="lg:col-span-6 rounded-3xl bg-[#FFFFFF] p-4 space-y-3 shadow-[0_2px_14px_rgba(44,30,16,0.035)]">
             <div className="flex items-center justify-between gap-2">
               <div className="min-w-0">
                 <h2 className="text-base font-bold text-[#2C1E10] truncate">
@@ -986,10 +986,11 @@ export function DharmaHomeView() {
               <button
                 type="button"
                 onClick={() => {
+                  playSoftTabBellSound(0.2);
                   setIsBaiKhanAutoScrolling(true);
                   setActiveBaiKhan(BAI_KHAN_DATA[0]);
                 }}
-                className="px-3 py-1 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap"
+                className="px-3 py-1 rounded-xl bg-[#FFF6DF] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap"
               >
                 Xem tất cả →
               </button>
@@ -1001,10 +1002,11 @@ export function DharmaHomeView() {
                   key={bk.id}
                   type="button"
                   onClick={() => {
+                    playSoftTabBellSound(0.2);
                     setIsBaiKhanAutoScrolling(true);
                     setActiveBaiKhan(bk);
                   }}
-                  className="text-left p-3 rounded-2xl bg-[#FFF9EB] hover:bg-[#FCECC9]/70 border border-[#EAD7A7] space-y-1 cursor-pointer transition-all min-w-0"
+                  className="text-left p-3 rounded-2xl bg-[#FAF7F0] hover:bg-[#FFF5DC] space-y-1 cursor-pointer transition-all min-w-0"
                 >
                   <span className="text-[10px] font-bold uppercase tracking-wider text-[#8C5500] block truncate">
                     {bk.eyebrow}
@@ -1016,9 +1018,9 @@ export function DharmaHomeView() {
             </div>
           </section>
 
-          <section className="lg:col-span-6 rounded-3xl bg-gradient-to-br from-[#FFF9EB] via-[#FCECC9] to-[#F4D99B] border border-[#DFC27D] p-4 sm:p-5 flex flex-col justify-between gap-3 shadow-xs">
+          <section className="lg:col-span-6 rounded-3xl bg-gradient-to-br from-[#FFF9EB] via-[#FCECC9] to-[#F4D99B] p-4 sm:p-5 flex flex-col justify-between gap-3 shadow-[0_3px_14px_rgba(140,85,0,0.06)]">
             <div className="space-y-1.5">
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFFFFF]/80 border border-[#DFC27D] text-[10px] font-bold uppercase tracking-wider text-[#8C5500]">
+              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFFFFF]/80 text-[10px] font-bold uppercase tracking-wider text-[#8C5500]">
                 THIỀN ÂM TẦN SỐ 432HZ • 528HZ
               </span>
               <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2C1E10] truncate">
@@ -1029,9 +1031,9 @@ export function DharmaHomeView() {
               </p>
             </div>
 
-            <div className="p-3 rounded-2xl bg-[#FFFFFF]/90 border border-[#DFC27D] flex items-center justify-between gap-3">
+            <div className="p-3 rounded-2xl bg-[#FFFFFF]/90 flex items-center justify-between gap-3 shadow-2xs">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#FFF6DF] flex items-center justify-center shrink-0">
                   <Volume2 className="w-5 h-5 text-[#8C5500]" />
                 </div>
                 <div className="min-w-0">
@@ -1077,7 +1079,7 @@ export function DharmaHomeView() {
               <Link
                 key={`${grp.year}-${grp.month}`}
                 href="/lich-phat-giao"
-                className="rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] p-3.5 space-y-2.5 transition-colors shadow-xs"
+                className="rounded-2xl bg-[#FFFFFF] p-3.5 space-y-2.5 transition-all shadow-[0_2px_12px_rgba(44,30,16,0.035)] hover:shadow-[0_4px_16px_rgba(140,85,0,0.08)]"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-sm text-[#8C5500]">Tháng {grp.month}</span>
@@ -1092,7 +1094,7 @@ export function DharmaHomeView() {
                       <img
                         src={ev.image}
                         alt={ev.title}
-                        className="w-10 h-10 rounded-xl object-cover border border-[#EAD7A7] shrink-0"
+                        className="w-10 h-10 rounded-xl object-cover shrink-0"
                       />
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-bold text-[#2C1E10] truncate">{ev.title}</p>
@@ -1130,7 +1132,7 @@ export function DharmaHomeView() {
               <Link
                 key={p.slug}
                 href={`/chua-dia-danh/${p.slug}`}
-                className="group rounded-2xl overflow-hidden bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] transition-all shadow-xs"
+                className="group rounded-2xl overflow-hidden bg-[#FFFFFF] transition-all shadow-[0_2px_12px_rgba(44,30,16,0.04)] hover:shadow-[0_4px_16px_rgba(140,85,0,0.09)]"
               >
                 <div className="aspect-[16/10] bg-[#FFF9EB] overflow-hidden">
                   <img
@@ -1164,7 +1166,7 @@ export function DharmaHomeView() {
                 key={wp.id}
                 type="button"
                 onClick={() => setActiveWallpaper(wp)}
-                className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#DFC27D] bg-[#FFFFFF] cursor-pointer shadow-xs"
+                className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#FFFFFF] cursor-pointer shadow-[0_2px_12px_rgba(44,30,16,0.04)]"
               >
                 <img
                   src={wp.image}
@@ -1203,9 +1205,9 @@ export function DharmaHomeView() {
               <Link
                 key={art.slug}
                 href={`/bai-viet/${art.slug}`}
-                className="group flex items-center gap-3 p-2.5 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] transition-all shadow-xs min-w-0"
+                className="group flex items-center gap-3 p-2.5 rounded-2xl bg-[#FFFFFF] transition-all shadow-[0_2px_12px_rgba(44,30,16,0.035)] hover:shadow-[0_4px_16px_rgba(140,85,0,0.08)] min-w-0"
               >
-                <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#FFF9EB] border border-[#DFC27D] shrink-0">
+                <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#FFF9EB] shrink-0">
                   <img
                     src={art.image}
                     alt={art.title}
@@ -1230,18 +1232,18 @@ export function DharmaHomeView() {
       </div>
 
       {/* ===================================================================== */}
-      {/* FULL-SCREEN SUB-PAGE 1: CHI TIẾT BỔN TÔN (100% FULL SCREEN + QUAY LẠI) */}
+      {/* FULL-SCREEN SUB-PAGE 1: CHI TIẾT BỔN TÔN (100% FULL SCREEN + < + MỞ TRÀN) */}
       {/* ===================================================================== */}
       {selectedBonTon && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setSelectedBonTon(null)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
               {selectedBonTon.name}
@@ -1249,46 +1251,46 @@ export function DharmaHomeView() {
             <Link
               href={`/thu-vien-bon-ton?id=${encodeURIComponent(selectedBonTon.libraryId)}`}
               onClick={() => setSelectedBonTon(null)}
-              className="px-3 py-2 rounded-xl bg-[#8C5500] text-white text-xs font-bold whitespace-nowrap"
+              className="px-3 py-2 rounded-full bg-[#8C5500] text-white text-xs font-bold whitespace-nowrap"
             >
               Tiểu sử đầy đủ
             </Link>
           </header>
 
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 max-w-3xl mx-auto w-full space-y-5">
-            <div className="rounded-3xl overflow-hidden bg-[#FFF9EB] border border-[#DFC27D] p-4 flex flex-col sm:flex-row items-center gap-5 shadow-xs">
+          <div className="flex-1 overflow-y-auto px-5 py-4 max-w-2xl mx-auto w-full space-y-6">
+            <div className="flex flex-col sm:flex-row items-center gap-5">
               <img
                 src={selectedBonTon.image}
                 alt={selectedBonTon.name}
-                className="w-40 h-40 sm:w-48 sm:h-48 rounded-2xl object-cover border border-[#DFC27D] shrink-0"
+                className="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl object-cover shadow-[0_8px_28px_rgba(44,30,16,0.1)] shrink-0"
               />
-              <div className="space-y-2 text-center sm:text-left min-w-0">
-                <span className="inline-block px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#DFC27D] text-[11px] font-bold text-[#8C5500]">
+              <div className="space-y-1.5 text-center sm:text-left min-w-0">
+                <span className="inline-block text-xs font-bold text-[#78531E]">
                   {selectedBonTon.feastDay}
                 </span>
                 <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#2C1E10]">
                   {selectedBonTon.name}
                 </h3>
-                <p className="text-xs sm:text-sm font-semibold text-[#6B533B]">
+                <p className="text-xs sm:text-sm font-medium text-[#6B533B]">
                   {selectedBonTon.fullTitle}
                 </p>
               </div>
             </div>
 
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] space-y-2 shadow-xs">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#8C5500]">
+            <div className="space-y-1.5">
+              <h4 className="text-[15px] font-bold text-[#78531E]">
                 Tâm Chú &amp; Hồng Danh Trì Niệm
-              </span>
-              <p className="font-serif italic text-base sm:text-lg font-semibold text-[#2C1E10] leading-relaxed">
+              </h4>
+              <p className="font-serif italic text-base sm:text-lg font-medium text-[#2C1E10] leading-relaxed">
                 {selectedBonTon.mantra}
               </p>
             </div>
 
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#FFFFFF] border border-[#EAD7A7] space-y-3 shadow-xs">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#8C5500]">
+            <div className="space-y-2">
+              <h4 className="text-[15px] font-bold text-[#78531E]">
                 Mười Phương Đại Nguyện Cốt Tủy
               </h4>
-              <ul className="space-y-2.5 text-sm text-[#2C1E10] list-disc pl-5">
+              <ul className="space-y-2.5 text-[15px] text-[#2C1E10] list-disc pl-5">
                 {selectedBonTon.vowsSummary.map((v, idx) => (
                   <li key={idx} className="leading-relaxed">
                     {v}
@@ -1298,20 +1300,21 @@ export function DharmaHomeView() {
             </div>
           </div>
 
-          <footer className="px-4 py-3 bg-[#FFFDF8] border-t border-[#EAD7A7] flex items-center justify-between gap-3 max-w-3xl mx-auto w-full shrink-0">
+          <footer className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 max-w-2xl mx-auto w-full shrink-0">
             <button
               type="button"
               onClick={() => setSelectedBonTon(null)}
-              className="px-4 py-2.5 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#5C3A08] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-10 h-10 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              ← Quay lại trang chủ
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <Link
               href={`/thuc-hanh?phap-khi=trang-hat&bon-ton=${encodeURIComponent(
                 selectedBonTon.slug
               )}`}
               onClick={() => setSelectedBonTon(null)}
-              className="px-5 py-2.5 rounded-xl bg-[#8C5500] hover:bg-[#6E4200] text-white text-xs font-bold shadow-sm"
+              className="px-5 py-2.5 rounded-full bg-[#8C5500] hover:bg-[#6E4200] text-white text-xs font-bold shadow-sm"
             >
               Lần chuỗi niệm 108 biến 📿
             </Link>
@@ -1324,14 +1327,14 @@ export function DharmaHomeView() {
       {/* ===================================================================== */}
       {activeBaiKhan && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex flex-wrap items-center justify-between gap-2 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex flex-wrap items-center justify-between gap-2 shrink-0">
             <button
               type="button"
               onClick={() => setActiveBaiKhan(null)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-1.5">
@@ -1455,14 +1458,14 @@ export function DharmaHomeView() {
       {/* ===================================================================== */}
       {activeWallpaper && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setActiveWallpaper(null)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
               {activeWallpaper.title}
@@ -1498,14 +1501,14 @@ export function DharmaHomeView() {
       {/* ===================================================================== */}
       {isAboutOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between shrink-0">
             <button
               type="button"
               onClick={() => setIsAboutOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm font-bold text-[#2C1E10]">Về Đạo Tràng Số DHARMA</h2>
             <div className="w-20" />

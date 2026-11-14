@@ -24,7 +24,7 @@ import {
   type NgheKinhVideoItem,
 } from '@/data/ngheKinhVideos';
 import { SUTRAS_DATA } from '@/data/sutras';
-import { playBellSound, playWoodenFishSound } from '@/lib/buddhistSounds';
+import { playBellSound, playSoftTabBellSound } from '@/lib/buddhistSounds';
 import { useDharmaPracticeStore } from '@/store/useDharmaPracticeStore';
 import { cn } from '@/lib/utils';
 
@@ -84,7 +84,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
     const exists = favoriteIds.includes(id);
     const next = exists ? favoriteIds.filter((item) => item !== id) : [...favoriteIds, id];
     persistList(FAVORITES_STORAGE_KEY, next, setFavoriteIds);
-    playWoodenFishSound(0.25);
+    playSoftTabBellSound(0.18);
     if (title) {
       showToast(exists ? `Đã bỏ yêu thích "${title}"` : `Đã lưu "${title}" vào danh sách yêu thích`);
     }
@@ -138,7 +138,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
   }, [activeVideo.sutraSlug]);
 
   const selectAndPlayVideo = (video: NgheKinhVideoItem, scrollToStage = false) => {
-    playWoodenFishSound(0.28);
+    playSoftTabBellSound(0.2);
     setActiveVideo(video);
     setHasStartedPlayer(true);
     setShouldAutoplay(true);
@@ -363,6 +363,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
                 key={tab.id}
                 type="button"
                 onClick={() => {
+                  playSoftTabBellSound(0.18);
                   setLibraryFilter(tab.id);
                   setVisibleCount(PAGE_SIZE);
                 }}
@@ -417,6 +418,7 @@ export function Tool05NgheKinh({ showToast }: Tool05NgheKinhProps) {
                 key={cat}
                 type="button"
                 onClick={() => {
+                  playSoftTabBellSound(0.18);
                   setSelectedCategory(cat);
                   setVisibleCount(PAGE_SIZE);
                 }}

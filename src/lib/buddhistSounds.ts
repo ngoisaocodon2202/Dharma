@@ -666,6 +666,274 @@ export function playBambooShakeSound(volume = 0.3) {
 export function cleanupAllBuddhistAudio() {
   stopMeditativeDrone();
   stopHealingDrone();
+  stopZenChillAmbient();
+}
+
+/**
+ * Play a gentle, softly reverberant temple bell chime for tab/section transitions
+ */
+export function playSoftTabBellSound(volume = 0.2) {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
+
+    const now = ctx.currentTime;
+    const master = ctx.createGain();
+    master.gain.setValueAtTime(Math.max(0.01, volume), now);
+    master.connect(ctx.destination);
+
+    // Subtle warm delay feedback network for natural soft reverb tail ("độ vang nhẹ")
+    const dryBus = ctx.createGain();
+    dryBus.gain.setValueAtTime(0.8, now);
+    dryBus.connect(master);
+
+    const delay = ctx.createDelay(0.5);
+    delay.delayTime.setValueAtTime(0.11, now);
+
+    const dampFilter = ctx.createBiquadFilter();
+    dampFilter.type = 'lowpass';
+    dampFilter.frequency.setValueAtTime(1450, now);
+
+    const feedback = ctx.createGain();
+    feedback.gain.setValueAtTime(0.28, now);
+
+    const wetBus = ctx.createGain();
+    wetBus.gain.setValueAtTime(0.28, now);
+
+    delay.connect(dampFilter);
+    dampFilter.connect(feedback);
+    feedback.connect(delay);
+    dampFilter.connect(wetBus);
+    wetBus.connect(master);
+
+    const softPartials = [
+      { freq: 432, gain: 0.65, decay: 1.55 },
+      { freq: 216, gain: 0.22, decay: 1.3 },
+      { freq: 648, gain: 0.16, decay: 1.15 },
+      { freq: 864, gain: 0.12, decay: 0.95 },
+    ];
+
+    softPartials.forEach(({ freq, gain, decay }) => {
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+
+      gainNode.gain.setValueAtTime(0.0001, now);
+      gainNode.gain.linearRampToValueAtTime(gain, now + 0.022);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+      osc.connect(gainNode);
+      gainNode.connect(dryBus);
+      gainNode.connect(delay);
+
+      osc.start(now);
+      osc.stop(now + decay + 0.05);
+    });
+
+    setTimeout(() => {
+      try {
+        delay.disconnect();
+        dampFilter.disconnect();
+        feedback.disconnect();
+        wetBus.disconnect();
+        dryBus.disconnect();
+        master.disconnect();
+      } catch {}
+    }, 2600);
+  } catch {
+    // Ignore audio errors quietly
+  }
+}
+
+let activeZenChillController: { stop: () => void; setMuted: (muted: boolean) => void } | null = null;
+
+/**
+ * Start a continuous, wordless relaxing Zen chill ambient instrumental soundscape
+ * for Cầu An & Cầu Siêu sanctuaries (warm soft chord pads + gentle water-drop chimes).
+ */
+export function startZenChillAmbient(volume = 0.16) {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return null;
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
+    }
+
+    if (activeZenChillController) {
+      return activeZenChillController;
+    }
+
+    const now = ctx.currentTime;
+    const master = ctx.createGain();
+    master.gain.setValueAtTime(0.0001, now);
+    master.gain.linearRampToValueAtTime(Math.max(0.01, volume), now + 2.0);
+    master.connect(ctx.destination);
+
+    // Warm global lowpass filter so every overtone feels silky and non-fatiguing
+    const warmFilter = ctx.createBiquadFilter();
+    warmFilter.type = 'lowpass';
+    warmFilter.frequency.setValueAtTime(920, now);
+    warmFilter.Q.setValueAtTime(0.55, now);
+    warmFilter.connect(master);
+
+    // Echo bus for sparse dreamy chill chime notes
+    const echoDelay = ctx.createDelay(1.0);
+    echoDelay.delayTime.setValueAtTime(0.42, now);
+    const echoFeedback = ctx.createGain();
+    echoFeedback.gain.setValueAtTime(0.32, now);
+    const echoDamp = ctx.createBiquadFilter();
+    echoDamp.type = 'lowpass';
+    echoDamp.frequency.setValueAtTime(1150, now);
+    const echoWet = ctx.createGain();
+    echoWet.gain.setValueAtTime(0.4, now);
+
+    echoDelay.connect(echoDamp);
+    echoDamp.connect(echoFeedback);
+    echoFeedback.connect(echoDelay);
+    echoDamp.connect(echoWet);
+    echoWet.connect(warmFilter);
+
+    // Subtle soft breeze noise layer
+    const noiseLen = Math.floor(ctx.sampleRate * 4);
+    const noiseBuf = ctx.createBuffer(1, noiseLen, ctx.sampleRate);
+    const noiseData = noiseBuf.getChannelData(0);
+    let pink = 0;
+    for (let i = 0; i < noiseLen; i++) {
+      const white = Math.random() * 2 - 1;
+      pink = (pink + 0.04 * white) / 1.04;
+      noiseData[i] = pink;
+    }
+    const noiseSrc = ctx.createBufferSource();
+    noiseSrc.buffer = noiseBuf;
+    noiseSrc.loop = true;
+    const noiseFilter = ctx.createBiquadFilter();
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(480, now);
+    noiseFilter.Q.setValueAtTime(0.7, now);
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.055, now);
+    noiseSrc.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(warmFilter);
+    noiseSrc.start(now);
+
+    // Warm drifting pad voices cycling peacefully every 7.5 seconds
+    const chords: number[][] = [
+      [174.61, 220.0, 261.63, 329.63], // Fmaj7
+      [146.83, 220.0, 261.63, 329.63], // Dm9
+      [130.81, 196.0, 246.94, 293.66], // Cmaj9
+      [110.0, 196.0, 246.94, 329.63],  // Am9
+    ];
+
+    const padOscs: OscillatorNode[] = chords[0].map((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = idx === 0 ? 'sine' : idx % 2 === 0 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.detune.setValueAtTime(idx === 1 ? -4 : idx === 2 ? 4 : 0, now);
+      g.gain.setValueAtTime(idx === 0 ? 0.34 : 0.16, now);
+      osc.connect(g);
+      g.connect(warmFilter);
+      osc.start(now);
+      return osc;
+    });
+
+    let chordIdx = 0;
+    const chordTimer = window.setInterval(() => {
+      if (!activeZenChillController || ctx.state === 'closed') return;
+      chordIdx = (chordIdx + 1) % chords.length;
+      const target = chords[chordIdx];
+      const t = ctx.currentTime;
+      padOscs.forEach((osc, i) => {
+        osc.frequency.setTargetAtTime(target[i], t, 1.35);
+      });
+    }, 7500);
+
+    // Soft pentatonic chill bell-drop motif every ~3.4s
+    const chillNotes = [293.66, 329.63, 392.0, 440.0, 523.25, 587.33];
+    let noteStep = 0;
+    const chimeTimer = window.setInterval(() => {
+      if (!activeZenChillController || ctx.state !== 'running') return;
+      const t = ctx.currentTime;
+      const freq = chillNotes[(noteStep * 2 + (noteStep % 3)) % chillNotes.length];
+      noteStep += 1;
+
+      const noteOsc = ctx.createOscillator();
+      const noteGain = ctx.createGain();
+      noteOsc.type = 'sine';
+      noteOsc.frequency.setValueAtTime(freq, t);
+
+      noteGain.gain.setValueAtTime(0.0001, t);
+      noteGain.gain.linearRampToValueAtTime(0.14, t + 0.04);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, t + 2.4);
+
+      noteOsc.connect(noteGain);
+      noteGain.connect(warmFilter);
+      noteGain.connect(echoDelay);
+      noteOsc.start(t);
+      noteOsc.stop(t + 2.5);
+    }, 3400);
+
+    let stopped = false;
+    const controller = {
+      setMuted: (muted: boolean) => {
+        try {
+          if (ctx.state === 'suspended' && !muted) {
+            ctx.resume().catch(() => {});
+          }
+          master.gain.setTargetAtTime(muted ? 0.0001 : Math.max(0.01, volume), ctx.currentTime, 0.2);
+        } catch {}
+      },
+      stop: () => {
+        if (stopped) return;
+        stopped = true;
+        clearInterval(chordTimer);
+        clearInterval(chimeTimer);
+        try {
+          const stopNow = ctx.currentTime;
+          master.gain.setTargetAtTime(0.0001, stopNow, 0.18);
+          setTimeout(() => {
+            try {
+              noiseSrc.stop();
+              noiseSrc.disconnect();
+            } catch {}
+            padOscs.forEach((osc) => {
+              try {
+                osc.stop();
+                osc.disconnect();
+              } catch {}
+            });
+            try {
+              echoDelay.disconnect();
+              echoFeedback.disconnect();
+              echoDamp.disconnect();
+              echoWet.disconnect();
+              warmFilter.disconnect();
+              master.disconnect();
+            } catch {}
+          }, 700);
+        } catch {}
+      },
+    };
+
+    activeZenChillController = controller;
+    return controller;
+  } catch {
+    return null;
+  }
+}
+
+export function stopZenChillAmbient() {
+  if (activeZenChillController) {
+    try {
+      activeZenChillController.stop();
+    } catch {}
+    activeZenChillController = null;
+  }
 }
 
 

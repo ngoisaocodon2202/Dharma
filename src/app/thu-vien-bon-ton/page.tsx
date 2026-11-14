@@ -1,17 +1,16 @@
 'use client';
 
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
-  ArrowLeft,
-  BookOpen,
-  Heart,
-  Sparkles,
+  ChevronLeft,
+  LayoutGrid,
   Share2,
   Check,
 } from 'lucide-react';
 import { BUDDHAS_DATA, type BuddhaItem } from '@/data/buddhasData';
-import { playBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import { BON_TON_MANTRA_CONFIG } from '@/data/bonTonMantraAudio';
+import { playSoftTabBellSound, playGrandTempleBellSound } from '@/lib/buddhistSounds';
 import { useDharmaStore } from '@/store/useDharmaStore';
 import { TempleBellIcon } from '@/components/icons/DharmaMinimalIcons';
 import { MantraKineticPlayer } from '@/components/buddhas/MantraKineticPlayer';
@@ -34,6 +33,7 @@ function BonTonLibraryInner() {
   const [isCopied, setIsCopied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [mantraStageEl, setMantraStageEl] = useState<HTMLDivElement | null>(null);
+  const sharedAudioRef = useRef<HTMLAudioElement | null>(null);
   const handleMantraStageRef = useCallback((el: HTMLDivElement | null) => {
     setMantraStageEl(el);
   }, []);
@@ -54,7 +54,20 @@ function BonTonLibraryInner() {
   }, [idParam]);
 
   const handleSelectBuddha = (buddha: BuddhaItem) => {
-    playBellSound(0.25);
+    const audio = sharedAudioRef.current;
+    const cfg = BON_TON_MANTRA_CONFIG[buddha.id];
+    if (audio && cfg?.audioUrl) {
+      try {
+        audio.pause();
+        audio.src = cfg.audioUrl;
+        audio.currentTime = 0;
+        audio.load();
+        // Trigger playback synchronously inside user click gesture so audio & syllables start locked together
+        audio.play().catch(() => {});
+      } catch {
+        // Fallback handled inside MantraKineticPlayer if browser defers load
+      }
+    }
     setSelectedBuddha(buddha);
     setActiveTab('tieu_su');
     setMantraPlayTrigger((n) => n + 1);
@@ -62,6 +75,13 @@ function BonTonLibraryInner() {
   };
 
   const handleBackToGrid = () => {
+    const audio = sharedAudioRef.current;
+    if (audio) {
+      audio.pause();
+      try {
+        audio.currentTime = 0;
+      } catch {}
+    }
     setMantraPlayTrigger(0);
     setIsMantraPlaying(false);
     setSelectedBuddha(null);
@@ -107,28 +127,29 @@ function BonTonLibraryInner() {
   return (
     <div className="min-h-screen bg-[#FAF7F0] text-[#2C1E10]">
       <CenterToast message={toastMessage} icon="sparkles" />
+      <audio ref={sharedAudioRef} preload="auto" playsInline className="hidden" />
 
       {!selectedBuddha ? (
         /* =================================================================== */
-        /* GRID VIEW: 18 BỔN TÔN (LIGHT WARM GOLD & WHITE COMPACT CARDS)       */
+        /* GRID VIEW: 18 BỔN TÔN (BORDERLESS SOFT WARM CARDS)                  */
         /* =================================================================== */
         <div className="max-w-5xl mx-auto px-3 sm:px-5 pt-3 pb-10 space-y-3.5">
           <header className="flex items-center justify-between gap-2 py-1.5">
             <button
               type="button"
               onClick={() => router.push('/thuc-hanh')}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-[#EAD7A7] text-[#8A5400] hover:border-[#C58C1B] text-xs font-bold active:scale-95 transition-all cursor-pointer shadow-xs shrink-0 whitespace-nowrap"
-              aria-label="Quay lại Đạo Tràng"
+              className="w-9 h-9 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#2C1E10] flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0"
+              aria-label="Quay lại"
+              title="Quay lại"
             >
-              <ArrowLeft className="w-4 h-4 shrink-0" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5 shrink-0" />
             </button>
 
             <h1 className="text-base sm:text-lg font-bold text-[#2C1E10] tracking-tight whitespace-nowrap truncate">
               Liên Hoa Bảo Điện (18 Vị)
             </h1>
 
-            <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#FFF6DC] border border-[#EAD7A7] text-[#8A5400] whitespace-nowrap shrink-0">
+            <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-black/[0.05] text-[#7D5822] whitespace-nowrap shrink-0">
               18 Bổn Tôn
             </span>
           </header>
@@ -140,9 +161,8 @@ function BonTonLibraryInner() {
                   key={buddha.id}
                   type="button"
                   onClick={() => handleSelectBuddha(buddha)}
-                  className="group rounded-2xl overflow-hidden border border-[#EAD7A7] hover:border-[#C58C1B] shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col bg-white active:scale-[0.98] text-center"
+                  className="group rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col bg-white active:scale-[0.98] text-center"
                 >
-                  {/* Warm Ivory Artwork Box */}
                   <div className="relative aspect-square w-full overflow-hidden bg-[#FAF3E0] flex items-center justify-center">
                     <img
                       src={buddha.image}
@@ -152,8 +172,7 @@ function BonTonLibraryInner() {
                     />
                   </div>
 
-                  {/* Single-Line Caption Bar — Never Wraps Awkwardly */}
-                  <div className="w-full bg-[#FFFBF2] border-t border-[#F0E2BE] px-2 py-2 flex items-center justify-center">
+                  <div className="w-full bg-[#FFFDF9] px-2 py-2 flex items-center justify-center">
                     <h2 className="text-[11px] sm:text-xs font-bold text-[#2C1E10] group-hover:text-[#9A6200] transition-colors whitespace-nowrap truncate w-full">
                       {buddha.name.replace(/^Đức Phật\s+/i, 'Phật ').replace(/\s+Bồ Tát$/i, '')}
                     </h2>
@@ -165,40 +184,37 @@ function BonTonLibraryInner() {
         </div>
       ) : (
         /* =================================================================== */
-        /* DETAIL VIEW: 1. TIỂU SỬ • 2. ĐẠI NGUYỆN • 3. THẦN CHÚ              */
+        /* DETAIL VIEW: CLEAN BORDERLESS EDITORIAL LAYOUT (IMAGE 2 STYLE)      */
         /* =================================================================== */
-        <div className="max-w-3xl mx-auto px-3 sm:px-5 pt-2.5 pb-10 space-y-3.5 animate-fade-in">
-          <header className="flex items-center justify-between gap-2 py-2 sticky top-0 bg-[#FAF7F0]/95 backdrop-blur-md z-30 border-b border-[#EAD7A7]">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-2 pb-12 space-y-5 animate-fade-in">
+          <header className="flex items-center justify-between gap-2 py-2.5 sticky top-0 bg-[#FAF7F0]/95 backdrop-blur-md z-30">
             <button
               type="button"
               onClick={handleBackToGrid}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-[#EAD7A7] text-[#8A5400] hover:border-[#C58C1B] text-xs font-bold active:scale-95 transition-all cursor-pointer shrink-0 whitespace-nowrap"
-              aria-label="Quay lại danh sách 18 Bổn Tôn"
+              className="w-9 h-9 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#2C1E10] flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0"
+              aria-label="Quay lại"
+              title="Quay lại"
             >
-              <ArrowLeft className="w-4 h-4 shrink-0" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5 shrink-0" />
             </button>
 
-            <div className="min-w-0 text-center flex-1 px-1">
-              <h1 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
-                {selectedBuddha.name}
-              </h1>
-              <p className="text-[10px] text-[#7D6442] whitespace-nowrap truncate">
-                {selectedBuddha.sanskrit}
-              </p>
-            </div>
+            <h1 className="text-base sm:text-lg font-bold text-[#2C1E10] text-center whitespace-nowrap truncate flex-1 px-2">
+              {selectedBuddha.name}
+            </h1>
 
             <button
               type="button"
               onClick={handleBackToGrid}
-              className="text-xs font-bold text-[#8A5400] px-3 py-1.5 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] hover:border-[#C58C1B] shrink-0 cursor-pointer whitespace-nowrap"
+              className="w-9 h-9 rounded-full bg-white text-[#8A5400] hover:bg-[#FFF6DC] shadow-xs flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0"
+              aria-label="Đổi vị"
+              title="Chọn vị Bổn Tôn khác"
             >
-              Đổi vị
+              <LayoutGrid className="w-4 h-4" />
             </button>
           </header>
 
-          {/* Deity Detail Cards Stack + Full-Card Kinetic Mantra Overlay */}
-          <div className="relative space-y-3.5">
+          {/* Deity Content Wrapper + Full-View Kinetic Mantra Scatter Overlay */}
+          <div className="relative space-y-5">
             <div
               ref={handleMantraStageRef}
               aria-hidden="true"
@@ -206,223 +222,171 @@ function BonTonLibraryInner() {
               className="pointer-events-none absolute inset-0 overflow-x-clip z-20"
             />
 
-            {/* Hero Sacred Plaque */}
-            <div className="rounded-2xl p-4 bg-white border border-[#EAD7A7] shadow-xs flex flex-col sm:flex-row gap-3.5 items-center">
-            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl overflow-hidden border-2 border-[#D4A024] shadow-sm shrink-0 bg-[#FAF3E0]">
-              <img
-                src={selectedBuddha.image}
-                alt={selectedBuddha.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="flex-1 text-center sm:text-left space-y-2 min-w-0 w-full">
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFF6DC] border border-[#EAD7A7] text-[10px] font-bold text-[#8A5400] whitespace-nowrap max-w-full truncate">
-                {selectedBuddha.realm}
-              </span>
-              <h2 className="text-lg sm:text-xl font-bold text-[#2C1E10] whitespace-nowrap truncate">
-                {selectedBuddha.name}
-              </h2>
-              <p className="text-xs text-[#6B5438] leading-snug line-clamp-2">
-                <strong className="text-[#8A5400]">Pháp bảo:</strong> {selectedBuddha.symbol}
-              </p>
-
-              {/* Side-by-side single-line buttons */}
-              <div className="pt-1.5 grid grid-cols-2 gap-2 w-full">
-                <button
-                  type="button"
-                  onClick={handleChantMantra}
-                  className="py-2.5 px-2.5 rounded-xl bg-[#C58C1B] text-white hover:bg-[#A6730E] font-bold text-[11px] sm:text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap shadow-xs"
-                >
-                  <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
-                  <span className="whitespace-nowrap truncate">Trì Niệm Công Đức</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleCopyMantra}
-                  className="py-2.5 px-2.5 rounded-xl bg-[#FFFDF8] border border-[#EAD7A7] hover:border-[#C58C1B] text-[#5C4428] text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
-                >
-                  {isCopied ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  ) : (
-                    <Share2 className="w-3.5 h-3.5 text-[#9A6200] shrink-0" />
-                  )}
-                  <span className="whitespace-nowrap truncate">
-                    {isCopied ? 'Đã Sao Chép' : 'Chép Chân Ngôn'}
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* 3 Pillar Tabs Switcher — Strictly Single-Line (`whitespace-nowrap`) */}
-          <div className="grid grid-cols-3 gap-1 p-1 rounded-2xl bg-[#FFF6DC] border border-[#EAD7A7]">
-            {[
-              { id: 'tieu_su', label: '1. Tiểu Sử', icon: BookOpen },
-              { id: 'dai_nguyen', label: '2. Đại Nguyện', icon: Heart },
-              { id: 'than_chu', label: '3. Thần Chú', icon: Sparkles },
-            ].map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => {
-                    if (tab.id === 'than_chu') {
-                      setActiveTab('than_chu');
-                      if (!isMantraPlaying) {
-                        setMantraPlayTrigger((n) => n + 1);
+            {/* Segmented Pill Switcher directly at top matching Image 2 */}
+            <div className="grid grid-cols-3 gap-1 p-1 rounded-full bg-black/[0.06]">
+              {[
+                { id: 'tieu_su', label: 'Tiểu sử' },
+                { id: 'dai_nguyen', label: 'Đại nguyện' },
+                { id: 'than_chu', label: 'Thần chú' },
+              ].map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => {
+                      playSoftTabBellSound(0.2);
+                      if (tab.id === 'than_chu') {
+                        setActiveTab('than_chu');
+                        if (!isMantraPlaying) {
+                          setMantraPlayTrigger((n) => n + 1);
+                        }
+                      } else {
+                        setActiveTab(tab.id as DetailTab);
                       }
-                    } else {
-                      playBellSound(0.2);
-                      setActiveTab(tab.id as DetailTab);
-                    }
-                  }}
-                  className={cn(
-                    'py-2 px-1.5 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1 transition-all cursor-pointer whitespace-nowrap',
-                    isActive
-                      ? 'bg-[#C58C1B] text-white shadow-xs'
-                      : 'text-[#6E5536] hover:text-[#2C1E10]'
-                  )}
-                >
-                  <Icon className="w-3.5 h-3.5 shrink-0" />
-                  <span className="whitespace-nowrap">{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="flex flex-col gap-3.5">
-          {/* TAB 1: TIỂU SỬ (renders directly alongside active Thần Chú above) */}
-          {activeTab === 'tieu_su' && (
-            <div className="order-2 rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
-              <div className="flex items-center gap-2.5 pb-2.5 border-b border-[#F2E5C7]">
-                <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
-                  <BookOpen className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
-                    Tiểu Sử &amp; Cội Nguồn Kinh Điển
-                  </h3>
-                  <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
-                    Hành trạng hóa độ &amp; xuất xứ chính thống
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-2.5 text-xs sm:text-sm leading-relaxed">
-                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
-                  <span className="font-bold text-[#8A5400] text-[11px] uppercase tracking-wider block">
-                    Xuất Xứ &amp; Căn Bản Kinh Điển
-                  </span>
-                  <p className="text-[#4A3620]">{selectedBuddha.tieuSu.origin}</p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
-                  <span className="font-bold text-[#8A5400] text-[11px] uppercase tracking-wider block">
-                    Hành Trạng &amp; Tích Hóa Độ
-                  </span>
-                  <p className="text-[#4A3620]">{selectedBuddha.tieuSu.story}</p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] space-y-1">
-                  <span className="font-bold text-[#8A5400] text-[11px] uppercase tracking-wider block">
-                    Ý Nghĩa Biểu Pháp
-                  </span>
-                  <p className="text-[#4A3620]">{selectedBuddha.tieuSu.meaning}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 2: ĐẠI NGUYỆN */}
-          {activeTab === 'dai_nguyen' && (
-            <div className="order-1 rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs">
-              <div className="flex items-center gap-2.5 pb-2.5 border-b border-[#F2E5C7]">
-                <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
-                  <Heart className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
-                    Bổn Nguyện &amp; Lời Thệ Nguyện
-                  </h3>
-                  <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
-                    Đại nguyện cứu độ muôn loài trong pháp giới
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-xs sm:text-sm font-semibold text-[#8A5400] italic leading-relaxed">
-                {selectedBuddha.daiNguyen.summary}
-              </p>
-
-              <div className="space-y-2">
-                {selectedBuddha.daiNguyen.vows.map((vow, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-xl bg-[#FFFBF2] border border-[#F0E2BE] flex items-start gap-2.5 text-xs sm:text-sm text-[#3D2914]"
+                    }}
+                    className={cn(
+                      'py-2 px-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap text-center',
+                      isActive
+                        ? 'bg-white text-[#2C1E10] font-bold shadow-xs'
+                        : 'text-[#5C4A32] hover:text-[#2C1E10]'
+                    )}
                   >
-                    <span className="w-5 h-5 rounded-full bg-[#FFF0C2] text-[#8A5400] font-mono font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5 border border-[#E2C275]">
-                      {idx + 1}
-                    </span>
-                    <p className="leading-relaxed flex-1">{vow}</p>
+                    <span className="whitespace-nowrap">{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Clean Portrait & Quick Actions sitting openly on canvas (no enclosed box) */}
+            <div className="flex items-center gap-3.5">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shadow-sm shrink-0 bg-[#FAF3E0]">
+                <img
+                  src={selectedBuddha.image}
+                  alt={selectedBuddha.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="flex-1 min-w-0 space-y-2">
+                <p className="text-xs font-semibold text-[#78531E] truncate">
+                  {selectedBuddha.title}
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleChantMantra}
+                    className="py-2 px-3 rounded-full bg-[#C58C1B] text-white hover:bg-[#A6730E] font-bold text-[11px] sm:text-xs inline-flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer whitespace-nowrap shadow-xs"
+                  >
+                    <TempleBellIcon className="w-3.5 h-3.5 shrink-0" />
+                    <span className="whitespace-nowrap">Trì Niệm Công Đức</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyMantra}
+                    className="w-8 h-8 rounded-full bg-black/[0.06] hover:bg-black/[0.1] text-[#5C4428] flex items-center justify-center active:scale-95 transition-all cursor-pointer shrink-0"
+                    title="Sao chép chân ngôn"
+                    aria-label="Chép chân ngôn"
+                  >
+                    {isCopied ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    ) : (
+                      <Share2 className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-6">
+              {/* TAB 1: TIỂU SỬ — Open borderless typography directly on canvas (Image 2 style) */}
+              {activeTab === 'tieu_su' && (
+                <article className="order-2 space-y-5 text-[15px] leading-relaxed text-[#2C1E10]">
+                  <div className="space-y-1.5">
+                    <h3 className="font-bold text-[#78531E] text-base">Tên gọi</h3>
+                    <p>
+                      {selectedBuddha.name} ({selectedBuddha.title}) — Phạn hiệu:{' '}
+                      <span className="italic text-[#5C4A32]">{selectedBuddha.sanskrit}</span>.
+                    </p>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
 
-          {/* THẦN CHÚ (Always mounted while deity is open; shown directly on Tiểu Sử & Thần Chú tabs so audio + floating syllables run automatically from open) */}
-          <div
-            className={cn(
-              'order-1 rounded-2xl p-4 sm:p-5 bg-white border border-[#EAD7A7] space-y-3.5 shadow-xs',
-              activeTab === 'tieu_su' || activeTab === 'than_chu' ? 'block' : 'hidden'
-            )}
-          >
-            <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#F2E5C7]">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-xl bg-[#FFF6DC] border border-[#EAD7A7] flex items-center justify-center text-[#8A5400] shrink-0">
-                  <Sparkles className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base font-bold text-[#2C1E10] whitespace-nowrap truncate">
-                    {selectedBuddha.thanChu.name}
-                  </h3>
-                  <p className="text-[11px] text-[#7D6442] whitespace-nowrap truncate">
-                    Chân ngôn uy lực mầu nhiệm
-                  </p>
-                </div>
-              </div>
+                  <div className="space-y-1.5">
+                    <h3 className="font-bold text-[#78531E] text-base">Thế giới</h3>
+                    <p>{selectedBuddha.realm}</p>
+                  </div>
 
-              <button
-                type="button"
-                onClick={handleCopyMantra}
-                className="p-2 rounded-xl border border-[#EAD7A7] bg-[#FFFBF2] text-[#8A5400] cursor-pointer shrink-0"
-                title="Sao chép thần chú"
-              >
-                {isCopied ? (
-                  <Check className="w-4 h-4 text-emerald-600" />
-                ) : (
-                  <Share2 className="w-4 h-4" />
+                  <div className="space-y-1.5">
+                    <h3 className="font-bold text-[#78531E] text-base">Xuất xứ &amp; Căn bản</h3>
+                    <p>{selectedBuddha.tieuSu.origin}</p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <h3 className="font-bold text-[#78531E] text-base">Hành trạng &amp; Tích hóa độ</h3>
+                    <p>{selectedBuddha.tieuSu.story}</p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <h3 className="font-bold text-[#78531E] text-base">Hình tượng &amp; Biểu pháp</h3>
+                    <p>{selectedBuddha.symbol}. {selectedBuddha.tieuSu.meaning}</p>
+                  </div>
+                </article>
+              )}
+
+              {/* TAB 2: ĐẠI NGUYỆN — Open flowing vows directly on canvas */}
+              {activeTab === 'dai_nguyen' && (
+                <article className="order-1 space-y-4 text-[15px] leading-relaxed text-[#2C1E10]">
+                  <div className="space-y-1">
+                    <h3 className="font-bold text-[#78531E] text-base">
+                      Bổn nguyện &amp; Lời thệ nguyện
+                    </h3>
+                    <p className="text-sm font-medium text-[#7D5822]">
+                      {selectedBuddha.daiNguyen.summary}
+                    </p>
+                  </div>
+
+                  <ol className="space-y-3">
+                    {selectedBuddha.daiNguyen.vows.map((vow, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5">
+                        <span className="font-mono font-bold text-xs text-[#8A5400] min-w-[20px] pt-1">
+                          {idx + 1}.
+                        </span>
+                        <p className="flex-1 text-[#2C1E10]">{vow}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </article>
+              )}
+
+              {/* THẦN CHÚ (Mounted directly alongside Tiểu Sử & Thần Chú tabs without enclosed panels) */}
+              <div
+                className={cn(
+                  'order-1 space-y-3',
+                  activeTab === 'tieu_su' || activeTab === 'than_chu' ? 'block' : 'hidden'
                 )}
-              </button>
-            </div>
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <h3 className="text-base font-bold text-[#78531E]">
+                      {selectedBuddha.thanChu.name}
+                    </h3>
+                  </div>
+                </div>
 
-            <MantraKineticPlayer
-              buddhaId={selectedBuddha.id}
-              sanskritDefault={selectedBuddha.thanChu.sanskrit}
-              vietnameseDefault={selectedBuddha.thanChu.vietnamese}
-              meaningDefault={selectedBuddha.thanChu.meaning}
-              benefitsDefault={selectedBuddha.thanChu.benefits}
-              playTrigger={mantraPlayTrigger}
-              portalContainer={mantraStageEl}
-              onPlayStateChange={setIsMantraPlaying}
-              onCompleted={handleMantraCompleted}
-            />
-          </div>
-          </div>
+                <MantraKineticPlayer
+                  buddhaId={selectedBuddha.id}
+                  sanskritDefault={selectedBuddha.thanChu.sanskrit}
+                  vietnameseDefault={selectedBuddha.thanChu.vietnamese}
+                  meaningDefault={selectedBuddha.thanChu.meaning}
+                  benefitsDefault={selectedBuddha.thanChu.benefits}
+                  playTrigger={mantraPlayTrigger}
+                  externalAudioRef={sharedAudioRef}
+                  portalContainer={mantraStageEl}
+                  onPlayStateChange={setIsMantraPlaying}
+                  onCompleted={handleMantraCompleted}
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}

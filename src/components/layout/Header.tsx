@@ -10,13 +10,13 @@ import {
   User,
   Search,
   Bell,
-  ArrowLeft,
+  ChevronLeft,
 } from 'lucide-react';
 import { MeditatingMonkOutlineIcon } from '@/components/icons/DharmaMinimalIcons';
 import { SearchModal } from './SearchModal';
 import { CenterToast } from '@/components/ui/CenterToast';
 import { useDharmaPracticeStore } from '@/store/useDharmaPracticeStore';
-import { playGrandTempleBellSound } from '@/lib/buddhistSounds';
+import { playGrandTempleBellSound, playSoftTabBellSound } from '@/lib/buddhistSounds';
 import { cn } from '@/lib/utils';
 
 const DESKTOP_TABS = [
@@ -70,20 +70,22 @@ export function Header() {
     <>
       {/* 1. COMPACT SUB-PAGE MOBILE HEADER (< lg) */}
       {!isMainTab && (
-        <header className="lg:hidden sticky top-0 z-30 bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7]">
+        <header className="lg:hidden sticky top-0 z-30 bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-black/8">
           <div className="px-3.5 h-13 flex items-center justify-between gap-2 max-w-4xl mx-auto">
             <button
               type="button"
-              onClick={() => router.back()}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs cursor-pointer active:scale-95 whitespace-nowrap shrink-0"
+              onClick={() => {
+                playSoftTabBellSound(0.18);
+                router.back();
+              }}
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] text-[#2C1E10] flex items-center justify-center cursor-pointer active:scale-95 shrink-0 transition-colors"
               aria-label="Quay lại"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
             <Link href="/" className="flex items-center gap-2 min-w-0">
-              <div className="w-7 h-7 rounded-full overflow-hidden border border-[#D9A02E] bg-[#FFF6DF] shrink-0">
+              <div className="w-7 h-7 rounded-full overflow-hidden bg-[#FFF6DF] shrink-0">
                 <img src="/dharma-logo.png" alt="DHARMA" className="w-full h-full object-cover" />
               </div>
               <span className="font-serif font-bold text-sm text-[#8C5500] tracking-wide whitespace-nowrap truncate">
@@ -94,7 +96,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="w-9 h-9 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] flex items-center justify-center cursor-pointer active:scale-95 shrink-0"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] text-[#7A5000] flex items-center justify-center cursor-pointer active:scale-95 shrink-0"
               aria-label="Tìm kiếm"
             >
               <Search className="w-4 h-4" />
@@ -104,10 +106,10 @@ export function Header() {
       )}
 
       {/* 2. UNIFIED DESKTOP DHARMA HEADER (>= lg) */}
-      <header className="hidden lg:block sticky top-0 z-40 w-full bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs overflow-x-clip">
+      <header className="hidden lg:block sticky top-0 z-40 w-full bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-black/8 shadow-2xs overflow-x-clip">
         <div className="w-full max-w-7xl mx-auto px-4 xl:px-6 h-16 flex items-center justify-between gap-2 xl:gap-4 min-w-0">
           <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-            <div className="w-9 h-9 xl:w-10 xl:h-10 rounded-full overflow-hidden border-2 border-[#D9A02E] bg-[#FFF6DF] shadow-2xs shrink-0">
+            <div className="w-9 h-9 xl:w-10 xl:h-10 rounded-full overflow-hidden ring-1 ring-[#D9A02E]/40 bg-[#FFF6DF] shadow-2xs shrink-0">
               <img
                 src="/dharma-logo.png"
                 alt="DHARMA"
@@ -127,7 +129,7 @@ export function Header() {
           {/* Center: Clean 5-Tab Dharma Navigation */}
           <nav
             aria-label="Điều hướng chính DHARMA"
-            className="flex items-center gap-0.5 xl:gap-1 bg-[#FAF7F0] border border-[#EAD7A7] rounded-full p-1 min-w-0 shrink"
+            className="flex items-center gap-0.5 xl:gap-1 bg-[#EFECE5] rounded-full p-1 min-w-0 shrink"
           >
             {DESKTOP_TABS.map(({ name, href, Icon }) => {
               const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
@@ -135,11 +137,12 @@ export function Header() {
                 <Link
                   key={href}
                   href={href}
+                  onClick={() => playSoftTabBellSound(0.2)}
                   className={cn(
                     'px-2.5 xl:px-3.5 py-1.5 rounded-full text-xs xl:text-[13px] font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap shrink-0',
                     isActive
-                      ? 'bg-gradient-to-r from-[#FFE07D] to-[#F5C542] text-[#3D2505] font-bold shadow-2xs border border-[#D9A02E]'
-                      : 'text-[#6B533B] hover:text-[#2C1E10] hover:bg-[#FFF6DF]/60'
+                      ? 'bg-[#8C5500] text-white font-bold shadow-xs'
+                      : 'text-[#5A4329] hover:text-[#2C1E10] hover:bg-white/60'
                   )}
                 >
                   <Icon className="w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0" />
@@ -155,7 +158,7 @@ export function Header() {
               type="button"
               onClick={handleStrikeBell}
               title="Thỉnh Chuông Chánh Niệm"
-              className="w-8 h-8 xl:w-9 xl:h-9 rounded-full bg-[#FFF6DF] border border-[#E5C67E] text-[#8C5500] hover:bg-[#FCECC2] flex items-center justify-center cursor-pointer transition-colors shrink-0"
+              className="w-8 h-8 xl:w-9 xl:h-9 rounded-full bg-[#EFECE5] text-[#8C5500] hover:bg-[#E7E1D5] flex items-center justify-center cursor-pointer transition-colors shrink-0"
               aria-label="Thỉnh Chuông Chánh Niệm"
             >
               <Bell className="w-4 h-4" />

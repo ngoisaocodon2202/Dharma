@@ -25,7 +25,40 @@ export interface BuddhaItem {
 }
 
 export const BUDDHAS_DATA: BuddhaItem[] = [
-  // 1. ĐỨC PHẬT DƯỢC SƯ
+  // 1. ĐỨC PHẬT THÍCH CA MÂU NI
+  {
+    id: 'duc-phat-thich-ca',
+    name: 'Đức Phật Thích Ca Mâu Ni',
+    title: 'Bổn Sư Thích Ca Mâu Ni Phật',
+    sanskrit: 'Śākyamuni Buddha (Siddhārtha Gautama)',
+    image: '/images/buddhas/duc-phat-thich-ca.png',
+    realm: 'Cõi Ta Bà (Saha World)',
+    symbol: 'Bảo tòa Kim Cương, Ấn Xúc Địa (Bhumisparsha Mudra), Cội Bồ Đề giác ngộ',
+    tieuSu: {
+      origin: 'Đản sinh vào ngày Rằm tháng Tư năm 624 TCN tại vườn Lâm Tỳ Ni (Nepal). Ngài là Thái tử Tất Đạt Đa, con vua Tịnh Phạn và Hoàng hậu Ma Gia thành Ca Tỳ La Vệ.',
+      story: 'Chứng kiến bốn cảnh Sinh - Lão - Bệnh - Tử nơi cổng thành, Ngài từ bỏ hoàng cung xuất gia tầm đạo. Trải qua 6 năm khổ hạnh rừng già và 49 ngày thiền quán dưới cội Bồ Đề, Ngài chứng đắc Vô Thượng Chánh Đẳng Chánh Giác, chuyển bánh xe Pháp luân khai sáng đạo Phật.',
+      meaning: 'Danh hiệu Thích Ca biểu trưng cho đức Tính Năng Nhân (từ bi vô lượng); Mâu Ni biểu trưng cho Tịch Tĩnh (trí tuệ vắng lặng, đoạn sạch mọi vọng tưởng chấp thủ).',
+    },
+    daiNguyen: {
+      summary: 'Tứ Hoằng Thệ Nguyện & Đại Bi Giáng Trần vì nhân loại khổ đau:',
+      vows: [
+        'Chúng sinh vô biên thề nguyện độ.',
+        'Phiền não vô tận thề nguyện đoạn.',
+        'Pháp môn vô lượng thề nguyện học.',
+        'Phật đạo vô thượng thề nguyện thành.',
+        'Nguyện giáng sinh vào đời ác năm trược (Ngũ Trược Ác Thế) để thắp sáng ngọn đèn chánh pháp, chỉ bày con đường Tứ Diệu Đế và Bát Chánh Đạo đưa chúng sinh thoát khỏi luân hồi.',
+      ],
+    },
+    thanChu: {
+      name: 'Thích Ca Mâu Ni Phật Tâm Chú',
+      sanskrit: 'Om Muni Muni Mahamunaye Svaha.',
+      vietnamese: 'Án Mâu Ni Mâu Ni Ma Ha Mâu Ni Dã Ta Bà Ha.',
+      meaning: 'Hỡi Đấng Tịch Tĩnh, Bậc Tịch Tĩnh Vĩ Đại, nguyện hướng về tâm tịch tịnh sáng tỏ thanh tịnh vô thượng của Ngài.',
+      benefits: 'Thanh lọc tạp niệm, nhiếp tâm an định, đánh thức hạt giống Bồ Đề và trí tuệ Bát Nhã sẵn có trong mỗi người.',
+    },
+  },
+
+  // 2. ĐỨC PHẬT DƯỢC SƯ
   {
     id: 'duc-phat-duoc-su',
     name: 'Đức Phật Dược Sư',
@@ -62,39 +95,6 @@ export const BUDDHAS_DATA: BuddhaItem[] = [
       vietnamese: 'Nam mô Bạc già phạt đế, Bệ sát xã, Lũ lô thích lưu ly, Bát lạt bà, Hắt ra xà dã, Đát tha yết đa dã, A ra ha đế, Tam miệu tam bột đà dã. Đát điệt tha: Án, Bệ sát thệ, Bệ sát thệ, Bệ sát xã, Tam một yết đế tỳ-ha-ha.',
       meaning: 'Kính lễ Đức Thế Tôn Dược Sư Lưu Ly Quang Vương Như Lai, Bậc Ứng Cúng, Chánh Biến Tri. Nguyện thần dược lưu ly vi diệu chữa lành mọi khổ đau, tật bệnh thân tâm.',
       benefits: 'Tiêu trừ bệnh chướng ngặt nghèo, giải trừ oan gia trái chủ, thân tâm an lạc, gia tăng tuổi thọ và phúc đức vô lượng.',
-    },
-  },
-
-  // 2. ĐỨC PHẬT THÍCH CA MÂU NI
-  {
-    id: 'duc-phat-thich-ca',
-    name: 'Đức Phật Thích Ca Mâu Ni',
-    title: 'Bổn Sư Thích Ca Mâu Ni Phật',
-    sanskrit: 'Śākyamuni Buddha (Siddhārtha Gautama)',
-    image: '/images/buddhas/duc-phat-thich-ca.png',
-    realm: 'Cõi Ta Bà (Saha World)',
-    symbol: 'Bảo tòa Kim Cương, Ấn Xúc Địa (Bhumisparsha Mudra), Cội Bồ Đề giác ngộ',
-    tieuSu: {
-      origin: 'Đản sinh vào ngày Rằm tháng Tư năm 624 TCN tại vườn Lâm Tỳ Ni (Nepal). Ngài là Thái tử Tất Đạt Đa, con vua Tịnh Phạn và Hoàng hậu Ma Gia thành Ca Tỳ La Vệ.',
-      story: 'Chứng kiến bốn cảnh Sinh - Lão - Bệnh - Tử nơi cổng thành, Ngài từ bỏ hoàng cung xuất gia tầm đạo. Trải qua 6 năm khổ hạnh rừng già và 49 ngày thiền quán dưới cội Bồ Đề, Ngài chứng đắc Vô Thượng Chánh Đẳng Chánh Giác, chuyển bánh xe Pháp luân khai sáng đạo Phật.',
-      meaning: 'Danh hiệu Thích Ca biểu trưng cho đức Tính Năng Nhân (từ bi vô lượng); Mâu Ni biểu trưng cho Tịch Tĩnh (trí tuệ vắng lặng, đoạn sạch mọi vọng tưởng chấp thủ).',
-    },
-    daiNguyen: {
-      summary: 'Tứ Hoằng Thệ Nguyện & Đại Bi Giáng Trần vì nhân loại khổ đau:',
-      vows: [
-        'Chúng sinh vô biên thề nguyện độ.',
-        'Phiền não vô tận thề nguyện đoạn.',
-        'Pháp môn vô lượng thề nguyện học.',
-        'Phật đạo vô thượng thề nguyện thành.',
-        'Nguyện giáng sinh vào đời ác năm trược (Ngũ Trược Ác Thế) để thắp sáng ngọn đèn chánh pháp, chỉ bày con đường Tứ Diệu Đế và Bát Chánh Đạo đưa chúng sinh thoát khỏi luân hồi.',
-      ],
-    },
-    thanChu: {
-      name: 'Thích Ca Mâu Ni Phật Tâm Chú',
-      sanskrit: 'Om Muni Muni Mahamunaye Svaha.',
-      vietnamese: 'Án Mâu Ni Mâu Ni Ma Ha Mâu Ni Dã Ta Bà Ha.',
-      meaning: 'Hỡi Đấng Tịch Tĩnh, Bậc Tịch Tĩnh Vĩ Đại, nguyện hướng về tâm tịch tịnh sáng tỏ thanh tịnh vô thượng của Ngài.',
-      benefits: 'Thanh lọc tạp niệm, nhiếp tâm an định, đánh thức hạt giống Bồ Đề và trí tuệ Bát Nhã sẵn có trong mỗi người.',
     },
   },
 

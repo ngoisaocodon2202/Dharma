@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import {
-  ArrowLeft,
+  ChevronLeft,
   Plus,
   Edit3,
   Trash2,
@@ -453,14 +453,14 @@ export function Tool08SoGioChap({
           role="dialog"
           aria-modal="true"
         >
-          <header className="px-4 sm:px-6 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
+          <header className="px-4 sm:px-6 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setPrayerModalTarget(null)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 shrink-0" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h3 className="font-serif font-bold text-sm sm:text-base text-[#8C5500] truncate">
               Văn Khấn Cúng Giỗ Chay • {prayerModalTarget.memorial.fullName}
@@ -519,14 +519,14 @@ export function Tool08SoGioChap({
           role="dialog"
           aria-modal="true"
         >
-          <header className="px-4 sm:px-6 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
+          <header className="px-4 sm:px-6 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsMenusModalOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 shrink-0" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h3 className="font-serif font-bold text-sm sm:text-base text-[#8C5500] truncate">
               Gợi Ý 3 Mâm Cỗ Chay Cúng Giỗ Thanh Tịnh

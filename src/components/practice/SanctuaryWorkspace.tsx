@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
-  ArrowLeft,
+  ChevronLeft,
   Play,
   Pause,
   RotateCcw,
@@ -38,7 +38,11 @@ import { Tool07ChuongMo } from '@/components/practice/tools/Tool07ChuongMo';
 import { Tool08SoGioChap } from '@/components/practice/tools/Tool08SoGioChap';
 import { MEDITATION_SOUNDS } from '@/data/dharmaExtraData';
 import { useDharmaAudioMixer } from '@/components/audio/DharmaAudioPlayer';
-import { cleanupAllBuddhistAudio, playOmTempleBellSound } from '@/lib/buddhistSounds';
+import {
+  cleanupAllBuddhistAudio,
+  playOmTempleBellSound,
+  playSoftTabBellSound,
+} from '@/lib/buddhistSounds';
 import { useDharmaPracticeStore } from '@/store/useDharmaPracticeStore';
 import { cn } from '@/lib/utils';
 
@@ -258,6 +262,7 @@ export function SanctuaryWorkspace({
 
   const handleSwitchNav = (item: WorkspaceNavItem) => {
     cleanupAllBuddhistAudio();
+    playSoftTabBellSound(0.2);
     setIsMeditating(false);
     setShowQuickSwitcher(false);
     if (item.isRoute || item.id === 'thu-vien-bon-ton') {
@@ -354,16 +359,15 @@ export function SanctuaryWorkspace({
     >
       {/* Clean Dharma Single Top Header (Hidden for may-niem-phat as it provides its own native Om Mani app header with (X) close) */}
       {activeTool !== 'may-niem-phat' && (
-        <header className="relative z-50 shrink-0 bg-[#FFFDF8]/95 backdrop-blur-xl border-b border-[#EAD7A7] shadow-2xs">
+        <header className="relative z-50 shrink-0 bg-[#FAF7F0]/95 backdrop-blur-xl">
           <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3 relative">
             <button
               type="button"
               onClick={handleCloseWorkspace}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] transition-colors cursor-pointer shrink-0 whitespace-nowrap"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] text-[#2C1E10] inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
               aria-label="Quay lại"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
             <div className="min-w-0 text-center">

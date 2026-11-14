@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
-  ArrowLeft,
+  ChevronLeft,
   MapPin,
   Search,
   Check,
@@ -23,7 +23,7 @@ import {
   PagodaSect,
 } from '@/data/pagodas';
 import { useDharmaStore } from '@/store/useDharmaStore';
-import { playOmTempleBellSound, playBeadTickSound } from '@/lib/buddhistSounds';
+import { playOmTempleBellSound, playSoftTabBellSound } from '@/lib/buddhistSounds';
 import { CenterToast } from '@/components/ui/CenterToast';
 import { cn } from '@/lib/utils';
 
@@ -83,7 +83,7 @@ export default function PagodasDirectoryPage() {
       playOmTempleBellSound(0.5);
       showToast(`Đã ghi dấu hành hương đảnh lễ tại ${pagoda.name}!`);
     } else {
-      playBeadTickSound(0.3);
+      playSoftTabBellSound(0.18);
       showToast(`Đã bỏ dấu hành hương tại ${pagoda.name}`);
     }
   };
@@ -162,7 +162,7 @@ export default function PagodasDirectoryPage() {
                   key={reg}
                   type="button"
                   onClick={() => {
-                    playBeadTickSound(0.25);
+                    playSoftTabBellSound(0.2);
                     setRegionFilter(reg);
                   }}
                   className={cn(
@@ -189,7 +189,7 @@ export default function PagodasDirectoryPage() {
                       key={sect}
                       type="button"
                       onClick={() => {
-                        playBeadTickSound(0.2);
+                        playSoftTabBellSound(0.2);
                         setSectFilter(sect);
                       }}
                       className={cn(
@@ -244,7 +244,7 @@ export default function PagodasDirectoryPage() {
                 <article
                   key={pagoda.slug}
                   onClick={() => {
-                    playBeadTickSound(0.25);
+                    playSoftTabBellSound(0.2);
                     setSelectedPagoda(pagoda);
                   }}
                   className="group rounded-3xl bg-[#FFFFFF] border border-[#EAD7A7] hover:border-[#C68B19] overflow-hidden shadow-xs transition-all duration-300 flex flex-col justify-between cursor-pointer"
@@ -337,15 +337,14 @@ export default function PagodasDirectoryPage() {
           aria-modal="true"
         >
           {/* Full-screen Sticky Header */}
-          <header className="px-4 sm:px-6 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0 shadow-xs">
+          <header className="px-4 sm:px-6 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setSelectedPagoda(null)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
               aria-label="Quay lại"
             >
-              <ArrowLeft className="w-4 h-4 shrink-0" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
             <h2 className="font-heading font-serif text-sm sm:text-base font-bold text-[#2C1E10] truncate">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowLeft, Volume2, Check } from 'lucide-react';
+import { ChevronLeft, Volume2, Check } from 'lucide-react';
 import {
   IncenseAltarIcon,
   MalaBeadsMinimalIcon,
@@ -149,14 +149,14 @@ export function IncenseOfferingModal({ isOpen, onClose }: IncenseModalProps) {
       aria-modal="true"
     >
       {/* Top Bar Full-Screen with Back Button */}
-      <header className="shrink-0 h-14 px-4 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shadow-xs">
+      <header className="shrink-0 h-14 px-4 bg-[#FAF7F0] flex items-center justify-between gap-3">
         <button
           type="button"
           onClick={onClose}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] transition-colors shrink-0 cursor-pointer whitespace-nowrap"
+          aria-label="Quay lại"
+          className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] transition-colors shrink-0 cursor-pointer"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Quay lại</span>
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
         <div className="min-w-0 text-center flex-1">
@@ -363,14 +363,14 @@ export function MalaBeadsModal({ isOpen, onClose }: MalaModalProps) {
       aria-modal="true"
     >
       {/* Top Bar Full-Screen with Back Button */}
-      <header className="shrink-0 h-14 px-4 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shadow-xs">
+      <header className="shrink-0 h-14 px-4 bg-[#FAF7F0] flex items-center justify-between gap-3">
         <button
           type="button"
           onClick={onClose}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6DF] border border-[#E5C67E] text-[#7A5000] font-bold text-xs hover:bg-[#FCECC2] transition-colors shrink-0 cursor-pointer whitespace-nowrap"
+          aria-label="Quay lại"
+          className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] transition-colors shrink-0 cursor-pointer"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Quay lại</span>
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
         <div className="min-w-0 text-center flex-1">

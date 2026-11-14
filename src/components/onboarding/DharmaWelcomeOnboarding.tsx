@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  ArrowLeft,
+  ChevronLeft,
   ArrowRight,
   BookOpenCheck,
   CalendarHeart,
@@ -368,10 +368,10 @@ export default function DharmaWelcomeOnboarding() {
                   <button
                     type="button"
                     onClick={() => setStep(0)}
-                    className="py-3 px-3 sm:px-4 rounded-2xl bg-[#FFFDF8] hover:bg-[#FFF5DC] border border-[#DFC27D] text-xs sm:text-sm font-bold text-[#6B533B] inline-flex items-center gap-1 transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                    aria-label="Quay lại"
+                    className="w-11 h-11 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] text-[#2C1E10] inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
                   >
-                    <ArrowLeft className="w-4 h-4 shrink-0" />
-                    <span>Quay lại</span>
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     type="button"
@@ -551,10 +551,10 @@ export default function DharmaWelcomeOnboarding() {
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="py-3 px-3 sm:px-4 rounded-2xl bg-[#FFFDF8] hover:bg-[#FFF5DC] border border-[#DFC27D] text-xs sm:text-sm font-bold text-[#6B533B] inline-flex items-center gap-1 transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                    aria-label="Quay lại"
+                    className="w-11 h-11 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] text-[#2C1E10] inline-flex items-center justify-center transition-colors cursor-pointer shrink-0"
                   >
-                    <ArrowLeft className="w-4 h-4 shrink-0" />
-                    <span>Quay lại</span>
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     type="button"

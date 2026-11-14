@@ -56,7 +56,7 @@ import {
   type VegetarianMode,
 } from '@/store/useDharmaStore';
 import { getNextSolarDateForLunar } from '@/lib/lunar-calendar';
-import { playBellSound, playBeadTickSound, playOmTempleBellSound } from '@/lib/buddhistSounds';
+import { playBellSound, playSoftTabBellSound, playOmTempleBellSound } from '@/lib/buddhistSounds';
 import { cn } from '@/lib/utils';
 
 const CUSTOM_AVATAR_KEY = 'phatphap_custom_avatar_v1';
@@ -978,14 +978,14 @@ function ProfileContent() {
       {/* ===================================================================== */}
       {isEditProfileOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsEditProfileOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10]">Hồ Sơ Phật Tử</h2>
             <div className="w-20" />
@@ -1065,13 +1065,14 @@ function ProfileContent() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-between items-center gap-2">
               <button
                 type="button"
                 onClick={() => setIsEditProfileOpen(false)}
-                className="px-4 py-2.5 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#6B533B] cursor-pointer"
+                aria-label="Quay lại"
+                className="w-10 h-10 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
               >
-                ← Quay lại
+                <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 type="submit"
@@ -1089,14 +1090,14 @@ function ProfileContent() {
       {/* ===================================================================== */}
       {isStatsOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsStatsOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <div className="text-center min-w-0">
               <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
@@ -1144,14 +1145,14 @@ function ProfileContent() {
       {/* ===================================================================== */}
       {isMemorialsOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-2 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-2 shrink-0">
             <button
               type="button"
               onClick={() => setIsMemorialsOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <div className="text-center min-w-0">
               <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
@@ -1301,14 +1302,14 @@ function ProfileContent() {
       {/* ===================================================================== */}
       {isPreceptsOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsPreceptsOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <div className="text-center min-w-0">
               <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
@@ -1329,7 +1330,7 @@ function ProfileContent() {
                   key={item.field}
                   type="button"
                   onClick={() => {
-                    playBeadTickSound(0.3);
+                    playSoftTabBellSound(0.18);
                     togglePrecept(item.field, todayKey);
                   }}
                   className={cn(
@@ -1368,14 +1369,14 @@ function ProfileContent() {
       {/* ===================================================================== */}
       {isMeditationScheduleOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsMeditationScheduleOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
               Chuông Nhắc Thời Khóa Hằng Ngày
@@ -1447,14 +1448,14 @@ function ProfileContent() {
       {/* ===================================================================== */}
       {isSettingsOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsSettingsOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
               Cài Đặt &amp; Sao Lưu Dữ Liệu
@@ -1528,14 +1529,14 @@ function ProfileContent() {
       {/* ===================================================================== */}
       {isAboutDharmaOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsAboutDharmaOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10]">Về Đạo Tràng DHARMA</h2>
             <div className="w-20" />
@@ -1564,14 +1565,14 @@ function ProfileContent() {
 
       {isSupportDharmaOpen && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setIsSupportDharmaOpen(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10]">
               Ủng Hộ &amp; Hộ Trì DHARMA

@@ -13,7 +13,7 @@ import {
   Check,
   Play,
   Pause,
-  ArrowLeft,
+  ChevronLeft,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CenterToast } from '@/components/ui/CenterToast';
@@ -28,7 +28,7 @@ import { BAI_KHAN_DATA, type BaiKhanItem } from '@/data/dharmaExtraData';
 import { DharmaSutraReader } from '@/components/sutra/DharmaSutraReader';
 import { useDharmaPracticeStore } from '@/store/useDharmaPracticeStore';
 import { getLunarDate } from '@/lib/lunar-calendar';
-import { playPageTurnSound, playBeadTickSound, playOmTempleBellSound } from '@/lib/buddhistSounds';
+import { playPageTurnSound, playSoftTabBellSound, playOmTempleBellSound } from '@/lib/buddhistSounds';
 
 const SUTRA_COUNTS_STORAGE_KEY = 'phatphap_dharma_sutra_counts_v2';
 
@@ -360,6 +360,7 @@ function BuddhistLibraryInner() {
                   <button
                     type="button"
                     onClick={() => {
+                      playSoftTabBellSound(0.2);
                       setSelectedCategory('all');
                       setShowCategoryMenu(false);
                     }}
@@ -378,6 +379,7 @@ function BuddhistLibraryInner() {
                       key={cat}
                       type="button"
                       onClick={() => {
+                        playSoftTabBellSound(0.2);
                         setSelectedCategory(cat);
                         setShowCategoryMenu(false);
                       }}
@@ -411,7 +413,7 @@ function BuddhistLibraryInner() {
           <button
             type="button"
             onClick={() => {
-              playBeadTickSound(0.25);
+              playSoftTabBellSound(0.2);
               setSelectedCategory((prev) => (prev === 'bookmarked' ? 'all' : 'bookmarked'));
             }}
             className={cn(
@@ -461,14 +463,15 @@ function BuddhistLibraryInner() {
             <button
               type="button"
               onClick={() => {
+                playSoftTabBellSound(0.2);
                 setSelectedCategory('all');
                 setVisibleLimit(30);
               }}
               className={cn(
-                'px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap shrink-0 border transition-colors cursor-pointer',
+                'px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer',
                 selectedCategory === 'all'
-                  ? 'bg-[#8C5500] border-[#8C5500] text-white'
-                  : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B] hover:border-[#C68B19] hover:text-[#2C1E10]'
+                  ? 'bg-[#8C5500] text-white'
+                  : 'bg-[#FFFFFF] text-[#6B533B] hover:text-[#2C1E10]'
               )}
             >
               Tất cả ({categoryCounts.all})
@@ -478,14 +481,15 @@ function BuddhistLibraryInner() {
                 key={cat}
                 type="button"
                 onClick={() => {
+                  playSoftTabBellSound(0.2);
                   setSelectedCategory(cat);
                   setVisibleLimit(60);
                 }}
                 className={cn(
-                  'px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap shrink-0 border transition-colors cursor-pointer',
+                  'px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap shrink-0 transition-colors cursor-pointer',
                   selectedCategory === cat
-                    ? 'bg-[#8C5500] border-[#8C5500] text-white'
-                    : 'bg-[#FFFFFF] border-[#EAD7A7] text-[#6B533B] hover:border-[#C68B19] hover:text-[#2C1E10]'
+                    ? 'bg-[#8C5500] text-white'
+                    : 'bg-[#FFFFFF] text-[#6B533B] hover:text-[#2C1E10]'
                 )}
               >
                 {cat} ({categoryCounts[cat] || 0})
@@ -640,14 +644,14 @@ function BuddhistLibraryInner() {
       {/* ======================================================================= */}
       {menuSutra && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex items-center justify-between gap-3 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={() => setMenuSutra(null)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-sm sm:text-base font-bold text-[#2C1E10] truncate">
               Thông Tin Kinh Điển
@@ -702,7 +706,7 @@ function BuddhistLibraryInner() {
                 onClick={() => {
                   const id = menuSutra.id;
                   const existed = bookmarkedSutraIds.includes(id);
-                  playBeadTickSound(0.3);
+                  playSoftTabBellSound(0.2);
                   toggleSutraBookmark(id);
                   showToast(existed ? 'Đã bỏ lưu bản kinh' : 'Đã lưu vào Tủ Kinh Yêu Thích');
                   setMenuSutra(null);
@@ -731,14 +735,14 @@ function BuddhistLibraryInner() {
       {/* ======================================================================= */}
       {showBaiKhanModal && (
         <div className="fixed inset-0 w-screen h-[100dvh] z-[150] bg-[#FAF7F0] text-[#2C1E10] flex flex-col overflow-hidden">
-          <header className="px-4 py-3 bg-[#FFFDF8] border-b border-[#EAD7A7] flex flex-wrap items-center justify-between gap-2 shrink-0">
+          <header className="px-4 py-3 bg-[#FAF7F0] flex flex-wrap items-center justify-between gap-2 shrink-0">
             <button
               type="button"
               onClick={() => setShowBaiKhanModal(false)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] text-xs font-bold text-[#8C5500] cursor-pointer"
+              aria-label="Quay lại"
+              className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Quay lại</span>
+              <ChevronLeft className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-1.5">

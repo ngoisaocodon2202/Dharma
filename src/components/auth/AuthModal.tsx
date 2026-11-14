@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Sparkles, Check } from 'lucide-react';
+import { ChevronLeft, Sparkles, Check } from 'lucide-react';
 import { BuddhaBodhiIcon } from '@/components/icons/BuddhaBodhiIcon';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from './AuthContext';
@@ -88,11 +88,10 @@ export function AuthModal() {
         <button
           type="button"
           onClick={closeAuthModal}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#FFF9EB] border border-[#DFC27D] hover:border-[#8C5500] text-xs font-bold text-[#8C5500] cursor-pointer whitespace-nowrap shrink-0"
+          className="w-9 h-9 rounded-full bg-[#EFECE5] hover:bg-[#E7E1D5] inline-flex items-center justify-center text-[#2C1E10] cursor-pointer shrink-0 transition-colors"
           aria-label="Quay lại"
         >
-          <ArrowLeft className="w-4 h-4 shrink-0" />
-          <span>Quay lại</span>
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
         <span className="text-sm sm:text-base font-heading font-bold text-[#2C1E10] truncate">
